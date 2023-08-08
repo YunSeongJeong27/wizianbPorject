@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -6,5 +7,6 @@
 <body>
     <h1>하이</h1>
     <h1>${hello}</h1>
+<%@include file="footer.jsp"%>
 </body>
 </html>
