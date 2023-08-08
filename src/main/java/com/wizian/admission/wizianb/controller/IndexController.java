@@ -13,8 +13,21 @@ public class IndexController {
         return "/index";
     }
 
+
+
     @GetMapping("/test")
     public String test(){
         return "admin/header";
     }
+
+    @GetMapping("/apply")
+    public String apply(Model model){
+        return " application/application_add";
+    }
+
+    @GetMapping("/apply2")
+    public String apply2(Model model){
+        return " application/application_checked";
+    }
+
 }
