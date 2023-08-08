@@ -17,4 +17,9 @@ public class IndexController {
     public String test(){
         return "/side";
     }
+
+    @GetMapping("/nth")
+    public String nth(){
+        return "nthInfo";
+    }
 }
