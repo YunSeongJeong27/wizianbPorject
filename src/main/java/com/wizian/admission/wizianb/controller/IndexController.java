@@ -22,4 +22,7 @@ public class IndexController {
     public String nth(){
         return "nthInfo";
     }
+
+    @GetMapping("/apply")
+    public String applyForm() { return "/application/application_add";}
 }

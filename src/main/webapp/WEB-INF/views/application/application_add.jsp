@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="../header.jsp" %>
+<%@include file="../user/header.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -36,12 +36,24 @@
             font-weight: 600;
         }
 
-        .table tr :nth-child(n+2) {
-            width: 83px;
-        }
 
         .table tbody tr td:nth-child(n+2) {
-            text-align: center;
+            text-align: right;
+        }
+        #apply_table td input {
+            width: 300px;
+        }
+        #apply_table colgroup col:first-child, col:nth-child(2){
+            width: 20%;
+        }
+        #apply_table colgroup col:nth-child(3){
+            width: 60%;
+        }
+        #apply_table tbody input{
+            background: #f9f9f9;
+            border-style: none;
+            height: 30px;
+            display: inline-block;
         }
 
         #application_div {
@@ -51,10 +63,6 @@
         #application_div:focus {
             outline: none;
             box-shadow: none;
-        }
-
-        #application_member {
-            font-weight: 600;
         }
 
         #application_member .member_id {
@@ -108,10 +116,19 @@
                 </select>
             </div>
             <h3 class="title mt-5 mb-1">추가제출서류</h3>
+            <%-- Buttons --%>
+            <div id="application_btn" class="d-flex justify-content-end mb-3">
+                <button type="button" class="btn btn-primary">서류추가</button>
+            </div>
             <div class="border-top border-dark border-2">
-                <table class="table table-hover align-middle">
-                    <thead>
-                    <tr class="table-light text-center">
+                <table id="apply_table" class="table table-hover align-middle">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead class="table-light text-center">
+                    <tr>
                         <th>제출서류</th>
                         <th>기관명</th>
                         <th>첨부파일</th>
@@ -120,91 +137,83 @@
                     <%-- 반복 start --%>
                     <tbody>
                     <tr>
-                        <td>지원서(가림A형)</td>
+                        <td><div>지원서(가림A형)</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <div class="flex justify_content_center">
+                                <input type="text" class="form-control">
+                                <button type="button" class="btn btn-sm btn-dark">업로드</button>
+                                <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
+                                <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div>지원서(필기용)</div></td>
+                        <td></td>
+                        <td>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>지원서(필기용)</td>
+                        <td><div>지원서(가림B형)</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>지원서(가림B형)</td>
+                        <td><div>학위증명서</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>학위증명서</td>
+                        <td><div>활동이력증명</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>활동이력증명</td>
+                        <td><div>필기고사답안지</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>필기고사답안지</td>
+                        <td><div>지원서(보관용)</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>지원서(보관용)</td>
+                        <td><div>지원서(보관용)</div></td>
                         <td></td>
                         <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>지원서(보관용)</td>
-                        <td></td>
-                        <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>지원서(필기용)</td>
-                        <td></td>
-                        <td>
-                            <input type="text">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">업로드</button>
+                            <input type="text" class="form-control">
+                            <button type="button" class="btn btn-sm btn-dark">업로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">다운로드</button>
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                         </td>
@@ -215,13 +224,13 @@
                 </table>
 
                 <%-- Buttons --%>
-                <div id="application_btn" class="d-flex justify-content-center mt-4">
-                    <button type="button" class="btn btn-primary">이전</button>
+                <div id="application_btn" class="d-flex justify-content-start mt-4">
+                    <button type="button" class="btn btn-secondary">이전</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<%@include file="../footer.jsp" %>
+<%--<%@include file="../user/footer.jsp" %>--%>
 </body>
 </html>

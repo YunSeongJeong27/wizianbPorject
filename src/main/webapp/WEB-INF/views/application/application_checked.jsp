@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="../header.jsp" %>
+<%@include file="../user/header.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -179,6 +179,6 @@
         </div>
     </div>
 </div>
-<%@include file="../footer.jsp" %>
+<%@include file="../user/footer.jsp" %>
 </body>
 </html>
