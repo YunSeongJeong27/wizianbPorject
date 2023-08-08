@@ -12,4 +12,9 @@ public class IndexController {
         model.addAttribute("hello","하이헬로우 안녕");
         return "/index";
     }
+
+    @GetMapping("/test")
+    public String test(){
+        return "/footer";
+    }
 }
