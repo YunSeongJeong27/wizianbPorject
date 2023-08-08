@@ -15,6 +15,6 @@ public class IndexController {
 
     @GetMapping("/test")
     public String test(){
-        return "/side";
+        return "admin/header";
     }
 }
