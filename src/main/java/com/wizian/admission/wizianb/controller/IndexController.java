@@ -15,12 +15,12 @@ public class IndexController {
 
     @GetMapping("/test")
     public String test(){
-        return "/side";
+        return "/admin/side";
     }
 
     @GetMapping("/nth")
     public String nth(){
-        return "nthInfo";
+        return "/admin/nthInfo";
     }
 
     @GetMapping("/apply")

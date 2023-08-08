@@ -9,11 +9,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -24,9 +21,6 @@
         }
         body{
             background-color: #F2F3F5;
-        }
-        .container-table .d-flex{
-            background-color: #fff;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{
@@ -68,7 +62,8 @@
         .nthInfoContainer .d-flex{
             border-bottom:1px solid #E1E1E1;
         }
-        .nthInfoContainer .d-flex * {
+        .nthInfoContainer .d-flex div,
+        .nthInfoContainer .d-flex .chkBox input[type='checkbox']{
             height: 100%;
             border-left: 1px solid #E1E1E1;
             padding: 10px 0;
@@ -84,11 +79,21 @@
             background-color: #EFEFEF;
             font-weight: 600;
         }
+        .container-table .tr,
+        .nthInfoContainer .d-flex.td:nth-child(even){
+            background-color: #fff;
+        }
         .nthInfoContainer .d-flex.td:nth-child(odd){
-            background-color: rgba(0,0,0,0);
+           background-color: rgba(0,0,0,0);
         }
         .nthInfoContainer .d-flex.td :nth-child(n):hover{
             background-color: #D1D1D1;
+            font-weight: 600;
+        }
+
+        /* 체크 박스 선택 시 css */
+        .nthInfoContainer .d-flex.td-chk{
+            background-color: #D1D1D1 !important;
         }
 
 
@@ -136,32 +141,37 @@
 </head>
 <body>
     <div class="container-table m-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center">
-                    <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                    <div class="col-1 me-1"><input type="text" class="form-control"></div>
-                    <div class="col-1 me-2">
-                        <select class="form-select">
-                            <option selected>1분기</option>
-                            <option>2분기</option>
-                            <option>3분기</option>
-                            <option>4분기</option>
-                        </select>
-                    </div>
+        <div class="col-12">
+            <div class="d-flex flex-row justify-content-end mb-1">
+                <button class="btn btn-sm btn-secondary me-1">조회</button>
+                <button class="btn btn-sm btn-light me-1">신규</button>
+                <button class="btn btn-sm btn-light me-1">저장</button>
+                <button class="btn btn-sm btn-light me-1">삭제</button>
+            </div>
 
-                    <div class="col-2 tableSearch">과정구분</div>
-                    <div class="col-2 me-2">
-                        <select class="form-select">
-                            <option selected>Java</option>
-                            <option>Python</option>
-                            <option>C++</option>
-                        </select>
-                    </div>
-
-                    <div class="col-2 tableSearch">과정명</div>
-                    <div class="col-2"><input type="text" class="form-control"></div>
+            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+                <div class="col-2 align-middle tableSearch">수강년도/분기</div>
+                <div class="col-1 me-1"><input type="text" class="form-control"></div>
+                <div class="col-1 me-2">
+                    <select class="form-select">
+                        <option selected>1분기</option>
+                        <option>2분기</option>
+                        <option>3분기</option>
+                        <option>4분기</option>
+                    </select>
                 </div>
+
+                <div class="col-2 tableSearch">과정구분</div>
+                <div class="col-2 me-2">
+                    <select class="form-select">
+                        <option selected>Java</option>
+                        <option>Python</option>
+                        <option>C++</option>
+                    </select>
+                </div>
+
+                <div class="col-2 tableSearch">과정명</div>
+                <div class="col-2"><input type="text" class="form-control"></div>
             </div>
         </div>
 
@@ -182,63 +192,61 @@
         <div class="nthInfoTable text-center border border-gray-100 rounded-2">
             <div class="nthInfoResponsive">
                 <div class="nthInfoContainer">
-                    <div>
-                        <div class="d-flex flex-row align-items-center th">
-                            <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
-                            <div class="col-2">과정명</div>
-                            <div class="col-1">과정구분</div>
-                            <div class="col-1">기수</div>
-                            <div class="col-1">수강년도</div>
-                            <div class="col-1">분기</div>
-                            <div class="col-2">모집기간</div>
-                            <div class="col-1">발표일자</div>
-                            <div class="col-1">현재전형일정</div>
-                            <div class="col-1">전형평가단계</div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center td">
-                            <div class="col-1 chkBox"><input type="checkbox" name="checkBox"></div>
-                            <div class="col-2">자바기반 어쩌구</div>
-                            <div class="col-1">JAVA</div>
-                            <div class="col-1">3</div>
-                            <div class="col-1">2023</div>
-                            <div class="col-1">1</div>
-                            <div class="col-2">2022-12-10 ~ 2022-12-15</div>
-                            <div class="col-1">2022-12-20</div>
-                            <div class="col-1">2022-12-20??</div>
-                            <div class="col-1">서류접수</div>
-                        </div>
+                    <div class="d-flex flex-row align-items-center th">
+                        <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
+                        <div class="col-2">과정명</div>
+                        <div class="col-1">과정구분</div>
+                        <div class="col-1">기수</div>
+                        <div class="col-1">수강년도</div>
+                        <div class="col-1">분기</div>
+                        <div class="col-2">모집기간</div>
+                        <div class="col-1">발표일자</div>
+                        <div class="col-1">현재전형일정</div>
+                        <div class="col-1">전형평가단계</div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center td">
+                        <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onchange="check(this)"></div>
+                        <div class="col-2">자바기반 어쩌구</div>
+                        <div class="col-1">JAVA</div>
+                        <div class="col-1">3</div>
+                        <div class="col-1">2023</div>
+                        <div class="col-1">1</div>
+                        <div class="col-2">2022-12-10 ~ 2022-12-15</div>
+                        <div class="col-1">2022-12-20</div>
+                        <div class="col-1">2022-12-20??</div>
+                        <div class="col-1">서류접수</div>
+                    </div>
 
 
-                        <div class="d-flex flex-row align-items-center td">
-                            <div class="col-1 chkBox"><input type="checkbox" name="checkBox"></div>
-                            <div class="col-2">자바기반 어쩌구</div>
-                            <div class="col-1">JAVA</div>
-                            <div class="col-1">3</div>
-                            <div class="col-1">2023</div>
-                            <div class="col-1">1</div>
-                            <div class="col-2">2022-12-10 ~ 2022-12-15</div>
-                            <div class="col-1">2022-12-20</div>
-                            <div class="col-1">2022-12-20??</div>
-                            <div class="col-1">서류접수</div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center td">
-                            <div class="col-1 chkBox"><input type="checkbox" name="checkBox"></div>
-                            <div class="col-2">자바기반 어쩌구</div>
-                            <div class="col-1">JAVA</div>
-                            <div class="col-1">3</div>
-                            <div class="col-1">2023</div>
-                            <div class="col-1">1</div>
-                            <div class="col-2">2022-12-10 ~ 2022-12-15</div>
-                            <div class="col-1">2022-12-20</div>
-                            <div class="col-1">2022-12-20??</div>
-                            <div class="col-1">서류접수</div>
-                        </div>
+                    <div class="d-flex flex-row align-items-center td">
+                        <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this)"></div>
+                        <div class="col-2">자바기반 어쩌구</div>
+                        <div class="col-1">JAVA</div>
+                        <div class="col-1">3</div>
+                        <div class="col-1">2023</div>
+                        <div class="col-1">1</div>
+                        <div class="col-2">2022-12-10 ~ 2022-12-15</div>
+                        <div class="col-1">2022-12-20</div>
+                        <div class="col-1">2022-12-20??</div>
+                        <div class="col-1">서류접수</div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center td">
+                        <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this)"></div>
+                        <div class="col-2">자바기반 어쩌구</div>
+                        <div class="col-1">JAVA</div>
+                        <div class="col-1">3</div>
+                        <div class="col-1">2023</div>
+                        <div class="col-1">1</div>
+                        <div class="col-2">2022-12-10 ~ 2022-12-15</div>
+                        <div class="col-1">2022-12-20</div>
+                        <div class="col-1">2022-12-20??</div>
+                        <div class="col-1">서류접수</div>
                     </div>
                 </div>
             </div>
 
             <%-- 페이징 --%>
-            <div class="pagination d-flex flex-row justify-content-center text-center position-relative">
+            <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
                 <ul>
                     <li class="active">1</li>
                     <li>2</li>
@@ -297,24 +305,29 @@
     </div>
 
 
-
-
-
-
-
     <script>
 
         // 체크박스 전체 선택
         var chkAll = document.getElementById("chkAll");
-        var chk = document.getElementsByName("checkBox");
+        var chkBox = document.getElementsByName("checkBox");
         chkAll.addEventListener("click", function(){
-            if(chkAll.checked) {
-                for(var i=0; i<chk.length; i++) chk[i].checked = true;
-            }
-            else{
-                for(var i=0; i<chk.length; i++) chk[i].checked = false;
-            }
+            chkBox.forEach((chk) => {
+                chk.checked = chkAll.checked;
+                check(chk);
+            });
         })
+
+        // 체크박스 선택 시 css
+        function check(e){
+            var td = e.parentElement.parentElement;
+            if(e.checked) td.classList.add("td-chk");
+            else td.classList.remove("td-chk");
+        }
+
+        // row 클릭 시 focus
+        function test(e){
+            e.addClass("td-bg")
+        }
 
 
 
