@@ -4,7 +4,7 @@
 <head>
     <title>Title</title>
     <style>
-        .breadcrumbs ul,
+        .breadcrumbs,
         .menu ul {
             list-style: none;
             padding: 0;
@@ -16,8 +16,12 @@
             font-weight: 600;
         }
 
-        .breadcrumbs ul li {
+        .breadcrumbs li {
             display: inline-block;
+            font-size: 13px;
+        }
+        #apply_current {
+            font-weight: bolder;
         }
 
         .menu ul li a {
@@ -65,6 +69,12 @@
             margin: 0 2px;
             padding: 10px 15px;
         }
+        #apply_complete .btn{
+            padding: 10px 18px;
+            background-color: lightgray;
+            border-style: none;
+            color: #000000;
+        }
     </style>
 </head>
 <body>
@@ -72,11 +82,11 @@
     <div class="container-sub-header">
         <div class="d-flex flex-row justify-content-between px-3">
             <p class="page-title">지원서확인</p>
-            <div class="breadcrumbs">
-                <ul>
-                    <li>홈</li>
-                    <li>마이페이지</li>
-                    <li>지원서확인</li>
+            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ul class="breadcrumbs">
+                    <li class="breadcrumb-item">홈</li>
+                    <li class="breadcrumb-item">마이페이지</li>
+                    <li id="apply_current" class="breadcrumb-item" aria-current="page">지원서확인</li>
                 </ul>
             </div>
         </div>
@@ -174,6 +184,9 @@
                     <button type="button" class="btn btn-secondary" disabled>지원취소</button>
                     <button type="button" class="btn btn-dark">입학원서출력</button>
                     <button type="button" class="btn btn-dark">수험표출력</button>
+                </div>
+                <div id="apply_complete" class="d-flex justify-content-end mt-5">
+                    <button type="button" class="btn btn-secondary">제출서류확인</button>
                 </div>
             </div>
         </div>
