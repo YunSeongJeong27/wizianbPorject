@@ -149,7 +149,7 @@
         }
 
         .tui-grid-cell-current-row td{
-            background-color: #F2F7FF;
+            background-color: #F2F7FF !important;
             font-weight: 600;
             color: #245396;
         }
@@ -167,10 +167,10 @@
 <div id="nthInfo" class="container-table m-2">
     <div class="col-12">
         <div class="d-flex flex-row justify-content-end mb-1">
-            <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
-            <button id="insertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
-            <button id="saveBtn" class="btn btn-sm btn-light btn-outline-dark me-1">저장</button>
-            <button id="deleteBtn" class="btn btn-sm btn-light btn-outline-dark me-1">삭제</button>
+            <button id="nthSelectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
+            <button id="nthInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
+            <button id="nthSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-1">저장</button>
+            <button id="nthDeleteBtn" class="btn btn-sm btn-light btn-outline-dark me-1">삭제</button>
         </div>
 
         <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
@@ -216,60 +216,6 @@
     </div>
 
     <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-        <%--<div class="nthInfoResponsive">
-            <div class="nthInfoContainer">
-                <div class="d-flex flex-row align-items-center th">
-                    <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
-                    <div class="col-1">과정구분</div>
-                    <div class="col-2">과정명</div>
-                    <div class="col-1">기수</div>
-                    <div class="col-1">수강년도</div>
-                    <div class="col-1">분기</div>
-                    <div class="col-1">수업개월수</div>
-                    <div class="col-2">교육기간</div>
-                    <div class="col-1">발표일자</div>
-                    <div class="col-1">비고</div>
-                </div>
-                <div class="d-flex flex-row align-items-center td tdBg" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="mainCheck" onclick="check(this);"></div>
-                    <div class="col-1 tableData">JAVA</div>
-                    <div class="col-2 tableData">자바기반 풀스택</div>
-                    <div class="col-1 tableData">3</div>
-                    <div class="col-1 tableData">2023</div>
-                    <div class="col-1 tableData">1</div>
-                    <div class="col-1 tableData">6</div>
-                    <div class="col-2"><span class="tableData">2022-12-10</span> ~ <span class="tableData">2023-05-15</span></div>
-                    <div class="col-1 tableData">2022-12-02</div>
-                    <div class="col-1 tableData"></div>
-                </div>
-
-
-                <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="mainCheck" onclick="check(this);"></div>
-                    <div class="col-1 tableData">Python</div>
-                    <div class="col-2 tableData">파이썬</div>
-                    <div class="col-1 tableData">1</div>
-                    <div class="col-1 tableData">2022</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-1 tableData">3</div>
-                    <div class="col-2"><span class="tableData">2022-05-10</span> ~ <span class=" tableData">2022-08-20</span></div>
-                    <div class="col-1 tableData">2022-05-01</div>
-                    <div class="col-1 tableData">비고비고</div>
-                </div>
-                <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="mainCheck" onclick="check(this);"></div>
-                    <div class="col-1 tableData">C++</div>
-                    <div class="col-2 tableData">C++ 코딩테스트</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-1 tableData">2023</div>
-                    <div class="col-1 tableData">4</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-2"><span class="tableData">2023-10-10</span> ~ <span class=" tableData">2022-11-10</span></div>
-                    <div class="col-1 tableData">2022-09-20</div>
-                    <div class="col-1 tableData"></div>
-                </div>
-            </div>
-        </div>--%>
         <div id="nthTable"></div>
         <%-- 페이징 --%>
         <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
@@ -299,39 +245,39 @@
             <tr>
                 <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                 <td class="col-2">
-                    <select class="form-select tableInput" aria-label="Default select">
+                    <select class="form-select tableInput" name="CORS_DIV" aria-label="Default select">
                         <option selected>[S] CORS_DIV [LM0010]</option>
                         <option>[S] CORS_DIV [LM0010] 2</option>
                     </select>
                 </td>
                 <td class="col-2 tableColor">과정명</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_NM"></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="SEL_NM" value="NTH_NM"></td>
                 <td class="col-2 tableColor">기수코드</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_CD" readonly></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="NTH_NM" value="NTH_CD" readonly></td>
             </tr>
             <tr>
                 <td class="col-2 tableColor">수강년도<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="ENT_YR"></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="ENT_YR" value="ENT_YR"></td>
                 <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
                 <td class="col-2">
-                    <select class="form-select tableInput" aria-label="Default select">
+                    <select class="form-select tableInput" name="TERM_DIV" aria-label="Default select">
                         <option selected>[S] TERM_DIV [CO0005]</option>
                     </select>
                 </td>
                 <td class="col-2 tableColor">수업개월수<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="number" value="YR_CNT" id="entInput"></td>
+                <td class="col-2"><input class="form-control tableInput" type="number" name="YR_CNT" value="YR_CNT" id="entInput"></td>
             </tr>
             <tr>
                 <td class="col-2 tableColor">교육시작일<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="date" value="[CAL] EDU_ST_DT"></td>
+                <td class="col-2"><input class="form-control tableInput" type="date" name="EDU_ST_DT" value="[CAL] EDU_ST_DT"></td>
                 <td class="col-2 tableColor">교육종료일<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="date" value="[CAL] EDU_END_DT"></td>
+                <td class="col-2"><input class="form-control tableInput" type="date" name="EDU_END_DT" value="[CAL] EDU_END_DT"></td>
                 <td class="col-2 tableColor">발표일자</td>
-                <td class="col-2"><input class="form-control tableInput" type="date" value="2020-10-10"></td>
+                <td class="col-2"><input class="form-control tableInput" type="date" name="ANN_DT" value="2020-10-10"></td>
             </tr>
             <tr>
                 <td class="col-2 tableColor">비고</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="NOTE"></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="NOTE" value="NOTE"></td>
                 <td class="col-2 tableColor"></td>
                 <td class="col-2"></td>
                 <td class="col-2 tableColor"></td>
@@ -545,6 +491,7 @@
         }
     }
 
+
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
@@ -553,10 +500,10 @@
                 NTH_NM: '3',
                 ENT_YR: '2023',
                 TERM_DIV: '1',
-                수업개월수: '6',
+                YR_CNT: '6',
                 EDU_ST_DT: '2023-08-01',
                 EDU_END_DT: '2023-08-01',
-                발표일자: '2023-08-01',
+                ANN_DT: '2023-08-01',
                 NOTE: ''
             },
             {
@@ -565,10 +512,10 @@
                 NTH_NM: '2',
                 ENT_YR: '2023',
                 TERM_DIV: '1',
-                수업개월수: '6',
+                YR_CNT: '6',
                 EDU_ST_DT: '2023-08-01',
                 EDU_END_DT: '2023-08-01',
-                발표일자: '2023-08-01',
+                ANN_DT: '2023-08-01',
                 NOTE: '장사때려침'
             },
             {
@@ -577,28 +524,16 @@
                 NTH_NM: '4',
                 ENT_YR: '2023',
                 TERM_DIV: '1',
-                수업개월수: '6',
+                YR_CNT: '6',
                 EDU_ST_DT: '2023-08-01',
                 EDU_END_DT: '2023-08-01',
-                발표일자: '2023-08-01',
+                ANN_DT: '2023-08-01',
                 NOTE: '장사때려침'
-            },
-            {
-                CORS_DIV: '',
-                SEL_NM: '',
-                NTH_NM: '',
-                ENT_YR: '',
-                TERM_DIV: '',
-                수업개월수: '',
-                EDU_ST_DT: '',
-                EDU_END_DT: '',
-                발표일자: '',
-                NOTE: ''
             }
         ];
         function educationPeriodFormatter({ row }) {
-            const startDate = row.EDU_ST_DT;
-            const endDate = row.EDU_END_DT;
+            var startDate = row.EDU_ST_DT;
+            var endDate = row.EDU_END_DT;
             return startDate +"~" + endDate;
         }
         const nthTable = new tui.Grid({
@@ -662,7 +597,7 @@
                 },
                 {
                     header: '수업개월수',
-                    name: '수업개월수',
+                    name: 'YR_CNT',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -674,7 +609,7 @@
                 },
                 {
                     header: '발표일자',
-                    name: '발표일자',
+                    name: 'ANN_DT',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -689,11 +624,16 @@
                 resizable: true
             },
 
-            draggable: false,
+            draggable: true
 
         });
 
         const nthTheme = new tui.Grid.applyTheme('default', {
+            row: {
+                hover: {
+                    background: '#D1D1D1'
+                }
+            },
             cell: {
                 normal: {
                     background: '#fff',
@@ -707,19 +647,72 @@
                 rowHeader: {
                     background: '#EFEFEF',
                     border:'#E1E1E1'
-                }
-                ,
+                },
                 evenRow: {
-                    background: '#F2F3F5',
-                    border: '#000'
+                    background: '#F2F3F5'
                 },
                 oddRow: {
-                    background: '#FFF',
+                    background: '#FFF'
+                },
+                hover: {
                     border: '#000'
                 }
             }
         });
+
+        nthTable.on('click', function (ev) {
+            var datas = nthTable.getRow(ev.rowKey);
+            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+
+            tableInput.forEach((ti) => {
+                ti.value = datas[ti.getAttribute("name")];
+            });
+
+
+        });
+
+        nthTable.on('check', function (ev) {
+            console.log('check', ev);
+        });
+
+        nthTable.on('uncheck', function (ev) {
+            console.log('uncheck', ev);
+        });
+
+
+        document.getElementById("nthInsertBtn").addEventListener("click", function () {
+            const rowData = [
+                {
+                    CORS_DIV: '',
+                    SEL_NM: '',
+                    NTH_NM: '',
+                    ENT_YR: '',
+                    TERM_DIV: '',
+                    YR_CNT: '',
+                    EDU_ST_DT: '',
+                    EDU_END_DT: '',
+                    ANN_DT: '',
+                    NOTE: ''
+                }
+            ];
+
+            nthTable.appendRow(rowData[0], {
+                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+                extendPrevRowSpan: true,
+                focus: true
+            });
+
+            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+
+            tableInput.forEach((ti) => {
+                ti.value = "";
+            });
+
+        });
+
     });
+
+
 </script>
 </body>
 </html>
