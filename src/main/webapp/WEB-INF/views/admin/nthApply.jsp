@@ -5,6 +5,7 @@
   Time: 오후 4:09
   To change this template use File | Settings | File Templates.
 --%>
+<%@include file="header.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -241,6 +242,7 @@
         </div>
     </div>
 
+    <%-- ~ --%>
     <div id="grid2"></div>
 </div>
 
@@ -629,6 +631,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script>
+    /* ~ */
     class RowNumberRenderer {
         constructor(props) {
             const el = document.createElement('span');
@@ -691,6 +694,7 @@
             hiddenInput.checked = checked;
         }
     }
+    /**/
 
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
@@ -719,6 +723,7 @@
                 APLY_DT: '2023-08-01 15:32'
             }
         ];
+        /* ~ */
         const data2 = [
             {
                 CORS_DIV: 'JAVA',
@@ -761,8 +766,9 @@
         function educationPeriodFormatter({ row }) {
             const startDate = row.EDU_ST_DT;
             const endDate = row.EDU_END_DT;
-            return `${startDate} ~ ${endDate}`;
+            return startDate +"~" + endDate;
         }
+        /**/
 
         const grid = new tui.Grid({
             el: document.getElementById('grid'),
@@ -831,6 +837,8 @@
         grid.on('uncheck', function (ev) {
             console.log('uncheck', ev);
         });
+
+        /* ~ */
         const grid2 = new tui.Grid({
             el: document.getElementById('grid2'),
             data: data2,
@@ -928,6 +936,7 @@
         grid.on('uncheck', function (ev) {
             console.log('uncheck', ev);
         });
+        /**/
     });
 </script>
 </body>

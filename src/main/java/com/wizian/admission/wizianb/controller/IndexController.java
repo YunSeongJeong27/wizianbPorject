@@ -30,4 +30,8 @@ public class IndexController {
 
     @GetMapping("/apply")
     public String applyForm() { return "/application/application_add";}
+
+
+    @GetMapping("/apply1")
+    public String apply() { return "/admin/nthApply";}
 }

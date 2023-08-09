@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -27,18 +28,21 @@
             box-shadow: none;
             border-color: #9a9a9a;
         }
+        .container-table .tr{
+             background-color: #fff;
+        }
 
         /* 과정 검색 */
-        .tableSearch{
-            font-weight: 600;
-        }
+         .tableSearch{
+             font-weight: 600;
+         }
 
         /* 검색 결과 수 */
-        .searchResult .subTitle{
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
+         .searchResult .subTitle{
+             font-size: 15px;
+             font-weight: 600;
+             margin-bottom: 0;
+         }
         .searchResult .subResult{
             font-size: 14px;
             margin-bottom: 0;
@@ -47,8 +51,8 @@
             padding: 0.2rem 2rem 0.2rem 0.75rem;
         }
 
-
-        /* 과정 정보 테이블 */
+        /*
+        !* 과정 정보 테이블 *!
         .nthInfoResponsive{
             overflow-x: auto;
             background-color: #fff;
@@ -89,17 +93,18 @@
             color: #245396;
         }
 
-        /* 체크 박스 선택 시 css */
+        !* 체크 박스 선택 시 css *!
         .nthInfoContainer .d-flex.tdChk{
             background-color: #D1D1D1 !important;
         }
-        /* row 선택 시 focus css */
+        !* row 선택 시 focus css *!
         .nthInfoContainer .d-flex.tdBg{
             background-color: #F2F7FF !important;
             border: 1px solid #245396 !important;
             font-weight: 600;
             color: #245396;
         }
+        */
 
         /* 페이징 */
         .pagination ul {
@@ -134,6 +139,21 @@
             color: #797676;
         }
 
+        /* 그리드 custom css */
+
+        /* 스크롤 자투리 부분 색 변경 */
+        .tui-grid-scrollbar-left-bottom,
+        .tui-grid-scrollbar-right-bottom,
+        .tui-grid-scrollbar-right-top{
+            background-color: #fff;
+        }
+
+        .tui-grid-cell-current-row td{
+            background-color: #F2F7FF;
+            font-weight: 600;
+            color: #245396;
+        }
+
         .table .tableColor{
             background-color: #FAFAFA;
         }
@@ -144,7 +164,7 @@
     </style>
 </head>
 <body>
-<div class="container-table m-2">
+<div id="nthInfo" class="container-table m-2">
     <div class="col-12">
         <div class="d-flex flex-row justify-content-end mb-1">
             <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
@@ -196,7 +216,7 @@
     </div>
 
     <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-        <div class="nthInfoResponsive">
+        <%--<div class="nthInfoResponsive">
             <div class="nthInfoContainer">
                 <div class="d-flex flex-row align-items-center th">
                     <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
@@ -249,8 +269,8 @@
                     <div class="col-1 tableData"></div>
                 </div>
             </div>
-        </div>
-
+        </div>--%>
+        <div id="nthTable"></div>
         <%-- 페이징 --%>
         <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
             <ul>
@@ -323,19 +343,10 @@
 
 
 <script>
-    window.onload = function () {
+/*    window.onload = function () {
         inputValue();
     }
 
-    // 체크박스 전체 선택
-    var chkAll = document.getElementById("chkAll");
-    var chkBox = document.getElementsByName("mainCheck");
-    chkAll.addEventListener("click", function(){
-        chkBox.forEach((chk) => {
-            chk.checked = chkAll.checked;
-            check(chk);
-        });
-    })
 
     // 체크박스 선택 시 css
     function check(e){
@@ -452,7 +463,7 @@
         if(confirm("저장하시겠습니까?")){
 
         }
-    })
+    })*/
 
 
     // input number 음수 막기
@@ -468,6 +479,246 @@
             this.value = 0;
             alert("음수값은 설정할 수 없습니다.");
         }
+    });
+
+    /* ~ */
+    /*class RowNumberRenderer {
+        constructor(props) {
+            const el = document.createElement('span');
+            el.innerHTML = props.formattedValue;
+            this.el = el;
+        }
+
+        getElement() {
+            return this.el;
+        }
+
+        render(props) {
+            this.el.innerHTML = props.formattedValue;
+        }
+    }*/
+
+    class CheckboxRenderer {
+        constructor(props) {
+            const {grid, rowKey} = props;
+
+            const label = document.createElement('label');
+            label.className = 'checkbox tui-grid-row-header-checkbox';
+            label.setAttribute('for', String(rowKey));
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.className = 'hidden-input';
+            hiddenInput.id = String(rowKey);
+
+            const customInput = document.createElement('span');
+            customInput.className = 'custom-input';
+
+            label.appendChild(hiddenInput);
+            label.appendChild(customInput);
+
+            hiddenInput.type = 'checkbox';
+            label.addEventListener('click', (ev) => {
+                ev.preventDefault();
+
+                if (ev.shiftKey) {
+                    grid[!hiddenInput.checked ? 'checkBetween' : 'uncheckBetween'](rowKey);
+                    return;
+                }
+
+                grid[!hiddenInput.checked ? 'check' : 'uncheck'](rowKey);
+            });
+
+            this.el = label;
+
+            this.render(props);
+        }
+
+        getElement() {
+            return this.el;
+        }
+
+        render(props) {
+            const hiddenInput = this.el.querySelector('.hidden-input');
+            const checked = Boolean(props.value);
+
+            hiddenInput.checked = checked;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const data = [
+            {
+                CORS_DIV: 'JAVA',
+                SEL_NM: '자바과정 풀스택',
+                NTH_NM: '3',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: ''
+            },
+            {
+                CORS_DIV: 'Python',
+                SEL_NM: '파이썬',
+                NTH_NM: '2',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: '장사때려침'
+            },
+            {
+                CORS_DIV: 'C++',
+                SEL_NM: 'C++ 코딩테스트',
+                NTH_NM: '4',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: '장사때려침'
+            },
+            {
+                CORS_DIV: '',
+                SEL_NM: '',
+                NTH_NM: '',
+                ENT_YR: '',
+                TERM_DIV: '',
+                수업개월수: '',
+                EDU_ST_DT: '',
+                EDU_END_DT: '',
+                발표일자: '',
+                NOTE: ''
+            }
+        ];
+        function educationPeriodFormatter({ row }) {
+            const startDate = row.EDU_ST_DT;
+            const endDate = row.EDU_END_DT;
+            return startDate +"~" + endDate;
+        }
+        const nthTable = new tui.Grid({
+            el: document.getElementById('nthTable'),
+            data: data,
+            rowHeaders: [
+                /*{
+                    type: 'rowNum',
+                    renderer: {
+                        type: RowNumberRenderer
+                    }
+                },*/
+                {
+                    type: 'checkbox',
+                    header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                    renderer: {
+                        type: CheckboxRenderer
+                    }
+                }
+            ],
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '과정구분',
+                    name: 'CORS_DIV',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '과정명',
+                    name: 'SEL_NM',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '기수',
+                    name: 'NTH_NM',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '수강년도',
+                    name: 'ENT_YR',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '분기',
+                    name: 'TERM_DIV',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '수업개월수',
+                    name: '수업개월수',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '교육기간',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center',
+                    formatter: educationPeriodFormatter
+                },
+                {
+                    header: '발표일자',
+                    name: '발표일자',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '비고',
+                    name: 'NOTE',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                }
+            ],
+            columnOptions: {
+                resizable: true
+            },
+
+            draggable: false,
+
+        });
+
+        const nthTheme = new tui.Grid.applyTheme('default', {
+            cell: {
+                normal: {
+                    background: '#fff',
+                    border:'#E1E1E1',
+                    showVerticalBorder: true
+                },
+                header: {
+                    background: '#EFEFEF',
+                    border: '#E1E1E1'
+                },
+                rowHeader: {
+                    background: '#EFEFEF',
+                    border:'#E1E1E1'
+                }
+                ,
+                evenRow: {
+                    background: '#F2F3F5',
+                    border: '#000'
+                },
+                oddRow: {
+                    background: '#FFF',
+                    border: '#000'
+                }
+            }
+        });
     });
 </script>
 </body>
