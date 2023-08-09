@@ -199,53 +199,53 @@
                 <div class="nthInfoContainer">
                     <div class="d-flex flex-row align-items-center th">
                         <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
-                        <div class="col-2">과정명</div>
                         <div class="col-1">과정구분</div>
+                        <div class="col-2">과정명</div>
                         <div class="col-1">기수</div>
                         <div class="col-1">수강년도</div>
                         <div class="col-1">분기</div>
+                        <div class="col-1">수업개월수</div>
                         <div class="col-2">교육기간</div>
                         <div class="col-1">발표일자</div>
-                        <div class="col-1">수업개월수</div>
                         <div class="col-1">비고</div>
                     </div>
-                    <div class="d-flex flex-row align-items-center td tdBg" onclick="test(this);">
+                    <div class="d-flex flex-row align-items-center td tdBg" onclick="rowFocus(this);">
                         <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                        <div class="col-2">자바기반 풀스택</div>
-                        <div class="col-1">JAVA</div>
-                        <div class="col-1">3</div>
-                        <div class="col-1">2023</div>
-                        <div class="col-1">1</div>
-                        <div class="col-2">2022-12-10 ~ 2023-05-15</div>
-                        <div class="col-1">2022-12-02</div>
-                        <div class="col-1">6</div>
-                        <div class="col-1"></div>
+                        <div class="col-1 tableData">JAVA</div>
+                        <div class="col-2 tableData">자바기반 풀스택</div>
+                        <div class="col-1 tableData">3</div>
+                        <div class="col-1 tableData">2023</div>
+                        <div class="col-1 tableData">1</div>
+                        <div class="col-1 tableData">6</div>
+                        <div class="col-2"><span class="tableData">2022-12-10</span> ~ <span class="tableData">2023-05-15</span></div>
+                        <div class="col-1 tableData">2022-12-02</div>
+                        <div class="col-1 tableData"></div>
                     </div>
 
 
-                    <div class="d-flex flex-row align-items-center td" onclick="test(this);">
+                    <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
                         <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                        <div class="col-2">파이썬</div>
-                        <div class="col-1">Python</div>
-                        <div class="col-1">1</div>
-                        <div class="col-1">2022</div>
-                        <div class="col-1">2</div>
-                        <div class="col-2">2022-05-10 ~ 2022-08-20</div>
-                        <div class="col-1">2022-05-01</div>
-                        <div class="col-1">3</div>
-                        <div class="col-1">비고비고</div>
+                        <div class="col-1 tableData">Python</div>
+                        <div class="col-2 tableData">파이썬</div>
+                        <div class="col-1 tableData">1</div>
+                        <div class="col-1 tableData">2022</div>
+                        <div class="col-1 tableData">2</div>
+                        <div class="col-1 tableData">3</div>
+                        <div class="col-2"><span class="tableData">2022-05-10</span> ~ <span class=" tableData">2022-08-20</span></div>
+                        <div class="col-1 tableData">2022-05-01</div>
+                        <div class="col-1 tableData">비고비고</div>
                     </div>
-                    <div class="d-flex flex-row align-items-center td" onclick="test(this);">
+                    <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
                         <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                        <div class="col-2">C++ 코딩테스트</div>
-                        <div class="col-1">C++</div>
-                        <div class="col-1">2</div>
-                        <div class="col-1">2023</div>
-                        <div class="col-1">4</div>
-                        <div class="col-2">2023-10-10 ~ 2022-11-10</div>
-                        <div class="col-1">2022-09-20</div>
-                        <div class="col-1">2</div>
-                        <div class="col-1"></div>
+                        <div class="col-1 tableData">C++</div>
+                        <div class="col-2 tableData">C++ 코딩테스트</div>
+                        <div class="col-1 tableData">2</div>
+                        <div class="col-1 tableData">2023</div>
+                        <div class="col-1 tableData">4</div>
+                        <div class="col-1 tableData">2</div>
+                        <div class="col-2"><span class="tableData">2023-10-10</span> ~ <span class=" tableData">2022-11-10</span></div>
+                        <div class="col-1 tableData">2022-09-20</div>
+                        <div class="col-1 tableData"></div>
                     </div>
                 </div>
             </div>
@@ -282,6 +282,12 @@
                         <option selected>[S] CORS_DIV [LM0010] 2</option>
                     </select>
                 </td>
+                <td class="col-2 tableColor">과정명</td>
+                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_NM"></td>
+                <td class="col-2 tableColor">기수코드</td>
+                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_CD" readonly></td>
+            </tr>
+            <tr>
                 <td class="col-2 tableColor">수강년도<span class="text-danger">*</span></td>
                 <td class="col-2"><input class="form-control tableInput" type="text" value="ENT_YR"></td>
                 <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
@@ -290,22 +296,16 @@
                         <option selected>[S] TERM_DIV [CO0005]</option>
                     </select>
                 </td>
+                <td class="col-2 tableColor">수업개월수<span class="text-danger">*</span></td>
+                <td class="col-2"><input class="form-control tableInput" type="number" value="YR_CNT" id="entInput"></td>
             </tr>
             <tr>
-                <td class="col-2 tableColor">기수코드</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_CD" readonly></td>
                 <td class="col-2 tableColor">교육시작일<span class="text-danger">*</span></td>
                 <td class="col-2"><input class="form-control tableInput" type="date" value="[CAL] EDU_ST_DT"></td>
                 <td class="col-2 tableColor">교육종료일<span class="text-danger">*</span></td>
                 <td class="col-2"><input class="form-control tableInput" type="date" value="[CAL] EDU_END_DT"></td>
-            </tr>
-            <tr>
-                <td class="col-2 tableColor">과정명</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" value="NTH_NM"></td>
                 <td class="col-2 tableColor">발표일자</td>
                 <td class="col-2"><input class="form-control tableInput" type="date" value="2020-10-10"></td>
-                <td class="col-2 tableColor">수업개월수<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="number" value="YR_CNT" id="entInput"></td>
             </tr>
             <tr>
                 <td class="col-2 tableColor">비고</td>
@@ -320,6 +320,9 @@
 
 
     <script>
+        window.onload = function () {
+            inputValue();
+        }
 
         // 체크박스 전체 선택
         var chkAll = document.getElementById("chkAll");
@@ -339,18 +342,25 @@
         }
 
         // row 클릭 시 focus
-        function test(e){
+        function rowFocus(e){
             var tdBg = document.getElementsByClassName("tdBg");
 
             tdBg[0].classList.remove("tdBg");
             e.classList.add("tdBg");
 
             // 하단 input에 값 넣기
-            var datas = document.querySelectorAll(".tdBg div");
-            var inputs = document.querySelectorAll("#inputTable input");
+            inputValue();
+        }
 
-            for(var i=0; i<datas.length-1; i++){
-                inputs[i].value = datas[i+1].innerText;
+        // 하단에 input 값 넣기
+        function inputValue(){
+            var datas = document.querySelectorAll(".tdBg .tableData");
+            var inputs = document.querySelectorAll("#inputTable .tableInput");
+
+            for(var i=0; i<datas.length; i++){
+                console.log(inputs[i].tagName);
+                if(inputs[i].tagName === 'SELECT') inputs[i].firstElementChild.setAttribute("selected", "selected");
+                else inputs[i].value = datas[i].innerText;
             }
         }
 
@@ -363,7 +373,7 @@
 
             var td = document.createElement("div");
             td.setAttribute("class", "d-flex flex-row align-items-center td tdBg");
-            td.setAttribute("onclick", "test(this);");
+            td.setAttribute("onclick", "rowFocus(this);");
 
             for(var i=0; i<10; i++){
                 var div = document.createElement("div");
@@ -380,7 +390,7 @@
                     td.append(div);
                     continue;
                 }
-                else if(i===1 || i===6) clazz = "col-2";
+                else if(i===2 || i===7) clazz = "col-2";
                 else clazz = "col-1";
 
                 div.setAttribute("class", clazz);
@@ -391,18 +401,12 @@
 
 
             // 아래 input 초기화
-            var inputs = document.querySelectorAll("#inputTable input");
-            var selects = document.querySelectorAll("#inputTable select");
-            var dates = document.querySelectorAll("#inputTable input[type='date']");
+            var inputs = document.querySelectorAll("#inputTable .tableInput");
 
             var idx = 0;
             inputs.forEach((input) => {
-                input.value = "";
-                if(idx > 2) return;
-                else {
-                    if(idx < 2) selects[idx].firstElementChild.setAttribute("selected", "selected");
-                    dates[idx].value = "null";
-                }
+                if(idx === 0 || idx === 4) inputs[idx].firstElementChild.setAttribute("selected", "selected");
+                else input.value = "";
                 idx++;
             });
         });
