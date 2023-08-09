@@ -328,7 +328,7 @@
 
     <div class="tab-content pt-3 bg-white" id="infoNavContent">
         <!-- 모진접형설정 Content -->
-        <div class="tab-pane fade show active" id="select-tab-pane" role="tabpanel" aria-labelledby="select-tab" tabindex="0">
+            <div class="tab-pane fade show active" id="select-tab-pane" role="tabpanel" aria-labelledby="select-tab" tabindex="0">
             <div class="d-flex col-5 justify-content-around align-items-center">
                 <div class="col-4 ms-3 fw-bold d-flex">
                     <div>
@@ -419,7 +419,7 @@
                 <table class="table table-bordered border fw-bold align-middle text-center">
                     <tr>
                         <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="personCheck" class="infoCheck">
+                            <input type="checkbox" name="personCheck" class="infoCheck" id="personChk">
                         </td>
                         <td class="tableColorHead" style="width: 19%;">모집정원</td>
                         <td class="tableColorHead" style="width: 19%;">선발기준인원</td>
@@ -471,7 +471,7 @@
                 <table class="table table-bordered border fw-bold align-middle text-center">
                     <tr>
                         <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="scheduleCheck1" class="infoCheck">
+                            <input type="checkbox" name="scheduleCheck1" class="infoCheck" id="scheduleChk">
                         </td>
                         <td class="tableColorHead" style="width: 17%;">전형일정<span class="text-danger">*</span></td>
                         <td class="tableColorHead" style="width: 17%;">전형평가단계</td>
@@ -552,7 +552,7 @@
                 <table class="table table-bordered border fw-bold align-middle text-center">
                     <tr>
                         <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="scheduleCheck1" class="infoCheck">
+                            <input type="checkbox" name="documentCheck" class="infoCheck" id="documentChk">
                         </td>
                         <td class="tableColorHead" style="width: 95%;">제출서류</td>
                     </tr>
@@ -664,6 +664,34 @@
 
 
 //     하단
+    // 체크박스 전체 선택
+    var personChk = document.getElementById("personChk");
+    var personCheck = document.getElementsByName("personCheck");
+    personChk.addEventListener("click", function(){
+        personCheck.forEach((chk) => {
+            chk.checked = personChk.checked;
+            check(chk);
+        });
+    })
+
+    var scheduleChk = document.getElementById("scheduleChk");
+    var scheduleCheck = document.getElementsByName("scheduleCheck1");
+    scheduleChk.addEventListener("click", function(){
+        scheduleCheck.forEach((chk) => {
+            chk.checked = scheduleChk.checked;
+            check(chk);
+        });
+    })
+
+    var documentChk = document.getElementById("documentChk");
+    var documentCheck = document.getElementsByName("documentCheck");
+    documentChk.addEventListener("click", function(){
+        documentCheck.forEach((chk) => {
+            chk.checked = documentChk.checked;
+            check(chk);
+        });
+    })
+
     //list 클릭 시 이벤트
     var biLists = document.getElementsByClassName("bi-list");
     Array.from(biLists).forEach((element) => {
