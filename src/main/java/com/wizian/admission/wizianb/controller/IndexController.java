@@ -15,7 +15,7 @@ public class IndexController {
 
     @GetMapping("/test")
     public String test(){
-        return "/admin/side";
+        return "/admin/nthMozip";
     }
 
     @GetMapping("/nth")
@@ -23,6 +23,16 @@ public class IndexController {
         return "/admin/nthInfo";
     }
 
+    @GetMapping("/notice")
+    public String notice(){
+        return "/admin/noticeManagement";
+    }
+
     @GetMapping("/apply")
-    public String applyForm() { return "/application/application_edu";}
+    public String applyForm() { return "/application/application_add";}
+
+
+    @GetMapping("/apply1")
+    public String apply() { return "/admin/nthApply";}
+
 }
