@@ -23,6 +23,11 @@ public class IndexController {
         return "/admin/nthInfo";
     }
 
+    @GetMapping("/notice")
+    public String notice(){
+        return "/admin/noticeManagement";
+    }
+
     @GetMapping("/apply")
     public String applyForm() { return "/application/application_add";}
 }
