@@ -761,7 +761,7 @@
         function educationPeriodFormatter({ row }) {
             const startDate = row.EDU_ST_DT;
             const endDate = row.EDU_END_DT;
-            return `${startDate} ~ ${endDate}`;
+            return startDate + "~" + endDate;
         }
 
         const grid = new tui.Grid({
