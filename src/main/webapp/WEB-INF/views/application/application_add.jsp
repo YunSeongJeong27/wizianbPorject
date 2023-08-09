@@ -72,10 +72,6 @@
             box-shadow: none;
         }
 
-        #application_member .member_id {
-            color: #f00;
-        }
-
         #apply_prev {
             margin: 0 2px;
             padding: 10px 15px;
