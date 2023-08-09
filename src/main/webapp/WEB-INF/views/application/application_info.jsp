@@ -46,13 +46,17 @@
             font-size: 13px;
             color: red;
         }
-        .info_input{
-            display: inline-block;
+        #application_btn button{
+            background: #003A78;
+            border-style: none;
+            padding: 10px 15px;
         }
+
+
     </style>
 </head>
 <body>
-<div class="my-5 container h-100">
+<div class="my-5 container">
     <div class="container-sub-header">
         <div class="d-flex flex-row justify-content-between px-3">
             <p class="page-title">기본정보</p>
@@ -76,10 +80,10 @@
                     <li class="py-2 border-bottom border-gray-100">
                         <a href="#" class="active">기본정보</a>
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 border-bottom border-gray-100">
                         <a href="#">학력사항</a>
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 border-bottom border-gray-100">
                         <a href="#">활동이력</a>
                     </li>
                     <li class="py-2">
@@ -107,9 +111,9 @@
                     <tr class="table-light">
                         <td>사진</td>
                         <td colspan="3">
-                            <img class="profile-pic">
+                            <img>
                             <div>
-                                <input type="file" id="file_add">
+                                <input type="file" id="file_add" accept="image/*">
                                 <label for="file_add" class="btn btn-sm btn-dark">업로드</label>
                                 <button type="button" class="btn btn-sm btn-dark">삭제</button>
                             </div>
@@ -128,18 +132,28 @@
                     <tr>
                         <td>이메일</td>
                         <td>
-                            <div class="info_input">
-                                <input type="text" class="form-control">
-                                <button type="button" class="btn btn-sm btn-dark">이메일인증</button>
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-sm btn-dark">이메일인증</button>
+                                </div>
                             </div>
                         </td>
                         <td>비밀번호</td>
                         <td>
-                            <div class="info_input">
-                                <input type="text" class="form-control">
-                                <button type="button" class="btn btn-sm btn-dark" disabled>비밀번호변경</button>
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-sm btn-dark" disabled>비밀번호변경</button>
+                                </div>
+                                <div>
+                                    <p id="info_pw">※비밀번호는 8자리 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야합니다.</p>
+                                </div>
                             </div>
-                            <p id="info_pw">※비밀번호는 8자리 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야합니다.</p>
                         </td>
                     </tr>
                     <tr>
@@ -147,7 +161,7 @@
                         <td><input type="text" class="form-control"></td>
                         <td>성별구분</td>
                         <td>
-                            <select>
+                            <select class="form-select">
                                 <option>(선택)</option>
                                 <option>남자</option>
                                 <option>여자</option>
@@ -159,14 +173,14 @@
                         <td>성명</td>
                         <td><input type="text" class="form-control"></td>
                         <td>생년월일</td>
-                        <td><input type="text" class="form-control"></td>
+                        <td><input type="date" class="form-control"></td>
                     </tr>
                     <tr>
                         <td>성명(영어)</td>
                         <td><input type="text" class="form-control"></td>
                         <td>지원자직업</td>
                         <td>
-                            <select>
+                            <select class="form-select">
                                 <option>(선택)</option>
                                 <option>직장인</option>
                                 <option>학생</option>
@@ -177,8 +191,14 @@
                     <tr>
                         <td>우편번호</td>
                         <td>
-                            <input type="text" class="form-control">
-                            <button type="button" class="btn btn-sm btn-dark">검색</button>
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-sm btn-dark">검색</button>
+                                </div>
+                            </div>
                         </td>
                         <td>지원자직업명</td>
                         <td><input type="text" class="form-control"></td>
@@ -190,8 +210,9 @@
                         <td><input type="text" class="form-control"></td>
                     </tr>
                     <tr>
-                        <td colspan="3">전화번호</td>
+                        <td>전화번호</td>
                         <td><input type="text" class="form-control"></td>
+                        <td colspan="2"></td>
                     </tr>
                     </tbody>
                     <%-- 반복 end --%>
