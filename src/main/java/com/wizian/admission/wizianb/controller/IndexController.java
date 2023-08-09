@@ -15,7 +15,7 @@ public class IndexController {
 
     @GetMapping("/test")
     public String test(){
-        return "/admin/side";
+        return "/admin/nthMozip";
     }
 
     @GetMapping("/nth")
