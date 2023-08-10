@@ -109,12 +109,12 @@
             </div>
 
 
-            <%--추가할때 반복, 여기부터~--%>
             <form class="edu_form" action="" method="">
                 <div id="again">
+                    <%--추가할때 반복, 여기부터~--%>
                     <div id="repeat_form">
                         <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-dark btn-sm mb-2" onclick="remove_btn()">삭제</button>
+                            <button type="button" class="btn btn-dark btn-sm mb-2" id="delete_form">삭제</button>
                         </div>
                         <div class="border-top border-dark border-2">
                             <div class="row mt-3">
@@ -208,7 +208,25 @@
             addDiv.find('[name="major"]').val("");
             addDiv.find('[name="gradFile"]').val("");
             addform.find("#again:first").append(addDiv);
+            addDiv.addClass('dynamic_section');
         });
+
+    });
+
+    $(document).on('click', '#delete_form', function() {
+        var section = $(this).closest("#repeat_form");
+
+        // Check if the section is dynamically added or not
+        if (section.hasClass('dynamic_section')) {
+            section.remove();
+        } else {
+            section.find('[name="gradDiv"]').val("");
+            section.find('[name="enterYear"]').val("");
+            section.find('[name="gradYear"]').val("");
+            section.find('[name="gradSchool"]').val("");
+            section.find('[name="major"]').val("");
+            section.find('[name="gradFile"]').val("");
+        }
     });
 
 </script>
