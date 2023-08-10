@@ -500,7 +500,7 @@
                 console.log(dataList);
                 tableInput.forEach((ti) => {
                     ti.addEventListener("change", function(){
-                        console.log(ti.getAttribute("name"));
+                        //console.log(ti.getAttribute("name"));
                         //dataList[ti.getAttribute("name")]=this.value;
                     })
                 });
