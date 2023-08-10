@@ -60,6 +60,15 @@
             background-color: #fff;
         }
 
+        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
+        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
+            border-right-style: solid;
+            border-right-color: #E1E1E1;
+        }
+        .tui-grid-cell{
+            border-left-width: 1px;
+        }
+
         /* 선택한 row */
         .tui-grid-cell-current-row td{
             background-color: #F2F7FF !important;
@@ -162,27 +171,6 @@
 
     <div class="nthInfoTable text-center border border-gray-100 rounded-2">
         <div id="nthTable"></div>
-        <%-- 페이징 --%>
-        <%--<div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
-            <ul>
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-                <li>10</li>
-                <li>></li>
-                <li>>></li>
-            </ul>
-
-            <div class="position-absolute top-50 end-0 translate-middle-y">
-                <p class="pageLoc">현재:1/전체:14(1~5)</p>
-            </div>
-        </div>--%>
     </div>
 
     <form>
@@ -344,6 +332,41 @@
     }
     */
 
+    // Table 테마
+    const gridTheme = new tui.Grid.applyTheme('default', {
+        row: {
+            hover: {
+                background: '#D1D1D1'
+            }
+        },
+        cell: {
+            normal: {
+                background: '#fff',
+                border:'#E1E1E1'
+            },
+            header: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            },
+            rowHeader: {
+                background: '#EFEFEF',
+                border:'#E1E1E1'
+            },
+            evenRow: {
+                background: '#F2F3F5'
+            },
+            oddRow: {
+                background: '#FFF'
+            },
+            hover: {
+                border: '#000'
+            },
+            float: {
+                background: "#fff"
+            }
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
@@ -465,39 +488,7 @@
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted(ev) {
                 nthTable.focus(0, 'CORS_DIV', true);
-                rowDataLoad(0);
-            }
-        });
-
-        // nthTable 테마
-        const nthTheme = new tui.Grid.applyTheme('default', {
-            row: {
-                hover: {
-                    background: '#D1D1D1'
-                }
-            },
-            cell: {
-                normal: {
-                    background: '#fff',
-                    border:'#E1E1E1'
-                },
-                header: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                },
-                rowHeader: {
-                    background: '#EFEFEF',
-                    border:'#E1E1E1'
-                },
-                evenRow: {
-                    background: '#F2F3F5'
-                },
-                oddRow: {
-                    background: '#FFF'
-                },
-                hover: {
-                    border: '#000'
-                }
+                rowDataLoad(0, nthTable, "inputTable");
             }
         });
 
@@ -505,7 +496,7 @@
         nthTable.on('click', function (ev) {
             if(ev.rowKey == null) return;       // 헤더 클릭 시
 
-            rowDataLoad(ev.rowKey);
+            rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
         // 체크박스 전체 선택/해제
@@ -566,19 +557,21 @@
 
 
         // 하단 table 데이터 넣기
-        function rowDataLoad(rowKey){
-            var datas = nthTable.getRow(rowKey);
-            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+        function rowDataLoad(rowKey, table, id){
+            var datas = table.getRow(rowKey);
+            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
 
-            tableInput.forEach((ti) => {
-                ti.value = datas[ti.getAttribute("name")];
-            });
+            if(datas == null ) {        // 데이터 x
+                tableInput.forEach((ti) => {
+                    ti.value = "";
+                });
+            }else{
+                tableInput.forEach((ti) => {
+                    ti.value = datas[ti.getAttribute("name")];
+                });
+            }
         }
-
-
     });
-
-
 </script>
 </body>
 </html>
