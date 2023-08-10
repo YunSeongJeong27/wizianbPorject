@@ -36,4 +36,5 @@ public class IndexController {
 
     @GetMapping("/apply1")
     public String apply() { return "/admin/nthApply";}
+
 }
