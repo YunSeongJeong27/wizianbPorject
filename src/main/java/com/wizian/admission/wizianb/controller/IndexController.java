@@ -13,6 +13,8 @@ public class IndexController {
         return "/index";
     }
 
+    @GetMapping("/side")
+    public String side(){return "/admin/side";}
     @GetMapping("/test")
     public String test(){
         return "/admin/nthMozip";

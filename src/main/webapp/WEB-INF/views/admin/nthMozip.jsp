@@ -6,11 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -133,6 +135,21 @@
             color: #797676;
         }
 
+        /* 그리드 custom css */
+
+        /* 스크롤 자투리 부분 색 변경 */
+        .tui-grid-scrollbar-left-bottom,
+        .tui-grid-scrollbar-right-bottom,
+        .tui-grid-scrollbar-right-top{
+            background-color: #fff;
+        }
+
+        .tui-grid-cell-current-row td{
+            background-color: #F2F7FF;
+            font-weight: 600;
+            color: #245396;
+        }
+
     /*하단*/
         .table .tableColor{
             background-color: #FAFAFA;
@@ -140,7 +157,6 @@
         .table .tableColorHead{
             background-color: #EFEFEF;
         }
-
 
         .divBtn{
             border-top-left-radius: 5px;
@@ -152,13 +168,9 @@
             cursor: pointer;
         }
 
-        .nav-pills > .nav-item > .active{
+        .nav-pills > .nav-item > .active {
             color: #224FA8 !important;
             background-color: white !important;
-        }
-
-        .infoCheck[type=checkbox] {
-            transform : scale(1.3);
         }
 
         .infoInput::-webkit-inner-spin-button {
@@ -172,11 +184,18 @@
             text-align: center;
             cursor: pointer;
         }
-
-        .infoTr >td:hover{
-            background-color: #D1D1D1;
+        .tableInput{
+            background-color: inherit;
+            border: none;
         }
 
+        .nthInfoContainer {
+            min-width: 1220px;
+        }
+        .nthInfoContainer .d-flex div:nth-child(n+2) {
+            min-height: 44px;
+            min-width: 120px;
+        }
     </style>
 </head>
 <body>
@@ -232,60 +251,7 @@
     </div>
 
     <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-        <div class="nthInfoResponsive">
-            <div class="nthInfoContainer">
-                <div class="d-flex flex-row align-items-center th">
-                    <div class="col-1 chkBox"><input type="checkbox" id="chkAll"></div>
-                    <div class="col-1">과정구분</div>
-                    <div class="col-2">과정명</div>
-                    <div class="col-1">기수</div>
-                    <div class="col-1">수강년도</div>
-                    <div class="col-1">분기</div>
-                    <div class="col-1">수업개월수</div>
-                    <div class="col-2">교육기간</div>
-                    <div class="col-1">발표일자</div>
-                    <div class="col-1">비고</div>
-                </div>
-                <div class="d-flex flex-row align-items-center td tdBg" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                    <div class="col-1 tableData">JAVA</div>
-                    <div class="col-2 tableData">자바기반 풀스택</div>
-                    <div class="col-1 tableData">3</div>
-                    <div class="col-1 tableData">2023</div>
-                    <div class="col-1 tableData">1</div>
-                    <div class="col-1 tableData">6</div>
-                    <div class="col-2"><span class="tableData">2022-12-10</span> ~ <span class="tableData">2023-05-15</span></div>
-                    <div class="col-1 tableData">2022-12-02</div>
-                    <div class="col-1 tableData"></div>
-                </div>
-
-
-                <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                    <div class="col-1 tableData">Python</div>
-                    <div class="col-2 tableData">파이썬</div>
-                    <div class="col-1 tableData">1</div>
-                    <div class="col-1 tableData">2022</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-1 tableData">3</div>
-                    <div class="col-2"><span class="tableData">2022-05-10</span> ~ <span class=" tableData">2022-08-20</span></div>
-                    <div class="col-1 tableData">2022-05-01</div>
-                    <div class="col-1 tableData">비고비고</div>
-                </div>
-                <div class="d-flex flex-row align-items-center td" onclick="rowFocus(this);">
-                    <div class="col-1 chkBox"><input type="checkbox" name="checkBox" onclick="check(this);"></div>
-                    <div class="col-1 tableData">C++</div>
-                    <div class="col-2 tableData">C++ 코딩테스트</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-1 tableData">2023</div>
-                    <div class="col-1 tableData">4</div>
-                    <div class="col-1 tableData">2</div>
-                    <div class="col-2"><span class="tableData">2023-10-10</span> ~ <span class=" tableData">2022-11-10</span></div>
-                    <div class="col-1 tableData">2022-09-20</div>
-                    <div class="col-1 tableData"></div>
-                </div>
-            </div>
-        </div>
+        <div id="nthTable"></div>
 
         <%-- 페이징 --%>
         <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
@@ -391,9 +357,17 @@
                         <td class="tableColor">현재 전형일정</td>
                         <td class=""><input class="form-control tableInput" type="text" value="[S] SCHDL_DIV[LMB020]" readonly></td>
                         <td class="tableColor">전형평가단계</td>
-                        <td class=""><input class="form-control tableInput" type="date" value="[S] STEP_DIV[LM0140]" readonly></td>
+                        <td class="">
+                            <select class="form-select tableInput">
+                                <option selected>[S] STEP_DIV[LM0140]</option>
+                            </select>
+                        </td>
                         <td class="tableColor">단계진행상태</td>
-                        <td class=""><input class="form-control tableInput" type="date" value="[S] STEP_STS_DIV[LM0040]"></td>
+                        <td class="">
+                            <select class="form-select tableInput">
+                                <option selected>[S] STEP_STS_DIV[LM0040]</option>
+                            </select>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -415,40 +389,7 @@
                 </div>
             </div>
 
-            <div class="p-3">
-                <table class="table table-bordered border fw-bold align-middle text-center">
-                    <tr>
-                        <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="personCheck" class="infoCheck" id="personChk">
-                        </td>
-                        <td class="tableColorHead" style="width: 19%;">모집정원</td>
-                        <td class="tableColorHead" style="width: 19%;">선발기준인원</td>
-                        <td class="tableColorHead" style="width: 19%;">지원인원</td>
-                        <td class="tableColorHead" style="width: 19%;">최종선발인원</td>
-                        <td class="tableColorHead" style="width: 19%;">예비합격인원</td>
-                    </tr>
-                    <tr class="infoTr">
-                        <td class="tableColor">
-                            <input type="checkbox" name="personCheck" class="infoCheck">
-                        </td>
-                        <td class="tableColor">
-                            <input type="number" placeholder="TO_CNT" class="infoInput">
-                        </td>
-                        <td class="tableColor">
-                            <input type="number" placeholder="PLAN_CNT" class="infoInput">
-                        </td>
-                        <td class="tableColor">
-                            <input type="number" placeholder="APLY_CNT" class="infoInput">
-                        </td>
-                        <td class="tableColor">
-                            <input type="number" placeholder="SEL_CNT" class="infoInput">
-                        </td>
-                        <td class="tableColor">
-                            <input type="number" placeholder="PRO_CNT" class="infoInput">
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <div id="contentGrid1" class="pt-3"></div>
         </div>
 
         <!-- 전형일정설정 Content -->
@@ -467,69 +408,7 @@
                 </div>
             </div>
 
-            <div class="p-3">
-                <table class="table table-bordered border fw-bold align-middle text-center">
-                    <tr>
-                        <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="scheduleCheck1" class="infoCheck" id="scheduleChk">
-                        </td>
-                        <td class="tableColorHead" style="width: 17%;">전형일정<span class="text-danger">*</span></td>
-                        <td class="tableColorHead" style="width: 17%;">전형평가단계</td>
-                        <td class="tableColorHead" style="width: 17%;">시작일시<span class="text-danger">*</span></td>
-                        <td class="tableColorHead" style="width: 17%;">종료일시<span class="text-danger">*</span></td>
-                        <td class="tableColorHead" style="width: 17%;">진행상태<span class="text-danger">*</span></td>
-                        <td class="tableColorHead" style="width: 10%;">노출여부</td>
-                    </tr>
-                    <tr class="infoTr">
-                        <td class="tableColor">
-                            <input type="checkbox" name="scheduleCheck1" class="infoCheck">
-                        </td>
-                        <td class="tableColor">
-                            <input type="text" value="SCHDL_DIV" class="infoInput" id="schdlDiv1" readonly>
-                            <i class="bi bi-list btn" id="1"></i>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">PLAN_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">APLY_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">SEL_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">PRO_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <input type="checkbox" name="scheduleCheck2" class="infoCheck">
-                        </td>
-                    </tr>
-                    <tr class="infoTr">
-                        <td class="tableColor">
-                            <input type="checkbox" name="scheduleCheck1" class="infoCheck">
-                        </td>
-                        <td class="tableColor">
-                            <input type="text" value="SCHDL_DIV" class="infoInput" id="schdlDiv2" readonly>
-                            <i class="bi bi-list btn" id="2"></i>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">PLAN_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">APLY_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">SEL_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <div class="form-control infoInput">PRO_CNT</div>
-                        </td>
-                        <td class="tableColor">
-                            <input type="checkbox" name="scheduleCheck2" class="infoCheck">
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <div id="contentGrid2" class="pt-3"></div>
         </div>
 
         <!-- 제출서류설정 Content -->
@@ -548,150 +427,449 @@
                 </div>
             </div>
 
-            <div class="p-3">
-                <table class="table table-bordered border fw-bold align-middle text-center">
-                    <tr>
-                        <td class="tableColorHead" style="width: 5%;">
-                            <input type="checkbox" name="documentCheck" class="infoCheck" id="documentChk">
-                        </td>
-                        <td class="tableColorHead" style="width: 95%;">제출서류</td>
-                    </tr>
-                    <tr class="infoTr">
-                        <td class="tableColor">
-                            <input type="checkbox" name="documentCheck" class="infoCheck">
-                        </td>
-                        <td class="tableColor">
-                            <div class="infoInput">DOC_DIV</div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <div id="contentGrid3" class="pt-3"></div>
         </div>
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script>
-    window.onload = function () {
-        inputValue();
-    }
+    class CheckboxRenderer {
+        constructor(props) {
+            const {grid, rowKey} = props;
 
-    // 체크박스 전체 선택
-    var chkAll = document.getElementById("chkAll");
-    var chkBox = document.getElementsByName("checkBox");
-    chkAll.addEventListener("click", function(){
-        chkBox.forEach((chk) => {
-            chk.checked = chkAll.checked;
-            check(chk);
-        });
-    })
+            const label = document.createElement('label');
+            label.className = 'checkbox tui-grid-row-header-checkbox';
+            label.setAttribute('for', String(rowKey));
 
-    // 체크박스 선택 시 css
-    function check(e){
-        var td = e.parentElement.parentElement;
-        if(e.checked) td.classList.add("tdChk");
-        else td.classList.remove("tdChk");
-    }
+            const hiddenInput = document.createElement('input');
+            hiddenInput.className = 'hidden-input';
+            hiddenInput.id = String(rowKey);
 
-    // row 클릭 시 focus
-    function rowFocus(e){
-        var tdBg = document.getElementsByClassName("tdBg");
+            const customInput = document.createElement('span');
+            customInput.className = 'custom-input';
 
-        tdBg[0].classList.remove("tdBg");
-        e.classList.add("tdBg");
+            label.appendChild(hiddenInput);
+            label.appendChild(customInput);
 
-        // 하단 input에 값 넣기
-        inputValue();
-    }
+            hiddenInput.type = 'checkbox';
+            label.addEventListener('click', (ev) => {
+                ev.preventDefault();
 
-    // 하단에 input 값 넣기
-    function inputValue(){
-        var datas = document.querySelectorAll(".tdBg .tableData");
-        var inputs = document.querySelectorAll("#inputTable .tableInput");
+                if (ev.shiftKey) {
+                    grid[!hiddenInput.checked ? 'checkBetween' : 'uncheckBetween'](rowKey);
+                    return;
+                }
 
-        for(var i=0; i<datas.length; i++){
-            console.log(inputs[i].tagName);
-            if(inputs[i].tagName === 'SELECT') inputs[i].firstElementChild.setAttribute("selected", "selected");
-            else inputs[i].value = datas[i].innerText;
+                grid[!hiddenInput.checked ? 'check' : 'uncheck'](rowKey);
+            });
+
+            this.el = label;
+
+            this.render(props);
+        }
+
+        getElement() {
+            return this.el;
+        }
+
+        render(props) {
+            const hiddenInput = this.el.querySelector('.hidden-input');
+            const checked = Boolean(props.value);
+
+            hiddenInput.checked = checked;
         }
     }
 
-    // 신규 btn 클릭 이벤트
-    var insertBtn = document.getElementById("insertBtn");
-    insertBtn.addEventListener("click", function () {
-
-        // 테이블에 새로운 행 추가
-        var tdBg = document.getElementsByClassName("tdBg");
-
-        var td = document.createElement("div");
-        td.setAttribute("class", "d-flex flex-row align-items-center td tdBg");
-        td.setAttribute("onclick", "rowFocus(this);");
-
-        for(var i=0; i<10; i++){
-            var div = document.createElement("div");
-            var clazz = "";
-            if(i===0) {
-                clazz = "col-1 chkBox";
-                var input = document.createElement("input");
-                input.setAttribute("type", "checkbox");
-                input.setAttribute("name", "checkBox");
-                input.setAttribute("onclick", "check(this);");
-
-                div.setAttribute("class", clazz);
-                div.append(input);
-                td.append(div);
-                continue;
+    document.addEventListener('DOMContentLoaded', function () {
+        const data = [
+            {
+                CORS_DIV: 'JAVA',
+                SEL_NM: '자바과정 풀스택',
+                NTH_NM: '3',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: ''
+            },
+            {
+                CORS_DIV: 'Python',
+                SEL_NM: '파이썬',
+                NTH_NM: '2',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: '장사때려침'
+            },
+            {
+                CORS_DIV: 'C++',
+                SEL_NM: 'C++ 코딩테스트',
+                NTH_NM: '4',
+                ENT_YR: '2023',
+                TERM_DIV: '1',
+                수업개월수: '6',
+                EDU_ST_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-01',
+                발표일자: '2023-08-01',
+                NOTE: '장사때려침'
+            },
+            {
+                CORS_DIV: '',
+                SEL_NM: '',
+                NTH_NM: '',
+                ENT_YR: '',
+                TERM_DIV: '',
+                수업개월수: '',
+                EDU_ST_DT: '',
+                EDU_END_DT: '',
+                발표일자: '',
+                NOTE: ''
             }
-            else if(i===2 || i===7) clazz = "col-2";
-            else clazz = "col-1";
-
-            div.setAttribute("class", clazz);
-            td.append(div);
+        ];
+        const contentData1 = [
+            {
+                TO_CNT:'TO_CNT',
+                PLAN_CNT:'PLAN_CNT',
+                APLY_CNT:'APLY_CNT',
+                SEL_CNT:'SEL_CNT',
+                PRO_CNT:'PRO_CNT'
+            },
+            {
+                TO_CNT:'TO_CNT2',
+                PLAN_CNT:'PLAN_CNT2',
+                APLY_CNT:'APLY_CNT2',
+                SEL_CNT:'SEL_CNT2',
+                PRO_CNT:'PRO_CNT2'
+            }
+        ];
+        const contentData2 = [
+            {
+                SCHDL_DIV:'SCHDL_DIV'+'<i class="bi bi-list"></i>',
+                STEP_DIV:'STEP_DIV',
+                ST_DT:'ST_DT',
+                END_DT:'END_DT',
+                STS_DIV:'STS_DIV',
+            },
+            {
+                SCHDL_DIV:'SCHDL_DIV'+'<i class="bi bi-list"></i>',
+                STEP_DIV:'STEP_DIV2',
+                ST_DT:'ST_DT2',
+                END_DT:'END_DT2',
+                STS_DIV:'STS_DIV2',
+            }
+        ];
+        const contentData3 = [
+            {
+                DOC_DIV:'DOC_DIV',
+            },
+            {
+                DOC_DIV:'DOC_DIV2',
+            }
+        ];
+        function educationPeriodFormatter({ row }) {
+            const startDate = row.EDU_ST_DT;
+            const endDate = row.EDU_END_DT;
+            return startDate +"~" + endDate;
         }
-        tdBg[0].after(td);
-        tdBg[0].classList.remove("tdBg");
+        const nthTable = new tui.Grid({
+            el: document.getElementById('nthTable'),
+            data: data,
+            rowHeaders: [
+                /*{
+                    type: 'rowNum',
+                    renderer: {
+                        type: RowNumberRenderer
+                    }
+                },*/
+                {
+                    type: 'checkbox',
+                    header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                    renderer: {
+                        type: CheckboxRenderer
+                    }
+                }
+            ],
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '과정구분',
+                    name: 'CORS_DIV',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '과정명',
+                    name: 'SEL_NM',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '기수',
+                    name: 'NTH_NM',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '수강년도',
+                    name: 'ENT_YR',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '분기',
+                    name: 'TERM_DIV',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '수업개월수',
+                    name: '수업개월수',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '교육기간',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center',
+                    formatter: educationPeriodFormatter
+                },
+                {
+                    header: '발표일자',
+                    name: '발표일자',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '비고',
+                    name: 'NOTE',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                }
+            ],
+            columnOptions: {
+                resizable: true
+            },
 
+            draggable: false,
 
-        // 아래 input 초기화
-        var inputs = document.querySelectorAll("#inputTable .tableInput");
+        });
+        const contentGrid1 = new tui.Grid({
+            el: document.getElementById('contentGrid1'),
+            data: contentData1,
+            rowHeaders: [
+                {
+                    type: 'checkbox',
+                    header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                    renderer: {
+                        type: CheckboxRenderer
+                    }
+                }
+            ],
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '모집정원',
+                    name: 'TO_CNT',
+                    sortingType: 'asc',
+                    sortable: false,
+                    align: 'center'
+                },
+                {
+                    header: '선발기준인원',
+                    name: 'PLAN_CNT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '지원인원',
+                    name: 'APLY_CNT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '최종선발인원',
+                    name: 'SEL_CNT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '예비합격인원',
+                    name: 'PRO_CNT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                }
+            ],
+            columnOptions: {
+                resizable: true
+            },
 
-        var idx = 0;
-        inputs.forEach((input) => {
-            if(idx === 0 || idx === 4) inputs[idx].firstElementChild.setAttribute("selected", "selected");
-            else input.value = "";
-            idx++;
+            draggable: false,
+
+        });
+        const contentGrid2 = new tui.Grid({
+            el: document.getElementById('contentGrid2'),
+            data: contentData2,
+            rowHeaders: [
+                {
+                    type: 'checkbox',
+                    header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                    renderer: {
+                        type: CheckboxRenderer
+                    }
+                }
+            ],
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '전형일정',
+                    name: 'SCHDL_DIV',
+                    sortingType: 'asc',
+                    sortable: false,
+                    align: 'center',
+                },
+                {
+                    header: '전형평가단계',
+                    name: 'STEP_DIV',
+                    sortingType: 'asc',
+                    sortable: false,
+                    align: 'center'
+                },
+                {
+                    header: '시작일시',
+                    name: 'ST_DT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '종료일시',
+                    name: 'END_DT',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '진행상태',
+                    name: 'STS_DIV',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '노출여부',
+                    align: 'center',
+                    formatter: function(data) {
+                        return '<input type="checkbox" name="chk" value="' + data.rowKey + '">'; // 체크박스 HTML 문자열 반환
+                    }
+                },
+            ],
+            columnOptions: {
+                resizable: true,
+            },
+
+            draggable: false,
+
+        });
+        const contentGrid3 = new tui.Grid({
+            el: document.getElementById('contentGrid3'),
+            data: contentData3,
+            rowHeaders: [
+                {
+                    type: 'checkbox',
+                    header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                    renderer: {
+                        type: CheckboxRenderer
+                    }
+                }
+            ],
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '제출서류',
+                    name: 'DOC_DIV',
+                    sortingType: 'asc',
+                    sortable: false,
+                    align: 'center',
+                },
+            ],
+            columnOptions: {
+                resizable: true,
+            },
+
+            draggable: false,
+
+        });
+
+        const nthTheme = new tui.Grid.applyTheme('default', {
+            cell: {
+                normal: {
+                    background: '#fff',
+                    border:'#E1E1E1',
+                    showVerticalBorder: true
+                },
+                header: {
+                    background: '#EFEFEF',
+                    border: '#E1E1E1'
+                },
+                rowHeader: {
+                    background: '#EFEFEF',
+                    border:'#E1E1E1'
+                }
+                ,
+                evenRow: {
+                    background: '#F2F3F5',
+                    border: '#000'
+                },
+                oddRow: {
+                    background: '#FFF',
+                    border: '#000'
+                }
+            }
         });
     });
 
 
 //     하단
-    // 체크박스 전체 선택
-    var personChk = document.getElementById("personChk");
-    var personCheck = document.getElementsByName("personCheck");
-    personChk.addEventListener("click", function(){
-        personCheck.forEach((chk) => {
-            chk.checked = personChk.checked;
-            check(chk);
-        });
-    })
-
-    var scheduleChk = document.getElementById("scheduleChk");
-    var scheduleCheck = document.getElementsByName("scheduleCheck1");
-    scheduleChk.addEventListener("click", function(){
-        scheduleCheck.forEach((chk) => {
-            chk.checked = scheduleChk.checked;
-            check(chk);
-        });
-    })
-
-    var documentChk = document.getElementById("documentChk");
-    var documentCheck = document.getElementsByName("documentCheck");
-    documentChk.addEventListener("click", function(){
-        documentCheck.forEach((chk) => {
-            chk.checked = documentChk.checked;
-            check(chk);
-        });
-    })
-
     //list 클릭 시 이벤트
     var biLists = document.getElementsByClassName("bi-list");
     Array.from(biLists).forEach((element) => {
@@ -721,6 +899,12 @@
                 schdlDiv.parentElement.removeChild(div);
             })
         });
+    });
+
+    // 탭 클릭 시 그리드 초기화
+    $('.nav-tabs div').on('shown.bs.tab', function() {
+        const gridTable = $('.tui-grid-table');
+        gridTable.css('width', '100%');
     });
 </script>
 </body>
