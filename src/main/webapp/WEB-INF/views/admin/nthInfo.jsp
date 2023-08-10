@@ -51,94 +51,6 @@
             padding: 0.2rem 2rem 0.2rem 0.75rem;
         }
 
-        /*
-        !* 과정 정보 테이블 *!
-        .nthInfoResponsive{
-            overflow-x: auto;
-            background-color: #fff;
-        }
-        .nthInfoContainer{
-            min-width: 1220px;
-            cursor: pointer;
-            max-height: 272px;
-        }
-        .nthInfoContainer .d-flex{
-            border-bottom:1px solid #E1E1E1;
-        }
-        .nthInfoContainer .d-flex div:nth-child(n+2){
-            height: 44px;
-            border-left: 1px solid #E1E1E1;
-            padding: 10px 0;
-        }
-        .nthInfoContainer .d-flex .chkBox,
-        .nthInfoContainer .d-flex .chkBox input[type='checkbox']{
-            height: 44px;
-            border:none;
-        }
-
-        .nthInfoContainer .th{
-            background-color: #EFEFEF;
-            font-weight: 600;
-        }
-        .container-table .tr,
-        .nthInfoContainer .d-flex.td:nth-child(even){
-            background-color: #fff;
-        }
-        .nthInfoContainer .d-flex.td:nth-child(odd){
-            background-color: #F2F3F5;
-        }
-        .nthInfoContainer .d-flex.td:not(.tdBg) :nth-child(n):hover{
-            background-color: #D1D1D1;
-            font-weight: 600;
-            color: #245396;
-        }
-
-        !* 체크 박스 선택 시 css *!
-        .nthInfoContainer .d-flex.tdChk{
-            background-color: #D1D1D1 !important;
-        }
-        !* row 선택 시 focus css *!
-        .nthInfoContainer .d-flex.tdBg{
-            background-color: #F2F7FF !important;
-            border: 1px solid #245396 !important;
-            font-weight: 600;
-            color: #245396;
-        }
-        */
-
-        /* 페이징 */
-        .pagination ul {
-            margin: 15px 0;
-            border: none;
-            padding: 0;
-        }
-        .pagination ul li{
-            display: inline-block;
-            border: none;
-            width: 25px;
-            height: 25px;
-            padding: 0;
-        }
-        .pagination ul li.active{
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            width: 25px;
-            height: 25px;
-            font-weight: 600;
-            color: #245396;
-        }
-        .pagination ul li:not(.active):hover{
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            width: 25px;
-            height: 25px;
-            font-weight: 600;
-        }
-        .pagination .pageLoc {
-            margin: 0 10px 0 0;
-            color: #797676;
-        }
-
         /* 그리드 custom css */
 
         /* 스크롤 자투리 부분 색 변경 */
@@ -148,8 +60,41 @@
             background-color: #fff;
         }
 
+        /* 선택한 row */
         .tui-grid-cell-current-row td{
             background-color: #F2F7FF !important;
+            font-weight: 600;
+            color: #245396;
+        }
+        /* 체크된 row */
+        .checkCell{
+            background-color: #D1D1D1 !important;
+        }
+
+        /* 페이징 */
+        .tui-pagination{
+            background-color: #fff;
+            margin:0 !important;
+            padding: 20px 0 12px;
+        }
+        .tui-is-disabled:hover{
+            background: initial !important;
+        }
+        .tui-page-btn span{
+            margin-top: 9px;
+        }
+        .tui-pagination .tui-page-btn{
+            border: none;
+        }
+        .tui-pagination .tui-page-btn:hover{
+            background-color: #e1e1e1;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .tui-pagination .tui-is-selected{
+            border: none !important;
+            background-color: #f5f5f5;
+            border-radius: 5px;
             font-weight: 600;
             color: #245396;
         }
@@ -218,7 +163,7 @@
     <div class="nthInfoTable text-center border border-gray-100 rounded-2">
         <div id="nthTable"></div>
         <%-- 페이징 --%>
-        <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
+        <%--<div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
             <ul>
                 <li class="active">1</li>
                 <li>2</li>
@@ -237,7 +182,7 @@
             <div class="position-absolute top-50 end-0 translate-middle-y">
                 <p class="pageLoc">현재:1/전체:14(1~5)</p>
             </div>
-        </div>
+        </div>--%>
     </div>
 
     <form>
@@ -289,100 +234,7 @@
 
 
 <script>
-/*    window.onload = function () {
-        inputValue();
-    }
-
-
-    // 체크박스 선택 시 css
-    function check(e){
-        var td = e.parentElement.parentElement;
-        if(e.checked) td.classList.add("tdChk");
-        else td.classList.remove("tdChk");
-    }
-
-    // row 클릭 시 focus
-    function rowFocus(e){
-        var tdBg = document.getElementsByClassName("tdBg");
-
-        tdBg[0].classList.remove("tdBg");
-        e.classList.add("tdBg");
-
-        // 하단 input에 값 넣기
-        inputValue();
-    }
-
-    // 하단에 input 값 넣기
-    function inputValue(){
-        var datas = document.querySelectorAll(".tdBg .tableData");
-        var inputs = document.querySelectorAll("#inputTable .tableInput");
-
-        for(var i=0; i<datas.length; i++){
-            console.log(inputs[i].tagName);
-            if(inputs[i].tagName === 'SELECT') inputs[i].firstElementChild.setAttribute("selected", "selected");
-            else inputs[i].value = datas[i].innerText;
-        }
-    }
-
-    // 신규 btn 클릭 이벤트
-    var insertBtn = document.getElementById("insertBtn");
-    insertBtn.addEventListener("click", function () {
-
-        // 테이블에 새로운 행 추가
-        var tdBg = document.getElementsByClassName("tdBg");
-
-        var td = document.createElement("div");
-        td.setAttribute("class", "d-flex flex-row align-items-center td tdBg");
-        td.setAttribute("onclick", "rowFocus(this);");
-
-        for(var i=0; i<10; i++){
-            var div = document.createElement("div");
-            var clazz = "";
-            if(i===0) {
-                clazz = "col-1 chkBox";
-                var input = document.createElement("input");
-                input.setAttribute("type", "checkbox");
-                input.setAttribute("name", "mainCheck");
-                input.setAttribute("onclick", "check(this);");
-
-                div.setAttribute("class", clazz);
-                div.append(input);
-                td.append(div);
-                continue;
-            }
-            else if(i===7) {
-                clazz = "col-2";
-                var span = document.createElement("span");
-                span.setAttribute("class", "tableData");
-                var span2 = document.createElement("span");
-                span2.setAttribute("class", "tableData");
-
-                div.setAttribute("class", clazz);
-                div.append(span, ' ~ ', span2);
-                td.append(div);
-                continue;
-            }
-            else if(i===2) clazz = "col-2 tableData";
-            else clazz = "col-1 tableData";
-
-            div.setAttribute("class", clazz);
-            td.append(div);
-        }
-        tdBg[0].after(td);
-        tdBg[0].classList.remove("tdBg");
-
-
-        // 아래 input 초기화
-        var inputs = document.querySelectorAll("#inputTable .tableInput");
-
-        var idx = 0;
-        inputs.forEach((input) => {
-            if(idx === 0 || idx === 4) inputs[idx].firstElementChild.setAttribute("selected", "selected");
-            else input.value = "";
-            idx++;
-        });
-    });
-
+/*
     // 삭제 btn 클릭 이벤트
     var deleteBtn = document.getElementById("deleteBtn");
     var deleteList = [];
@@ -442,7 +294,7 @@
         render(props) {
             this.el.innerHTML = props.formattedValue;
         }
-    }*/
+    }
 
     class CheckboxRenderer {
         constructor(props) {
@@ -490,7 +342,7 @@
             hiddenInput.checked = checked;
         }
     }
-
+    */
 
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
@@ -534,32 +386,17 @@
         function educationPeriodFormatter({ row }) {
             var startDate = row.EDU_ST_DT;
             var endDate = row.EDU_END_DT;
-            return startDate +"~" + endDate;
+            return startDate + "~" + endDate;
         }
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: data,
-            rowHeaders: [
-                /*{
-                    type: 'rowNum',
-                    renderer: {
-                        type: RowNumberRenderer
-                    }
-                },*/
-                {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
-                }
-            ],
-            pagination: true,
+            rowHeaders: ['checkbox'],
+            pageOptions: {
+                useClient: true,	// front에서만 페이징 하는 속성
+                perPage: 5,		//한번에 보여줄 데이터 수
+                visiblePages: 10
+            },
             scrollX: true,
             scrollY: true,
             columns: [
@@ -623,11 +460,16 @@
             columnOptions: {
                 resizable: true
             },
+            draggable: true,
 
-            draggable: true
-
+            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+            onGridMounted(ev) {
+                nthTable.focus(0, 'CORS_DIV', true);
+                rowDataLoad(0);
+            }
         });
 
+        // nthTable 테마
         const nthTheme = new tui.Grid.applyTheme('default', {
             row: {
                 hover: {
@@ -637,8 +479,7 @@
             cell: {
                 normal: {
                     background: '#fff',
-                    border:'#E1E1E1',
-                    showVerticalBorder: true
+                    border:'#E1E1E1'
                 },
                 header: {
                     background: '#EFEFEF',
@@ -660,26 +501,40 @@
             }
         });
 
+        // row 클릭 시 하단에 해당 row 데이터 load
         nthTable.on('click', function (ev) {
-            var datas = nthTable.getRow(ev.rowKey);
-            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+            if(ev.rowKey == null) return;       // 헤더 클릭 시
 
-            tableInput.forEach((ti) => {
-                ti.value = datas[ti.getAttribute("name")];
+            rowDataLoad(ev.rowKey);
+        });
+
+        // 체크박스 전체 선택/해제
+        var checkBox = [];
+        nthTable.on('checkAll', function (ev) {
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='CORS_DIV'");
+
+            rowKeys.forEach((rowKey) => {
+                checkBox.push(rowKey);
+                nthTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
             });
-
-
+        });
+        nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+            checkBox.forEach((rowKey) => {
+                nthTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            });
         });
 
+        // 체크박스 개별 선택/해제
         nthTable.on('check', function (ev) {
-            console.log('check', ev);
+            nthTable.addRowClassName(ev.rowKey, "checkCell");
         });
-
         nthTable.on('uncheck', function (ev) {
-            console.log('uncheck', ev);
+            nthTable.removeRowClassName(ev.rowKey, "checkCell");
         });
 
 
+        // 신규 버튼 click
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
@@ -702,13 +557,24 @@
                 focus: true
             });
 
+            // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
-
             tableInput.forEach((ti) => {
                 ti.value = "";
             });
-
         });
+
+
+        // 하단 table 데이터 넣기
+        function rowDataLoad(rowKey){
+            var datas = nthTable.getRow(rowKey);
+            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+
+            tableInput.forEach((ti) => {
+                ti.value = datas[ti.getAttribute("name")];
+            });
+        }
+
 
     });
 
