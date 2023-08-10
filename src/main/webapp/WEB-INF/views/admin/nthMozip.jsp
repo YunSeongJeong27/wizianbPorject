@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -189,13 +188,13 @@
             border: none;
         }
 
-        .nthInfoContainer {
-            min-width: 1220px;
-        }
-        .nthInfoContainer .d-flex div:nth-child(n+2) {
-            min-height: 44px;
-            min-width: 120px;
-        }
+        /*.nthInfoContainer {*/
+        /*    min-width: 1220px;*/
+        /*}*/
+        /*.nthInfoContainer .d-flex div:nth-child(n+2) {*/
+        /*    min-height: 44px;*/
+        /*    min-width: 120px;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -279,22 +278,22 @@
 <%--하단--%>
     <div class="nav nav-pills nav-tabs fw-bold text-center col-4 d-flex justify-content-between mt-4" id="infoNav" role="tablist">
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn active" id="select-tab" data-bs-toggle="tab" data-bs-target="#select-tab-pane" role="tab" aria-controls="select-tab-pane" aria-selected="true">모집전형설정</div>
+            <div class="p-2 divBtn active" id="select" data-bs-toggle="tab" type="button" onclick="tabContent(this)">모집전형설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="person-tab" data-bs-toggle="tab" data-bs-target="#person-tab-pane" type="button" role="tab" aria-controls="person-tab-pane" aria-selected="false">모집인원설정</div>
+            <div class="p-2 divBtn" id="person" data-bs-toggle="tab" type="button" onclick="tabContent(this)">모집인원설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane" type="button" role="tab" aria-controls="schedule-tab-pane" aria-selected="false">전형일정설정</div>
+            <div class="p-2 divBtn" id="schedule" data-bs-toggle="tab" type="button" onclick="tabContent(this)">전형일정설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="document-tab" data-bs-toggle="tab" data-bs-target="#document-tab-pane" type="button" role="tab" aria-controls="document-tab-pane" aria-selected="false">제출서류설정</div>
+            <div class="p-2 divBtn" id="document" data-bs-toggle="tab" type="button" onclick="tabContent(this)">제출서류설정</div>
         </div>
     </div>
 
     <div class="tab-content pt-3 bg-white" id="infoNavContent">
         <!-- 모진접형설정 Content -->
-            <div class="tab-pane fade show active" id="select-tab-pane" role="tabpanel" aria-labelledby="select-tab" tabindex="0">
+        <div id="select-pane">
             <div class="d-flex col-5 justify-content-around align-items-center">
                 <div class="col-4 ms-3 fw-bold d-flex">
                     <div>
@@ -374,7 +373,7 @@
         </div>
 
         <!-- 모집인원설정 Content -->
-        <div class="tab-pane fade" id="person-tab-pane" role="tabpanel" aria-labelledby="person-tab" tabindex="0">
+        <div id="person-pane" style="display: none">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
@@ -389,11 +388,11 @@
                 </div>
             </div>
 
-            <div id="contentGrid1" class="pt-3"></div>
+            <div id="personGridDiv" class="pt-3"></div>
         </div>
 
         <!-- 전형일정설정 Content -->
-        <div class="tab-pane fade" id="schedule-tab-pane" role="tabpanel" aria-labelledby="schedule-tab" tabindex="0">
+        <div id="schedule-pane" style="display: none">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
@@ -408,11 +407,11 @@
                 </div>
             </div>
 
-            <div id="contentGrid2" class="pt-3"></div>
+            <div id="scheduleGridDiv" class="pt-3"></div>
         </div>
 
         <!-- 제출서류설정 Content -->
-        <div class="tab-pane fade" id="document-tab-pane" role="tabpanel" aria-labelledby="document-tab" tabindex="0">
+        <div id="document-pane" style="display: none;">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
@@ -427,7 +426,7 @@
                 </div>
             </div>
 
-            <div id="contentGrid3" class="pt-3"></div>
+            <div id="documentGridDiv" class="pt-3"></div>
         </div>
 </div>
 
@@ -481,7 +480,8 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // document.addEventListener('DOMContentLoaded', function () {
+    window.onload = function() {
         const data = [
             {
                 CORS_DIV: 'JAVA',
@@ -532,50 +532,10 @@
                 NOTE: ''
             }
         ];
-        const contentData1 = [
-            {
-                TO_CNT:'TO_CNT',
-                PLAN_CNT:'PLAN_CNT',
-                APLY_CNT:'APLY_CNT',
-                SEL_CNT:'SEL_CNT',
-                PRO_CNT:'PRO_CNT'
-            },
-            {
-                TO_CNT:'TO_CNT2',
-                PLAN_CNT:'PLAN_CNT2',
-                APLY_CNT:'APLY_CNT2',
-                SEL_CNT:'SEL_CNT2',
-                PRO_CNT:'PRO_CNT2'
-            }
-        ];
-        const contentData2 = [
-            {
-                SCHDL_DIV:'SCHDL_DIV'+'<i class="bi bi-list"></i>',
-                STEP_DIV:'STEP_DIV',
-                ST_DT:'ST_DT',
-                END_DT:'END_DT',
-                STS_DIV:'STS_DIV',
-            },
-            {
-                SCHDL_DIV:'SCHDL_DIV'+'<i class="bi bi-list"></i>',
-                STEP_DIV:'STEP_DIV2',
-                ST_DT:'ST_DT2',
-                END_DT:'END_DT2',
-                STS_DIV:'STS_DIV2',
-            }
-        ];
-        const contentData3 = [
-            {
-                DOC_DIV:'DOC_DIV',
-            },
-            {
-                DOC_DIV:'DOC_DIV2',
-            }
-        ];
-        function educationPeriodFormatter({ row }) {
+        function educationPeriodFormatter({row}) {
             const startDate = row.EDU_ST_DT;
             const endDate = row.EDU_END_DT;
-            return startDate +"~" + endDate;
+            return startDate + "~" + endDate;
         }
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
@@ -668,183 +628,11 @@
             draggable: false,
 
         });
-        const contentGrid1 = new tui.Grid({
-            el: document.getElementById('contentGrid1'),
-            data: contentData1,
-            rowHeaders: [
-                {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
-                }
-            ],
-            pagination: true,
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '모집정원',
-                    name: 'TO_CNT',
-                    sortingType: 'asc',
-                    sortable: false,
-                    align: 'center'
-                },
-                {
-                    header: '선발기준인원',
-                    name: 'PLAN_CNT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '지원인원',
-                    name: 'APLY_CNT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '최종선발인원',
-                    name: 'SEL_CNT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '예비합격인원',
-                    name: 'PRO_CNT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                }
-            ],
-            columnOptions: {
-                resizable: true
-            },
-
-            draggable: false,
-
-        });
-        const contentGrid2 = new tui.Grid({
-            el: document.getElementById('contentGrid2'),
-            data: contentData2,
-            rowHeaders: [
-                {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
-                }
-            ],
-            pagination: true,
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '전형일정',
-                    name: 'SCHDL_DIV',
-                    sortingType: 'asc',
-                    sortable: false,
-                    align: 'center',
-                },
-                {
-                    header: '전형평가단계',
-                    name: 'STEP_DIV',
-                    sortingType: 'asc',
-                    sortable: false,
-                    align: 'center'
-                },
-                {
-                    header: '시작일시',
-                    name: 'ST_DT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '종료일시',
-                    name: 'END_DT',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '진행상태',
-                    name: 'STS_DIV',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '노출여부',
-                    align: 'center',
-                    formatter: function(data) {
-                        return '<input type="checkbox" name="chk" value="' + data.rowKey + '">'; // 체크박스 HTML 문자열 반환
-                    }
-                },
-            ],
-            columnOptions: {
-                resizable: true,
-            },
-
-            draggable: false,
-
-        });
-        const contentGrid3 = new tui.Grid({
-            el: document.getElementById('contentGrid3'),
-            data: contentData3,
-            rowHeaders: [
-                {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
-                }
-            ],
-            pagination: true,
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '제출서류',
-                    name: 'DOC_DIV',
-                    sortingType: 'asc',
-                    sortable: false,
-                    align: 'center',
-                },
-            ],
-            columnOptions: {
-                resizable: true,
-            },
-
-            draggable: false,
-
-        });
-
         const nthTheme = new tui.Grid.applyTheme('default', {
             cell: {
                 normal: {
                     background: '#fff',
-                    border:'#E1E1E1',
+                    border: '#E1E1E1',
                     showVerticalBorder: true
                 },
                 header: {
@@ -853,7 +641,7 @@
                 },
                 rowHeader: {
                     background: '#EFEFEF',
-                    border:'#E1E1E1'
+                    border: '#E1E1E1'
                 }
                 ,
                 evenRow: {
@@ -866,8 +654,250 @@
                 }
             }
         });
-    });
+    }
+    // });
 
+
+    let personGrid;
+    let scheduleGrid;
+    let documentGrid;
+
+    function tabContent(e){
+        //display 지우기
+        const elements = document.querySelectorAll('#select-pane, #person-pane, #document-pane, #schedule-pane');
+        elements.forEach(function(element) {
+            element.style.display = 'none';
+        });
+
+        var content = document.getElementById(e.id+"-pane");
+
+        if(e.id === "select"){
+            content.setAttribute("style","display:block");
+        }else if(e.id === "person"){
+            if(!personGrid){
+                const personData = [
+                    {
+                        TO_CNT: 'TO_CNT',
+                        PLAN_CNT: 'PLAN_CNT',
+                        APLY_CNT: 'APLY_CNT',
+                        SEL_CNT: 'SEL_CNT',
+                        PRO_CNT: 'PRO_CNT'
+                    },
+                    {
+                        TO_CNT: 'TO_CNT2',
+                        PLAN_CNT: 'PLAN_CNT2',
+                        APLY_CNT: 'APLY_CNT2',
+                        SEL_CNT: 'SEL_CNT2',
+                        PRO_CNT: 'PRO_CNT2'
+                    }
+                ];
+                personGrid = new tui.Grid({
+                    el: document.getElementById(e.id+'GridDiv'),
+                    data: personData,
+                    rowHeaders: [
+                        {
+                            type: 'checkbox',
+                            header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                            renderer: {
+                                type: CheckboxRenderer
+                            }
+                        }
+                    ],
+                    pagination: true,
+                    scrollX: true,
+                    scrollY: true,
+                    columns: [
+                        {
+                            header: '모집정원',
+                            name: 'TO_CNT',
+                            sortingType: 'asc',
+                            sortable: false,
+                            align: 'center'
+                        },
+                        {
+                            header: '선발기준인원',
+                            name: 'PLAN_CNT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '지원인원',
+                            name: 'APLY_CNT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '최종선발인원',
+                            name: 'SEL_CNT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '예비합격인원',
+                            name: 'PRO_CNT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        }
+                    ],
+                    columnOptions: {
+                        resizable: true
+                    },
+
+                    draggable: false,
+
+                });
+            }
+            content.setAttribute("style","display:block");
+        }else if(e.id === "schedule"){
+            if(!scheduleGrid){
+                const scheduleData = [
+                    {
+                        SCHDL_DIV: 'SCHDL_DIV' + '<i class="bi bi-list"></i>',
+                        STEP_DIV: 'STEP_DIV',
+                        ST_DT: 'ST_DT',
+                        END_DT: 'END_DT',
+                        STS_DIV: 'STS_DIV',
+                    },
+                    {
+                        SCHDL_DIV: 'SCHDL_DIV' + '<i class="bi bi-list"></i>',
+                        STEP_DIV: 'STEP_DIV2',
+                        ST_DT: 'ST_DT2',
+                        END_DT: 'END_DT2',
+                        STS_DIV: 'STS_DIV2',
+                    }
+                ];
+                scheduleGrid = new tui.Grid({
+                    el: document.getElementById(e.id+'GridDiv'),
+                    data: scheduleData,
+                    rowHeaders: [
+                        {
+                            type: 'checkbox',
+                            header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                            renderer: {
+                                type: CheckboxRenderer
+                            }
+                        }
+                    ],
+                    pagination: true,
+                    scrollX: true,
+                    scrollY: true,
+                    columns: [
+                        {
+                            header: '전형일정',
+                            name: 'SCHDL_DIV',
+                            sortingType: 'asc',
+                            sortable: false,
+                            align: 'center',
+                        },
+                        {
+                            header: '전형평가단계',
+                            name: 'STEP_DIV',
+                            sortingType: 'asc',
+                            sortable: false,
+                            align: 'center'
+                        },
+                        {
+                            header: '시작일시',
+                            name: 'ST_DT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '종료일시',
+                            name: 'END_DT',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '진행상태',
+                            name: 'STS_DIV',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center'
+                        },
+                        {
+                            header: '노출여부',
+                            align: 'center',
+                            formatter: function (data) {
+                                return '<input type="checkbox" name="chk" value="' + data.rowKey + '">'; // 체크박스 HTML 문자열 반환
+                            }
+                        },
+                    ],
+                    columnOptions: {
+                        resizable: true,
+                    },
+
+                    draggable: false,
+
+                });
+            }
+            content.setAttribute("style","display:block");
+        }else if(e.id === "document"){
+            if(!documentGrid){
+                const documentData = [
+                    {
+                        DOC_DIV: 'DOC_DIV',
+                    },
+                    {
+                        DOC_DIV: 'DOC_DIV2',
+                    }
+                ];
+                documentGrid = new tui.Grid({
+                    el: document.getElementById(e.id+'GridDiv'),
+                    data: documentData,
+                    rowHeaders: [
+                        {
+                            type: 'checkbox',
+                            header: `
+          <label for="all-checkbox" class="checkbox">
+            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
+            <span class="custom-input"></span>
+          </label>
+        `,
+                            renderer: {
+                                type: CheckboxRenderer
+                            }
+                        }
+                    ],
+                    pagination: true,
+                    scrollX: true,
+                    scrollY: true,
+                    columns: [
+                        {
+                            header: '제출서류',
+                            name: 'DOC_DIV',
+                            sortingType: 'asc',
+                            sortable: false,
+                            align: 'center',
+                        },
+                    ],
+                    columnOptions: {
+                        resizable: true,
+                    },
+
+                    draggable: false,
+
+                });
+            }
+            content.setAttribute("style","display:block");
+        }
+    }
 
 //     하단
     //list 클릭 시 이벤트
@@ -901,11 +931,6 @@
         });
     });
 
-    // 탭 클릭 시 그리드 초기화
-    $('.nav-tabs div').on('shown.bs.tab', function() {
-        const gridTable = $('.tui-grid-table');
-        gridTable.css('width', '100%');
-    });
 </script>
 </body>
 </html>
