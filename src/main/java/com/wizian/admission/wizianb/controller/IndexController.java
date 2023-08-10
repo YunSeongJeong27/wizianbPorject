@@ -27,7 +27,7 @@ public class IndexController {
 
     @GetMapping("/notice")
     public String notice(){
-        return "/admin/noticeManagement";
+        return "/admin/nthNotice";
     }
 
     @GetMapping("/apply")

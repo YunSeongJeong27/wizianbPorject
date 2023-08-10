@@ -515,13 +515,19 @@
                 });*/
 
                 noticeTable.on('beforeChange', ev => {
+
                     console.log('before change:', ev);
+
+                    console.log(noticeData);
+                    console.log(ev.dataset);
+                    console.log(ev.data);
                 });
                 noticeTable.on('afterChange', ev => {
                     console.log('after change:', ev);
+                    console.log(noticeData);
                 })
 
-
+                console.log(noticeData);
                 noticeTable.resetData(noticeData);
 
 
