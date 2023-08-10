@@ -223,7 +223,7 @@
                         </div>--%>
 
                         <div class="border border-gray-100 rounded-2 bg-white h-50 p-3">
-                            <textarea class="form-control tableInput" name="MSG_CONT" type="text" readonly></textarea>
+                            <textarea class="form-control tableInput" name="MSG_CONT" readonly></textarea>
                         </div>
                     </div>
 

@@ -486,7 +486,7 @@
             draggable: true,
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-            onGridMounted(ev) {
+            onGridMounted() {
                 nthTable.focus(0, 'CORS_DIV', true);
                 rowDataLoad(0, nthTable, "inputTable");
             }
