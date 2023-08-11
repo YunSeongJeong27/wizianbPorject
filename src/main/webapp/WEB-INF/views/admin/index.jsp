@@ -19,6 +19,9 @@
         .btn-lf:hover span {
             color: initial;
         }
+        .indexDiv{
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -51,7 +54,7 @@
                                 <div class="collapse navbar-collapse ms-4" id="navbarEntSel1">
                                     <div class="navbar-nav">
                                         <div class="nav-item">
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">모집기수정보</a>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('info')">모집기수정보</div>
                                         </div>
                                     </div>
                                 </div>
@@ -62,9 +65,9 @@
                                 <div class="collapse navbar-collapse ms-4" id="navbarEntSel2">
                                     <div class="navbar-nav">
                                         <div class="nav-item">
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">모집전형정보</a>
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">모집전형안내문관리</a>
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">자기소개서문항관리</a>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('mozip')">모집전형정보</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('notice')">모집전형안내문관리</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('monhang')">자기소개서문항관리</div>
                                         </div>
                                     </div>
                                 </div>
@@ -75,8 +78,8 @@
                                 <div class="collapse navbar-collapse ms-4" id="navbarEntSel3">
                                     <div class="navbar-nav">
                                         <div class="nav-item">
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">원서접수관리</a>
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">적격심사관리</a>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('apply')">원서접수관리</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('')">적격심사관리</div>
                                         </div>
                                     </div>
                                 </div>
@@ -101,13 +104,19 @@
         </div>
     </div>
     <!-- 오 -->
-    <div>
+    <div style="width: 100%">
+        <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
 
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function index(address){
+        var iframe = document.getElementById("iframe");
+        iframe.setAttribute("src",address);
+    }
+
     function folder(e) {
         var span = e.getElementsByTagName("span")[0];
         if (span.classList.contains("bi-folder2-open")) {
@@ -118,6 +127,7 @@
             span.classList.add("bi-folder2-open");
         }
     }
+
 </script>
 </body>
 <%@include file="../user/footer.jsp"%>
