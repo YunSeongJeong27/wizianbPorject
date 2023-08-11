@@ -30,6 +30,11 @@ public class IndexController {
         return "/admin/nthNotice";
     }
 
+    @GetMapping("/monhang")
+    public String monhang(){
+        return "/admin/nthMonhang";
+    }
+
     @GetMapping("/apply")
     public String applyForm() { return "/application/application_edu";}
 
