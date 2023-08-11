@@ -14,7 +14,7 @@ public class IndexController {
     }
 
     @GetMapping("/admin")
-    public String admin(){return "side";}
+    public String admin(){return "/admin/index";}
 
     @GetMapping("/info")
     public String info(){
