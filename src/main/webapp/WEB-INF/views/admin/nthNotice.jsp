@@ -189,16 +189,12 @@
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 noticeData = [
                     {
-                        CORS_DIV: 'NEW_CORS_DIV',
-                        NTH_NM: 'NEW_NTH_NM',
-                        NTH_CD: 'NEW_NTH_CD',
-                        ENT_YR: 'NEW_ENT_YR',
-                        TERM_DIV: 'NEW_TERM_DIV',
-                        EDU_ST_DT: '2023-08-01',
-                        EDU_END_DT: '2023-08-01',
-                        ANNOUNCE_DT: '2023-08-11',
-                        SCHDL_DIV: 'NEW_SCHDL_DIV',
-                        STEP_DIV: 'NEW_STEP_DIV'
+                        STEP_DIV_NM: '2',
+                        MSG_DIV_NM: '1'
+                    },
+                    {
+                        STEP_DIV_NM: '3',
+                        MSG_DIV_NM: '2'
                     }
                 ];
             }
