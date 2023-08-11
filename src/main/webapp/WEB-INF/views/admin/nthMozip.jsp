@@ -195,6 +195,7 @@
         /*    min-height: 44px;*/
         /*    min-width: 120px;*/
         /*}*/
+
     </style>
 </head>
 <body>
@@ -294,7 +295,7 @@
     <div class="tab-content pt-3 bg-white" id="infoNavContent">
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
-            <div class="d-flex col-5 justify-content-around align-items-center">
+            <div class="d-flex col-4 align-items-center" style="height: 40px";>
                 <div class="col-4 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
@@ -316,8 +317,8 @@
                         <option>완료</option>
                     </select>
                 </div>
-                <div class="col-2">
-                    <div class="btn btn-outline-secondary w-100 fw-bold">변경</div>
+                <div class="col-2 ms-2">
+                    <div class="btn btn-sm btn-outline-secondary fw-bold">변경</div>
                 </div>
             </div>
             <div class="p-3">
@@ -374,17 +375,17 @@
 
         <!-- 모집인원설정 Content -->
         <div id="person-pane" style="display: none">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>모집인원설정</div>
                 </div>
-                <div class="d-flex justify-content-around me-3" style="width: 13%;">
-                    <div class="btn btn-outline-secondary" style="width: 30%;">신규</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">삭제</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">저장</div>
+                <div class="d-flex justify-content-end me-3" style="width: 13%;">
+                    <button id="personInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
+                    <button id="personSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
+                    <button id="personDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                 </div>
             </div>
 
@@ -393,17 +394,17 @@
 
         <!-- 전형일정설정 Content -->
         <div id="schedule-pane" style="display: none">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>전형일정설정</div>
                 </div>
-                <div class="d-flex justify-content-around me-3" style="width: 13%;">
-                    <div class="btn btn-outline-secondary" style="width: 30%;">신규</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">삭제</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">저장</div>
+                <div class="d-flex justify-content-end me-3" style="width: 13%;">
+                    <button id="scheduleInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
+                    <button id="scheduleSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
+                    <button id="scheduleDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                 </div>
             </div>
 
@@ -412,17 +413,17 @@
 
         <!-- 제출서류설정 Content -->
         <div id="document-pane" style="display: none;">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>제출서류설정</div>
                 </div>
-                <div class="d-flex justify-content-around me-3" style="width: 13%;">
-                    <div class="btn btn-outline-secondary" style="width: 30%;">신규</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">삭제</div>
-                    <div class="btn btn-outline-secondary" style="width: 30%;">저장</div>
+                <div class="d-flex justify-content-end me-3" style="width: 13%;">
+                    <button id="documentInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
+                    <button id="documentSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
+                    <button id="documentDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
                 </div>
             </div>
 
