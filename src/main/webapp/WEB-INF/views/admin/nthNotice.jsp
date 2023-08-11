@@ -155,6 +155,15 @@
             var noticeData = [];
             var firstColumName = 'STEP_DIV_NM';
 
+            /*  //!*쓰는 예시 *
+           // 선택된 행의 데이터를 가져옵니다.
+           const rowData = noticeTable.getRow(rowKey);
+           // 방법1. 원하는 데이터만 추출합니다.
+           const stepDivNm = rowData.STEP_DIV_NM;
+           const msgDivNm = rowData.MSG_DIV_NM;
+           // 방법2. 원하는 데이터만 추출합니다.
+           const { STEP_DIV_NM: stepDivNm, MSG_DIV_NM: msgDivNm } = rowData;*/
+
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 noticeData = [
