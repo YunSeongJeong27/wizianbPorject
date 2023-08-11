@@ -27,7 +27,7 @@ public class IndexController {
     @GetMapping("/monhang")
     public String monhang(){return "/admin/nthMonhang"; }
     @GetMapping("/apply")
-    public String test(){return "/admin/nthApply";}
+    public String apply(){return "/admin/nthApply";}
 
     @GetMapping("/apply1")
     public String applyForm() { return "/application/applicationIntroduce";}
