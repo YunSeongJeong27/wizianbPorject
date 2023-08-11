@@ -40,8 +40,12 @@
             <div class="nav-item" style="width: 31%;">
                 <a href="#" class="nav-link">원서작성</a>
             </div>
-            <div class="nav-item" style="width: 31%;">
-                <a href="#" class="nav-link">마이페이지</a>
+            <div class="nav-item dropdown" style="width: 31%;">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">마이페이지</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">지원서확인</a></li>
+                    <li><a class="dropdown-item" href="#">추가제출서류</a></li>
+                </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
                 <a href="#" class="nav-link">합격자발표</a>
