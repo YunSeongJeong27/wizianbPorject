@@ -26,9 +26,9 @@
                 <div class="d-flex flex-row align-items-center">
                     <p class="subTitle fw-bold me-2">자기소개서문항</p>
                     <p class="subResult text-secondary me-2">검색결과:0건</p>
-                    <select class="form-select w-auto">
+                    <select id="test" class="form-select w-auto">
                         <option selected>5</option>
-                        <option>30</option>
+                        <option>7</option>
                         <option>50</option>
                         <option>70</option>
                         <option>100</option>
@@ -49,12 +49,15 @@
     </div>
 
     <script>
+
+
+
+
         // monhang테이블 grid
         // nthTable row 누를 때마다 monhangTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var monhangData = [];
             var firstColumName = 'Field';
-
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 monhangData = [
@@ -83,7 +86,7 @@
                 bodyHeight: 340,
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
-                    perPage: 30,		//한번에 보여줄 데이터 수
+                    perPage: 5,		//한번에 보여줄 데이터 수
                     visiblePages: 10
                 },
                 scrollX: true,
@@ -192,6 +195,10 @@
                 });
 
                 monhangData = monhangTable.getData();
+            });
+
+            document.getElementById("test").addEventListener("change", function(){
+                monhangTable.setPerPage(this.value, monhangData);
             });
         }
 
