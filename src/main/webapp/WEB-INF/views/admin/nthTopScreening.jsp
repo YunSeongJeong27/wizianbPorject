@@ -229,6 +229,33 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script>
+    const gridTheme = new tui.Grid.applyTheme('default', {
+        cell: {
+            normal: {
+                background: '#fff',
+                border: '#E1E1E1',
+                showVerticalBorder: true
+            },
+            header: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            },
+            rowHeader: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            }
+            ,
+            evenRow: {
+                background: '#F2F3F5',
+                border: '#000'
+            },
+            oddRow: {
+                background: '#FFF',
+                border: '#000'
+            }
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
@@ -333,32 +360,14 @@
 
             draggable: true,
 
-        });
-        const nthTheme = new tui.Grid.applyTheme('default', {
-            cell: {
-                normal: {
-                    background: '#fff',
-                    border: '#E1E1E1',
-                    showVerticalBorder: true
-                },
-                header: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                },
-                rowHeader: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                }
-                ,
-                evenRow: {
-                    background: '#F2F3F5',
-                    border: '#000'
-                },
-                oddRow: {
-                    background: '#FFF',
-                    border: '#000'
-                }
+            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+            onGridMounted() {
+                nthTable.focus(0, 'CORS_DIV', true);
+                subTableLoad(0);
             }
+        });
+        nthTable.on('click', function (ev) {
+            subTableLoad(ev.rowKey);
         });
     });
 </script>
