@@ -10,13 +10,6 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
-    <!-- JQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <%--Toast--%>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
-
     <style>
         *{
             padding: 0;
@@ -131,51 +124,8 @@
             <div class="d-flex flex-row justify-content-end mb-1">
                 <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
             </div>
-
-            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                <div class="col-1 me-1"><input type="text" class="form-control"></div>
-                <div class="col-1 me-2">
-                    <select class="form-select">
-                        <option selected>1분기</option>
-                        <option>2분기</option>
-                        <option>3분기</option>
-                        <option>4분기</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정구분</div>
-                <div class="col-2 me-2">
-                    <select class="form-select">
-                        <option selected>Java</option>
-                        <option>Python</option>
-                        <option>C++</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정명</div>
-                <div class="col-2"><input type="text" class="form-control"></div>
-            </div>
-
-            <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-                <div class="d-flex flex-row align-items-center">
-                    <p class="subTitle fw-bold me-2">모집기수정보</p>
-                    <p class="subResult text-secondary me-2">검색결과:00건</p>
-                    <div>
-                        <select class="form-select">
-                            <option selected>5</option>
-                            <option>30</option>
-                            <option>50</option>
-                            <option>70</option>
-                            <option>100</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-                <div id="nthTable"></div>
-            </div>
+            
+            <%@ include file="nthTopScreening.jsp"%>
 
             <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
                 <div class="d-flex flex-row align-items-center">
