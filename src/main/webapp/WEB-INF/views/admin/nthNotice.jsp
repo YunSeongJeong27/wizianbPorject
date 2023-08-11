@@ -225,21 +225,25 @@
                     </div>
 
                     <div id="noticeInfoTable" class="text-start mb-3 mt-2">
-                        <div class="d-flex flex-row align-items-center border border-gray-100 rounded-2 mb-2">
-                            <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">메일제목</div>
-                            <div class="col-10 p-2"><input  class="form-control tableInput" type="text" name="SUBJECT" value=""></div>
+                        <div class="border border-gray-100 rounded-2 mb-2">
+                            <div class="d-flex flex-row align-items-center border-bottom border-gray-100">
+                                <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">메일제목</div>
+                                <div class="col-10 p-2"><input  class="form-control tableInput" type="text" name="SUBJECT" value=""></div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">첨부파일</div>
+                                <div class="col-10 p-2 d-flex flex-row align-items-center">
+                                    <input class="form-control" type="text" disabled style="width: 95%;">
+                                    <input id="addFile" class="form-control d-none" type="file">
+                                    <label for="addFile" class="ms-3" style="width: 4%; font-size: 20px;"><i class="bi bi-search"></i></label>
+                                </div>
+                            </div>
                         </div>
-                        <%--<div class="d-flex flex-row align-items-center ps-2">
-                            <div class="col-2 fw-bold">첨부파일</div>
-                            <div class="col-10"><input class="form-control" type="file" value="안내문 제목"></div>
-                        </div>--%>
 
                         <div class="border border-gray-100 rounded-2 bg-white h-50 p-3">
                             "$"{저장해놓은 Editor 값}
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -458,7 +462,7 @@
                 else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                     noticeData = [
                         {
-                            STEP_DIV_NM: '1',
+                            STEP_DIV_NM: '3',
                             MSG_DIV_NM: '1',
                             SUBJECT: '메일제목',
                             MSG_CONT: '내용'
@@ -486,7 +490,7 @@
                     },
                     scrollX: true,
                     scrollY: true,
-                    editingEvent: 'click',
+                    //editingEvent: 'click',
                     columns: [
                         {
                             header: '전형평가단계',
@@ -571,16 +575,14 @@
 
                 // 데이터 변경 후
                 noticeTable.on('afterChange', ev => {
-                    var arr = ev["changes"];
-                    arr.forEach((a) => {
-                        var list = noticeData[a['rowKey']];
-                        list[a['columnName']] = a['value'];
-                    });
+                    var changes = ev["changes"][0];
+                    var rowKey = changes['rowKey']
+                    var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
+                    datas[changes['columnName']] = changes['value'];
 
                     noticeTable.resetData(noticeData);
+                    noticeTable.focus(rowKey, 'STEP_DIV_NM', true);
                 })
-
-
 
 
                 // 신규 버튼 click
@@ -599,6 +601,9 @@
                         extendPrevRowSpan: true,
                         focus: true
                     });
+
+                    noticeData = noticeTable.getData();
+                    console.log(noticeData);
 
                     // 옆 notice 데이터 초기화
                     var tableInput = document.querySelectorAll("#noticeInfoTable .tableInput");

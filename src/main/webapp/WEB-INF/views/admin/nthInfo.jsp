@@ -173,8 +173,8 @@
         <div id="nthTable"></div>
     </div>
 
-    <form>
-        <table id="inputTable" class="table border fw-bold align-middle mt-4">
+    <table id="inputTable" class="table border fw-bold align-middle mt-4">
+        <tbody>
             <tr>
                 <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                 <td class="col-2">
@@ -220,8 +220,8 @@
                 <td class="col-2 tableColor"></td>
                 <td class="col-2"></td>
             </tr>
-        </table>
-    </form>
+        </tbody>
+    </table>
 </div>
 
 
@@ -493,15 +493,20 @@
             onGridMounted() {
                 nthTable.focus(0, 'CORS_DIV', true);
                 rowDataLoad(0, nthTable, "inputTable");
+                document.querySelector("#inputTable tbody").setAttribute("id", "row0");
 
                 // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
+                // 데이터 업데이트..
                 var tableInput = document.querySelectorAll("#inputTable .tableInput");
-                var dataList = nthData[nthTable.getFocusedCell()['rowKey']];
-                console.log(dataList);
                 tableInput.forEach((ti) => {
                     ti.addEventListener("change", function(){
-                        //console.log(ti.getAttribute("name"));
-                        //dataList[ti.getAttribute("name")]=this.value;
+                        var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
+
+                        var idx = nthTable.getIndexOfRow(rowKey);
+                        nthData[idx][ti.getAttribute("name")]=this.value;
+
+                        nthTable.resetData(nthData);
+                        nthTable.focus(rowKey, 'CORS_DIV', true);
                     })
                 });
             }
@@ -511,6 +516,7 @@
         nthTable.on('click', function (ev) {
             if(ev.rowKey == null) return;       // 헤더 클릭 시
 
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
@@ -556,14 +562,18 @@
                 }
             ];
 
+            var rowKey = nthTable.getFocusedCell()['rowKey'];
             nthTable.appendRow(rowData[0], {
-                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+                at: idx = nthTable.getIndexOfRow(rowKey)+1,
                 extendPrevRowSpan: true,
                 focus: true
             });
 
+            nthData = nthTable.getData();
+
             // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+rowKey);
             tableInput.forEach((ti) => {
                 ti.value = "";
             });
