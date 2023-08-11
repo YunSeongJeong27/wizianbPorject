@@ -27,6 +27,9 @@
             box-shadow: none;
             border-color: #9a9a9a;
         }
+        .container-table .tr{
+            background-color: #fff;
+        }
 
         /* 과정 검색 */
         .tableSearch{
