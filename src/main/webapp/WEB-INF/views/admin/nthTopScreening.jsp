@@ -107,6 +107,10 @@
             font-weight: 600;
             color: #245396;
         }
+        .tui-page-btn.tui-next-is-ellip.tui-last-child,
+        .tui-page-btn.tui-prev-is-ellip.tui-first-child{
+            display: none;
+        }
 
         /* text edit */
         .tui-grid-layer-editing .tui-grid-content-text{
