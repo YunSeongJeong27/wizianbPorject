@@ -10,21 +10,6 @@
 <head>
     <title>Title</title>
     <style>
-
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
-        }
-        .tui-grid-cell{
-            border-left-width: 1px;
-        }
-
-        /* 체크된 row */
-        .checkCell{
-            background-color: #D1D1D1 !important;
-        }
-
         .table .tableColor{
             background-color: #FAFAFA;
         }

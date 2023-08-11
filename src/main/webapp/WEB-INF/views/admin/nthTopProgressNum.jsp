@@ -47,92 +47,6 @@
             padding: 0.2rem 1.25rem 0.2rem 0.75rem;
         }
 
-
-        /* 과정 정보 테이블 */
-        .nthInfoResponsive{
-            overflow-x: auto;
-        }
-        .nthInfoContainer{
-            min-width: 1220px;
-            cursor: pointer;
-        }
-        .nthInfoContainer .d-flex{
-            border-bottom:1px solid #E1E1E1;
-        }
-        .nthInfoContainer .d-flex div:nth-child(n+2){
-            height: 44px;
-            border-left: 1px solid #E1E1E1;
-            padding: 10px 0;
-        }
-        .nthInfoContainer .d-flex .chkBox,
-        .nthInfoContainer .d-flex .chkBox input[type='checkbox']{
-            height: 44px;
-            border:none;
-        }
-
-        .nthInfoContainer .th{
-            background-color: #EFEFEF;
-            font-weight: 600;
-        }
-        .container-table .tr,
-        .nthInfoContainer .d-flex.td:nth-child(even){
-            background-color: #fff;
-        }
-        .nthInfoContainer .d-flex.td:nth-child(odd){
-            background-color: rgba(0,0,0,0);
-        }
-        .nthInfoContainer .d-flex.td:not(.tdBg) :nth-child(n):hover{
-            background-color: #D1D1D1;
-            font-weight: 600;
-            color: #245396;
-        }
-
-        /* 체크 박스 선택 시 css */
-        .nthInfoContainer .d-flex.tdChk{
-            background-color: #D1D1D1 !important;
-        }
-        /* row 선택 시 focus css */
-        .nthInfoContainer .d-flex.tdBg{
-            background-color: #F2F7FF !important;
-            border: 1px solid #245396 !important;
-            font-weight: 600;
-            color: #245396;
-        }
-
-
-        /* 페이징 */
-        .pagination ul {
-            margin: 15px 0;
-            border: none;
-            padding: 0;
-        }
-        .pagination ul li{
-            display: inline-block;
-            border: none;
-            width: 25px;
-            height: 25px;
-            padding: 0;
-        }
-        .pagination ul li.active{
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            width: 25px;
-            height: 25px;
-            font-weight: 600;
-            color: #245396;
-        }
-        .pagination ul li:not(.active):hover{
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            width: 25px;
-            height: 25px;
-            font-weight: 600;
-        }
-        .pagination .pageLoc {
-            margin: 0 10px 0 0;
-            color: #797676;
-        }
-
         /* 그리드 custom css */
 
         /* 스크롤 자투리 부분 색 변경 */
@@ -142,10 +56,65 @@
             background-color: #fff;
         }
 
+        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
+        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
+            border-right-style: solid;
+            border-right-color: #E1E1E1;
+        }
+        .tui-grid-cell{
+            border-left-width: 1px;
+        }
+
+        /* 선택한 row */
         .tui-grid-cell-current-row td{
             background-color: #F2F7FF !important;
             font-weight: 600;
             color: #245396;
+        }
+        /* 체크된 row */
+        .checkCell{
+            background-color: #D1D1D1 !important;
+        }
+
+        /* 페이징 */
+        .tui-pagination{
+            background-color: #fff;
+            margin:0 !important;
+            padding: 20px 0 12px;
+        }
+        .tui-is-disabled:hover{
+            background: initial !important;
+        }
+        .tui-page-btn span{
+            margin-top: 9px;
+        }
+        .tui-pagination .tui-page-btn{
+            border: none;
+        }
+        .tui-pagination .tui-page-btn:hover{
+            background-color: #e1e1e1;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .tui-pagination .tui-is-selected{
+            border: none !important;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #245396;
+        }
+
+        /* text edit */
+        .tui-grid-layer-editing .tui-grid-content-text{
+            height: 100% !important;
+            border: none !important;
+            text-align: center !important;
+        }
+        /* select eidt */
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-select-box-input.tui-select-box-open{
+            border: none !important;
+            border-bottom: 1px solid #aaa !important;
         }
     </style>
 </head>
@@ -202,26 +171,9 @@
             <div id="nthTable"></div>
 
             <%-- 페이징 --%>
-            <div class="pagination d-flex flex-row justify-content-center text-center position-relative tr">
-                <ul>
-                    <li class="active">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li>10</li>
-                    <li>></li>
-                    <li>>></li>
-                </ul>
-
-                <div class="position-absolute top-50 end-0 translate-middle-y">
-                    <p class="pageLoc">현재:1/전체:14(1~5)</p>
-                </div>
-            </div>
+<%--                <div class="position-absolute top-50 end-0 translate-middle-y">--%>
+<%--                    <p class="pageLoc">현재:1/전체:14(1~5)</p>--%>
+<%--                </div>--%>
         </div>
     </div>
 
@@ -229,6 +181,33 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script>
+    const gridTheme = new tui.Grid.applyTheme('default', {
+        cell: {
+            normal: {
+                background: '#fff',
+                border: '#E1E1E1',
+                showVerticalBorder: true
+            },
+            header: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            },
+            rowHeader: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            }
+            ,
+            evenRow: {
+                background: '#F2F3F5',
+                border: '#000'
+            },
+            oddRow: {
+                background: '#FFF',
+                border: '#000'
+            }
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
@@ -265,16 +244,15 @@
                 NOTE: '기수 비고 3'
             }
         ];
-        function educationPeriodFormatter({row}) {
-            const startDate = row.EDU_ST_DT;
-            const endDate = row.EDU_END_DT;
-            return startDate + "~" + endDate;
-        }
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: data,
             rowHeaders: ['checkbox'],
-            pagination: true,
+            pageOptions: {
+                useClient: true,	// front에서만 페이징 하는 속성
+                perPage: 5,		//한번에 보여줄 데이터 수
+                visiblePages: 10
+            },
             scrollX: true,
             scrollY: true,
             columns: [
@@ -339,31 +317,10 @@
                 resizable: true
             },
             draggable: true,
-        });
-        const nthTheme = new tui.Grid.applyTheme('default', {
-            cell: {
-                normal: {
-                    background: '#fff',
-                    border: '#E1E1E1',
-                    showVerticalBorder: true
-                },
-                header: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                },
-                rowHeader: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                }
-                ,
-                evenRow: {
-                    background: '#F2F3F5',
-                    border: '#000'
-                },
-                oddRow: {
-                    background: '#FFF',
-                    border: '#000'
-                }
+
+            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+            onGridMounted() {
+                nthTable.focus(0, 'CORS_DIV', true);
             }
         });
     });
