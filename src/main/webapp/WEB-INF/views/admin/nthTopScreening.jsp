@@ -183,7 +183,7 @@
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
             <div class="col-3 d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">모집기수정보</p>
+                <p class="subTitle fw-bold me-2">모집전형정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>
                     <select class="form-select">
@@ -232,37 +232,28 @@
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
-                CORS_DIV: 'JAVA',
-                SEL_NM: '자바과정 풀스택',
-                NTH_NM: '3',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
+                CORS_DIV: 'CORS_DIV',
+                NTH_NM: 'NTH_NM',
+                NTH_CD: 'NTH_CD',
+                ENT_YR: 'ENT_YR',
+                TERM_DIV: 'TERM_DIV',
                 EDU_ST_DT: '2023-08-01',
                 EDU_END_DT: '2023-08-01',
-                YR_CNT: '6',
-                NOTE: '기수 비고 1'
+                ANNOUNCE_DT: '2023-08-11',
+                SCHDL_DIV: 'SCHDL_DIV',
+                STEP_DIV: 'STEP_DIV'
             },
             {
-                CORS_DIV: 'Python',
-                SEL_NM: '파이썬',
-                NTH_NM: '2',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
+                CORS_DIV: 'CORS_DIV2',
+                NTH_NM: 'NTH_NM2',
+                NTH_CD: 'NTH_CD2',
+                ENT_YR: 'ENT_YR2',
+                TERM_DIV: 'TERM_DIV2',
                 EDU_ST_DT: '2023-08-01',
                 EDU_END_DT: '2023-08-01',
-                YR_CNT: '6',
-                NOTE: '기수 비고 2'
-            },
-            {
-                CORS_DIV: 'C++',
-                SEL_NM: 'C++ 코딩테스트',
-                NTH_NM: '4',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
-                YR_CNT: '6',
-                NOTE: '기수 비고 3'
+                ANNOUNCE_DT: '2023-08-11',
+                SCHDL_DIV: 'SCHDL_DIV2',
+                STEP_DIV: 'STEP_DIV2'
             }
         ];
         function educationPeriodFormatter({row}) {
@@ -287,14 +278,14 @@
                 },
                 {
                     header: '과정명',
-                    name: 'SEL_NM',
+                    name: 'NTH_NM',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '기수',
-                    name: 'NTH_NM',
+                    name: 'NTH_CD',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -311,26 +302,27 @@
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '교육시작일',
+                    header: '모집기간',
                     name: 'EDU_ST_DT',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
+                    formatter: educationPeriodFormatter
                 },
                 {
-                    header: '교육종료일',
-                    name: 'EDU_END_DT',
+                    header: '발표일자',
+                    name: 'ANNOUNCE_DT',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '수업개월수',
-                    name: 'YR_CNT',
+                    header: '전형일정',
+                    name: 'SCHDL_DIV',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '비고',
-                    name: 'NOTE',
+                    header: '전형평가단계',
+                    name: 'STEP_DIV',
                     sortingType: 'asc',
                     sortable: false, align: 'center'
                 }
@@ -338,7 +330,9 @@
             columnOptions: {
                 resizable: true
             },
+
             draggable: true,
+
         });
         const nthTheme = new tui.Grid.applyTheme('default', {
             cell: {
@@ -366,56 +360,6 @@
                 }
             }
         });
-    });
-
-    // 신규 버튼 click
-    document.getElementById("insertBtn").addEventListener("click", function () {
-        const rowData = [
-            {
-                CORS_DIV: 'NEW_CORS_DIV',
-                SEL_NM: 'NEW_SEL_NM',
-                NTH_NM: 'NEW_NTH_NM',
-                ENT_YR: 'NEW_ENT_YR',
-                TERM_DIV: 'NEW_TERM_DIV',
-                EDU_ST_DT: 'NEW_EDU_ST_DT',
-                EDU_END_DT: 'NEW_EDU_END_DT',
-                YR_CNT: 'NEW_YR_CNT',
-                NOTE: 'NEW_NOTE'
-            }
-        ];
-        var rowKey = nthTable.getFocusedCell()['rowKey'];
-        nthTable.appendRow(rowData[0], {
-            at: idx = nthTable.getIndexOfRow(rowKey)+1,
-            extendPrevRowSpan: true,
-            focus: true
-        });
-        nthData = nthTable.getData();
-        // 하단 table 초기화
-        var tableInput = document.querySelectorAll("#inputTable .tableInput");
-        document.querySelector("#inputTable tbody").setAttribute("id", "row"+rowKey);
-        tableInput.forEach((ti) => {
-            ti.value = "";
-        });
-
-
-        // 하단 table 데이터 넣기
-        function rowDataLoad(rowKey, table, id){
-            var datas = table.getRow(rowKey);
-            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-            if(datas == null ) {        // 데이터 x
-                tableInput.forEach((ti) => {
-                    ti.value = "";
-                });
-            }else{
-                tableInput.forEach((ti) => {
-                    var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
-                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
-                    }
-                    ti.value = datas[tiName];
-                });
-            }
-        }
     });
 </script>
 </body>

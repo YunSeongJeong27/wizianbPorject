@@ -10,57 +10,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
-    <!-- JQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <%--Toast--%>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
-
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        body{
-            background-color: #F2F3F5;
-        }
-        .container-table .form-select:focus,
-        .container-table .form-control:focus{
-            box-shadow: none;
-            border-color: #9a9a9a;
-        }
-        .container-table .tr{
-            background-color: #fff;
-        }
-
-        /* 과정 검색 */
-        .tableSearch{
-            font-weight: 600;
-        }
-
-        /* 검색 결과 수 */
-        .searchResult .subTitle{
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
-        .searchResult .subResult{
-            font-size: 14px;
-            margin-bottom: 0;
-        }
-        .searchResult select.form-select{
-            padding: 0.2rem 2rem 0.2rem 0.75rem;
-        }
-
-        /* 그리드 custom css */
-
-        /* 스크롤 자투리 부분 색 변경 */
-        .tui-grid-scrollbar-left-bottom,
-        .tui-grid-scrollbar-right-bottom,
-        .tui-grid-scrollbar-right-top{
-            background-color: #fff;
-        }
 
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
@@ -71,43 +22,9 @@
             border-left-width: 1px;
         }
 
-        /* 선택한 row */
-        .tui-grid-cell-current-row td{
-            background-color: #F2F7FF !important;
-            font-weight: 600;
-            color: #245396;
-        }
         /* 체크된 row */
         .checkCell{
             background-color: #D1D1D1 !important;
-        }
-
-        /* 페이징 */
-        .tui-pagination{
-            background-color: #fff;
-            margin:0 !important;
-            padding: 20px 0 12px;
-        }
-        .tui-is-disabled:hover{
-            background: initial !important;
-        }
-        .tui-page-btn span{
-            margin-top: 9px;
-        }
-        .tui-pagination .tui-page-btn{
-            border: none;
-        }
-        .tui-pagination .tui-page-btn:hover{
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        .tui-pagination .tui-is-selected{
-            border: none !important;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            font-weight: 600;
-            color: #245396;
         }
 
         /* noticeInfoTable */
@@ -144,50 +61,7 @@
                 <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
             </div>
 
-            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                <div class="col-1 me-1"><input type="text" class="form-control"></div>
-                <div class="col-1 me-2">
-                    <select class="form-select">
-                        <option selected>1분기</option>
-                        <option>2분기</option>
-                        <option>3분기</option>
-                        <option>4분기</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정구분</div>
-                <div class="col-2 me-2">
-                    <select class="form-select">
-                        <option selected>Java</option>
-                        <option>Python</option>
-                        <option>C++</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정명</div>
-                <div class="col-2"><input type="text" class="form-control"></div>
-            </div>
-
-            <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-                <div class="d-flex flex-row align-items-center">
-                    <p class="subTitle fw-bold me-2">모집기수정보</p>
-                    <p class="subResult text-secondary me-2">검색결과:00건</p>
-                    <div>
-                        <select class="form-select">
-                            <option selected>5</option>
-                            <option>30</option>
-                            <option>50</option>
-                            <option>70</option>
-                            <option>100</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-                <div id="nthTable"></div>
-            </div>
+            <%@ include file="nthTopScreening.jsp"%>
 
             <div class="d-flex flex-row justify-content-between mt-4 h-100">
                 <div class="col-4 me-3">
@@ -287,169 +161,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
-        // Table 테마
-        const gridTheme = new tui.Grid.applyTheme('default', {
-            row: {
-                hover: {
-                    background: '#D1D1D1'
-                }
-            },
-            cell: {
-                normal: {
-                    background: '#fff',
-                    border:'#E1E1E1'
-                },
-                header: {
-                    background: '#EFEFEF',
-                    border: '#E1E1E1'
-                },
-                rowHeader: {
-                    background: '#EFEFEF',
-                    border:'#E1E1E1'
-                },
-                evenRow: {
-                    background: '#F2F3F5'
-                },
-                oddRow: {
-                    background: '#FFF'
-                },
-                hover: {
-                    border: '#000'
-                }
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const nthData = [
-                {
-                    CORS_DIV: 'JAVA',
-                    SEL_NM: '자바과정 풀스택',
-                    NTH_NM: '3',
-                    ENT_YR: '2023',
-                    TERM_DIV: '1',
-                    YR_CNT: '6',
-                    EDU_ST_DT: '2023-08-01',
-                    EDU_END_DT: '2023-08-01',
-                    ANN_DT: '2023-08-01',
-                    NOTE: ''
-                },
-                {
-                    CORS_DIV: 'Python',
-                    SEL_NM: '파이썬',
-                    NTH_NM: '2',
-                    ENT_YR: '2023',
-                    TERM_DIV: '1',
-                    YR_CNT: '6',
-                    EDU_ST_DT: '2023-08-01',
-                    EDU_END_DT: '2023-08-01',
-                    ANN_DT: '2023-08-01',
-                    NOTE: '장사때려침'
-                },
-                {
-                    CORS_DIV: 'C++',
-                    SEL_NM: 'C++ 코딩테스트',
-                    NTH_NM: '4',
-                    ENT_YR: '2023',
-                    TERM_DIV: '1',
-                    YR_CNT: '6',
-                    EDU_ST_DT: '2023-08-01',
-                    EDU_END_DT: '2023-08-01',
-                    ANN_DT: '2023-08-01',
-                    NOTE: '장사때려침'
-                }
-            ];
-            function educationPeriodFormatter({ row }) {
-                var startDate = row.EDU_ST_DT;
-                var endDate = row.EDU_END_DT;
-                return startDate + "~" + endDate;
-            }
-            const nthTable = new tui.Grid({
-                el: document.getElementById('nthTable'),
-                data: nthData,
-                pageOptions: {
-                    useClient: true,	// front에서만 페이징 하는 속성
-                    perPage: 5,		//한번에 보여줄 데이터 수
-                    visiblePages: 10
-                },
-                scrollX: true,
-                scrollY: true,
-                columns: [
-                    {
-                        header: '과정구분',
-                        name: 'CORS_DIV',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
-                        header: '과정명',
-                        name: 'SEL_NM',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
-                        header: '기수',
-                        name: 'NTH_NM',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '수강년도',
-                        name: 'ENT_YR',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '분기',
-                        name: 'TERM_DIV',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '수업개월수',
-                        name: 'YR_CNT',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '교육기간',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center',
-                        formatter: educationPeriodFormatter
-                    },
-                    {
-                        header: '발표일자',
-                        name: 'ANN_DT',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '비고',
-                        name: 'NOTE',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    }
-                ],
-                columnOptions: {
-                    resizable: true
-                },
-                draggable: true,
-
-                // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-                onGridMounted() {
-                    nthTable.focus(0, 'CORS_DIV', true);
-                    subTableLoad(0);
-                }
-            });
-
-            nthTable.on('click', function (ev) {
-                subTableLoad(ev.rowKey);
-            });
-        });
 
         // notice테이블 grid
         // nthTable row 누를 때마다 noticeTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
@@ -460,16 +173,16 @@
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 noticeData = [
                     {
-                        STEP_DIV_NM: '3',
-                        MSG_DIV_NM: '1',
-                        SUBJECT: '메일제목',
-                        MSG_CONT: '내용'
-                    },
-                    {
-                        STEP_DIV_NM: '2',
-                        MSG_DIV_NM: '2',
-                        SUBJECT: '메일제목2',
-                        MSG_CONT: '내용2'
+                        CORS_DIV: 'NEW_CORS_DIV',
+                        NTH_NM: 'NEW_NTH_NM',
+                        NTH_CD: 'NEW_NTH_CD',
+                        ENT_YR: 'NEW_ENT_YR',
+                        TERM_DIV: 'NEW_TERM_DIV',
+                        EDU_ST_DT: '2023-08-01',
+                        EDU_END_DT: '2023-08-01',
+                        ANNOUNCE_DT: '2023-08-11',
+                        SCHDL_DIV: 'NEW_SCHDL_DIV',
+                        STEP_DIV: 'NEW_STEP_DIV'
                     }
                 ];
             }

@@ -9,11 +9,6 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
-    <!-- JQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <style>
         .table .tableColor{
@@ -57,7 +52,14 @@
 </head>
 <body>
 <div class="container-table m-2">
-    <%@ include file="nthTopProgressNum.jsp"%>
+    <div class="d-flex flex-row justify-content-end mb-1">
+        <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
+        <button id="insertBtn" class="btn btn-sm btn-light me-1">신규</button>
+        <button id="saveBtn" class="btn btn-sm btn-light me-1">저장</button>
+        <button id="deleteBtn" class="btn btn-sm btn-light me-1">삭제</button>
+    </div>
+
+    <%@ include file="nthTopScreening.jsp"%>
 
     <div class="nav nav-pills nav-tabs fw-bold text-center col-4 d-flex justify-content-between mt-4" id="infoNav" role="tablist">
         <div class="nav-item" role="presentation" style="width: 24%;">
@@ -213,8 +215,6 @@
         </div>
 </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script>
     class CheckboxRenderer {
         constructor(props) {
@@ -534,6 +534,10 @@
             })
         });
     });
+
+    nthTable.addEventListener("click",function(){
+        console.log("감자감자");
+    })
 
 </script>
 </body>
