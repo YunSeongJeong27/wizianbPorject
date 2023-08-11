@@ -548,6 +548,7 @@
 
             // 체크박스 전체 선택/해제
             var checkBox = [];
+
             noticeTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+Object.keys(noticeData[0])[0]+"'");

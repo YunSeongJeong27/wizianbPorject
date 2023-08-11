@@ -26,9 +26,7 @@ public class IndexController {
     }
 
     @GetMapping("/notice")
-    public String notice(){
-        return "/admin/nthNotice";
-    }
+    public String notice(){ return "/admin/nthNotice";}
 
     @GetMapping("/monhang")
     public String monhang(){
