@@ -46,6 +46,21 @@
             background-color: #F4F4F4;
         }
 
+        /* text edit */
+        .tui-grid-layer-editing .tui-grid-content-text{
+            height: 100% !important;
+            border: none !important;
+            text-align: center !important;
+        }
+        /* select eidt */
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
+            border: none !important;
+        }
+        .tui-select-box-input.tui-select-box-open{
+            border: none !important;
+            border-bottom: 1px solid #aaa !important;
+        }
+
         .biIcon{
             opacity: 0.5;
         }
@@ -168,6 +183,7 @@
         // nthTable row 누를 때마다 noticeTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var noticeData = [];
+            var firstColumName = 'STEP_DIV_NM';
 
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
@@ -247,7 +263,7 @@
 
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
-                    noticeTable.focus(0, 'STEP_DIV_NM', true);
+                    noticeTable.focus(0, firstColumName, true);
                     rowDataLoad(0, noticeTable, "noticeInfoTable");
                 }
             });
@@ -264,7 +280,7 @@
 
             noticeTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
-                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+Object.keys(noticeData[0])[0]+"'");
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
                 rowKeys.forEach((rowKey) => {
                     checkBox.push(rowKey);
@@ -293,8 +309,12 @@
                 datas[changes['columnName']] = changes['value'];
 
                 noticeTable.resetData(noticeData);
-                noticeTable.focus(rowKey, 'STEP_DIV_NM', true);
-            })
+                noticeTable.focus(rowKey, firstColumName, true);
+            });
+
+            noticeTable.on('drop', ev => {
+                firstColumName = noticeTable.getColumns()[0]['name'];
+            });
 
 
             // 신규 버튼 click
@@ -315,7 +335,6 @@
                 });
 
                 noticeData = noticeTable.getData();
-                console.log(noticeData);
 
                 // 옆 notice 데이터 초기화
                 var tableInput = document.querySelectorAll("#noticeInfoTable .tableInput");
