@@ -236,7 +236,7 @@
                 ENT_YR: '2023',
                 TERM_DIV: '1',
                 EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-02',
                 YR_CNT: '6',
                 NOTE: '기수 비고 2'
             },
@@ -247,7 +247,7 @@
                 ENT_YR: '2023',
                 TERM_DIV: '1',
                 EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-03',
                 YR_CNT: '6',
                 NOTE: '기수 비고 3'
             }
@@ -298,12 +298,14 @@
                 },
                 {
                     header: '교육시작일',
-                    sortingType: 'EDU_ST_DT',
+                    name: 'EDU_ST_DT',
+                    sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육종료일',
-                    sortingType: 'EDU_END_DT',
+                    name: 'EDU_END_DT',
+                    sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
