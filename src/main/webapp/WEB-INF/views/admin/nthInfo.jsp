@@ -239,35 +239,6 @@
 
 
 <script>
-/*
-    // 삭제 btn 클릭 이벤트
-    var deleteBtn = document.getElementById("deleteBtn");
-    var deleteList = [];
-    deleteBtn.addEventListener("click", function(){
-        chkBox.forEach((chk) => {
-            if(chk.checked) deleteList.push(chk.parentElement.parentElement);
-        });
-
-        if(deleteList.length === 0) alert('체크박스를 선택해야합니다.')
-        else {
-            if(confirm('삭제하시겠습니까?')){
-                deleteList.forEach((div) => {
-                    div.remove();
-                })
-                document.querySelector(".nthInfoContainer .td").classList.add("tdBg");
-                inputValue();
-            }
-        }
-    })
-
-    // 저장 btn 클릭 이벤트
-    var saveBtn = document.getElementById("saveBtn");
-    saveBtn.addEventListener("click", function(){
-        if(confirm("저장하시겠습니까?")){
-
-        }
-    })*/
-
 
     // input number 음수 막기
     var entInput = document.getElementById("entInput");
@@ -283,71 +254,6 @@
             alert("음수값은 설정할 수 없습니다.");
         }
     });
-
-    /* ~ */
-    /*class RowNumberRenderer {
-        constructor(props) {
-            const el = document.createElement('span');
-            el.innerHTML = props.formattedValue;
-            this.el = el;
-        }
-
-        getElement() {
-            return this.el;
-        }
-
-        render(props) {
-            this.el.innerHTML = props.formattedValue;
-        }
-    }
-
-    class CheckboxRenderer {
-        constructor(props) {
-            const {grid, rowKey} = props;
-
-            const label = document.createElement('label');
-            label.className = 'checkbox tui-grid-row-header-checkbox';
-            label.setAttribute('for', String(rowKey));
-
-            const hiddenInput = document.createElement('input');
-            hiddenInput.className = 'hidden-input';
-            hiddenInput.id = String(rowKey);
-
-            const customInput = document.createElement('span');
-            customInput.className = 'custom-input';
-
-            label.appendChild(hiddenInput);
-            label.appendChild(customInput);
-
-            hiddenInput.type = 'checkbox';
-            label.addEventListener('click', (ev) => {
-                ev.preventDefault();
-
-                if (ev.shiftKey) {
-                    grid[!hiddenInput.checked ? 'checkBetween' : 'uncheckBetween'](rowKey);
-                    return;
-                }
-
-                grid[!hiddenInput.checked ? 'check' : 'uncheck'](rowKey);
-            });
-
-            this.el = label;
-
-            this.render(props);
-        }
-
-        getElement() {
-            return this.el;
-        }
-
-        render(props) {
-            const hiddenInput = this.el.querySelector('.hidden-input');
-            const checked = Boolean(props.value);
-
-            hiddenInput.checked = checked;
-        }
-    }
-    */
 
     // Table 테마
     const gridTheme = new tui.Grid.applyTheme('default', {
