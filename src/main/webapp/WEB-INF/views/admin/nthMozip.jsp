@@ -518,18 +518,6 @@
                 EDU_END_DT: '2023-08-01',
                 발표일자: '2023-08-01',
                 NOTE: '장사때려침'
-            },
-            {
-                CORS_DIV: '',
-                SEL_NM: '',
-                NTH_NM: '',
-                ENT_YR: '',
-                TERM_DIV: '',
-                수업개월수: '',
-                EDU_ST_DT: '',
-                EDU_END_DT: '',
-                발표일자: '',
-                NOTE: ''
             }
         ];
         function educationPeriodFormatter({row}) {

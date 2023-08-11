@@ -14,6 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <%--Toast--%>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
 
     <style>
         *{
@@ -127,6 +129,12 @@
             background-color: #F4F4F4;
         }
 
+        .biIcon{
+            opacity: 0.5;
+        }
+        .biIcon:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -209,7 +217,8 @@
                 <div class="w-100">
                     <div class="searchResult d-flex flex-row justify-content-between align-items-center" style="height: 32.38px">
                         <p class="subTitle fw-bold">안내문내용</p>
-                        <button id="noticeInsertContentBtn" class="btn btn-sm btn-light btn-outline-dark">안내문작성하기</button>
+                        <button id="noticeInsertContentBtn" class="btn btn-sm btn-light btn-outline-dark"
+                        data-bs-toggle="modal" data-bs-target="#noticeModal">안내문작성하기</button>
                     </div>
 
                     <div id="noticeInfoTable" class="text-start mb-3 mt-2">
@@ -223,7 +232,7 @@
                         </div>--%>
 
                         <div class="border border-gray-100 rounded-2 bg-white h-50 p-3">
-                            <textarea class="form-control tableInput" name="MSG_CONT" readonly></textarea>
+                            "$"{저장해놓은 Editor 값}
                         </div>
                     </div>
 
@@ -233,7 +242,46 @@
         </div>
     </div>
 
+    <%--안내문 작성하기 Modal--%>
+    <div class="modal fade" id="noticeModal" tabindex="-1"
+         role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" id="dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <div class="modal-title fw-bold">
+                        WIZIAN 정보처리학원
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-files biIcon fw-bolder fs-4 btn p-1" onclick="sizeChange()"></i>
+                        <i class="bi bi-x biIcon fw-bolder fs-2 btn p-1" data-bs-dismiss="modal"></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div><i class="bi bi-star-fill text-warning"></i></div>
+                                <div class="fw-bold">&nbsp;게시 내용 작성하기</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <input type="submit" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" value="저장">
+                                <input type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" data-bs-dismiss="modal" value="닫기">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div id="editor"></div>
+                            <div>
+                                <input type="hidden" id="contents" name="noticeContent">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
         // Table 테마
         const gridTheme = new tui.Grid.applyTheme('default', {
@@ -567,7 +615,42 @@
             }
         });
 
+        // Toast Editor
+        const Editor = toastui.Editor;
+        const editor = new Editor({
+            el: document.querySelector('#editor'),
+            height: '350px',
+            initialEditType: 'wysiwyg',
+            initialValue: '저장값 불러오기',
+            previewStyle: 'vertical',
+            language:'ko'
+        });
+        editor.getMarkdown();
 
+
+        // 모달이 열릴 때 이벤트 핸들러 등록
+        var modal = document.getElementById("noticeModal")
+        modal.addEventListener('hide.bs.modal', function () {
+            var dialog = document.getElementById("dialog");
+            if (dialog.classList.contains('modal-fullscreen')) {
+                dialog.classList.remove("modal-fullscreen");
+                dialog.classList.add("modal-lg");
+                editor.setHeight('350px');
+            }
+        });
+        //모달 크기 조정
+        function sizeChange(){
+            var dialog = document.getElementById("dialog");
+            if (dialog.classList.contains("modal-fullscreen")) {
+                dialog.classList.remove("modal-fullscreen");
+                dialog.classList.add("modal-lg");
+                editor.setHeight('350px');
+            } else {
+                dialog.classList.remove("modal-lg");
+                dialog.classList.add("modal-fullscreen");
+                editor.setHeight('90%');
+            }
+        }
     </script>
 </body>
 </html>
