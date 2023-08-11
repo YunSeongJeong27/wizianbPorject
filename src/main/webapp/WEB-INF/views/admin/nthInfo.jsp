@@ -108,6 +108,19 @@
             color: #245396;
         }
 
+        /* text edit */
+        .tui-grid-layer-editing .tui-grid-content-text{
+            height: 100% !important;
+            border: none !important;
+            text-align: center !important;
+        }
+        /* select eidt */
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-select-box-input.tui-select-box-open{
+            border: none !important;
+            border-bottom: 1px solid #aaa !important;
+        }
+
         .table .tableColor{
             background-color: #FAFAFA;
         }
@@ -372,6 +385,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        var firstColumName = 'CORS_DIV';
+
         var nthData = [
             {
                 CORS_DIV: 'Java',
@@ -491,7 +506,7 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthTable.focus(0, 'CORS_DIV', true);
+                nthTable.focus(0, firstColumName, true);
                 rowDataLoad(0, nthTable, "inputTable");
                 document.querySelector("#inputTable tbody").setAttribute("id", "row0");
 
@@ -506,7 +521,7 @@
                         nthData[idx][ti.getAttribute("name")]=this.value;
 
                         nthTable.resetData(nthData);
-                        nthTable.focus(rowKey, 'CORS_DIV', true);
+                        nthTable.focus(rowKey, firstColumName, true);
                     })
                 });
             }
@@ -524,7 +539,7 @@
         var checkBox = [];
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+Object.keys(nthData[0])[0]+"'");
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
                 checkBox.push(rowKey);
@@ -543,6 +558,10 @@
         });
         nthTable.on('uncheck', function (ev) {
             nthTable.removeRowClassName(ev.rowKey, "checkCell");
+        });
+
+        nthTable.on('drop', ev => {
+            firstColumName = nthTable.getColumns()[0]['name'];
         });
 
         // 신규 버튼 click
@@ -590,10 +609,11 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
+                    if(tiName==="CORS_DIV" || tiName==="TERM_DIV"){
                         $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    }else{
+                        ti.value = datas[tiName];
                     }
-                    ti.value = datas[tiName];
                 });
             }
         }
