@@ -13,35 +13,23 @@ public class IndexController {
         return "/index";
     }
 
-    @GetMapping("/side")
-    public String side(){return "/admin/side";}
-    @GetMapping("/top1")
-    public String top1(){return "/admin/nthTopProgressNum";}
-    @GetMapping("/top2")
-    public String top2(){return "/admin/nthTopScreening";}
-    @GetMapping("/test")
-    public String test(){
-        return "/admin/nthMozip";
-    }
+    @GetMapping("/admin")
+    public String admin(){return "/admin/index";}
 
-    @GetMapping("/nth")
-    public String nth(){
+    @GetMapping("/info")
+    public String info(){
         return "/admin/nthInfo";
     }
-
+    @GetMapping("/mozip")
+    public String mozip(){return "/admin/nthMozip"; }
     @GetMapping("/notice")
-    public String notice(){ return "/admin/nthNotice";}
-
+    public String notice(){return "/admin/nthNotice"; }
     @GetMapping("/monhang")
-    public String monhang(){
-        return "/admin/nthMonhang";
-    }
-
+    public String monhang(){return "/admin/nthMonhang"; }
     @GetMapping("/apply")
-    public String applyForm() { return "/application/application_edu";}
-
+    public String test(){return "/admin/nthApply";}
 
     @GetMapping("/apply1")
-    public String apply() { return "/admin/nthApply";}
+    public String applyForm() { return "/application/applicationIntroduce";}
 
 }

@@ -40,8 +40,12 @@
             <div class="nav-item" style="width: 31%;">
                 <a href="#" class="nav-link">원서작성</a>
             </div>
-            <div class="nav-item" style="width: 31%;">
-                <a href="#" class="nav-link">마이페이지</a>
+            <div class="nav-item dropdown" style="width: 31%;">
+                <a href="#" class="nav-link" id="navbarDropdown" role="button">마이페이지</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">지원서확인</a></li>
+                    <li><a class="dropdown-item" href="#">추가제출서류</a></li>
+                </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
                 <a href="#" class="nav-link">합격자발표</a>
@@ -52,7 +56,18 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
+    $(document).ready(function () {
+        $('.nav-item.dropdown').hover(
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideDown('fast');
+                $(this).addClass('show');
+            },
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideUp('fast');
+                $(this).removeClass('show');
+            }
+        );
+    });
 </script>
 </body>
 </html>

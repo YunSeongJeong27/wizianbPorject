@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
@@ -26,6 +27,9 @@
         .container-table .form-control:focus{
             box-shadow: none;
             border-color: #9a9a9a;
+        }
+        .container-table .tr{
+            background-color: #fff;
         }
 
         /* 과정 검색 */
@@ -103,6 +107,10 @@
             font-weight: 600;
             color: #245396;
         }
+        .tui-page-btn.tui-next-is-ellip.tui-last-child,
+        .tui-page-btn.tui-prev-is-ellip.tui-first-child{
+            display: none;
+        }
 
         /* text edit */
         .tui-grid-layer-editing .tui-grid-content-text{
@@ -120,7 +128,7 @@
 </head>
 
 <body>
-    <div class="container-table m-2">
+    <div class="container-table">
         <%--TOP--%>
         <div class="col-12">
             <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
@@ -175,12 +183,12 @@
                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
                 </div>--%>
             </div>
-        </div>
     </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {

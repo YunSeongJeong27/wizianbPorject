@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
@@ -26,6 +27,9 @@
         .container-table .form-control:focus{
             box-shadow: none;
             border-color: #9a9a9a;
+        }
+        .container-table .tr{
+            background-color: #fff;
         }
 
         /* 과정 검색 */
@@ -103,6 +107,10 @@
             font-weight: 600;
             color: #245396;
         }
+        .tui-page-btn.tui-next-is-ellip.tui-last-child,
+        .tui-page-btn.tui-prev-is-ellip.tui-first-child{
+            display: none;
+        }
 
         /* text edit */
         .tui-grid-layer-editing .tui-grid-content-text{
@@ -120,7 +128,7 @@
 </head>
 
 <body>
-    <div class="container-table m-2">
+    <div class="container-table">
         <%--TOP--%>
         <div class="col-12">
             <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
@@ -178,8 +186,10 @@
     </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
@@ -209,9 +219,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const data = [
+        var firstColumName = 'CORS_DIV';
+
+        var nthData = [
             {
-                CORS_DIV: 'JAVA',
+                CORS_DIV: 'Java',
                 SEL_NM: '자바과정 풀스택',
                 NTH_NM: '3',
                 ENT_YR: '2023',
@@ -228,7 +240,7 @@
                 ENT_YR: '2023',
                 TERM_DIV: '1',
                 EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-02',
                 YR_CNT: '6',
                 NOTE: '기수 비고 2'
             },
@@ -239,14 +251,14 @@
                 ENT_YR: '2023',
                 TERM_DIV: '1',
                 EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
+                EDU_END_DT: '2023-08-03',
                 YR_CNT: '6',
                 NOTE: '기수 비고 3'
             }
         ];
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: data,
+            data: nthData,
             rowHeaders: ['checkbox'],
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
@@ -292,7 +304,7 @@
                     header: '교육시작일',
                     name: 'EDU_ST_DT',
                     sortingType: 'asc',
-                    sortable: true, align: 'center',
+                    sortable: true, align: 'center'
                 },
                 {
                     header: '교육종료일',
@@ -310,7 +322,7 @@
                     header: '비고',
                     name: 'NOTE',
                     sortingType: 'asc',
-                    sortable: false, align: 'center'
+                    sortable: true, align: 'center'
                 }
             ],
             columnOptions: {
@@ -320,40 +332,101 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthTable.focus(0, 'CORS_DIV', true);
+                nthTable.focus(0, firstColumName, true);
+
+                rowDataLoad(0, nthTable, "inputTable");
+
+                document.querySelector("#inputTable tbody").setAttribute("id", "row0");
+
+                // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
+                // 데이터 업데이트..
+                var tableInput = document.querySelectorAll("#inputTable .tableInput");
+                tableInput.forEach((ti) => {
+                    ti.addEventListener("change", function(){
+                        var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
+
+                        console.log(rowKey);
+
+                        var idx = nthTable.getIndexOfRow(rowKey);
+                        console.log(idx);
+
+                        nthData[idx][ti.getAttribute("name")]=this.value;
+
+                        nthTable.resetData(nthData);
+                        nthTable.focus(rowKey, firstColumName, true);
+                    })
+                });
             }
         });
-    });
 
-    // 신규 버튼 click
-    document.getElementById("insertBtn").addEventListener("click", function () {
-        const rowData = [
-            {
-                CORS_DIV: 'NEW_CORS_DIV',
-                SEL_NM: 'NEW_SEL_NM',
-                NTH_NM: 'NEW_NTH_NM',
-                ENT_YR: 'NEW_ENT_YR',
-                TERM_DIV: 'NEW_TERM_DIV',
-                EDU_ST_DT: 'NEW_EDU_ST_DT',
-                EDU_END_DT: 'NEW_EDU_END_DT',
-                YR_CNT: 'NEW_YR_CNT',
-                NOTE: 'NEW_NOTE'
-            }
-        ];
-        var rowKey = nthTable.getFocusedCell()['rowKey'];
-        nthTable.appendRow(rowData[0], {
-            at: idx = nthTable.getIndexOfRow(rowKey)+1,
-            extendPrevRowSpan: true,
-            focus: true
-        });
-        nthData = nthTable.getData();
-        // 하단 table 초기화
-        var tableInput = document.querySelectorAll("#inputTable .tableInput");
-        document.querySelector("#inputTable tbody").setAttribute("id", "row"+rowKey);
-        tableInput.forEach((ti) => {
-            ti.value = "";
+        // row 클릭 시 하단에 해당 row 데이터 load
+        nthTable.on('click', function (ev) {
+            if(ev.rowKey == null) return;       // 헤더 클릭 시
+
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
+            rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
+        // 체크박스 전체 선택/해제
+        var checkBox = [];
+        nthTable.on('checkAll', function (ev) {
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                checkBox.push(rowKey);
+                nthTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            });
+        });
+        nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+            checkBox.forEach((rowKey) => {
+                nthTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            });
+        });
+
+        // 체크박스 개별 선택/해제
+        nthTable.on('check', function (ev) {
+            nthTable.addRowClassName(ev.rowKey, "checkCell");
+        });
+        nthTable.on('uncheck', function (ev) {
+            nthTable.removeRowClassName(ev.rowKey, "checkCell");
+        });
+
+        nthTable.on('drop', ev => {
+            firstColumName = nthTable.getColumns()[0]['name'];
+        });
+
+        // 신규 버튼 click
+        document.getElementById("nthInsertBtn").addEventListener("click", function () {
+            const rowData = [
+                {
+                    CORS_DIV: '',
+                    SEL_NM: '',
+                    NTH_NM: '',
+                    ENT_YR: '',
+                    TERM_DIV: '',
+                    EDU_ST_DT: '',
+                    EDU_END_DT: '',
+                    YR_CNT: '',
+                    NOTE: ''
+                }
+            ];
+
+            nthTable.appendRow(rowData[0], {
+                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+                extendPrevRowSpan: true,
+                focus: true
+            });
+
+            nthData = nthTable.getData();
+
+            // 하단 table 초기화
+            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+            tableInput.forEach((ti) => {
+                ti.value = "";
+            });
+        });
 
         // 하단 table 데이터 넣기
         function rowDataLoad(rowKey, table, id){
@@ -374,6 +447,12 @@
             }
         }
     });
+
+
+
+
+
+
 </script>
 </body>
 </html>
