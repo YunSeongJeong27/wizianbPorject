@@ -100,7 +100,7 @@
                         <a href="#">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="#">활동이력</a>
+                        <a href="#">경력사항</a>
                     </li>
                     <li class="py-2">
                         <a href="#" class="active">자기소개서</a>
@@ -127,8 +127,9 @@
                             <textarea class="form-control" placeholder="Leave a comment here"  style="height: 150px; resize: none;"></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <span id="text_count">[0</span>
-                            <span>/2000 자]</span>
+                            <span id="text_count">[0/</span>
+                            <span id="maxLength">2000</span>
+                            <span> 자]</span>
                         </div>
                     </div>
                     <%--문항반복끝--%>
@@ -139,14 +140,15 @@
                             <textarea class="form-control" placeholder="Leave a comment here" style="height: 150px; resize: none;">답변내용</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <span>[0</span><%--id값 주기. id="text_count--%>
-                            <span>/'최대허용글자수'자]</span>
+                            <span>[0/</span><%--id값 주기. id="text_count--%>
+                            <span>최대허용글자수</span>
+                            <span> 자]</span>
                         </div>
                     </div>
 
                 </div>
                 <%--버튼--%>
-                <div class="d-flex justify-content-between mt-5 ">
+                <div class="d-flex justify-content-between mt-5">
                     <button type="button" class="btn btn-second">이전</button>
                     <button type="button" id="save_btn" class="btn btn-dark">저장</button>
                     <button type="button" class="btn btn-second">저장 후 이동</button>
@@ -156,15 +158,19 @@
         </div>
     </div>
 </div>
+
 <script>
     $('#text_box textarea').keyup(function () {
        var content = $(this).val();
-        $('#text_count').html('['+content.length);
+        $('#text_count').html('['+content.length+"/");
 
-        if (content.length > 2000){
-            alert("최대 2000자까지 입력 가능합니다.");
-            $(this).val(content.substring(0, 2000));
-            $('#text_count').html('['+2000);
+        var maxLengthElement = document.getElementById('maxLength');
+        var ml = parseInt(maxLengthElement.innerText, 10);
+
+        if (content.length > ml){
+            alert("최대 "+ml+"자까지 입력 가능합니다.");
+            $(this).val(content.substring(0, ml));
+            $('#text_count').html('['+ml+"/");
         }
     });
 </script>

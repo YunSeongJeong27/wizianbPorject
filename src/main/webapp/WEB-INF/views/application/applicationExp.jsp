@@ -9,7 +9,7 @@
 <%@include file="../user/header.jsp" %>
 <html>
 <head>
-    <title>활동이력</title>
+    <title>경력사항</title>
     <style>
         .breadcrumbs,
         .menu ul {
@@ -68,12 +68,12 @@
 <div class="my-5 container">
     <div class="container-sub-header">
         <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">활동이력</p>
+            <p class="page-title">경력사항</p>
             <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ul class="breadcrumbs">
                     <li class="breadcrumb-item"><i class="fas fa-sharp fa-light fa-house"></i></li>
                     <li class="breadcrumb-item">원서작성</li>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">활동이력</li>
+                    <li id="apply_current" class="breadcrumb-item" aria-current="page">경력사항</li>
                 </ul>
             </div>
         </div>
@@ -93,7 +93,7 @@
                         <a href="#">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="#" class="active">활동이력</a>
+                        <a href="#" class="active">경력사항</a>
                     </li>
                     <li class="py-2">
                         <a href="#">자기소개서</a>
@@ -104,7 +104,7 @@
         <div id="edu_title" class="col-lg-9">
             <h3 class="mb-3">자바기반 풀스택 개발자 취업과정</h3>
             <div class="title mt-5 mb-1">
-                활동이력
+                경력사항
             </div>
 
             <form class="exp_form" action="" method="">
@@ -116,11 +116,11 @@
                         </div>
                         <div class="border-top border-dark border-2">
                             <div class="row mt-3">
-                                <div class="col-lg-2">기관명</div>
+                                <div class="col-lg-2">근무처명</div>
                                 <div class="col-lg-4">
                                     <input type="date" name="PLC_NM" value="" class="form-control">
                                 </div>
-                                <div class="col-lg-2">활동시작년월/종료년월</div>
+                                <div class="col-lg-2">근무시작년월/종료년월</div>
                                 <div class="col-lg-2">
                                     <input type="date" name="ST_DT" value="" class="form-control">
                                 </div>
@@ -130,17 +130,17 @@
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col-lg-2">활동내역</div>
+                                <div class="col-lg-2">근무처직무</div>
                                 <div class="col-lg-4">
                                     <input name="PLC_JOB" type="text" class="form-control">
                                 </div>
-                                <div class="col-lg-2">비고</div>
+                                <div class="col-lg-2">특기사항</div>
                                 <div class="col-lg-4">
                                     <input name="NOTE" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-lg-2">활동증명서파일등록</div>
+                                <div class="col-lg-2">증명서파일등록</div>
                                 <div class="col-lg-10">
                                     <div class="d-flex justify-content">
                                         <input name="gradFile" type="text" class="form-control me-1" disabled>
