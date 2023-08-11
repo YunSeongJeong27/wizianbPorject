@@ -1,15 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: admin
-  Date: 2023-08-09
-  Time: 오후 5:04
+  Date: 2023-08-10
+  Time: 오후 3:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../user/header.jsp" %>
 <html>
 <head>
-    <title>원서작성_학력사항</title>
+    <title>학력사항</title>
+    <script src="jquery-3.6.4.js"></script>
     <style>
         .breadcrumbs,
         .menu ul {
@@ -46,6 +47,21 @@
         #add_eduInfo, #save_btn{
             background: #003A78;
         }
+        #edu_title h3{
+            font-weight: bolder;
+        }
+        #edu_p{
+            font-size: 13px;
+            color: #245396;
+            font-weight: bolder;
+            margin-top: 0;
+        }
+        .btn-second{
+            background: #e1e1e1;
+        }
+        .edu_form{
+            white-space: nowrap;
+        }
 
     </style>
 </head>
@@ -63,7 +79,10 @@
             </div>
         </div>
     </div>
+</div>
+<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
 
+<div class="my-5 container">
     <div class="row">
         <div class="col-lg-3 mb-3">
             <div class="menu h-auto px-3 border rounded-3">
@@ -83,36 +102,32 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-9">
-            <div class="mb-3">
-                자바기반 풀스택 개발자 취업과정
+        <div id="edu_title" class="col-lg-9">
+            <h3 class="mb-3">자바기반 풀스택 개발자 취업과정</h3>
+            <div class="title mt-5 mb-1">
+                학력사항
             </div>
-            <h3 class="title mt-5 mb-1">학력사항</h3>
-            <div class="d-flex justify-content-end mt-5">
-                <button type="button" class="btn btn-dark" onclick="remove_btn()">삭제</button>
-            </div>
-            <div class="border-top border-dark border-2">
-                <table class="table table-hover align-middle">
-                    <colgroup>
-                        <col style="width: 20%">
-                        <col style="width: 30%;">
-                        <col style="width: 20%">
-                        <col style="width: 15%;">
-                        <col style="width: 15%;">
-                    </colgroup>
-                    <tr>
-                        <td>학위구분</td>
-                        <td>
-                            <div class="row g-3">
-                                <div class="col-auto">
-                                    <select class="form-select">
+
+
+            <form class="edu_form" action="" method="">
+                <div id="again">
+                    <%--추가할때 반복, 여기부터~--%>
+                    <div id="repeat_form">
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="button" class="btn btn-dark btn-sm mb-2" id="delete_form">삭제</button>
+                        </div>
+                        <div class="border-top border-dark border-2">
+                            <div class="row mt-3">
+                                <div class="col-lg-2">학위구분</div>
+                                <div class="col-lg-2">
+                                    <select class="form-select" name="gradDiv">
                                         <option selected></option>
                                         <option>학사학위</option>
                                         <option>석사학위</option>
                                         <option>박사학위</option>
                                     </select>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-lg-2">
                                     <select class="form-select">
                                         <option selected></option>
                                         <option>졸업</option>
@@ -123,48 +138,98 @@
                                         <option>편입</option>
                                     </select>
                                 </div>
+                                <div class="col-lg-2">입학년월/졸업년월</div>
+                                <div class="col-lg-2">
+                                    <input type="date" name="enterYear" value="enterYear" class="form-control">
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="date" name="gradYear" value="graduateYear" class="form-control">
+                                </div>
                             </div>
-                        </td>
-                        <td>입학년월/졸업년월</td>
-                        <td class="col-auto">
-                            <input type="date" value="enterYear" class="form-control">
-                        </td>
-                        <td class="col-auto">
-                            <input type="date" value="graduateYear" class="form-control">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>학위기관명</td>
-                        <td><input type="text" class="form-control"></td>
-                        <td>학과/전공명</td>
-                        <td colspan="2"><input type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>학위증명서파일등록</td>
-                        <td colspan="4">
-                            <input type="text" class="form-control" disabled>
-                            <label class="btn btn-sm btn-outline-dark">업로드</label>
-                            <button type="button" class="btn btn-sm btn-outline-dark">다운로드</button>
-                            <button type="button" class="btn btn-sm btn-outline-dark">삭제</button>
-                        </td>
-                    </tr>
-                </table>
-                <div>
-                    <p>※파일명규칙:기수명-성명-파일명.pdf</p>
-                </div>
-                <div class="d-flex justify-content-end mt-5">
-                    <button type="button" class="btn btn-dark" id="add_eduInfo" onclick="add_eduInfo()">학력추가</button>
-                </div>
-                <%--버튼--%>
-                <div>
-                    <button type="button" class="btn btn-secondary">이전</button>
-                    <button type="button" id="save_btn" class="btn btn-dark">저장</button>
-                    <button type="button" class="btn btn-secondary">저장 후 이동</button>
-                </div>
-            </div>
-        </div>
 
+                            <div class="row mt-3">
+                                <div class="col-lg-2">학위기관명</div>
+                                <div class="col-lg-4">
+                                    <input name="gradSchool" type="text" class="form-control">
+                                </div>
+                                <div class="col-lg-2">학과/전공명</div>
+                                <div class="col-lg-4">
+                                    <input name="major" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-2">학위증명서파일등록</div>
+                                <div class="col-lg-10">
+                                    <div class="d-flex justify-content">
+                                        <input name="gradFile" type="text" class="form-control me-1" disabled>
+                                        <label class="btn btn-sm btn-outline-dark me-1">업로드</label>
+                                        <button type="button" class="btn btn-sm btn-outline-dark me-1">다운로드</button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p id="edu_p">※파일명규칙:기수명-성명-파일명.pdf</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <%--추가반복 여기까지--%>
+                    <%--추가할 폼위치--%>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="button" class="btn btn-dark" id="add_eduInfo">학력추가</button>
+                    </div>
+
+                    <%--버튼--%>
+                    <div class="d-flex justify-content-between mt-5 ">
+                        <button type="button" class="btn btn-second">이전</button>
+                        <button type="button" id="save_btn" class="btn btn-dark">저장</button>
+                        <button type="button" class="btn btn-second">저장 후 이동</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+<script src="jquery-3.6.4.js"></script>
+<script>
+    var idx=1;
+    $(document).ready(function (){
+        $("#add_eduInfo").on('click',function () {
+            idx++;
+            var addform = $(this).closest("form");
+            var addDiv = addform.find("#repeat_form:first").clone(true);
+
+            addDiv.find('[name="gradDiv"]').val("");
+            addDiv.find('[name="enterYear"]').val("");
+            addDiv.find('[name="gradYear"]').val("");
+            addDiv.find('[name="gradSchool"]').val("");
+            addDiv.find('[name="major"]').val("");
+            addDiv.find('[name="gradFile"]').val("");
+            addform.find("#again:first").append(addDiv);
+            addDiv.addClass('dynamic_section');
+        });
+
+    });
+
+    $(document).on('click', '#delete_form', function() {
+        var section = $(this).closest("#repeat_form");
+
+        // Check if the section is dynamically added or not
+        if (section.hasClass('dynamic_section')) {
+            section.remove();
+        } else {
+            section.find('[name="gradDiv"]').val("");
+            section.find('[name="enterYear"]').val("");
+            section.find('[name="gradYear"]').val("");
+            section.find('[name="gradSchool"]').val("");
+            section.find('[name="major"]').val("");
+            section.find('[name="gradFile"]').val("");
+        }
+    });
+
+</script>
+<%@include file="../user/footer.jsp" %>
 </body>
 </html>
