@@ -6,26 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
     <style>
-
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
-        }
-        .tui-grid-cell{
-            border-left-width: 1px;
-        }
-
-        /* 체크된 row */
-        .checkCell{
-            background-color: #D1D1D1 !important;
-        }
 
         /* noticeInfoTable */
         #noticeInfoTable textarea{
@@ -44,21 +29,6 @@
         #noticeInfoTable .inputTitle+div input{
             border:none;
             background-color: #F4F4F4;
-        }
-
-        /* text edit */
-        .tui-grid-layer-editing .tui-grid-content-text{
-            height: 100% !important;
-            border: none !important;
-            text-align: center !important;
-        }
-        /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
-            border: none !important;
-        }
-        .tui-select-box-input.tui-select-box-open{
-            border: none !important;
-            border-bottom: 1px solid #aaa !important;
         }
 
         .biIcon{
@@ -190,11 +160,15 @@
                 noticeData = [
                     {
                         STEP_DIV_NM: '2',
-                        MSG_DIV_NM: '1'
+                        MSG_DIV_NM: '1',
+                        SUBJECT: '제목',
+                        MSG_CONT: '내용'
                     },
                     {
                         STEP_DIV_NM: '3',
-                        MSG_DIV_NM: '2'
+                        MSG_DIV_NM: '2',
+                        SUBJECT: '제목22',
+                        MSG_CONT: '내용22'
                     }
                 ];
             }
