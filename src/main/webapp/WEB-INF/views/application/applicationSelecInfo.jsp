@@ -39,7 +39,7 @@
             color: #003A78;
         }
 
-        #save_btn{
+        #save_btn,#saveFirst_btn{
             background: #003A78;
         }
         #selecInfo_content{
@@ -82,7 +82,8 @@
         </div>
 
         <div class="d-flex justify-content-center m-5">
-            <button type="button" id="save_btn" class="btn btn-dark">기존회원작성</button>
+            <button type="button" id="saveFirst_btn" class="btn btn-dark me-3 p-2">지원서처음작성</button>
+            <button type="button" id="save_btn" class="btn btn-dark p-2">기존회원작성</button>
         </div>
     </div>
 </div>

@@ -102,7 +102,7 @@
                         <a href="#">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="#">활동이력</a>
+                        <a href="#">경력사항</a>
                     </li>
                     <li class="py-2">
                         <a href="#">자기소개서</a>
