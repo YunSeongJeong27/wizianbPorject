@@ -164,6 +164,9 @@
                         <option>C++</option>
                     </select>
                 </div>
+
+                <div class="col-2 tableSearch">과정명</div>
+                <div class="col-2"><input type="text" class="form-control"></div>
             </div>
 
             <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
@@ -455,13 +458,13 @@
                 else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                     noticeData = [
                         {
-                            STEP_DIV_NM: 2,
+                            STEP_DIV_NM: '1',
                             MSG_DIV_NM: '1',
                             SUBJECT: '메일제목',
                             MSG_CONT: '내용'
                         },
                         {
-                            STEP_DIV_NM: 2,
+                            STEP_DIV_NM: '2',
                             MSG_DIV_NM: '2',
                             SUBJECT: '메일제목2',
                             MSG_CONT: '내용2'
@@ -496,11 +499,10 @@
                                 type: 'select',
                                 options: {
                                     listItems: [
-                                        { text: 'IE 9', value: 1 },
-                                        { text: 'IE 10', value: 2 },
-                                        { text: 'IE 11', value: 3 },
-                                        { text: 'Firefox', value: 4 },
-                                        { text: 'Chrome', value: 5 }
+                                        { text: '원서접수', value: '1' },
+                                        { text: '서류전형', value: '2' },
+                                        { text: '면접전형', value: '3' },
+                                        { text: '합격사정', value: '4' }
                                     ]
                                 }
                             }
@@ -510,7 +512,17 @@
                             name: 'MSG_DIV_NM',
                             sortingType: 'asc',
                             sortable: true,
-                            align: 'center'
+                            align: 'center',
+                            formatter: 'listItemText',
+                            editor: {
+                                type: 'select',
+                                options: {
+                                    listItems: [
+                                        { text: '모집전형안내문', value: '1' },
+                                        { text: '최종합격자안내문', value: '2' }
+                                    ]
+                                }
+                            }
                         }
                     ],
                     columnOptions: {
@@ -557,20 +569,18 @@
                     noticeTable.removeRowClassName(ev.rowKey, "checkCell");
                 });
 
-                /*noticeTable.on('editingFinish', function (ev) {
-                   console.log('editingFinish:', ev);
-                   noticeTable.resetData(noticeData);
-                });*/
-
-                noticeTable.on('beforeChange', ev => {
-                    console.log('before change:', ev);
-                });
+                // 데이터 변경 후
                 noticeTable.on('afterChange', ev => {
-                    console.log('after change:', ev);
+                    var arr = ev["changes"];
+                    arr.forEach((a) => {
+                        var list = noticeData[a['rowKey']];
+                        list[a['columnName']] = a['value'];
+                    });
+
+                    noticeTable.resetData(noticeData);
                 })
 
 
-                noticeTable.resetData(noticeData);
 
 
                 // 신규 버튼 click

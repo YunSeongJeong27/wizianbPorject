@@ -179,8 +179,9 @@
                 <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                 <td class="col-2">
                     <select class="form-select tableInput" name="CORS_DIV" aria-label="Default select">
-                        <option selected>[S] CORS_DIV [LM0010]</option>
-                        <option>[S] CORS_DIV [LM0010] 2</option>
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                        <option value="C++">C++</option>
                     </select>
                 </td>
                 <td class="col-2 tableColor">과정명</td>
@@ -194,7 +195,10 @@
                 <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
                 <td class="col-2">
                     <select class="form-select tableInput" name="TERM_DIV" aria-label="Default select">
-                        <option selected>[S] TERM_DIV [CO0005]</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                     </select>
                 </td>
                 <td class="col-2 tableColor">수업개월수<span class="text-danger">*</span></td>
@@ -368,9 +372,9 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const data = [
+        var nthData = [
             {
-                CORS_DIV: 'JAVA',
+                CORS_DIV: 'Java',
                 SEL_NM: '자바과정 풀스택',
                 NTH_NM: '3',
                 ENT_YR: '2023',
@@ -413,7 +417,7 @@
         }
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: data,
+            data: nthData,
             rowHeaders: ['checkbox'],
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
@@ -489,6 +493,17 @@
             onGridMounted() {
                 nthTable.focus(0, 'CORS_DIV', true);
                 rowDataLoad(0, nthTable, "inputTable");
+
+                // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
+                var tableInput = document.querySelectorAll("#inputTable .tableInput");
+                var dataList = nthData[nthTable.getFocusedCell()['rowKey']];
+                console.log(dataList);
+                tableInput.forEach((ti) => {
+                    ti.addEventListener("change", function(){
+                        //console.log(ti.getAttribute("name"));
+                        //dataList[ti.getAttribute("name")]=this.value;
+                    })
+                });
             }
         });
 
@@ -524,7 +539,6 @@
             nthTable.removeRowClassName(ev.rowKey, "checkCell");
         });
 
-
         // 신규 버튼 click
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
@@ -555,23 +569,27 @@
             });
         });
 
-
         // 하단 table 데이터 넣기
         function rowDataLoad(rowKey, table, id){
             var datas = table.getRow(rowKey);
             var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-
             if(datas == null ) {        // 데이터 x
                 tableInput.forEach((ti) => {
                     ti.value = "";
                 });
             }else{
                 tableInput.forEach((ti) => {
-                    ti.value = datas[ti.getAttribute("name")];
+                    var tiName = ti.getAttribute("name");
+                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
+                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    }
+                    ti.value = datas[tiName];
                 });
             }
         }
     });
+
+
 </script>
 </body>
 </html>

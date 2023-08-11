@@ -27,11 +27,11 @@ public class IndexController {
 
     @GetMapping("/notice")
     public String notice(){
-        return "/admin/noticeManagement";
+        return "/admin/nthNotice";
     }
 
     @GetMapping("/apply")
-    public String applyForm() { return "/application/application_add";}
+    public String applyForm() { return "/application/application_edu";}
 
 
     @GetMapping("/apply1")
