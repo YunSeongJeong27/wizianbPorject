@@ -190,10 +190,10 @@
                 <td class="col-2"><input class="form-control tableInput" type="text" name="NTH_NM" value="NTH_CD" readonly></td>
             </tr>
             <tr>
-                <td class="col-2 tableColor">수강년도<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="text" name="ENT_YR" value="ENT_YR"></td>
-                <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
-                <td class="col-2">
+                <td class="tableColor">수강년도<span class="text-danger">*</span></td>
+                <td class=""><input class="form-control tableInput" type="text" name="ENT_YR" value="ENT_YR"></td>
+                <td class="tableColor">분기구분<span class="text-danger">*</span></td>
+                <td class="">
                     <select class="form-select tableInput" name="TERM_DIV" aria-label="Default select">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -201,24 +201,20 @@
                         <option value="4">4</option>
                     </select>
                 </td>
-                <td class="col-2 tableColor">수업개월수<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="number" name="YR_CNT" value="YR_CNT" id="entInput"></td>
+                <td class="tableColor">수업개월수<span class="text-danger">*</span></td>
+                <td class=""><input class="form-control tableInput" type="number" name="YR_CNT" value="YR_CNT" id="entInput"></td>
             </tr>
             <tr>
-                <td class="col-2 tableColor">교육시작일<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="date" name="EDU_ST_DT" value="[CAL] EDU_ST_DT"></td>
-                <td class="col-2 tableColor">교육종료일<span class="text-danger">*</span></td>
-                <td class="col-2"><input class="form-control tableInput" type="date" name="EDU_END_DT" value="[CAL] EDU_END_DT"></td>
-                <td class="col-2 tableColor">발표일자</td>
-                <td class="col-2"><input class="form-control tableInput" type="date" name="ANN_DT" value="2020-10-10"></td>
+                <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
+                <td class=""><input class="form-control tableInput" type="date" name="EDU_ST_DT" value="[CAL] EDU_ST_DT"></td>
+                <td class="tableColor">교육종료일<span class="text-danger">*</span></td>
+                <td class=""><input class="form-control tableInput" type="date" name="EDU_END_DT" value="[CAL] EDU_END_DT"></td>
+                <td class="tableColor">발표일자</td>
+                <td class=""><input class="form-control tableInput" type="date" name="ANN_DT" value="2020-10-10"></td>
             </tr>
             <tr>
-                <td class="col-2 tableColor">비고</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" name="NOTE" value="NOTE"></td>
-                <td class="col-2 tableColor"></td>
-                <td class="col-2"></td>
-                <td class="col-2 tableColor"></td>
-                <td class="col-2"></td>
+                <td class="tableColor">비고</td>
+                <td class="" colspan="5"><input class="form-control tableInput" type="text" name="NOTE" value="NOTE"></td>
             </tr>
         </tbody>
     </table>

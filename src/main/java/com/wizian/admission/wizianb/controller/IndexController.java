@@ -15,6 +15,8 @@ public class IndexController {
 
     @GetMapping("/side")
     public String side(){return "/admin/side";}
+    @GetMapping("/top")
+    public String top(){return "/admin/nthTopProgressNum";}
     @GetMapping("/test")
     public String test(){
         return "/admin/nthMozip";
