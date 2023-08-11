@@ -520,7 +520,7 @@
         var checkBox = [];
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='CORS_DIV'");
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+Object.keys(nthData[0])[0]+"'");
 
             rowKeys.forEach((rowKey) => {
                 checkBox.push(rowKey);
@@ -594,8 +594,6 @@
             }
         }
     });
-
-
 </script>
 </body>
 </html>

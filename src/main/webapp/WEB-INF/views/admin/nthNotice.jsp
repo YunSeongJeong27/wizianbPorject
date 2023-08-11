@@ -323,7 +323,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const data = [
+            const nthData = [
                 {
                     CORS_DIV: 'JAVA',
                     SEL_NM: '자바과정 풀스택',
@@ -368,7 +368,7 @@
             }
             const nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
-                data: data,
+                data: nthData,
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -442,193 +442,191 @@
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
                     nthTable.focus(0, 'CORS_DIV', true);
-                    noticeTableLoad(0);
+                    subTableLoad(0);
                 }
             });
 
             nthTable.on('click', function (ev) {
-                noticeTableLoad(ev.rowKey);
+                subTableLoad(ev.rowKey);
+            });
+        });
+
+        // notice테이블 grid
+        // nthTable row 누를 때마다 noticeTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
+        function subTableLoad(rowKey){
+            var noticeData = [];
+
+            if(rowKey == null) return;       // 헤더 클릭 시
+            else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
+                noticeData = [
+                    {
+                        STEP_DIV_NM: '3',
+                        MSG_DIV_NM: '1',
+                        SUBJECT: '메일제목',
+                        MSG_CONT: '내용'
+                    },
+                    {
+                        STEP_DIV_NM: '2',
+                        MSG_DIV_NM: '2',
+                        SUBJECT: '메일제목2',
+                        MSG_CONT: '내용2'
+                    }
+                ];
+            }
+
+            var noticeEl = document.getElementById('noticeTable');
+            noticeEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
+
+            const noticeTable = new tui.Grid({
+                el: noticeEl,
+                data: noticeData,
+                rowHeaders: ['checkbox'],
+                pageOptions: {
+                    useClient: true,	// front에서만 페이징 하는 속성
+                    perPage: 5,		//한번에 보여줄 데이터 수
+                    visiblePages: 10
+                },
+                scrollX: true,
+                scrollY: true,
+                //editingEvent: 'click',
+                columns: [
+                    {
+                        header: '전형평가단계',
+                        name: 'STEP_DIV_NM',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center',
+                        formatter: 'listItemText',
+                        editor: {
+                            type: 'select',
+                            options: {
+                                listItems: [
+                                    { text: '원서접수', value: '1' },
+                                    { text: '서류전형', value: '2' },
+                                    { text: '면접전형', value: '3' },
+                                    { text: '합격사정', value: '4' }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        header: '안내문종류',
+                        name: 'MSG_DIV_NM',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center',
+                        formatter: 'listItemText',
+                        editor: {
+                            type: 'select',
+                            options: {
+                                listItems: [
+                                    { text: '모집전형안내문', value: '1' },
+                                    { text: '최종합격자안내문', value: '2' }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                columnOptions: {
+                    resizable: true
+                },
+                draggable: true,
+
+                // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+                onGridMounted() {
+                    noticeTable.focus(0, 'STEP_DIV_NM', true);
+                    rowDataLoad(0, noticeTable, "noticeInfoTable");
+                }
             });
 
+            // row 클릭 시 하단에 해당 row 데이터 load
+            noticeTable.on('click', function (ev) {
+                if(ev.rowKey == null) return;       // 헤더 클릭 시
+
+                rowDataLoad(ev.rowKey, noticeTable, "noticeInfoTable");
+            });
+
+            // 체크박스 전체 선택/해제
+            var checkBox = [];
+
+            noticeTable.on('checkAll', function (ev) {
+                var id = ev.instance['el'].id;
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+Object.keys(noticeData[0])[0]+"'");
+
+                rowKeys.forEach((rowKey) => {
+                    checkBox.push(rowKey);
+                    noticeTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                });
+            });
+            noticeTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+                checkBox.forEach((rowKey) => {
+                    noticeTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                });
+            });
+
+            // 체크박스 개별 선택/해제
+            noticeTable.on('check', function (ev) {
+                noticeTable.addRowClassName(ev.rowKey, "checkCell");
+            });
+            noticeTable.on('uncheck', function (ev) {
+                noticeTable.removeRowClassName(ev.rowKey, "checkCell");
+            });
+
+            // 데이터 변경 후
+            noticeTable.on('afterChange', ev => {
+                var changes = ev["changes"][0];
+                var rowKey = changes['rowKey']
+                var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
+                datas[changes['columnName']] = changes['value'];
+
+                noticeTable.resetData(noticeData);
+                noticeTable.focus(rowKey, 'STEP_DIV_NM', true);
+            })
 
 
-
-            // notice테이블 grid
-            // nthTable row 누를 때마다 noticeTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
-            function noticeTableLoad(rowKey){
-                var noticeData = [];
-
-                if(rowKey == null) return;       // 헤더 클릭 시
-                else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
-                    noticeData = [
-                        {
-                            STEP_DIV_NM: '3',
-                            MSG_DIV_NM: '1',
-                            SUBJECT: '메일제목',
-                            MSG_CONT: '내용'
-                        },
-                        {
-                            STEP_DIV_NM: '2',
-                            MSG_DIV_NM: '2',
-                            SUBJECT: '메일제목2',
-                            MSG_CONT: '내용2'
-                        }
-                    ];
-                }
-
-                var noticeEl = document.getElementById('noticeTable');
-                noticeEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
-
-                const noticeTable = new tui.Grid({
-                    el: noticeEl,
-                    data: noticeData,
-                    rowHeaders: ['checkbox'],
-                    pageOptions: {
-                        useClient: true,	// front에서만 페이징 하는 속성
-                        perPage: 5,		//한번에 보여줄 데이터 수
-                        visiblePages: 10
-                    },
-                    scrollX: true,
-                    scrollY: true,
-                    //editingEvent: 'click',
-                    columns: [
-                        {
-                            header: '전형평가단계',
-                            name: 'STEP_DIV_NM',
-                            sortingType: 'asc',
-                            sortable: true,
-                            align: 'center',
-                            formatter: 'listItemText',
-                            editor: {
-                                type: 'select',
-                                options: {
-                                    listItems: [
-                                        { text: '원서접수', value: '1' },
-                                        { text: '서류전형', value: '2' },
-                                        { text: '면접전형', value: '3' },
-                                        { text: '합격사정', value: '4' }
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            header: '안내문종류',
-                            name: 'MSG_DIV_NM',
-                            sortingType: 'asc',
-                            sortable: true,
-                            align: 'center',
-                            formatter: 'listItemText',
-                            editor: {
-                                type: 'select',
-                                options: {
-                                    listItems: [
-                                        { text: '모집전형안내문', value: '1' },
-                                        { text: '최종합격자안내문', value: '2' }
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    columnOptions: {
-                        resizable: true
-                    },
-                    draggable: true,
-
-                    // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-                    onGridMounted() {
-                        noticeTable.focus(0, 'STEP_DIV_NM', true);
-                        rowDataLoad(0, noticeTable, "noticeInfoTable");
+            // 신규 버튼 click
+            document.getElementById("noticeInsertBtn").addEventListener("click", function () {
+                const rowData = [
+                    {
+                        STEP_DIV_NM: '1',
+                        MSG_DIV_NM: '1',
+                        SUBJECT: '',
+                        MSG_CONT: ''
                     }
+                ];
+
+                noticeTable.appendRow(rowData[0], {
+                    at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
+                    extendPrevRowSpan: true,
+                    focus: true
                 });
 
-                // row 클릭 시 하단에 해당 row 데이터 load
-                noticeTable.on('click', function (ev) {
-                    if(ev.rowKey == null) return;       // 헤더 클릭 시
+                noticeData = noticeTable.getData();
+                console.log(noticeData);
 
-                    rowDataLoad(ev.rowKey, noticeTable, "noticeInfoTable");
+                // 옆 notice 데이터 초기화
+                var tableInput = document.querySelectorAll("#noticeInfoTable .tableInput");
+                tableInput.forEach((ti) => {
+                    ti.value = "";
                 });
+            });
 
-                // 체크박스 전체 선택/해제
-                var checkBox = [];
-                noticeTable.on('checkAll', function (ev) {
-                    var id = ev.instance['el'].id;
-                    var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='MSG_DIV_NM'");
+            // 옆 notice 데이터 넣기
+            function rowDataLoad(rowKey, table, id){
+                var datas = table.getRow(rowKey);
+                var tableInput = document.querySelectorAll("#"+id+" .tableInput");
 
-                    rowKeys.forEach((rowKey) => {
-                        checkBox.push(rowKey);
-                        noticeTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
-                    });
-                });
-                noticeTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-                    checkBox.forEach((rowKey) => {
-                        noticeTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
-                    });
-                });
-
-                // 체크박스 개별 선택/해제
-                noticeTable.on('check', function (ev) {
-                    noticeTable.addRowClassName(ev.rowKey, "checkCell");
-                });
-                noticeTable.on('uncheck', function (ev) {
-                    noticeTable.removeRowClassName(ev.rowKey, "checkCell");
-                });
-
-                // 데이터 변경 후
-                noticeTable.on('afterChange', ev => {
-                    var changes = ev["changes"][0];
-                    var rowKey = changes['rowKey']
-                    var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
-                    datas[changes['columnName']] = changes['value'];
-
-                    noticeTable.resetData(noticeData);
-                    noticeTable.focus(rowKey, 'STEP_DIV_NM', true);
-                })
-
-
-                // 신규 버튼 click
-                document.getElementById("noticeInsertBtn").addEventListener("click", function () {
-                    const rowData = [
-                        {
-                            STEP_DIV_NM: '1',
-                            MSG_DIV_NM: '1',
-                            SUBJECT: '',
-                            MSG_CONT: ''
-                        }
-                    ];
-
-                    noticeTable.appendRow(rowData[0], {
-                        at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
-                        extendPrevRowSpan: true,
-                        focus: true
-                    });
-
-                    noticeData = noticeTable.getData();
-                    console.log(noticeData);
-
-                    // 옆 notice 데이터 초기화
-                    var tableInput = document.querySelectorAll("#noticeInfoTable .tableInput");
+                if(datas == null ) {        // 데이터 x
                     tableInput.forEach((ti) => {
                         ti.value = "";
                     });
-                });
-
-                // 옆 notice 데이터 넣기
-                function rowDataLoad(rowKey, table, id){
-                    var datas = table.getRow(rowKey);
-                    var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-
-                    if(datas == null ) {        // 데이터 x
-                        tableInput.forEach((ti) => {
-                            ti.value = "";
-                        });
-                    }else{
-                        tableInput.forEach((ti) => {
-                            ti.value = datas[ti.getAttribute("name")];
-                        });
-                    }
+                }else{
+                    tableInput.forEach((ti) => {
+                        ti.value = datas[ti.getAttribute("name")];
+                    });
                 }
             }
-        });
+        }
 
         // Toast Editor
         const Editor = toastui.Editor;
