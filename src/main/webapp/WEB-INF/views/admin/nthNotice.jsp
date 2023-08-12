@@ -85,7 +85,7 @@
                             <div class="d-flex flex-row align-items-center">
                                 <p class="subTitle fw-bold me-2">모집전형안내문</p>
                                 <p class="subResult text-secondary me-2">검색결과:0건</p>
-                                <select class="form-select w-auto">
+                                <select class="form-select w-auto" id="noticeTablePage">
                                     <option selected>5</option>
                                     <option>30</option>
                                     <option>50</option>
@@ -208,6 +208,7 @@
             }
 
             var noticeEl = document.getElementById('noticeTable');
+            const noticeTablePage = document.querySelector('#noticeTablePage');
             noticeEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
             const noticeTable = new tui.Grid({
@@ -217,7 +218,8 @@
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
-                    visiblePages: 10
+                    visiblePages: 10,
+                    pagination: true
                 },
                 scrollX: true,
                 scrollY: true,
@@ -271,6 +273,13 @@
                     rowDataLoad(0, noticeTable, "noticeInfoTable");
                 }
             });
+            // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+            function handlePerPageChange(event) {
+                const perPage = parseInt(event.target.value, 10);
+                noticeTable.setPerPage(perPage);
+            }
+            // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+            noticeTablePage.addEventListener('change', handlePerPageChange);
 
             // row 클릭 시 하단에 해당 row 데이터 load
             noticeTable.on('click', function (ev) {
