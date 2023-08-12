@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../user/header.jsp"%>
+<%@ include file="../admin/header.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -79,7 +79,6 @@
                                     <div class="navbar-nav">
                                         <div class="nav-item">
                                             <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('apply')">원서접수관리</div>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('')">적격심사관리</div>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +105,6 @@
     <!-- 오 -->
     <div style="width: 100%">
         <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
-
     </div>
 </div>
 
