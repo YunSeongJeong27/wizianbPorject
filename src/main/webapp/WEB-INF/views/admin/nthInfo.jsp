@@ -79,7 +79,6 @@
 
 
 <script>
-
     // input number 음수 막기
     var entInput = document.getElementById("entInput");
     entInput.addEventListener("click", function () {
