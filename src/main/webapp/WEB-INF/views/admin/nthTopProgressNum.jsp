@@ -48,7 +48,7 @@
             margin-bottom: 0;
         }
         .searchResult select.form-select{
-            padding: 0.2rem 1.25rem 0.2rem 0.75rem;
+            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
         }
 
         /* 그리드 custom css */
@@ -119,7 +119,9 @@
             text-align: center !important;
         }
         /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
+            border: none !important;
+        }
         .tui-select-box-input.tui-select-box-open{
             border: none !important;
             border-bottom: 1px solid #aaa !important;

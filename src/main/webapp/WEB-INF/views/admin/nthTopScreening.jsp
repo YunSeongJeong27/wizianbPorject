@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
@@ -47,7 +48,7 @@
             margin-bottom: 0;
         }
         .searchResult select.form-select{
-            padding: 0.2rem 1.25rem 0.2rem 0.75rem;
+            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
         }
 
         /* 그리드 custom css */
@@ -118,7 +119,9 @@
             text-align: center !important;
         }
         /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
+            border: none !important;
+        }
         .tui-select-box-input.tui-select-box-open{
             border: none !important;
             border-bottom: 1px solid #aaa !important;
@@ -182,12 +185,11 @@
                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
                 </div>--%>
             </div>
-        </div>
     </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
