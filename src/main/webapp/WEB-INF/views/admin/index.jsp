@@ -84,9 +84,9 @@
                                     평가관리
                                 </button>
                                 <div class="collapse accordion-collapse ms-4" id="accEntSel4">
-                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">서류전형합격사정</div>
-                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">면접전형합격사정</div>
-                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">최종합격자명부</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('interviewPass')">서류전형합격사정</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('applicationPass')">면접전형합격사정</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('finalPass')">최종합격자명부</div>
                                 </div>
                             </div>
                         </div>
