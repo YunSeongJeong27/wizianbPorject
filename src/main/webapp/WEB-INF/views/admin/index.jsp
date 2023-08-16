@@ -12,9 +12,6 @@
     <title>Title</title>
 
     <style>
-        body{
-            overflow-x: hidden;
-        }
         .btn-lf:hover{
             background-color: #D1D1D1;
             color: blue;
@@ -29,9 +26,9 @@
 </head>
 
 <body>
-<div class="d-flex" style="height: calc(100% - 108px);">
+<div class="d-flex">
     <!-- 왼 -->
-    <div style="width: 250px;">
+    <div style="width: 300px; height: 100vh;">
         <div class="d-flex p-2 shadow-sm" style="height: 6%;">
             <div class="col-10">
                 <input class="form-control h-100" type="text" placeholder="검색어를 입력하세요">
@@ -41,62 +38,55 @@
             </div>
         </div>
         <div class="p-2 shadow-sm" style="height: 93%;">
-            <div>
-                <div class="w-100">
-                    <button class="p-2 w-100 fw-bold text-start navbar-toggler btn-lf" data-bs-toggle="collapse" data-bs-target="#navbarEnt" aria-controls="navbarEnt" aria-expanded="false" aria-label="Toggle navigation" onclick="folder(this)">
+            <div class="accordion" id="accordionWrap">
+                <div class="w-100 accordion-item">
+                    <button class="p-2 w-100 fw-bold text-start btn-lf navbar-toggler" data-bs-toggle="collapse" data-bs-target="#accordionEnt" aria-controls="accordionEnt" aria-expanded="true" onclick="folder(this)">
                         <span class="bi bi-folder2"></span>
                         입학관리
                     </button>
-                    <div class="collapse navbar-collapse ms-4" id="navbarEnt">
-                        <div class="navbar-nav">
-                            <div class="nav-item">
-                                <button class="nav-link px-2 py-1 mt-1 w-100 fw-bold text-start btn-lf" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEntSel1" aria-controls="navbarEntSel1" aria-expanded="false" aria-label="Toggle navigation" onclick="folder(this)">
+                    <div class="collapse accordion-collapse show ms-4" id="accordionEnt" data-bs-parent="#accordionWrap">
+                        <div class="accordion" id="accEntSelWrap">
+                            <div class="accordion-item border-0">
+                                <button class="nav-link px-2 py-1 mt-1 w-100 btn-lf fw-bold text-start" data-bs-toggle="collapse" data-bs-target="#accEntSel1" aria-controls="accEntSel1" aria-expanded="true" onclick="folder(this)">
                                     <span class="bi bi-folder2"></span>
                                     기수정보
                                 </button>
-                                <div class="collapse navbar-collapse ms-4" id="navbarEntSel1">
-                                    <div class="navbar-nav">
-                                        <div class="nav-item">
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('info')">모집기수정보</div>
-                                        </div>
-                                    </div>
+                                <div class="collapse accordion-collapse ms-4" id="accEntSel1">
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('info')">모집기수정보</div>
                                 </div>
-                                <button class="nav-link px-2 py-1 mt-1 w-100 fw-bold text-start btn-lf" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEntSel2" aria-controls="navbarEntSel2" aria-expanded="false" aria-label="Toggle navigation" onclick="folder(this)">
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <button class="nav-link px-2 py-1 mt-1 w-100 btn-lf fw-bold text-start collapsed" data-bs-toggle="collapse" data-bs-target="#accEntSel2" aria-controls="accEntSel2" aria-expanded="false" onclick="folder(this)">
                                     <span class="bi bi-folder2"></span>
                                     모집전형설정
                                 </button>
-                                <div class="collapse navbar-collapse ms-4" id="navbarEntSel2">
-                                    <div class="navbar-nav">
-                                        <div class="nav-item">
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('mozip')">모집전형정보</div>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('notice')">모집전형안내문관리</div>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('monhang')">자기소개서문항관리</div>
-                                        </div>
-                                    </div>
+                                <div class="collapse accordion-collapse ms-4" id="accEntSel2">
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('mozip')">모집전형정보</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('notice')">모집전형안내문관리</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('monhang')">자기소개서문항관리</div>
                                 </div>
-                                <button class="nav-link px-2 py-1 mt-1 w-100 fw-bold text-start btn-lf" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEntSel3" aria-controls="navbarEntSel3" aria-expanded="false" aria-label="Toggle navigation" onclick="folder(this)">
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <button class="nav-link px-2 py-1 mt-1 w-100 btn-lf fw-bold text-start collapsed" data-bs-toggle="collapse" data-bs-target="#accEntSel3" aria-controls="accEntSel3" aria-expanded="false" onclick="folder(this)">
                                     <span class="bi bi-folder2"></span>
                                     원서접수관리
                                 </button>
-                                <div class="collapse navbar-collapse ms-4" id="navbarEntSel3">
-                                    <div class="navbar-nav">
-                                        <div class="nav-item">
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('apply')">원서접수관리</div>
-                                        </div>
-                                    </div>
+                                <div class="collapse accordion-collapse ms-4" id="accEntSel3">
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index('apply')">원서접수관리</div>
                                 </div>
-                                <button class="nav-link px-2 py-1 mt-1 w-100 fw-bold text-start btn-lf" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEntSel4" aria-controls="navbarEntSel4" aria-expanded="false" aria-label="Toggle navigation" onclick="folder(this)">
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <button class="nav-link px-2 py-1 mt-1 w-100 btn-lf fw-bold text-start collapsed" data-bs-toggle="collapse" data-bs-target="#accEntSel4" aria-controls="accEntSel4" aria-expanded="false" onclick="folder(this)">
                                     <span class="bi bi-folder2"></span>
                                     평가관리
                                 </button>
-                                <div class="collapse navbar-collapse ms-4" id="navbarEntSel4">
-                                    <div class="navbar-nav">
-                                        <div class="nav-item">
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('applicationPass')">서류전형합격사정</div>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('interviewPass')">면접전형합격사정</div>
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">최종합격자명부</a>
-                                        </div>
-                                    </div>
+                                <div class="collapse accordion-collapse ms-4" id="accEntSel4">
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">서류전형합격사정</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">면접전형합격사정</div>
+                                    <div class="nav-link p-1 btn-lf indexDiv" onclick="index()">최종합격자명부</div>
                                 </div>
                             </div>
                         </div>
@@ -105,9 +95,10 @@
             </div>
         </div>
     </div>
-    <!-- 오 -->
-    <div style="width: calc(100% - 250px);">
-        <iframe style="width: 100%; height: 100%;" src="/info" id="iframe"></iframe>
+
+<!-- 오 -->
+    <div style="width: 100%">
+        <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
     </div>
 </div>
 
@@ -127,8 +118,13 @@
             span.classList.remove("bi-folder2");
             span.classList.add("bi-folder2-open");
         }
+        console.log(e);
+        var test = e.nextSibling;
+        console.log(test.id);
+
     }
 
 </script>
 </body>
+<%@include file="../user/footer.jsp"%>
 </html>
