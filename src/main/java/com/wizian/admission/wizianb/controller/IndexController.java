@@ -35,5 +35,8 @@ public class IndexController {
 
     @GetMapping("/finalPass")
     public String finalPass() { return "/admin/nthFinal";}
+    @GetMapping("/evaluationResults")
+    public String evaluationResults() { return "/admin/evaluationResults";}
+
 
 }
