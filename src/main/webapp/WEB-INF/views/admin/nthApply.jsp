@@ -25,7 +25,7 @@
         }
     </style>
     <style>
-        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
             margin: 0;
             padding: 0;
             border: 0;
@@ -172,6 +172,24 @@
             background-color: #F4F4F4;
         }
 
+        .divBtn{
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+
+            color: #9E9FA8 !important;
+            background-color: #C2C2C4 !important;
+
+            cursor: pointer;
+        }
+
+        .nav-tabs > .nav-item > .active {
+            color: #224FA8 !important;
+            background-color: white !important;
+        }
+
+        .table>tbody>tr>td:nth-child(odd) {
+            background-color: #F5F5F5;
+        }
     </style>
 </head>
 <body>
@@ -256,8 +274,7 @@
         <div id="grid2"></div>
     </div>
 
-
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-5">
             <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center">
@@ -278,13 +295,13 @@
                     </div>
                 </div>
                 <div>
-                    <button id="btn_grid2_excel_export" class="btn btn-outline-secondary btn-sm me-2"
+                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1"
                             onclick="fn_excel_grid2_onclick()">
                         엑셀내보내기(전체)
                     </button>
                 </div>
             </div>
-            <div>
+            <div class="mt-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex">
                         <div class="me-4">
@@ -297,7 +314,7 @@
                             </select>
                         </div>
                         <div>
-                            <button id="btn_arg2_change_all" class="btn btn-outline-secondary btn-sm"
+                            <button id="btn_arg2_change_all" class="btn btn-sm btn-secondary me-1"
                                     onclick="fn_grid2_change_all_onclick()">
                                 일괄변경
                             </button>
@@ -305,211 +322,212 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <div>
-                            <button id="btn_aply_cfm" class="btn btn-outline-secondary btn-sm me-2"
+                            <button id="btn_aply_cfm" class="btn btn-sm btn-secondary me-1"
                                     onclick="fn_aply_cfm_onclick()" disabled>접수취소
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="grid"></div>
+            <div id="grid" class="mt-2"></div>
         </div>
         <!-- 탭 아이디 'mainTab' -->
-        <div id="mainTab" class="col">
-            <ul role="tablist" class="nav nav-tabs" id="tabList">
-                <li role="presentation" class="nav-item">
-                    <button class="nav-link active" id="btn_tab1" data-bs-toggle="tab" data-bs-target="#tab1"
+        <div id="mainTab" class="col-7">
+            <ul role="tablist" class="nav nav-tabs col-9" id="tabList">
+                <li role="presentation" class="nav-item me-1 col-2">
+                    <button class="nav-link active divBtn w-100" id="btn_tab1" data-bs-toggle="tab" data-bs-target="#tab1"
                             type="button" role="tab" aria-controls="tab1" aria-selected="true">기본정보
                     </button>
                 </li>
-                <li role="presentation" class="nav-item">
-                    <button class="nav-link" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2" type="button"
+                <li role="presentation" class="nav-item me-1 col-2">
+                    <button class="nav-link divBtn w-100" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2" type="button"
                             role="tab" aria-controls="tab2" aria-selected="false">학력사항
                     </button>
                 </li>
-                <li role="presentation" class="nav-item">
-                    <button class="nav-link" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3" type="button"
+                <li role="presentation" class="nav-item me-1 col-2">
+                    <button class="nav-link divBtn w-100" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3" type="button"
                             role="tab" aria-controls="tab3" aria-selected="false">활동이력
                     </button>
                 </li>
-                <li role="presentation" class="nav-item">
-                    <button class="nav-link" id="btn_tab4" data-bs-toggle="tab" data-bs-target="#tab4" type="button"
+                <li role="presentation" class="nav-item me-1 col-2">
+                    <button class="nav-link divBtn w-100" id="btn_tab4" data-bs-toggle="tab" data-bs-target="#tab4" type="button"
                             role="tab" aria-controls="tab4" aria-selected="false">자기소개서
                     </button>
                 </li>
-                <li role="presentation" class="nav-item">
-                    <button class="nav-link" id="btn_tab5" data-bs-toggle="tab" data-bs-target="#tab5" type="button"
+                <li role="presentation" class="nav-item me-1 col-2">
+                    <button class="nav-link divBtn w-100" id="btn_tab5" data-bs-toggle="tab" data-bs-target="#tab5" type="button"
                             role="tab" aria-controls="tab5" aria-selected="false">제출서류
                     </button>
                 </li>
             </ul>
-            <div class="tab-content text-bg-light" id="myTabContent">
+            <div class="tab-content text-bg-light bg-white" id="myTabContent">
                 <div id="tab1" aria-labelledby="btn_tab1" role="tabpanel"
                      class="tab-pane fade show active" tabindex="0">
-                    <div class="wrap_contents" style="height: 1185px;">
+                    <div class="wrap_contents" style="height: 700px;">
                         <div class="contents">
                             <div class="container">
-                                <div class="d-flex justify-content-between">
-                                    <h3>기본정보</h3>
+                                <div class="d-flex justify-content-between py-3 align-items-center">
+                                    <div>기본정보</div>
                                     <div>
-                                        <button id="btn_tab1_modify" class="btn btn-outline-secondary btn-sm me-2"
+                                        <button id="btn_tab1_modify" class="btn btn-sm btn-secondary me-1"
                                                 title="Modify"
                                                 onclick="fn_btn_tab1_modify_onclick()" disabled="">수정
                                         </button>
-                                        <button id="btn_tab1_save" class="btn btn-outline-secondary btn-sm me-2"
+                                        <button id="btn_tab1_save" class="btn btn-sm btn-secondary me-1"
                                                 title="Save"
                                                 onclick="fn_btn_tab1_save_onclick()" disabled="">저장
                                         </button>
                                     </div>
                                 </div>
                                 <div class="form-basic">
-                                    <div>
+                                    <div class="border-top border-3 border-dark">
                                         <table class="table">
+                                            <thead></thead>
                                             <tbody>
-                                            <tr>
-                                                <td>모집과정명</td>
-                                                <td>
-                                                    <select id="slt_cors_div" class="form-select"
-                                                            disabled="">
-                                                        <option value="10">정규과정</option>
-                                                        <option value="21">야간과정</option>
-                                                        <option value="30">번역아틀리에</option>
-                                                        <option value="40">문화콘텐츠 번역실무 고급과정</option>
-                                                    </select>
-                                                </td>
-                                                <td>성별</td>
-                                                <td>
-                                                    <select id="slt_gen_div"
-                                                            class="form-select"
-                                                            style="">
-                                                        <option value=" ">(미선택)</option>
-                                                        <option value="10">남자</option>
-                                                        <option value="20">여자</option>
-                                                        <option value="30">기타</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>이메일</td>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <input type="text" id="txt_transcript_email"
-                                                               class="form-control" disabled="disabled">
-                                                        <!-- <button class="btn_email btn_slt button_sm noShrink" title="이메일인증" onclick="location.href='./EN0220P.html'">이메일인증</button> -->
-                                                    </div>
-                                                </td>
-                                                <td rowspan="7">사진</td>
-                                                <td rowspan="7">
-                                                    <div class="profile-pic dp_inlineblk"
-                                                         style="vertical-align: bottom;">
-                                                        <img id="img_preview" class="profile-pic" src="/일본어_김현진.jpg">
-                                                    </div>
-                                                    <!-- <div class="div_top_gap_06 dp_inlineblk" style="vertical-align: bottom;">
-                                                        <button class="btn_slt button_sm" title="업로드">업로드</button>
-                                                        <button class="btn_slt button_sm" title="삭제">삭제</button>
-                                                    </div> -->
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>성명(한글)</td>
-                                                <td><input type="text" id="txt_inp1_nm_kor" value=""
-                                                           class="form-control " maxlength="50"
-                                                           disabled="disabled"></td>
+                                                <tr>
+                                                    <td class="align-middle">모집과정명</td>
+                                                    <td class="align-middle">
+                                                        <select id="slt_cors_div" class="form-select"
+                                                                disabled="">
+                                                            <option value="10">정규과정</option>
+                                                            <option value="21">야간과정</option>
+                                                            <option value="30">번역아틀리에</option>
+                                                            <option value="40">문화콘텐츠 번역실무 고급과정</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="align-middle">성별</td>
+                                                    <td class="align-middle">
+                                                        <select id="slt_gen_div"
+                                                                class="form-select"
+                                                                style="">
+                                                            <option value=" ">(미선택)</option>
+                                                            <option value="10">남자</option>
+                                                            <option value="20">여자</option>
+                                                            <option value="30">기타</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">이메일</td>
+                                                    <td class="align-middle">
+                                                        <div class="input-group">
+                                                            <input type="text" id="txt_transcript_email"
+                                                                   class="form-control" disabled="disabled">
+                                                            <!-- <button class="btn_email btn_slt button_sm noShrink" title="이메일인증" onclick="location.href='./EN0220P.html'">이메일인증</button> -->
+                                                        </div>
+                                                    </td>
+                                                    <td rowspan="7" class="align-middle">사진</td>
+                                                    <td rowspan="7" class="align-middle">
+                                                        <div class="profile-pic dp_inlineblk"
+                                                             style="vertical-align: bottom;">
+                                                            <img id="img_preview" class="profile-pic" src="/일본어_김현진.jpg">
+                                                        </div>
+                                                        <!-- <div class="div_top_gap_06 dp_inlineblk" style="vertical-align: bottom;">
+                                                            <button class="btn_slt button_sm" title="업로드">업로드</button>
+                                                            <button class="btn_slt button_sm" title="삭제">삭제</button>
+                                                        </div> -->
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">성명(한글)</td>
+                                                    <td class="align-middle"><input type="text" id="txt_inp1_nm_kor" value=""
+                                                               class="form-control " maxlength="50"
+                                                               disabled="disabled"></td>
 
-                                            </tr>
-                                            <tr>
-                                                <td class=" fake_th lbl_chk">성명(영어)</td>
-                                                <td><input type="text" id="txt_inp1_nm_eng" value=""
-                                                           class="form-control" maxlength="50"
-                                                           disabled="disabled"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>생년월일</td>
-                                                <!-- <td>
-                                                    <span class="bg-icon_calendar div_top_gap_04">
-                                                        <input type="date" id="cal_brdt" class="cal_brdt width_100 ">
-                                                    </span>
-                                                </td> -->
-                                                <td>
-                                                    <div class="multi_inputs">
-                                                        <input type="text" id="cal_brdt"
-                                                               class="cal_brdt txt_default cal_format_kr hasDatepicker"
-                                                               maxlength="10" autocomplete="off"
-                                                               disabled="disabled"><img
-                                                            class="ui-datepicker-trigger"
-                                                            src="/images/icon-calendar.svg"
-                                                            alt="..." title="...">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>지원자직업</td>
-                                                <td>
-                                                    <select id="slt_job_div" class="form-select">
-                                                        <option value=" ">(미선택)</option>
-                                                        <option value="10">직장인</option>
-                                                        <option value="20">학생(졸업예정)</option>
-                                                        <option value="30">학생(졸업)</option>
-                                                        <option value="90">기타</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>지원자직업명</td>
-                                                <td>
-                                                    <input type="text" id="txt_inp1_job_nm"
-                                                           class="form-control" maxlength="50"
-                                                           disabled="disabled">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>우편번호</td>
-                                                <td>
-                                                    <div class="d-flex">
-                                                        <input type="text" placeholder="" id="txt_inp1_zip_cd"
-                                                               class="form-control"
+                                                </tr>
+                                                <tr>
+                                                    <td class="fake_th lbl_chk align-middle">성명(영어)</td>
+                                                    <td class="align-middle"><input type="text" id="txt_inp1_nm_eng" value=""
+                                                               class="form-control" maxlength="50"
+                                                               disabled="disabled"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">생년월일</td>
+                                                    <!-- <td>
+                                                        <span class="bg-icon_calendar div_top_gap_04">
+                                                            <input type="date" id="cal_brdt" class="cal_brdt width_100 ">
+                                                        </span>
+                                                    </td> -->
+                                                    <td class="align-middle">
+                                                        <div class="multi_inputs">
+                                                            <input type="text" id="cal_brdt"
+                                                                   class="cal_brdt txt_default cal_format_kr hasDatepicker"
+                                                                   maxlength="10" autocomplete="off"
+                                                                   disabled="disabled"><img
+                                                                class="ui-datepicker-trigger"
+                                                                src="/images/icon-calendar.svg"
+                                                                alt="..." title="...">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">지원자직업</td>
+                                                    <td class="align-middle">
+                                                        <select id="slt_job_div" class="form-select">
+                                                            <option value=" ">(미선택)</option>
+                                                            <option value="10">직장인</option>
+                                                            <option value="20">학생(졸업예정)</option>
+                                                            <option value="30">학생(졸업)</option>
+                                                            <option value="90">기타</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">지원자직업명</td>
+                                                    <td class="align-middle">
+                                                        <input type="text" id="txt_inp1_job_nm"
+                                                               class="form-control" maxlength="50"
                                                                disabled="disabled">
-                                                        <button id="btn_zip_cd"
-                                                                class="btn btn-outline-secondary btn-sm me-2" title="검색"
-                                                                onclick="fn_inp1_zipcode_onclick()" disabled="disabled">
-                                                            검색
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fake_th">주소(기본)</td>
-                                                <td colspan="3"><input type="text" id="txt_inp1_addr_local"
-                                                                       class="form-control" maxlength="200"
-                                                                       disabled="disabled"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>주소(상세)</td>
-                                                <td colspan="3"><input type="text" id="txt_inp1_addr_natv"
-                                                                       class="form-control" maxlength="200"
-                                                                       disabled="disabled"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>전화번호</td>
-                                                <td><input type="text" id="txt_inp1_tel_local"
-                                                           class="form-control" maxlength="20"
-                                                           oninput="fn_numSign(this)" disabled="disabled"></td>
-                                                <td>휴대전화</td>
-                                                <td><input type="text" id="txt_inp1_tel_natv"
-                                                           class="form-control" maxlength="20"
-                                                           oninput="fn_numSign(this)" disabled="disabled"></td>
-                                            </tr>
-                                            <tr hidden="">
-                                                <td>
-                                                    <div id="txt_aply_no"></div>
-                                                </td>
-                                                <td>
-                                                    <div id="txt_mem_id"></div>
-                                                </td>
-                                                <td>
-                                                    <div id="txt_tab1_sel_cd"></div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">우편번호</td>
+                                                    <td class="align-middle">
+                                                        <div class="d-flex">
+                                                            <input type="text" placeholder="" id="txt_inp1_zip_cd"
+                                                                   class="form-control"
+                                                                   disabled="disabled">
+                                                            <button id="btn_zip_cd"
+                                                                    class="btn btn-outline-secondary btn-sm me-2" title="검색"
+                                                                    onclick="fn_inp1_zipcode_onclick()" disabled="disabled">
+                                                                검색
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fake_th align-middle">주소(기본)</td>
+                                                    <td colspan="3" class="align-middle"><input type="text" id="txt_inp1_addr_local"
+                                                                           class="form-control" maxlength="200"
+                                                                           disabled="disabled"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">주소(상세)</td>
+                                                    <td colspan="3" class="align-middle"><input type="text" id="txt_inp1_addr_natv"
+                                                                           class="form-control" maxlength="200"
+                                                                           disabled="disabled"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">전화번호</td>
+                                                    <td class="align-middle"><input type="text" id="txt_inp1_tel_local"
+                                                               class="form-control" maxlength="20"
+                                                               oninput="fn_numSign(this)" disabled="disabled"></td>
+                                                    <td class="align-middle">휴대전화</td>
+                                                    <td class="align-middle"><input type="text" id="txt_inp1_tel_natv"
+                                                               class="form-control" maxlength="20"
+                                                               oninput="fn_numSign(this)" disabled="disabled"></td>
+                                                </tr>
+                                                <tr hidden="">
+                                                    <td>
+                                                        <div id="txt_aply_no"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="txt_mem_id"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="txt_tab1_sel_cd"></div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -521,102 +539,114 @@
                 <div id="tab2" aria-labelledby="btn_tab2" role="tabpanel"
                      class="tab-pane fade" tabindex="0">
                     <!-- 탭2 그리드1 -->
-                    <div style="height: 1185px;">
-                        <div class="m-2 d-flex justify-content-between">
-                            <div class="grid_title grid_title_arrange">
-                                <div><h3 id="lbl_tab2_grid1_title">학력사항</h3></div>
-                            </div>
-                            <div>
-                                <button id="btn_tab2_grid1_modify" class="btn btn-outline-secondary btn-sm me-2"
-                                        onclick="fn_tab2_grid1_modify_onclick()">수정
-                                </button>
-                                <button id="btn_tab2_grid1_save" class="btn btn-outline-secondary btn-sm me-2"
-                                        disabled=""
-                                        onclick="fn_tab2_grid1_save_onclick()">저장
-                                </button>
+                    <div style="height: 700px;">
+                        <div class="contents">
+                            <div class="container">
+                                <div class="d-flex justify-content-between py-3 align-items-center">
+                                    <div class="grid_title grid_title_arrange">
+                                        <div id="lbl_tab2_grid1_title">학력사항</div>
+                                    </div>
+                                    <div>
+                                        <button id="btn_tab2_grid1_modify" class="btn btn-sm btn-secondary me-1"
+                                                onclick="fn_tab2_grid1_modify_onclick()">수정
+                                        </button>
+                                        <button id="btn_tab2_grid1_save" class="btn btn-sm btn-secondary me-1"
+                                                disabled=""
+                                                onclick="fn_tab2_grid1_save_onclick()">저장
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="tab2Grid" style="width: 99%"></div>
                             </div>
                         </div>
-                        <div id="tab2Grid" class="pt-3" style="width: 99%"></div>
                     </div>
                 </div>
                 <div id="tab3" aria-labelledby="btn_tab3" role="tabpanel"
                      class="tab-pane fade" aria-hidden="true">
                     <!-- 탭3 그리드1 -->
-                    <div style="height: 1185px;">
-                        <div class="m-2 d-flex justify-content-between">
-                            <div class="grid_title grid_title_arrange">
-                                <div><h3 id="lbl_tab3_grid1_title">활동이력</h3></div>
-                            </div>
-                            <div class="align_right">
-                                <button id="btn_tab3_grid_modify" class="btn btn-outline-secondary btn-sm me-2"
-                                        onclick="fn_tab3_grid1_modify_onclick()">수정
-                                </button>
-                                <button id="btn_tab3_grid_save" class="btn btn-outline-secondary btn-sm me-2"
-                                        disabled=""
-                                        onclick="fn_tab3_grid1_save_onclick()">저장
-                                </button>
+                    <div style="height: 700px;">
+                        <div class="contents">
+                            <div class="container">
+                                <div class="d-flex justify-content-between py-3 align-items-center">
+                                    <div class="grid_title grid_title_arrange">
+                                        <div id="lbl_tab3_grid1_title">활동이력</div>
+                                    </div>
+                                    <div class="align_right">
+                                        <button id="btn_tab3_grid_modify" class="btn btn-sm btn-secondary me-1"
+                                                onclick="fn_tab3_grid1_modify_onclick()">수정
+                                        </button>
+                                        <button id="btn_tab3_grid_save" class="btn btn-sm btn-secondary me-1"
+                                                disabled=""
+                                                onclick="fn_tab3_grid1_save_onclick()">저장
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="tab3Grid" style="width: 99%"></div>
                             </div>
                         </div>
-                        <div id="tab3Grid" style="width: 99%"></div>
                     </div>
                 </div>
                 <div id="tab4" aria-labelledby="btn_tab4" role="tabpanel"
                      class="tab-pane fade" aria-hidden="true">
-                    <div style="height: 1185px;">
-                        <div class="div_wrap_title">
-                            <h3 class="grid_title grid_title_arrange">자기소개서</h3>
-                        </div>
-                        <div id="wrap_div">
-                            <div id="div_tab4_inp1">
-                                <div id="item_no_0" class="form-basic div_top_gap_20" item_no="1" item_expl="">
-                                    <div>
-                                        <td>▶ 지원동기 [글자 제한 : 2000자]</td>
-                                    </div>
-                                    <div>
-                                        <textarea name="ans"
-                                                  style="height:175px; overflow-y:scroll;"
-                                                  class="form-control"
-                                                  onkeyup="fn_answer_keyup(this)"
-                                                  onkeydown="fn_answer_keydown(this)"
-                                        ></textarea></div>
-                                    <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(2107 /
-                                        2000 자)</p></div>
+                    <div style="height: 700px;">
+                        <div class="contents">
+                            <div class="container">
+                                <div class="div_wrap_title d-flex justify-content-between py-3 align-items-center">
+                                    <div class="grid_title grid_title_arrange">자기소개서</div>
                                 </div>
+                                <div id="wrap_div">
+                                    <div id="div_tab4_inp1">
+                                        <div id="item_no_0" class="form-basic div_top_gap_20" item_no="1" item_expl="">
+                                            <div>
+                                                <td>▶ 지원동기 [글자 제한 : 2000자]</td>
+                                            </div>
+                                            <div>
+                                                <textarea name="ans"
+                                                          style="height:175px; overflow-y:scroll;"
+                                                          class="form-control"
+                                                          onkeyup="fn_answer_keyup(this)"
+                                                          onkeydown="fn_answer_keydown(this)"
+                                                ></textarea></div>
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(2107 /
+                                                2000 자)</p></div>
+                                        </div>
 
-                                <div id="item_no_2" class="form-basic div_top_gap_20" item_no="3" item_expl="">
-                                    <div class="div_top_gap_10">
-                                        <td class="align_left bdr_bottom_unset">▶ 과정 중 수학 계획 [글자 제한 :
-                                            2000자]
-                                        </td>
+                                        <div id="item_no_2" class="form-basic div_top_gap_20" item_no="3" item_expl="">
+                                            <div class="div_top_gap_10">
+                                                <td class="align_left bdr_bottom_unset">▶ 과정 중 수학 계획 [글자 제한 :
+                                                    2000자]
+                                                </td>
+                                            </div>
+                                            <div class="div_top_gap_10">
+                                                <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
+                                            </div>
+                                            <div class="div_top_gap_10"><textarea name="ans"
+                                                                                  style="height:175px; overflow-y:scroll;"
+                                                                                  class="form-control"
+                                                                                  onkeyup="fn_answer_keyup(this)"
+                                                                                  onkeydown="fn_answer_keydown(this)"
+                                                                                  disabled="disabled"></textarea></div>
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(44 /
+                                                2000 자)</p></div>
+                                        </div>
+                                        <div id="item_no_3" class="form-basic div_top_gap_20" item_no="4" item_expl="">
+                                            <div class="div_top_gap_10">
+                                                <td class="align_left bdr_bottom_unset">▶ 수료 후 계획 [글자 제한 : 2000자]
+                                                </td>
+                                            </div>
+                                            <div class="div_top_gap_10">
+                                                <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
+                                            </div>
+                                            <div class="div_top_gap_10"><textarea name="ans"
+                                                                                  style="height:175px; overflow-y:scroll;"
+                                                                                  class="form-control"
+                                                                                  onkeyup="fn_answer_keyup(this)"
+                                                                                  onkeydown="fn_answer_keydown(this)"
+                                                                                  disabled="disabled"></textarea></div>
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(19 /
+                                                2000 자)</p></div>
+                                        </div>
                                     </div>
-                                    <div class="div_top_gap_10">
-                                        <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
-                                    </div>
-                                    <div class="div_top_gap_10"><textarea name="ans"
-                                                                          style="height:175px; overflow-y:scroll;"
-                                                                          class="form-control"
-                                                                          onkeyup="fn_answer_keyup(this)"
-                                                                          onkeydown="fn_answer_keydown(this)"
-                                                                          disabled="disabled"></textarea></div>
-                                    <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(44 /
-                                        2000 자)</p></div>
-                                </div>
-                                <div id="item_no_3" class="form-basic div_top_gap_20" item_no="4" item_expl="">
-                                    <div class="div_top_gap_10">
-                                        <td class="align_left bdr_bottom_unset">▶ 수료 후 계획 [글자 제한 : 2000자]
-                                        </td>
-                                    </div>
-                                    <div class="div_top_gap_10">
-                                        <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
-                                    </div>
-                                    <div class="div_top_gap_10"><textarea name="ans"
-                                                                          style="height:175px; overflow-y:scroll;"
-                                                                          class="form-control"
-                                                                          onkeyup="fn_answer_keyup(this)"
-                                                                          onkeydown="fn_answer_keydown(this)"
-                                                                          disabled="disabled"></textarea></div>
-                                    <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(19 /
-                                        2000 자)</p></div>
                                 </div>
                             </div>
                         </div>
@@ -625,22 +655,26 @@
                 <div id="tab5" aria-labelledby="btn_tab5" role="tabpanel"
                      class="tab-pane fade" aria-hidden="true">
                     <!-- 탭5  -->
-                    <div style="height: 1185px;">
-                        <div class="m-2 d-flex justify-content-between">
-                            <div class="grid_title grid_title_arrange">
-                                <div><h3 id="lbl_tab5_grid1_title">제출서류</h3></div>
-                            </div>
-                            <div class="align_right">
-                                <!-- <button id="btn_tab6_modify" class="btn-default" onclick="fn_btn_tab6_modify_onclick()">수정</button> -->
-                                <button id="btn_tab5_new" class="btn btn-outline-secondary btn-sm me-2"
-                                        onclick="fn_tab6_new_onclick()">신규
-                                </button>
-                                <button id="btn_tab5_save" class="btn btn-outline-secondary btn-sm me-2"
-                                        onclick="fn_btn_tab6_save_onclick()">저장
-                                </button>
+                    <div style="height: 700px;">
+                        <div class="contents">
+                            <div class="container">
+                                <div class="d-flex justify-content-between py-3 align-items-center">
+                                    <div class="grid_title grid_title_arrange">
+                                        <div id="lbl_tab5_grid1_title">제출서류</div>
+                                    </div>
+                                    <div class="align_right">
+                                        <!-- <button id="btn_tab6_modify" class="btn-default" onclick="fn_btn_tab6_modify_onclick()">수정</button> -->
+                                        <button id="btn_tab5_new" class="btn btn-sm btn-secondary me-1"
+                                                onclick="fn_tab6_new_onclick()">신규
+                                        </button>
+                                        <button id="btn_tab5_save" class="btn btn-sm btn-secondary me-1"
+                                                onclick="fn_btn_tab6_save_onclick()">저장
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="tab5Grid" style="width: 99%"></div>
                             </div>
                         </div>
-                        <div id="tab5Grid" style="width: 99%"></div>
                     </div>
                 </div>
             </div>
@@ -667,52 +701,32 @@
         }
     }
 
-    class CheckboxRenderer {
-        constructor(props) {
-            const {grid, rowKey} = props;
-
-            const label = document.createElement('label');
-            label.className = 'checkbox tui-grid-row-header-checkbox';
-            label.setAttribute('for', String(rowKey));
-
-            const hiddenInput = document.createElement('input');
-            hiddenInput.className = 'hidden-input';
-            hiddenInput.id = String(rowKey);
-
-            const customInput = document.createElement('span');
-            customInput.className = 'custom-input';
-
-            label.appendChild(hiddenInput);
-            label.appendChild(customInput);
-
-            hiddenInput.type = 'checkbox';
-            label.addEventListener('click', (ev) => {
-                ev.preventDefault();
-
-                if (ev.shiftKey) {
-                    grid[!hiddenInput.checked ? 'checkBetween' : 'uncheckBetween'](rowKey);
-                    return;
-                }
-
-                grid[!hiddenInput.checked ? 'check' : 'uncheck'](rowKey);
-            });
-
-            this.el = label;
-
-            this.render(props);
+    const gridTheme = new tui.Grid.applyTheme('default', {
+        cell: {
+            normal: {
+                background: '#fff',
+                border: '#E1E1E1',
+                showVerticalBorder: true
+            },
+            header: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            },
+            rowHeader: {
+                background: '#EFEFEF',
+                border: '#E1E1E1'
+            }
+            ,
+            evenRow: {
+                background: '#F2F3F5',
+                border: '#000'
+            },
+            oddRow: {
+                background: '#FFF',
+                border: '#000'
+            }
         }
-
-        getElement() {
-            return this.el;
-        }
-
-        render(props) {
-            const hiddenInput = this.el.querySelector('.hidden-input');
-            const checked = Boolean(props.value);
-
-            hiddenInput.checked = checked;
-        }
-    }
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
@@ -831,16 +845,7 @@
                     }
                 },
                 {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
+                    type: 'checkbox'
                 }
             ],
             scrollX: true,
@@ -876,10 +881,7 @@
             columnOptions: {
                 resizable: true
             },
-
             draggable: true,
-
-
         });
         grid.on('check', function (ev) {
             console.log('check', ev);
@@ -891,26 +893,6 @@
         const grid2 = new tui.Grid({
             el: document.getElementById('grid2'),
             data: data2,
-            rowHeaders: [
-                {
-                    type: 'rowNum',
-                    renderer: {
-                        type: RowNumberRenderer
-                    }
-                },
-                {
-                    type: 'checkbox',
-                    header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                    renderer: {
-                        type: CheckboxRenderer
-                    }
-                }
-            ],
             scrollX: true,
             scrollY: true,
             columns: [
@@ -1026,20 +1008,7 @@
                     tab2Grid = new tui.Grid({
                         el: document.getElementById('tab2Grid'),
                         data: personData,
-                        rowHeaders: [
-                            {
-                                type: 'checkbox',
-                                header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                                renderer: {
-                                    type: CheckboxRenderer
-                                }
-                            }
-                        ],
+                        rowHeaders: ['checkbox'],
                         scrollX: false,
                         scrollY: false,
                         columns: [
@@ -1087,20 +1056,7 @@
                     tab3Grid = new tui.Grid({
                         el: document.getElementById('tab3Grid'),
                         data: data3,
-                        rowHeaders: [
-                            {
-                                type: 'checkbox',
-                                header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                                renderer: {
-                                    type: CheckboxRenderer
-                                }
-                            }
-                        ],
+                        rowHeaders: ['checkbox'],
                         pagination: true,
                         scrollX: true,
                         scrollY: true,
@@ -1146,20 +1102,7 @@
                     tab5Grid = new tui.Grid({
                         el: document.getElementById('tab5Grid'),
                         data: fileData,
-                        rowHeaders: [
-                            {
-                                type: 'checkbox',
-                                header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                                renderer: {
-                                    type: CheckboxRenderer
-                                }
-                            }
-                        ],
+                        rowHeaders: ['checkbox'],
                         pagination: true,
                         scrollX: true,
                         scrollY: true,
