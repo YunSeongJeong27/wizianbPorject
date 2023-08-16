@@ -22,6 +22,7 @@
         }
         body{
             background-color: #F2F3F5;
+            min-width: 1250px;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{
@@ -48,7 +49,7 @@
             margin-bottom: 0;
         }
         .searchResult select.form-select{
-            padding: 0.2rem 1.25rem 0.2rem 0.75rem;
+            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
         }
 
         /* 그리드 custom css */
@@ -119,7 +120,9 @@
             text-align: center !important;
         }
         /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
+            border: none !important;
+        }
         .tui-select-box-input.tui-select-box-open{
             border: none !important;
             border-bottom: 1px solid #aaa !important;
@@ -159,7 +162,7 @@
 
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-3 d-flex flex-row align-items-center">
+            <div class="col-4 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집기수정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>
@@ -345,14 +348,9 @@
                     ti.addEventListener("change", function(){
                         var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
 
-                        console.log(rowKey);
+                        //nthData[idx][ti.getAttribute("name")]=this.value;
 
-                        var idx = nthTable.getIndexOfRow(rowKey);
-                        console.log(idx);
-
-                        nthData[idx][ti.getAttribute("name")]=this.value;
-
-                        nthTable.resetData(nthData);
+                        nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
                         nthTable.focus(rowKey, firstColumName, true);
                     })
                 });
@@ -368,19 +366,20 @@
         });
 
         // 체크박스 전체 선택/해제
-        var checkBox = [];
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
             var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
-                checkBox.push(rowKey);
-                nthTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
         nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-            checkBox.forEach((rowKey) => {
-                nthTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
 
