@@ -65,6 +65,12 @@ public class Test_ApplicationJSP {
     }
 
 
+    @GetMapping("/app5")
+    public String test5(){
+
+        return "/application/applicationEdu";
+    }
+
 
     }
 
