@@ -194,7 +194,6 @@
 
                 //applicationTable.resetData(applicationData);
                 applicationTable.setValue(rowKey, changes['columnName'], changes['value'], false);
-                applicationTable.focus(rowKey, firstColumName, true);
             });
 
             applicationTable.on('drop', ev => {

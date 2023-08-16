@@ -300,7 +300,6 @@
                 //noticeTable.resetData(noticeData);
 
                 noticeTable.setValue(rowKey, changes['columnName'], changes['value'], false);
-                noticeTable.focus(rowKey, firstColumName, true);
             });
 
             noticeTable.on('drop', ev => {

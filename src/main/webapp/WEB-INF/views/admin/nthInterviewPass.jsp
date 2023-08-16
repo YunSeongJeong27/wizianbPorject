@@ -201,7 +201,6 @@
                 //datas[changes['columnName']] = changes['value'];
 
                 interviewTable.setValue(rowKey, changes['columnName'], changes['value'], false);
-                interviewTable.focus(rowKey, firstColumName, true);
             });
 
             interviewTable.on('drop', ev => {
