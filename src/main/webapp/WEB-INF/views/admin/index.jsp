@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../user/header.jsp"%>
+<%@ include file="../admin/header.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -79,7 +79,6 @@
                                     <div class="navbar-nav">
                                         <div class="nav-item">
                                             <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('apply')">원서접수관리</div>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('')">적격심사관리</div>
                                         </div>
                                     </div>
                                 </div>
@@ -90,8 +89,8 @@
                                 <div class="collapse navbar-collapse ms-4" id="navbarEntSel4">
                                     <div class="navbar-nav">
                                         <div class="nav-item">
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">서류전형합격사정</a>
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">면접전형합격사정</a>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('applicationPass')">서류전형합격사정</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('interviewPass')">면접전형합격사정</div>
                                             <a class="nav-link p-1 btn-lf" aria-current="page" href="#">최종합격자명부</a>
                                         </div>
                                     </div>
@@ -106,7 +105,6 @@
     <!-- 오 -->
     <div style="width: 100%">
         <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
-
     </div>
 </div>
 

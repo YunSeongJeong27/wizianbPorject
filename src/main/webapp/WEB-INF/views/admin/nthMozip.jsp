@@ -274,7 +274,7 @@
             element.style.display = 'none';
         });
 
-        var content = document.getElementById(e.id+"-pane");
+        const content = document.getElementById(e.id+"-pane");
 
         if(e.id === "select"){
             content.setAttribute("style","display:block");
@@ -503,41 +503,6 @@
             content.setAttribute("style","display:block");
         }
     }
-
-    //list 클릭 시 이벤트
-    var biLists = document.getElementsByClassName("bi-list");
-    Array.from(biLists).forEach((element) => {
-        //태그 생성
-        var div = document.createElement("div");
-        var select = document.createElement("select");
-        for(let i=0 ; i<5 ; i++){
-            var option = document.createElement("option");
-            option.innerHTML = i;
-            select.appendChild(option);
-        }
-        div.appendChild(select);
-
-        //style 설정
-        div.setAttribute("class","position-absolute");
-        select.setAttribute("class","w-100");
-        div.setAttribute("style","width:15%;");
-
-        element.addEventListener("click", function() {
-            //태그 삽입
-            var schdlDiv = document.getElementById("schdlDiv"+this.id);
-            schdlDiv.parentElement.appendChild(div);
-            //select 변경 시 이벤트
-            select.addEventListener("change",function(){
-                schdlDiv.value = this.value;
-                //태그 삭제
-                schdlDiv.parentElement.removeChild(div);
-            })
-        });
-    });
-
-    nthTable.addEventListener("click",function(){
-        console.log("감자감자");
-    })
 
 </script>
 </body>
