@@ -22,6 +22,7 @@
         }
         body{
             background-color: #F2F3F5;
+            min-width: 1250px;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{
@@ -161,7 +162,7 @@
 
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-3 d-flex flex-row align-items-center">
+            <div class="col-4 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집기수정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>
@@ -347,15 +348,9 @@
                     ti.addEventListener("change", function(){
                         var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
 
-                        console.log(rowKey);
+                        //nthData[idx][ti.getAttribute("name")]=this.value;
 
-                        var idx = nthTable.getIndexOfRow(rowKey);
-                        console.log(idx);
-
-                        nthData[idx][ti.getAttribute("name")]=this.value;
-
-                        nthTable.resetData(nthData);
-                        nthTable.focus(rowKey, firstColumName, true);
+                        nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
                     })
                 });
             }
@@ -370,19 +365,20 @@
         });
 
         // 체크박스 전체 선택/해제
-        var checkBox = [];
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
             var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
-                checkBox.push(rowKey);
-                nthTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
         nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-            checkBox.forEach((rowKey) => {
-                nthTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
 
@@ -398,7 +394,26 @@
             firstColumName = nthTable.getColumns()[0]['name'];
         });
 
-        // 신규 버튼 click
+        // 하단 table 데이터 넣기
+        function rowDataLoad(rowKey, table, id){
+            var datas = table.getRow(rowKey);
+            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
+            if(datas == null ) {        // 데이터 x
+                tableInput.forEach((ti) => {
+                    ti.value = "";
+                });
+            }else{
+                tableInput.forEach((ti) => {
+                    var tiName = ti.getAttribute("name");
+                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
+                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    }
+                    ti.value = datas[tiName];
+                });
+            }
+        }
+
+        // 신규 버튼 클릭 이벤트
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
@@ -430,24 +445,11 @@
             });
         });
 
-        // 하단 table 데이터 넣기
-        function rowDataLoad(rowKey, table, id){
-            var datas = table.getRow(rowKey);
-            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-            if(datas == null ) {        // 데이터 x
-                tableInput.forEach((ti) => {
-                    ti.value = "";
-                });
-            }else{
-                tableInput.forEach((ti) => {
-                    var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
-                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
-                    }
-                    ti.value = datas[tiName];
-                });
-            }
-        }
+        // 삭제 버튼 클릭 이벤트
+        document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+
+
+        });
     });
 
 

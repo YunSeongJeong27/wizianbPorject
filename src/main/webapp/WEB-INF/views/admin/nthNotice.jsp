@@ -49,7 +49,7 @@
             <%@ include file="nthTopScreening.jsp"%>
 
             <div class="d-flex flex-row justify-content-between mt-4 h-100">
-                <div class="col-4 me-3">
+                <div class="col-4 me-3" style="min-width: 449px;">
                     <div class="searchResult">
                         <div class="d-flex flex-row justify-content-between mb-2">
                             <div class="d-flex flex-row align-items-center">
@@ -264,20 +264,21 @@
             });
 
             // 체크박스 전체 선택/해제
-            var checkBox = [];
 
             noticeTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
                 rowKeys.forEach((rowKey) => {
-                    checkBox.push(rowKey);
-                    noticeTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                    noticeTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
             noticeTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-                checkBox.forEach((rowKey) => {
-                    noticeTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                var id = ev.instance['el'].id;
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+                rowKeys.forEach((rowKey) => {
+                    noticeTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
 
@@ -293,11 +294,12 @@
             noticeTable.on('afterChange', ev => {
                 var changes = ev["changes"][0];
                 var rowKey = changes['rowKey']
-                var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
-                datas[changes['columnName']] = changes['value'];
+                //var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
+                //datas[changes['columnName']] = changes['value'];
 
-                noticeTable.resetData(noticeData);
-                noticeTable.focus(rowKey, firstColumName, true);
+                //noticeTable.resetData(noticeData);
+
+                noticeTable.setValue(rowKey, changes['columnName'], changes['value'], false);
             });
 
             noticeTable.on('drop', ev => {
@@ -309,8 +311,8 @@
             document.getElementById("noticeInsertBtn").addEventListener("click", function () {
                 const rowData = [
                     {
-                        STEP_DIV_NM: '1',
-                        MSG_DIV_NM: '1',
+                        STEP_DIV_NM: '',
+                        MSG_DIV_NM: '',
                         SUBJECT: '',
                         MSG_CONT: ''
                     }
