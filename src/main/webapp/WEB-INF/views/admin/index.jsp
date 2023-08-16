@@ -12,6 +12,9 @@
     <title>Title</title>
 
     <style>
+        body{
+            overflow-x: hidden;
+        }
         .btn-lf:hover{
             background-color: #D1D1D1;
             color: blue;
@@ -26,9 +29,9 @@
 </head>
 
 <body>
-<div class="d-flex">
+<div class="d-flex" style="height: calc(100% - 108px);">
     <!-- 왼 -->
-    <div style="width: 250px; height: 100vh;">
+    <div style="width: 250px;">
         <div class="d-flex p-2 shadow-sm" style="height: 6%;">
             <div class="col-10">
                 <input class="form-control h-100" type="text" placeholder="검색어를 입력하세요">
@@ -103,8 +106,8 @@
         </div>
     </div>
     <!-- 오 -->
-    <div style="width: 100%">
-        <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
+    <div style="width: calc(100% - 250px);">
+        <iframe style="width: 100%; height: 100%;" src="/info" id="iframe"></iframe>
     </div>
 </div>
 
@@ -128,5 +131,4 @@
 
 </script>
 </body>
-<%@include file="../user/footer.jsp"%>
 </html>

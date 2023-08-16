@@ -45,10 +45,10 @@
                     </div>
                     <div class="d-flex flex-row align-items-center">
                         <p class="subTitle fw-bold me-2">선발결과</p>
-                        <select class="form-select w-auto me-1">
-                            <option selected>선택</option>
-                            <option>적격</option>
-                            <option>부적격</option>
+                        <select id="passDiv" class="form-select w-auto me-1">
+                            <option value="0" selected>선택</option>
+                            <option value="1">적격</option>
+                            <option value="2">부적격</option>
                         </select>
                         <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                         <button class="btn btn-sm btn-light btn-outline-dark">저장</button>

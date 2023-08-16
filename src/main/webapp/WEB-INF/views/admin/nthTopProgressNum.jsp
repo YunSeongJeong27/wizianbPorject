@@ -22,6 +22,7 @@
         }
         body{
             background-color: #F2F3F5;
+            min-width: 1250px;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{

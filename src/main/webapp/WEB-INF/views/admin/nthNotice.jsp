@@ -49,7 +49,7 @@
             <%@ include file="nthTopScreening.jsp"%>
 
             <div class="d-flex flex-row justify-content-between mt-4 h-100">
-                <div class="col-4 me-3">
+                <div class="col-4 me-3" style="min-width: 449px;">
                     <div class="searchResult">
                         <div class="d-flex flex-row justify-content-between mb-2">
                             <div class="d-flex flex-row align-items-center">
