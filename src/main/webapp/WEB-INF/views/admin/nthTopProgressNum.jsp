@@ -351,7 +351,6 @@
                         //nthData[idx][ti.getAttribute("name")]=this.value;
 
                         nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
-                        nthTable.focus(rowKey, firstColumName, true);
                     })
                 });
             }
@@ -395,7 +394,26 @@
             firstColumName = nthTable.getColumns()[0]['name'];
         });
 
-        // 신규 버튼 click
+        // 하단 table 데이터 넣기
+        function rowDataLoad(rowKey, table, id){
+            var datas = table.getRow(rowKey);
+            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
+            if(datas == null ) {        // 데이터 x
+                tableInput.forEach((ti) => {
+                    ti.value = "";
+                });
+            }else{
+                tableInput.forEach((ti) => {
+                    var tiName = ti.getAttribute("name");
+                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
+                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    }
+                    ti.value = datas[tiName];
+                });
+            }
+        }
+
+        // 신규 버튼 클릭 이벤트
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
@@ -427,24 +445,11 @@
             });
         });
 
-        // 하단 table 데이터 넣기
-        function rowDataLoad(rowKey, table, id){
-            var datas = table.getRow(rowKey);
-            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-            if(datas == null ) {        // 데이터 x
-                tableInput.forEach((ti) => {
-                    ti.value = "";
-                });
-            }else{
-                tableInput.forEach((ti) => {
-                    var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
-                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
-                    }
-                    ti.value = datas[tiName];
-                });
-            }
-        }
+        // 삭제 버튼 클릭 이벤트
+        document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+
+
+        });
     });
 
 

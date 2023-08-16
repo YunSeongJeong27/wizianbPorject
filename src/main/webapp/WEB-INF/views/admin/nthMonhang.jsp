@@ -170,7 +170,6 @@
 
                 //monhangTable.resetData(monhangData);
                 monhangTable.setValue(rowKey, changes['columnName'], changes['value'], false);
-                monhangTable.focus(rowKey, firstColumName, true);
             });
 
             monhangTable.on('drop', ev => {
