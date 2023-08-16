@@ -45,12 +45,12 @@
                     </div>
                     <div class="d-flex flex-row align-items-center">
                         <p class="subTitle fw-bold me-2">선발결과</p>
-                        <select class="form-select w-auto me-1">
-                            <option selected>선택</option>
-                            <option>합격</option>
-                            <option>불합격</option>
+                        <select id="passDiv" class="form-select w-auto me-1">
+                            <option value="0" selected>선택</option>
+                            <option value="1">합격</option>
+                            <option value="2">불합격</option>
                         </select>
-                        <button class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                        <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                         <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
                     </div>
                 </div>
@@ -167,18 +167,21 @@
 
 
             // 체크박스 전체 선택/해제
-            var checkBox = [];
             interviewTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
                 rowKeys.forEach((rowKey) => {
-                    checkBox.push(rowKey);
-                    interviewTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                    interviewTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
+
             interviewTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-                checkBox.forEach((rowKey) => {
-                    interviewTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                var id = ev.instance['el'].id;
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+                rowKeys.forEach((rowKey) => {
+                    interviewTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
 
@@ -194,10 +197,10 @@
             interviewTable.on('afterChange', ev => {
                 var changes = ev["changes"][0];
                 var rowKey = changes['rowKey']
-                var datas = interviewData[interviewTable.getIndexOfRow(rowKey)];
-                datas[changes['columnName']] = changes['value'];
+                //var datas = interviewData[interviewTable.getIndexOfRow(rowKey)];
+                //datas[changes['columnName']] = changes['value'];
 
-                interviewTable.resetData(interviewData);
+                interviewTable.setValue(rowKey, changes['columnName'], changes['value'], false);
                 interviewTable.focus(rowKey, firstColumName, true);
             });
 
@@ -205,9 +208,24 @@
                 firstColumName = interviewTable.getColumns()[0]['name'];
             });
 
-            document.getElementById("test").addEventListener("change", function(){
-                interviewTable.setPerPage(this.value, interviewData);
+            // 일괄처리 버튼 이벤트
+            document.getElementById("passBtn").addEventListener("click", function(){
+                if(confirm("일괄처리하시겠습니까?")){
+                    var passDiv = document.getElementById("passDiv");
+                    var val = passDiv.options[passDiv.selectedIndex].value;
+
+                    if(val === "0"){
+                        alert("선발결과를 선택해주세요.");
+                        return;
+                    }
+
+                    var rowKeys = interviewTable.getCheckedRowKeys();
+                    rowKeys.forEach(rowKey => {
+                        interviewTable.setValue(rowKey, 'RSLT_DIV', passDiv.options[passDiv.selectedIndex].value, false);
+                    });
+                }
             });
+
         }
 
 

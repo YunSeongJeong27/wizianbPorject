@@ -50,7 +50,7 @@
                             <option>적격</option>
                             <option>부적격</option>
                         </select>
-                        <button class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                        <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                         <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
                     </div>
                 </div>
@@ -159,18 +159,21 @@
 
 
             // 체크박스 전체 선택/해제
-            var checkBox = [];
             applicationTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
                 rowKeys.forEach((rowKey) => {
-                    checkBox.push(rowKey);
-                    applicationTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                    applicationTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
+
             applicationTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-                checkBox.forEach((rowKey) => {
-                    applicationTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                var id = ev.instance['el'].id;
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+                rowKeys.forEach((rowKey) => {
+                    applicationTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
 
@@ -186,10 +189,11 @@
             applicationTable.on('afterChange', ev => {
                 var changes = ev["changes"][0];
                 var rowKey = changes['rowKey']
-                var datas = applicationData[applicationTable.getIndexOfRow(rowKey)];
-                datas[changes['columnName']] = changes['value'];
+                //var datas = applicationData[applicationTable.getIndexOfRow(rowKey)];
+                //datas[changes['columnName']] = changes['value'];
 
-                applicationTable.resetData(applicationData);
+                //applicationTable.resetData(applicationData);
+                applicationTable.setValue(rowKey, changes['columnName'], changes['value'], false);
                 applicationTable.focus(rowKey, firstColumName, true);
             });
 
@@ -197,8 +201,22 @@
                 firstColumName = applicationTable.getColumns()[0]['name'];
             });
 
-            document.getElementById("test").addEventListener("change", function(){
-                applicationTable.setPerPage(this.value, applicationData);
+            // 일괄처리 버튼 이벤트
+            document.getElementById("passBtn").addEventListener("click", function(){
+                if(confirm("일괄처리하시겠습니까?")){
+                    var passDiv = document.getElementById("passDiv");
+                    var val = passDiv.options[passDiv.selectedIndex].value;
+
+                    if(val === "0"){
+                        alert("선발결과를 선택해주세요.");
+                        return;
+                    }
+
+                    var rowKeys = applicationTable.getCheckedRowKeys();
+                    rowKeys.forEach(rowKey => {
+                        applicationTable.setValue(rowKey, 'DOC_QLFY_YN', passDiv.options[passDiv.selectedIndex].value, false);
+                    });
+                }
             });
         }
 

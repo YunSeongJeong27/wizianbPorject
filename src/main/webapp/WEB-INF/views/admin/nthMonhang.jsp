@@ -138,18 +138,18 @@
 
 
             // 체크박스 전체 선택/해제
-            var checkBox = [];
             monhangTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
                 rowKeys.forEach((rowKey) => {
-                    checkBox.push(rowKey);
-                    monhangTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                    monhangTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
             monhangTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-                checkBox.forEach((rowKey) => {
-                    monhangTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                var id = ev.instance['el'].id;
+                var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+                rowKeys.forEach((rowKey) => {
+                    monhangTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
                 });
             });
 
@@ -165,10 +165,11 @@
             monhangTable.on('afterChange', ev => {
                 var changes = ev["changes"][0];
                 var rowKey = changes['rowKey']
-                var datas = monhangData[monhangTable.getIndexOfRow(rowKey)];
-                datas[changes['columnName']] = changes['value'];
+                //var datas = monhangData[monhangTable.getIndexOfRow(rowKey)];
+                //datas[changes['columnName']] = changes['value'];
 
-                monhangTable.resetData(monhangData);
+                //monhangTable.resetData(monhangData);
+                monhangTable.setValue(rowKey, changes['columnName'], changes['value'], false);
                 monhangTable.focus(rowKey, firstColumName, true);
             });
 

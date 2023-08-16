@@ -347,14 +347,9 @@
                     ti.addEventListener("change", function(){
                         var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
 
-                        console.log(rowKey);
+                        //nthData[idx][ti.getAttribute("name")]=this.value;
 
-                        var idx = nthTable.getIndexOfRow(rowKey);
-                        console.log(idx);
-
-                        nthData[idx][ti.getAttribute("name")]=this.value;
-
-                        nthTable.resetData(nthData);
+                        nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
                         nthTable.focus(rowKey, firstColumName, true);
                     })
                 });
@@ -370,19 +365,20 @@
         });
 
         // 체크박스 전체 선택/해제
-        var checkBox = [];
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
             var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
-                checkBox.push(rowKey);
-                nthTable.addRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+                nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
         nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-            checkBox.forEach((rowKey) => {
-                nthTable.removeRowClassName(rowKey.getAttribute("data-row-key"), "checkCell");
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
             });
         });
 
