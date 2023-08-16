@@ -32,7 +32,9 @@
 <body>
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
-        <div class="h-100 col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat;"></div>
+        <div class="h-100 col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat;">
+            <a href="/admin"></a>
+        </div>
         <div class="h-50 col-3 d-flex justify-content-around me-3 align-items-center">
             <div class="dropdown col-5">
                 <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false">
