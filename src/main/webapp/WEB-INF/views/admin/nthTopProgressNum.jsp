@@ -80,6 +80,17 @@
         .checkCell{
             background-color: #D1D1D1 !important;
         }
+        /* floating row */
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header{
+            background-color: #fff !important;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header:nth-child(1){
+            height: 100%;
+            padding: 15px 5px;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header .tui-grid-cell-content{
+            text-align: center;
+        }
 
         /* 페이징 */
         .tui-pagination{
@@ -405,7 +416,7 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="CORS_DIV"){
+                    if(tiName==="CORS_DIV" || tiName==="TERM_DIV"){
                         $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
                     }
                     ti.value = datas[tiName];
@@ -447,16 +458,20 @@
 
         // 삭제 버튼 클릭 이벤트
         document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+            if(confirm("삭제하시겠습니까?")){
+                nthTable.removeCheckedRows(false);
 
+                if(nthTable.getData().length !== 0){
+                    var rowKey = nthTable.getRowAt(0)['rowKey'];
 
+                    nthTable.focus(rowKey, firstColumName, true);
+                    rowDataLoad(rowKey, nthTable, "inputTable");
+                }else{                                              // 데이터 x
+                    rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
+                }
+            }
         });
     });
-
-
-
-
-
-
 </script>
 </body>
 </html>
