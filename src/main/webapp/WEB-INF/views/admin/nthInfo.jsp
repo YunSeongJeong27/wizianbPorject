@@ -66,10 +66,6 @@
                 <td class=""><input class="form-control tableInput" type="date" name="EDU_ST_DT" value="[CAL] EDU_ST_DT"></td>
                 <td class="tableColor">교육종료일<span class="text-danger">*</span></td>
                 <td class=""><input class="form-control tableInput" type="date" name="EDU_END_DT" value="[CAL] EDU_END_DT"></td>
-                <td class="tableColor">발표일자</td>
-                <td class=""><input class="form-control tableInput" type="date" name="ANN_DT" value="2020-10-10"></td>
-            </tr>
-            <tr>
                 <td class="tableColor">비고</td>
                 <td class="" colspan="5"><input class="form-control tableInput" type="text" name="NOTE" value="NOTE"></td>
             </tr>

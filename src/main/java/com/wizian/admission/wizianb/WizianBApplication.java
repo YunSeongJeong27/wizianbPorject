@@ -6,10 +6,13 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.wizian.admission.wizianb.mapper"})
+@MapperScan(basePackages = {"com.wizian.admission.wizianb.repository"})
 public class WizianBApplication {
 
 	public static void main(String[] args) {
@@ -20,6 +23,8 @@ public class WizianBApplication {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 
+		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml");
+		sessionFactory.setMapperLocations(res);
 		return sessionFactory.getObject();
 	}
 }

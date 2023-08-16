@@ -22,6 +22,7 @@
         }
         body{
             background-color: #F2F3F5;
+            min-width: 1250px;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{
@@ -78,6 +79,17 @@
         /* 체크된 row */
         .checkCell{
             background-color: #D1D1D1 !important;
+        }
+        /* floating row */
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header{
+            background-color: #fff !important;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header:nth-child(1){
+            height: 100%;
+            padding: 15px 5px;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header .tui-grid-cell-content{
+            text-align: center;
         }
 
         /* 페이징 */

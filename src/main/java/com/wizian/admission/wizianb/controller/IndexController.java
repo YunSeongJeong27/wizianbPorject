@@ -33,7 +33,7 @@ public class IndexController {
     @GetMapping("/applicationPass")
     public String applicationPass(){return "/admin/nthApplicationPass";}
 
-    @GetMapping("/apply1")
-    public String applyForm() { return "/admin/nthFinal";}
+    @GetMapping("/finalPass")
+    public String finalPass() { return "/admin/nthFinal";}
 
 }
