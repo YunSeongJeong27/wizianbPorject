@@ -28,8 +28,10 @@ public class IndexController {
     public String monhang(){return "/admin/nthMonhang"; }
     @GetMapping("/apply")
     public String apply(){return "/admin/nthApply";}
-    @GetMapping("/interviewpass")
-    public String interviewpass(){return "/admin/nthInterviewPass";}
+    @GetMapping("/interviewPass")
+    public String interviewPass(){return "/admin/nthInterviewPass";}
+    @GetMapping("/applicationPass")
+    public String applicationPass(){return "/admin/nthApplicationPass";}
 
     @GetMapping("/apply1")
     public String applyForm() { return "/admin/nthFinal";}

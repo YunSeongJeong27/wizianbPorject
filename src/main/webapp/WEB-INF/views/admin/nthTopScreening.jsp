@@ -130,7 +130,7 @@
 </head>
 
 <body>
-    <div class="container-table m-2">
+    <div class="container-table">
         <%--TOP--%>
         <div class="col-12">
             <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
@@ -161,7 +161,7 @@
 
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-3 d-flex flex-row align-items-center">
+            <div class="col-4 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집전형정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>

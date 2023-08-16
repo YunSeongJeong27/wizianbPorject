@@ -161,7 +161,7 @@
 
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-3 d-flex flex-row align-items-center">
+            <div class="col-4 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집기수정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>

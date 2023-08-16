@@ -89,8 +89,8 @@
                                 <div class="collapse navbar-collapse ms-4" id="navbarEntSel4">
                                     <div class="navbar-nav">
                                         <div class="nav-item">
-                                            <a class="nav-link p-1 btn-lf" aria-current="page" href="#">서류전형합격사정</a>
-                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('interviewpass')">면접전형합격사정</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('applicationPass')">서류전형합격사정</div>
+                                            <div class="nav-link p-1 btn-lf indexDiv" aria-current="page" onclick="index('interviewPass')">면접전형합격사정</div>
                                             <a class="nav-link p-1 btn-lf" aria-current="page" href="#">최종합격자명부</a>
                                         </div>
                                     </div>
