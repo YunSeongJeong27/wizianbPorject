@@ -16,7 +16,7 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     private final ApplicationInfoRepository applicationInfoRepository;
 
     @Override
-    public List<ApplicationInfo> findAplyInfoByMemIdAndCourseDiv(String memId, String courseDiv) {
-        return applicationInfoRepository.findAplyInfoByMemIdAndCourseDiv(memId,courseDiv);
+    public List<ApplicationInfo> findAplyInfoByMemIdAndRcrtNo(String memId, String rcrtNo) {
+        return applicationInfoRepository.findAplyInfoByMemIdAndRcrtNo(memId,rcrtNo);
     }
 }

@@ -16,9 +16,10 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
 
     @GetMapping("/application/info")
-    public List<ApplicationInfo> getAplyInfo(@RequestParam("memId") String memId,@RequestParam("courseDiv") String courseDiv){
-        return applicationInfoService.findAplyInfoByMemIdAndCourseDiv(memId, courseDiv);
+    public List<ApplicationInfo> getAplyInfo(@RequestParam("memId") String memId,@RequestParam("rcrtNo") String rcrtNo){
+        return applicationInfoService.findAplyInfoByMemIdAndRcrtNo(memId, rcrtNo);
     }
+
 
 
 }

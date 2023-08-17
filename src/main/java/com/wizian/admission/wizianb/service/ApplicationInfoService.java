@@ -8,5 +8,5 @@ import java.util.List;
 @Service
 public interface ApplicationInfoService {
 
-   List<ApplicationInfo> findAplyInfoByMemIdAndCourseDiv(String memId,String courseDiv);
+   List<ApplicationInfo> findAplyInfoByMemIdAndRcrtNo(String memId,String rcrtNo);
 }

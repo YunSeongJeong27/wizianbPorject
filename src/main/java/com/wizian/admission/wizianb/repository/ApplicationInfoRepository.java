@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ApplicationInfoRepository {
 
-    List<ApplicationInfo> findAplyInfoByMemIdAndCourseDiv(String memId,String courseDiv);
+    List<ApplicationInfo> findAplyInfoByMemIdAndRcrtNo(String memId,String rcrtNo);
 }
