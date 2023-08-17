@@ -58,16 +58,16 @@
         .tui-grid-scrollbar-left-bottom,
         .tui-grid-scrollbar-right-bottom,
         .tui-grid-scrollbar-right-top{
-            background-color: #fff;
+            background-color: #fff !important;
         }
 
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
+            border-right-style: solid !important;
+            border-right-color: #E1E1E1 !important;
         }
         .tui-grid-cell{
-            border-left-width: 1px;
+            border-left-width: 1px !important;
         }
 
         /* 선택한 row */
@@ -94,7 +94,7 @@
 
         /* 페이징 */
         .tui-pagination{
-            background-color: #fff;
+            background-color: #fff !important;
             margin:0 !important;
             padding: 20px 0 12px;
         }
@@ -233,33 +233,33 @@
     document.addEventListener('DOMContentLoaded', function () {
         const data = [
             {
-                CORS_DIV: 'CORS_DIV',
-                NTH_NM: 'NTH_NM',
-                NTH_CD: 'NTH_CD',
-                ENT_YR: 'ENT_YR',
+                COURSE_DIV: 'COURSE_DIV',
+                COURSE_NAME: 'COURSE_NAME',
+                NTH_CODE: 'NTH_CODE',
+                ENT_YEAR: 'ENT_YEAR',
                 TERM_DIV: 'TERM_DIV',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
-                ANNOUNCE_DT: '2023-08-11',
-                SCHDL_DIV: 'SCHDL_DIV',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME',
                 STEP_DIV: 'STEP_DIV'
             },
             {
-                CORS_DIV: 'CORS_DIV2',
-                NTH_NM: 'NTH_NM2',
-                NTH_CD: 'NTH_CD2',
-                ENT_YR: 'ENT_YR2',
+                COURSE_DIV: 'COURSE_DIV2',
+                COURSE_NAME: 'COURSE_NAME2',
+                NTH_CODE: 'NTH_CODE2',
+                ENT_YEAR: 'ENT_YEAR2',
                 TERM_DIV: 'TERM_DIV2',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
-                ANNOUNCE_DT: '2023-08-11',
-                SCHDL_DIV: 'SCHDL_DIV2',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME2',
                 STEP_DIV: 'STEP_DIV2'
             }
         ];
         function educationPeriodFormatter({row}) {
-            const startDate = row.EDU_ST_DT;
-            const endDate = row.EDU_END_DT;
+            const startDate = row.EDU_START_DATE;
+            const endDate = row.EDU_END_DATE;
             return startDate + "~" + endDate;
         }
         const nthTable = new tui.Grid({
@@ -276,27 +276,27 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'CORS_DIV',
+                    name: 'COURSE_DIV',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'NTH_NM',
+                    name: 'COURSE_NAME',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
-                    header: '기수',
-                    name: 'NTH_CD',
+                    header: '기수코드',
+                    name: 'NTH_CODE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수강년도',
-                    name: 'ENT_YR',
+                    name: 'ENT_YEAR',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -307,21 +307,21 @@
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '모집기간',
-                    name: 'EDU_ST_DT',
+                    header: '교육기간',
+                    name: 'EDU_DATE',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
                     formatter: educationPeriodFormatter
                 },
                 {
                     header: '발표일자',
-                    name: 'ANNOUNCE_DT',
+                    name: 'ANNOUNCE_DATE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '전형일정',
-                    name: 'SCHDL_DIV',
+                    name: 'SCHDL_NAME',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -340,7 +340,7 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthTable.focus(0, 'CORS_DIV', true);
+                nthTable.focus(0, 'COURSE_DIV', true);
                 subTableLoad(0);
             }
         });

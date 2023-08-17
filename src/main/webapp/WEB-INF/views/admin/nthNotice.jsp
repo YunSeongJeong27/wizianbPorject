@@ -6,26 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
     <style>
-
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
-        }
-        .tui-grid-cell{
-            border-left-width: 1px;
-        }
-
-        /* 체크된 row */
-        .checkCell{
-            background-color: #D1D1D1 !important;
-        }
 
         /* noticeInfoTable */
         #noticeInfoTable textarea{
@@ -44,21 +29,6 @@
         #noticeInfoTable .inputTitle+div input{
             border:none;
             background-color: #F4F4F4;
-        }
-
-        /* text edit */
-        .tui-grid-layer-editing .tui-grid-content-text{
-            height: 100% !important;
-            border: none !important;
-            text-align: center !important;
-        }
-        /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
-            border: none !important;
-        }
-        .tui-select-box-input.tui-select-box-open{
-            border: none !important;
-            border-bottom: 1px solid #aaa !important;
         }
 
         .biIcon{
@@ -183,26 +153,31 @@
         // nthTable row 누를 때마다 noticeTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var noticeData = [];
-            var firstColumName = 'STEP_DIV_NM';
+            var firstColumName = 'STEP_DIV';
 
             /*  //!*쓰는 예시 *
-          // 선택된 행의 데이터를 가져옵니다.
-          const rowData = noticeTable.getRow(rowKey);
-          // 방법1. 원하는 데이터만 추출합니다.
-          const stepDivNm = rowData.STEP_DIV_NM;
-          const msgDivNm = rowData.MSG_DIV_NM;
-          // 방법2. 원하는 데이터만 추출합니다.
-          const { STEP_DIV_NM: stepDivNm, MSG_DIV_NM: msgDivNm } = rowData;*/
+           // 선택된 행의 데이터를 가져옵니다.
+           const rowData = noticeTable.getRow(rowKey);
+           // 방법1. 원하는 데이터만 추출합니다.
+           const stepDivNm = rowData.STEP_DIV;
+           const msgDivNm = rowData.MSG_DIV;
+           // 방법2. 원하는 데이터만 추출합니다.
+           const { STEP_DIV: stepDivNm, MSG_DIV: msgDivNm } = rowData;*/
+
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 noticeData = [
                     {
-                        STEP_DIV_NM: '2',
-                        MSG_DIV_NM: '1'
+                        STEP_DIV: '2',
+                        MSG_DIV: '1',
+                        SUBJECT: '제목',
+                        MSG_CONT: '내용'
                     },
                     {
-                        STEP_DIV_NM: '3',
-                        MSG_DIV_NM: '2'
+                        STEP_DIV: '3',
+                        MSG_DIV: '2',
+                        SUBJECT: '제목22',
+                        MSG_CONT: '내용22'
                     }
                 ];
             }
@@ -227,7 +202,7 @@
                 columns: [
                     {
                         header: '전형평가단계',
-                        name: 'STEP_DIV_NM',
+                        name: 'STEP_DIV',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -246,7 +221,7 @@
                     },
                     {
                         header: '안내문종류',
-                        name: 'MSG_DIV_NM',
+                        name: 'MSG_DIV',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -336,8 +311,8 @@
             document.getElementById("noticeInsertBtn").addEventListener("click", function () {
                 const rowData = [
                     {
-                        STEP_DIV_NM: '',
-                        MSG_DIV_NM: '',
+                        STEP_DIV: '',
+                        MSG_DIV: '',
                         SUBJECT: '',
                         MSG_CONT: ''
                     }

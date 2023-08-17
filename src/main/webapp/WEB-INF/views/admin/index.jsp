@@ -5,7 +5,7 @@
   Time: 오후 4:08
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../admin/header.jsp"%>
 <html>
 <head>
@@ -84,7 +84,7 @@
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">서류전형합격사정</div>
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">면접전형합격사정</div>
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">최종합격자명부</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('evaluationResults')">평가결과등록</div>
+                            <div class="nav-link p-1 btn-lf indexDiv" onclick="index('evaluationResults')">평가결과등록</div>
                         </div>
                     </div>
                 </div>
