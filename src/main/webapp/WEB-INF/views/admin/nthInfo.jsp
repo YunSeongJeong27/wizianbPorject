@@ -35,23 +35,23 @@
             <tr>
                 <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                 <td class="col-2">
-                    <select class="form-select tableInput" name="COURSE_DIV" aria-label="Default select">
+                    <select class="form-select tableInput" name="courseDiv" aria-label="Default select">
                         <option value="Java">Java</option>
                         <option value="Python">Python</option>
                         <option value="C++">C++</option>
                     </select>
                 </td>
                 <td class="col-2 tableColor">과정명</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" name="COURSE_NAME" value="NTH_NM"></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="courseName" value="NTH_NM"></td>
                 <td class="col-2 tableColor">기수코드</td>
-                <td class="col-2"><input class="form-control tableInput" type="text" name="NTH_CODE" value="NTH_CD" readonly></td>
+                <td class="col-2"><input class="form-control tableInput" type="text" name="nthCode" value="NTH_CD" readonly></td>
             </tr>
             <tr>
                 <td class="tableColor">수강년도<span class="text-danger">*</span></td>
-                <td class=""><input class="form-control tableInput" type="text" name="ENT_YEAR" value="ENT_YR"></td>
+                <td class=""><input class="form-control tableInput" type="text" name="entYear" value="ENT_YR"></td>
                 <td class="tableColor">분기구분<span class="text-danger">*</span></td>
                 <td class="">
-                    <select class="form-select tableInput" name="TERM_DIV" aria-label="Default select">
+                    <select class="form-select tableInput" name="termDiv" aria-label="Default select">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -63,9 +63,9 @@
             </tr>
             <tr>
                 <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
-                <td class=""><input class="form-control tableInput" type="date" name="EDU_START_DATE" value="[CAL] EDU_ST_DT"></td>
+                <td class=""><input class="form-control tableInput" type="date" name="eduStartDate" value="[CAL] EDU_ST_DT"></td>
                 <td class="tableColor">교육종료일<span class="text-danger">*</span></td>
-                <td class=""><input class="form-control tableInput" type="date" name="EDU_END_DATE" value="[CAL] EDU_END_DT"></td>
+                <td class=""><input class="form-control tableInput" type="date" name="eduEndDate" value="[CAL] EDU_END_DT"></td>
                 <td class="tableColor">비고</td>
                 <td class="" colspan="5"><input class="form-control tableInput" type="text" name="NOTE" value="NOTE"></td>
             </tr>

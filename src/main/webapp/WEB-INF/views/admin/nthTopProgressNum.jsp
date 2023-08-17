@@ -5,7 +5,7 @@
   Time: 오전 11:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Title</title>
@@ -17,7 +17,6 @@
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
-
 <body>
     <div class="container-table">
         <%--TOP--%>
@@ -110,101 +109,15 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        var firstColumName = 'COURSE_DIV';
+        var firstColumName = 'courseDiv';
 
-        var nthData = [
-            {
-                COURSE_DIV: 'Java',
-                COURSE_NAME: '자바과정 풀스택',
-                NTH_CODE: '3',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 1'
-            },
-            {
-                COURSE_DIV: 'Python',
-                COURSE_NAME: '파이썬',
-                NTH_CODE: '2',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-02',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 2'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
-            }
-        ];
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: nthData,
+            data: {
+                api: {
+                    readData: { url: '/recruitment/view', method: 'GET' }
+                }
+            },
             rowHeaders: ['checkbox'],
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
@@ -217,57 +130,45 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'COURSE_DIV',
+                    name: 'courseDiv',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'COURSE_NAME',
+                    name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '기수코드',
-                    name: 'NTH_CODE',
+                    name: 'nthCode',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수강년도',
-                    name: 'ENT_YEAR',
+                    name: 'entYear',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '분기',
-                    name: 'TERM_DIV',
+                    name: 'termDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육시작일',
-                    name: 'EDU_START_DATE',
+                    name: 'eduStartDate',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육종료일',
-                    name: 'EDU_END_DATE',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수업개월수',
-                    name: 'EDU_MONTH',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '비고',
-                    name: 'NOTE',
+                    name: 'eduEndDate',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }
@@ -357,7 +258,7 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="COURSE_DIV" || tiName==="TERM_DIV"){
+                    if(tiName==="courseDiv" || tiName==="termDiv"){
                         $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
                     }
                     ti.value = datas[tiName];
@@ -369,15 +270,13 @@
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
-                    COURSE_DIV: '',
-                    COURSE_NAME: '',
-                    NTH_CODE: '',
-                    ENT_YEAR: '',
-                    TERM_DIV: '',
-                    EDU_START_DATE: '',
-                    EDU_END_DATE: '',
-                    EDU_MONTH: '',
-                    NOTE: ''
+                    courseDiv: '',
+                    courseName: '',
+                    nthCode: '',
+                    entYear: '',
+                    termDiv: '',
+                    eduStartDate: '',
+                    eduEndDate: ''
                 }
             ];
 
