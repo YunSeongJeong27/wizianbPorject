@@ -16,7 +16,12 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
     <link rel="stylesheet" href="css/custom.css" />
     <style>
-        body {
+        #mainTab #tabList,
+        #mainTab #tab1,
+        #mainTab #lbl_tab2_grid1_title,
+        #mainTab #lbl_tab3_grid1_title,
+        #mainTab #tab4,
+        #mainTab #lbl_tab5_grid1_title{
             font-size: 15px !important;
             font-weight: bolder !important;
         }
@@ -120,7 +125,7 @@
                     </div>
                 </div>
                 <div class="d-flex col-4 align-items-center">
-                    <div class="tableSearch me-5">
+                    <div class="tableSearch me-5" >
                         <label for="registrationStatus">상태구분</label>
                     </div>
                     <div class="ms-5 col">
@@ -179,7 +184,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex">
                         <div class="me-4">
-                            <label for="slt_arg2_aply_sts_div" class="form-label">상태구분</label>
+                            <label for="slt_arg2_aply_sts_div" class="form-label fw-bold">상태구분</label>
                         </div>
                         <div>
                             <select id="slt_arg2_aply_sts_div" class="form-select-sm me-3">
@@ -207,7 +212,7 @@
         </div>
         <!-- 탭 아이디 'mainTab' -->
         <div id="mainTab" class="col-7">
-            <ul role="tablist" class="nav nav-tabs col-9" id="tabList">
+            <ul role="tablist" class="nav nav-tabs col-9" id="tabList" style="width: 658px;">
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link active divBtn w-100" id="btn_tab1" data-bs-toggle="tab" data-bs-target="#tab1"
                             type="button" role="tab" aria-controls="tab1" aria-selected="true">기본정보
@@ -615,7 +620,7 @@
                 APLY_NO: 'FQ2232',
                 NM_KOR: '가갑손',
                 APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-07-12 15:32'
+                APLY_DT: '2023-07-12 15:32123123131231231231232'
             },
             {
                 APLY_NO: '3E2232',
@@ -740,8 +745,8 @@
         ]
 
         function educationPeriodFormatter({row}) {
-            const startDate = row.EDU_ST_DT;
-            const endDate = row.EDU_END_DT;
+            const startDate = row.EDU_START_DATE;
+            const endDate = row.EDU_END_DATE;
             return startDate + "~" + endDate;
         }
 
@@ -941,8 +946,9 @@
                 TERM_DIV: '1',
                 EDU_START_DATE: '2023-08-01',
                 EDU_END_DATE: '2023-08-01',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 1'
+                발표일자: '2023-08-02',
+                STEP_DIV: '전형단계',
+                STATUS_DIV: '진행완료'
             },
             {
                 COURSE_DIV: 'Python',
@@ -952,8 +958,9 @@
                 TERM_DIV: '1',
                 EDU_START_DATE: '2023-08-01',
                 EDU_END_DATE: '2023-08-02',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 2'
+                발표일자: '2023-08-03',
+                STEP_DIV: '전형단계2',
+                STATUS_DIV: '진행완료'
             },
             {
                 COURSE_DIV: 'C++',
@@ -963,8 +970,10 @@
                 TERM_DIV: '1',
                 EDU_START_DATE: '2023-08-01',
                 EDU_END_DATE: '2023-08-03',
-                EDU_MONTH: '6',
-                NOTE: '기수 비고 3'
+                발표일자: '2023-08-05',
+                STEP_DIV: '전형단계3',
+                STATUS_DIV: '진행중'
+
             }
         ];
         const nthTable = new tui.Grid({
@@ -1012,26 +1021,27 @@
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '교육시작일',
-                    name: 'EDU_START_DATE',
+                    header: '교육기간',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center',
+                    width: 220,
+                    formatter: educationPeriodFormatter
+                },
+                {
+                    header: '발표일자',
+                    name: '발표일자',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '교육종료일',
-                    name: 'EDU_END_DATE',
+                    header: '전형단계',
+                    name: 'STEP_DIV',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '수업개월수',
-                    name: 'EDU_MONTH',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '비고',
-                    name: 'NOTE',
+                    header: '진행상태',
+                    name: 'STATUS_DIV',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }

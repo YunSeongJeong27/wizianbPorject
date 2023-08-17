@@ -38,8 +38,8 @@
 
                     <div>
                         <button id="monhangInsertBtn" class="btn btn-sm btn-light btn-outline-dark">신규</button>
-                        <button id="monhangSaveBtn" class="btn btn-sm btn-light btn-outline-dark">저장</button>
-                        <button id="monhangDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                        <button id="monhangSaveBtn" class="btn btn-sm btn-success">저장</button>
+                        <button id="monhangDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
                     </div>
                 </div>
 
@@ -201,10 +201,6 @@
                 });
 
                 monhangData = monhangTable.getData();
-            });
-
-            document.getElementById("test").addEventListener("change", function(){
-                monhangTable.setPerPage(this.value, monhangData);
             });
         }
 

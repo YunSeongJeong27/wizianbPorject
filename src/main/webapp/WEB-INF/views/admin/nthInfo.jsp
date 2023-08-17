@@ -24,8 +24,8 @@
     <div class="d-flex flex-row justify-content-end mb-1">
         <button id="nthSelectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
         <button id="nthInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
-        <button id="nthSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-1">저장</button>
-        <button id="nthDeleteBtn" class="btn btn-sm btn-light btn-outline-dark me-1">삭제</button>
+        <button id="nthSaveBtn" class="btn btn-sm btn-success me-1">저장</button>
+        <button id="nthDeleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
     </div>
 
     <%@ include file="nthTopProgressNum.jsp"%>

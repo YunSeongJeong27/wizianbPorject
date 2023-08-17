@@ -236,6 +236,7 @@
                     name: 'EDU_DATE',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
+                    width: 220,
                     formatter: educationPeriodFormatter
                 },
                 {
