@@ -63,31 +63,25 @@
     </div>
 
     <script>
-
-
-
-
         // interview테이블 grid
         // nthTable row 누를 때마다 interviewTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var interviewData = [];
-            var firstColumName = 'APLY_NO';
+            var firstColumName = 'NAME_KOR';
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 interviewData = [
                     {
-                        APLY_NO: 'E12341234',
-                        NM_KOR: '홍길동',
+                        NAME_KOR: '홍길동',
                         EV_SCORE: '86.6',
                         PREL_ORD: '1',
-                        RSLT_DIV: '1'
+                        FNL_PASS_YN: '1'
                     },
                     {
-                        APLY_NO: 'E98769876',
-                        NM_KOR: '이길동',
+                        NAME_KOR: '이길동',
                         EV_SCORE: '50.4',
                         PREL_ORD: '2',
-                        RSLT_DIV: '2'
+                        FNL_PASS_YN: '2'
                     }
                 ];
             }
@@ -109,15 +103,8 @@
                 scrollY: true,
                 columns: [
                     {
-                        header: '수험번호',
-                        name: 'APLY_NO',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
                         header: '지원자명',
-                        name: 'NM_KOR',
+                        name: 'NAME_KOR',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
@@ -138,7 +125,7 @@
                     },
                     {
                         header: '선발결과',
-                        name: 'RSLT_DIV',
+                        name: 'FNL_PASS_YN',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -220,7 +207,7 @@
 
                     var rowKeys = interviewTable.getCheckedRowKeys();
                     rowKeys.forEach(rowKey => {
-                        interviewTable.setValue(rowKey, 'RSLT_DIV', passDiv.options[passDiv.selectedIndex].value, false);
+                        interviewTable.setValue(rowKey, 'FNL_PASS_YN', passDiv.options[passDiv.selectedIndex].value, false);
                     });
                 }
             });

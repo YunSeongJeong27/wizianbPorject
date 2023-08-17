@@ -5,7 +5,6 @@
   Time: 오후 10:48
   To change this template use File | Settings | File Templates.
 --%>
-<%@include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,6 +22,7 @@
         }
         body{
             background-color: #F2F3F5;
+            min-width: 1250px;
         }
         .container-table .form-select:focus,
         .container-table .form-control:focus{
@@ -49,7 +49,7 @@
             margin-bottom: 0;
         }
         .searchResult select.form-select{
-            padding: 0.2rem 1.25rem 0.2rem 0.75rem;
+            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
         }
 
         /* 그리드 custom css */
@@ -58,16 +58,16 @@
         .tui-grid-scrollbar-left-bottom,
         .tui-grid-scrollbar-right-bottom,
         .tui-grid-scrollbar-right-top{
-            background-color: #fff;
+            background-color: #fff !important;
         }
 
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
+            border-right-style: solid !important;
+            border-right-color: #E1E1E1 !important;
         }
         .tui-grid-cell{
-            border-left-width: 1px;
+            border-left-width: 1px !important;
         }
 
         /* 선택한 row */
@@ -80,10 +80,21 @@
         .checkCell{
             background-color: #D1D1D1 !important;
         }
+        /* floating row */
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header{
+            background-color: #fff !important;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header:nth-child(1){
+            height: 100%;
+            padding: 15px 5px;
+        }
+        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header .tui-grid-cell-content{
+            text-align: center;
+        }
 
         /* 페이징 */
         .tui-pagination{
-            background-color: #fff;
+            background-color: #fff !important;
             margin:0 !important;
             padding: 20px 0 12px;
         }
@@ -120,11 +131,14 @@
             text-align: center !important;
         }
         /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input,
+        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
+            border: none !important;
+        }
         .tui-select-box-input.tui-select-box-open{
             border: none !important;
             border-bottom: 1px solid #aaa !important;
         }
+
     </style>
 </head>
 <body>
@@ -176,16 +190,14 @@
         </div>
     </div>
     <%--BODY--%>
-    <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-        <div id="nthTable"></div>
+    <div class="text-center border border-gray-100 rounded-2">
+        <div id="finalTable"></div>
 
 
         <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
              <p class="pageLoc">현재:1/전체:14(1~5)</p>
          </div>--%>
     </div>
-
-
 </div>
 <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -222,19 +234,26 @@
         const data = [
             {
                 APLY_NO: 'APLY_NO',
-                NM_KOR: 'NM_KOR',
-                GEN_DIV_NM: 'GEN_DIV_NM'
-
+                NAME_KOR: 'NAME_KOR',
+                AGE : 20,
+                GENDER: 'GENDER',
+                DOC_PASS_YN: '합격',
+                EV_SCORE: '80',
+                PREL_ORD: '1'
             },
             {
                 APLY_NO: 'APLY_NO2',
-                NM_KOR: 'NM_KOR2',
-                GEN_DIV_NM: 'GEN_DIV_NM2'
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_SCORE: '70',
+                PREL_ORD: '2'
             }
         ];
 
-        const nthTable = new tui.Grid({
-            el: document.getElementById('nthTable'),
+        const finalTable = new tui.Grid({
+            el: document.getElementById('finalTable'),
             data: data,
             rowHeaders: ['rowNum'], //인덱스
             pageOptions: {
@@ -250,7 +269,7 @@
                     {
                         header: '면접전형',
                         name: 'INTERVIEW',
-                        childNames: ['INT_AVR', 'INT_RANK']
+                        childNames: ['EV_SCORE', 'PREL_ORD']
                     }
                 ]
             },
@@ -264,38 +283,38 @@
                 },
                 {
                     header: '지원자명',
-                    name: 'NM_KOR',
+                    name: 'NAME_KOR',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '연령',
-                    name: '',
+                    name: 'AGE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '성별',
-                    name: 'GEN_DIV_NM',
+                    name: 'GENDER',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '서류전형',
-                    name: 'DOCUMENT',
+                    name: 'DOC_PASS_YN',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '평균',
-                    name: 'INT_AVR',
+                    name: 'EV_SCORE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '순위',
-                    name: 'INT_RANK',
+                    name: 'PREL_ORD',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }
@@ -308,11 +327,11 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthTable.focus(0, 'CORS_DIV', true);
+                finalTable.focus(0, 'APLY_NO', true);
                 subTableLoad(0);
             }
         });
-        nthTable.on('click', function (ev) {
+        finalTable.on('click', function (ev) {
             subTableLoad(ev.rowKey);
         });
     });

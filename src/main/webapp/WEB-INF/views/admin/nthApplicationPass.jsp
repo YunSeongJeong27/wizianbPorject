@@ -47,8 +47,8 @@
                         <p class="subTitle fw-bold me-2">선발결과</p>
                         <select id="passDiv" class="form-select w-auto me-1">
                             <option value="0" selected>선택</option>
-                            <option value="1">적격</option>
-                            <option value="2">부적격</option>
+                            <option value="1">합격</option>
+                            <option value="2">불합격</option>
                         </select>
                         <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                         <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
@@ -71,21 +71,17 @@
         // nthTable row 누를 때마다 applicationTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var applicationData = [];
-            var firstColumName = 'APLY_NO';
+            var firstColumName = 'NAME_KOR';
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 applicationData = [
                     {
-                        APLY_NO: 'E12341234',
-                        NM_KOR: '홍길동',
-                        DOC_QLFY_YN: '1',
-                        DOC_RSN: ''
+                        NAME_KOR: '홍길동',
+                        DOC_PASS_YN: '1'
                     },
                     {
-                        APLY_NO: 'E98769876',
-                        NM_KOR: '이길동',
-                        DOC_QLFY_YN: '2',
-                        DOC_RSN: '자기소개서 미제출'
+                        NAME_KOR: '이길동',
+                        DOC_PASS_YN: '2'
                     }
                 ];
             }
@@ -107,22 +103,15 @@
                 scrollY: true,
                 columns: [
                     {
-                        header: '수험번호',
-                        name: 'APLY_NO',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
                         header: '지원자명',
-                        name: 'NM_KOR',
+                        name: 'NAME_KOR',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
-                        header: '적격여부',
-                        name: 'DOC_QLFY_YN',
+                        header: '합격여부',
+                        name: 'DOC_PASS_YN',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -131,19 +120,11 @@
                             type: 'select',
                             options: {
                                 listItems: [
-                                    { text: '적격', value: '1' },
-                                    { text: '부적격', value: '2' }
+                                    { text: '합격', value: '1' },
+                                    { text: '불합격', value: '2' }
                                 ]
                             }
                         }
-                    },
-                    {
-                        header: '부적격사유',
-                        name: 'DOC_RSN',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center',
-                        editor: 'text'
                     }
                 ],
                 columnOptions: {
@@ -213,7 +194,7 @@
 
                     var rowKeys = applicationTable.getCheckedRowKeys();
                     rowKeys.forEach(rowKey => {
-                        applicationTable.setValue(rowKey, 'DOC_QLFY_YN', passDiv.options[passDiv.selectedIndex].value, false);
+                        applicationTable.setValue(rowKey, 'DOC_PASS_YN', passDiv.options[passDiv.selectedIndex].value, false);
                     });
                 }
             });
