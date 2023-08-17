@@ -26,6 +26,25 @@
     </style>
 </head>
 <body>
+<div class="my-3 d-flex justify-content-center">
+    <div class="container-sub-header" style="width: 1440px;">
+        <div class="d-flex flex-row justify-content-between px-3">
+            <div class="page-title" id="headerText">${title}</div>
+
+            <div class="d-flex align-items-center">
+                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <div class="breadcrumb d-flex align-items-center" id="breadCrumb">
+                        <div id="breadcrumbDiv1" class="breadcrumb-item" style="cursor:pointer;">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
+
 <div class="container-lg">
     <div>
         <div id="selecInfo_title" class="pb-2 mb-4 mb-0 mt-3">
@@ -50,6 +69,12 @@
     const save_btn = document.getElementById("save_btn");
     save_btn.addEventListener("click", function(){
         window.location.href = "/userInfo";
+    })
+
+    ////상단에 홈>마이페이지> (이벤트리스너)
+    const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
+    breadcrumbDiv1.addEventListener("click",function(){
+        window.location.href = "/app";
     })
 </script>
 <%@include file="../user/footer.jsp" %>

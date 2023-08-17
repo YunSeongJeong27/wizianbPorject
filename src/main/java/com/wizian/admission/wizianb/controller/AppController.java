@@ -3,6 +3,7 @@ package com.wizian.admission.wizianb.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
@@ -15,11 +16,13 @@ public class AppController {
 
     //메인 페이지
     @GetMapping("/app")
-    public String application(){
+    public String application(Model model){
+        model.addAttribute("title","모집전형선택");
         return "/application/applicationWrite";
     }
     @GetMapping("/selectInfo")
-    public String SelecInfo(){
+    public String SelecInfo(Model model){
+        model.addAttribute("title","전형 정보");
         return "/application/applicationSelectInfo";
     }
 
@@ -45,33 +48,40 @@ public class AppController {
     }
 
     @GetMapping("/checked")
-    public String checked(){
+    public String checked(Model model){
+        model.addAttribute("title","마이페이지");
         return "/application/applicationChecked";
     }
 
     @GetMapping("/pass")
-    public String pass(){
+    public String pass(Model model){
+        model.addAttribute("title", "합격자발표");
         return "/application/applicationPass";
     }
     @GetMapping("/pledge")
-    public String pledge(){
+    public String pledge(Model model){
+        model.addAttribute("title","등록서약/포기");
         return "/application/applicationPledge";
     }
 
     @GetMapping("userInfo")
-    public String userInfo(){
+    public String userInfo(Model model){
+        model.addAttribute("title","기본정보");
         return "/application/applicationInfo";
     }
     @GetMapping("userEdu")
-    public String userEdu(){
+    public String userEdu(Model model){
+        model.addAttribute("title","학력사항");
         return "/application/applicationEdu";
     }
     @GetMapping("userExp")
-    public String userExp(){
+    public String userExp(Model model){
+        model.addAttribute("title","경력사항");
         return "/application/applicationExp";
     }
     @GetMapping("userIntroduce")
-    public String userIntroduce(){
+    public String userIntroduce(Model model){
+        model.addAttribute("title","자기소개서");
         return "/application/applicationIntroduce";
     }
 

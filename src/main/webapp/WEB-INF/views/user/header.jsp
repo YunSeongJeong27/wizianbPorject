@@ -72,7 +72,7 @@
                 <a href="/checked" class="nav-link headerBtn" id="navbarDropdown" role="button">마이페이지</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item headerBtn" href="/checked">지원서확인</a></li>
-                    <li><a class="dropdown-item headerBtn" id="checkedAnchor" href="#second-tap">추가제출서류</a></li>
+                    <li><a class="dropdown-item headerBtn" id="checkedAnchor" href="#">추가제출서류</a></li>
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
@@ -82,24 +82,6 @@
     </div>
 </div>
 
-<div class="my-3 d-flex justify-content-center">
-    <div class="container-sub-header" style="width: 1440px;">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <div class="page-title" id="headerText">DB로 작성가능한가요?</div>
-
-            <div class="d-flex align-items-center">
-                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <div class="breadcrumb d-flex align-items-center" id="breadCrumb">
-                        <div class="breadcrumb-item" style="cursor:pointer;" onclick="window.location.href='/app'";>
-                            <i class="bi bi-house-door"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -132,78 +114,73 @@
         // 첫 번째 <a> 태그의 href 속성과 일치하는 두 번째 <a> 태그 선택
         const applicationCheckedLink = document.querySelectorAll('a[href="#second-tap"]');
         // 두 번째 <a> 태그의 클릭 이벤트 호출
-        applicationCheckedLink[1].click();
+        applicationCheckedLink[0].click();
     });
 
 
-    var headerBtn = document.querySelectorAll(".headerBtn");
-    headerBtn.forEach(function(Btn){
-        Btn.addEventListener("click", function(e){
-            // e.preventDefault()
-            const breadCrumb = document.getElementById("breadCrumb")
-            function breadCrumb1(text1, controller1){
-                const createDiv = document.createElement("div");
-                createDiv.className = "breadcrumb-item";
-                createDiv.id = "breadCrumb1";
-                createDiv.style.cursor = "pointer";
-                breadCrumb.appendChild(createDiv);
-                const breadCrumb1 = document.getElementById("breadCrumb1");
-                breadCrumb1.textContent = text1;
-                breadCrumb1.addEventListener("click",function(){
-                    window.location.href = controller1;
-                });
-            }
-            function breadCrumb2(text2, controller2){
-                const createDiv = document.createElement("div");
-                createDiv.className = "breadcrumb-item fw-bold";
-                createDiv.id = "breadCrumb2";
-                createDiv.style.cursor = "pointer";
-                breadCrumb.appendChild(createDiv);
-                const breadCrumb2 = document.getElementById("breadCrumb2");
-                breadCrumb2.textContent = text2;
-                breadCrumb2.addEventListener("click",function(){
-                    window.location.href = controller2;
-                })
-            }
-            function breadCrumbRemove(){
-                const breadCrumb1 = document.getElementById("breadCrumb1");
-                const breadCrumb2 = document.getElementById("breadCrumb2");
-                if (breadCrumb1) {
-                    breadCrumb.removeChild(breadCrumb1);
-                }
-                if (breadCrumb2) {
-                    breadCrumb.removeChild(breadCrumb2);
-                }
-            }
-
-            switch (Btn.innerHTML){
-                case "원서작성" :
-                    breadCrumbRemove();
-                    break;
-                case "마이페이지" :
-                    breadCrumbRemove();
-                    breadCrumb1("마이페이지","/checked");
-                    breadCrumb2("지원서확인","/checked")
-                    break;
-                case "지원서확인" :
-                    breadCrumbRemove();
-                    breadCrumb1("마이페이지","/checked");
-                    breadCrumb2("지원서확인","/checked")
-                    break;
-                case "추가제출서류" :
-                    breadCrumbRemove();
-                    breadCrumb1("마이페이지","/checked");
-                    breadCrumb2("추가제출서류","/checked");
-                    break;
-                case "합격자발표" :
-                    breadCrumbRemove();
-                    breadCrumb1("합격자발표","/pass");
-                    breadCrumb2("합격자발표","/pass");
-                    break;
-
-            }
-        })
-    })
+    // var headerBtn = document.querySelectorAll(".headerBtn");
+    // headerBtn.forEach(function(Btn){
+    //     Btn.addEventListener("click", function(e){
+    //          //e.preventDefault()
+    //         const breadCrumb = document.getElementById("breadCrumb")
+    //         function breadCrumb1(text1, controller1){
+    //             const createDiv = document.createElement("div");
+    //             createDiv.className = "breadcrumb-item";
+    //             createDiv.id = "breadCrumb1";
+    //             createDiv.style.cursor = "pointer";
+    //             breadCrumb.appendChild(createDiv);
+    //             const breadCrumb1 = document.getElementById("breadCrumb1");
+    //             breadCrumb1.textContent = text1;
+    //             breadCrumb1.addEventListener("click",function(){
+    //                 window.location.href = controller1;
+    //             });
+    //         }
+    //         function breadCrumb2(text2, controller2){
+    //             const createDiv = document.createElement("div");
+    //             createDiv.className = "breadcrumb-item fw-bold";
+    //             createDiv.id = "breadCrumb2";
+    //             createDiv.style.cursor = "pointer";
+    //             breadCrumb.appendChild(createDiv);
+    //             const breadCrumb2 = document.getElementById("breadCrumb2");
+    //             breadCrumb2.textContent = text2;
+    //             breadCrumb2.addEventListener("click",function(){
+    //                 window.location.href = controller2;
+    //             })
+    //         }
+    //         function breadCrumbRemove(){
+    //             const breadCrumb1 = document.getElementById("breadCrumb1");
+    //             const breadCrumb2 = document.getElementById("breadCrumb2");
+    //             if (breadCrumb1) {
+    //                 breadCrumb.removeChild(breadCrumb1);
+    //             }
+    //             if (breadCrumb2) {
+    //                 breadCrumb.removeChild(breadCrumb2);
+    //             }
+    //         }
+    //
+    //         switch (Btn.innerHTML){
+    //             case "원서작성" :
+    //                 break;
+    //             case "마이페이지" :
+    //                 breadCrumb1("마이페이지", "/checked");
+    //                 breadCrumb2("지원서확인", "/checked");
+    //                 break;
+    //             case "지원서확인" :
+    //                 breadCrumb1("마이페이지","/checked");
+    //                 breadCrumb2("지원서확인","/checked")
+    //                 break;
+    //             case "추가제출서류" :
+    //                 breadCrumb1("마이페이지","/checked");
+    //                 breadCrumb2("추가제출서류","/checked");
+    //                 break;
+    //             case "합격자발표" :
+    //                 breadCrumb1("합격자발표","/pass");
+    //                 breadCrumb2("합격자발표","/pass");
+    //                 break;
+    //
+    //         }
+    //     })
+    // })
 
 </script>
 </body>

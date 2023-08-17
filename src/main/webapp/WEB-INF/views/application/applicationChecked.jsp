@@ -163,6 +163,27 @@
 
 </head>
 <body>
+<div class="my-3 d-flex justify-content-center">
+    <div class="container-sub-header" style="width: 1440px;">
+        <div class="d-flex flex-row justify-content-between px-3">
+            <div class="page-title" id="headerText">${title}</div>
+
+            <div class="d-flex align-items-center">
+                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <div class="breadcrumb d-flex align-items-center" id="breadCrumb">
+                        <div id="breadcrumbDiv1" class="breadcrumb-item" style="cursor:pointer;">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div id="breadcrumbDiv2" class="breadcrumb-item" style="cursor:pointer;">마이페이지</div>
+                        <div id="breadcrumbDiv3" class="breadcrumb-item fw-bold" style="cursor:pointer;">지원서작성</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
+
 <div class="my-5 container">
     <div class="row">
         <%--좌측탭--%>
@@ -799,6 +820,20 @@
         });
     });
 
+    ////상단에 홈>마이페이지> (이벤트리스너)
+    const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
+    const breadcrumbDiv2 = document.getElementById("breadcrumbDiv2");
+    const breadcrumbDiv3 = document.getElementById("breadcrumbDiv3");
+    breadcrumbDiv1.addEventListener("click",function(){
+        window.location.href = "/app";
+    })
+    breadcrumbDiv2.addEventListener("click",function(){
+        window.location.href = "/checked";
+    })
+    breadcrumbDiv3.addEventListener("click",function(){
+        window.location.href = "/checked";
+    })
+
     //상단에 홈>마이페이지> (텍스트값 주는 코드)
     document.addEventListener('DOMContentLoaded', function () {
         const tabLinks = document.querySelectorAll('.list-group-item-action'); // 탭 링크들을 선택
@@ -806,8 +841,8 @@
         tabLinks.forEach(tabLink => {
             tabLink.addEventListener('click', function () {
                 const tabText = this.innerText; // 클릭한 탭의 텍스트를 가져옴
-                const applyCurrent = document.getElementById('apply_current'); // apply_current 요소를 가져옴
-                applyCurrent.textContent = tabText; // apply_current의 텍스트를 변경
+                const breadcrumbDiv3 = document.getElementById('breadcrumbDiv3');
+                breadcrumbDiv3.textContent = tabText; // breadcrumb3의 텍스트를 변경
             });
         });
     });

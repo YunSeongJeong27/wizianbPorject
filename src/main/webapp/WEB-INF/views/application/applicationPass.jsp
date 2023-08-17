@@ -43,6 +43,27 @@
 
 </head>
 <body>
+<div class="my-3 d-flex justify-content-center">
+    <div class="container-sub-header" style="width: 1440px;">
+        <div class="d-flex flex-row justify-content-between px-3">
+            <div class="page-title" id="headerText">${title}</div>
+
+            <div class="d-flex align-items-center">
+                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <div class="breadcrumb d-flex align-items-center" id="breadCrumb">
+                        <div id="breadcrumbDiv1" class="breadcrumb-item" style="cursor:pointer;">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div id="breadcrumbDiv2" class="breadcrumb-item" style="cursor:pointer;">합격자발표</div>
+                        <div id="breadcrumbDiv3" class="breadcrumb-item fw-bold" style="cursor:pointer;">합격자발표</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
+
 <div class="my-5 container">
     <div class="row">
         <%--좌측탭--%>
@@ -155,6 +176,20 @@
     const pledgeBtn = document.getElementById("pledgeBtn");
     pledgeBtn.addEventListener("click", function(){
         window.location.href = "/pledge"
+    })
+
+    ////상단에 홈>마이페이지> (이벤트리스너)
+    const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
+    const breadcrumbDiv2 = document.getElementById("breadcrumbDiv2");
+    const breadcrumbDiv3 = document.getElementById("breadcrumbDiv3");
+    breadcrumbDiv1.addEventListener("click",function(){
+        window.location.href = "/app";
+    })
+    breadcrumbDiv2.addEventListener("click",function(){
+        window.location.href = "/pass";
+    })
+    breadcrumbDiv3.addEventListener("click",function(){
+        window.location.href = "/pass";
     })
 </script>
 <%@include file="../user/footer.jsp" %>
