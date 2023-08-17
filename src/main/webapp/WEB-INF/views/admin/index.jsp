@@ -27,7 +27,7 @@
 <body>
 <div class="d-flex" style="height: calc(100vh - 108px);">
     <!-- 왼 -->
-    <div style="width: 300px; height: 100%;">
+    <div style="width: 250px; height: 100%;">
         <div class="d-flex p-2 shadow-sm" style="height: 50px;">
             <div class="col-10">
                 <input class="form-control h-100" type="text" placeholder="검색어를 입력하세요">
@@ -36,7 +36,7 @@
                 <i class="bi bi-search"></i>
             </div>
         </div>
-        <div class="p-2 shadow-sm" style="height: calc(100% - 50px);">
+        <div class="p-2 shadow-sm" style="height: calc(100% - 50px); overflow-y: auto;">
            <div class="w-100">
                 <div class="px-2 py-1 w-100 fw-bold text-start btn-lf iconWrap btn" id="indexBtn" onclick="indexBtn(this)">
                     <span class="bi bi-folder2"></span>
@@ -71,7 +71,7 @@
                             원서접수관리
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply')">원서접수관리</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply_ex')">원서접수관리</div>
                         </div>
                     </div>
 
@@ -93,7 +93,7 @@
     </div>
 
 <!-- 오 -->
-    <div style="width: 100%">
+    <div style="width: calc(100% - 250px);">
         <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
     </div>
 </div>
