@@ -87,6 +87,12 @@
         </div>
     </div>
 </div>
+<script>
+    const save_btn = document.getElementById("save_btn");
+    save_btn.addEventListener("click", function(){
+        window.location.href = "/userInfo";
+    })
+</script>
 <%@include file="../user/footer.jsp" %>
 </body>
 </html>

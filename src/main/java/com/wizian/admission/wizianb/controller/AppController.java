@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,7 @@ public class AppController {
     }
     @GetMapping("/selectInfo")
     public String SelecInfo(){
-        return "/application/applicationSelecInfo";
+        return "/application/applicationSelectInfo";
     }
 
     //원서작성페이지 임시데이터로 불러와봄
@@ -49,18 +48,29 @@ public class AppController {
         return "/application/applicationChecked";
     }
 
+    @GetMapping("/pass")
+    public String pass(){
+        return "/application/applicationPass";
+    }
+    @GetMapping("/pledge")
+    public String pledge(){
+        return "/application/applicationPledge";
+    }
 
-    @GetMapping("/test")
-    public String test(){
-        return "/application/applicationChecked";
-//      ㅇ Checked       지원서 확인
-//        Edu           학력사항
-//        Exp           경력사항
-//        Info          기본정보
-//        Introduce     자기소개서
-//        Pass          지원서 확인 - 합격자 발표
-//        Pledge        등록서약/포기
-//      ㅇ SelecInfo     전형정보
-//      ㅇ Write         모집전형선택
+    @GetMapping("userInfo")
+    public String userInfo(){
+        return "/application/applicationInfo";
+    }
+    @GetMapping("userEdu")
+    public String userEdu(){
+        return "/application/applicationEdu";
+    }
+    @GetMapping("userExp")
+    public String userExp(){
+        return "/application/applicationExp";
+    }
+    @GetMapping("userIntroduce")
+    public String userIntroduce(){
+        return "/application/applicationIntroduce";
     }
 }

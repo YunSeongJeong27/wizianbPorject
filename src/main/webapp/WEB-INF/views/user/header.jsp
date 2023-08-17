@@ -49,7 +49,7 @@
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
-                <a href="#" class="nav-link">합격자발표</a>
+                <a href="/pass" class="nav-link">합격자발표</a>
             </div>
         </div>
     </div>
@@ -78,8 +78,6 @@
     const checkedAnchor = document.querySelector('#checkedAnchor');
 
     checkedAnchor.addEventListener('click', function(e) {
-        const contextPath =
-            console.log(contextPath);
         // 링크의 기본 동작(새로운 페이지 열기) 방지
         e.preventDefault();
         // 이벤트가 발생한 <a> 태그의 href 속성 값 선택

@@ -73,14 +73,14 @@
 <div class="my-5 container">
     <div class="container-sub-header">
         <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">지원서확인</p>
+            <p class="page-title">합격자발표</p>
 
             <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ul class="breadcrumbs">
                     <li class="breadcrumb-item">홈</li>
-                    <li class="breadcrumb-item">마이페이지</li>
+                    <li class="breadcrumb-item">합격자발표</li>
                     <%--탭에맞게 바뀌게--%>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">지원서확인</li>
+                    <li id="apply_current" class="breadcrumb-item" aria-current="page">합격자발표</li>
                 </ul>
             </div>
         </div>
@@ -191,10 +191,20 @@
             <div class="border-top border-dark border-2">
                 <div class="border mt-3" style="width: 100%; height:150px;"></div>
             </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                <div class="btn bg-primary bg-opacity-25" id="pledgeBtn">등록서약/포기</div>
+            </div>
     </div>
 </div>
 </div>
 
+<script>
+    const pledgeBtn = document.getElementById("pledgeBtn");
+    pledgeBtn.addEventListener("click", function(){
+        window.location.href = "/pledge"
+    })
+</script>
 <%@include file="../user/footer.jsp" %>
 </body>
 </html>
