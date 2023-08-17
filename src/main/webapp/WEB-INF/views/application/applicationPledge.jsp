@@ -10,7 +10,6 @@
 <html>
 <head>
     <title>등록서약/포기</title>
-    <script src="jquery-3.6.4.js"></script>
     <style>
         .page-title {
             font-size: 36px;

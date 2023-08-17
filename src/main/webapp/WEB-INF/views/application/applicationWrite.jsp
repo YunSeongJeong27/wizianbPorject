@@ -102,7 +102,6 @@
         <div class="col-md-auto finalDocumentPre"></div>
         <button id="appBtn">접수바로가기</button>
     </div>
-
 </div>
 
 

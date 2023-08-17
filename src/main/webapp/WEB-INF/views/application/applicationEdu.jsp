@@ -191,7 +191,6 @@
         </div>
     </div>
 </div>
-<script src="jquery-3.6.4.js"></script>
 <script>
     var idx=1;
     $(document).ready(function (){

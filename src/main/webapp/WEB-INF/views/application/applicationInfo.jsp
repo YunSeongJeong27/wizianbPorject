@@ -89,11 +89,12 @@
             <div></div>
         </div>
     </div>
+</div>
     <img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920">
-
-    <div class="row">
+<div class="my-5 container">
+    <div class="row mt-5">
         <div class="col-lg-3 mb-3">
-            <div class="menu h-auto px-3 border rounded-3">
+            <div class="menu h-auto px-3 border rounded-3 me-5">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
                         <a href="#" class="active">기본정보</a>
@@ -146,6 +147,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             이메일
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
@@ -159,6 +161,7 @@
                         </div>
                         <div class="col-lg-2">
                             비밀번호
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <div>
@@ -183,12 +186,14 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             비밀번호확인
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
                             성별구분
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <select class="form-select">
@@ -202,12 +207,14 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             성명
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
                             생년월일
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="date" class="form-control">
@@ -216,6 +223,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             성명(영어)
+                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
@@ -247,7 +255,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            지원자직업명
+                            전화번호
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
@@ -261,20 +269,21 @@
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
-                            상세주소
+                            휴대폰번호
                         </div>
                         <div class="col-lg-4">
-                            <input type="date" class="form-control">
+                            <input type="text" class="form-control">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-2">
-                            전화번호
+                            상세주소
                         </div>
                         <div class="col-lg-10">
                             <input type="text" class="form-control">
                         </div>
                     </div>
+
 
                     <%-- Buttons --%>
                     <div id="application_btn" class="d-flex justify-content-center mt-4">
