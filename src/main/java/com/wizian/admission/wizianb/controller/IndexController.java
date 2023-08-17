@@ -26,6 +26,8 @@ public class IndexController {
     public String notice(){return "/admin/nthNotice"; }
     @GetMapping("/monhang")
     public String monhang(){return "/admin/nthMonhang"; }
+    @GetMapping("/apply_ex")
+    public String apply_ex(){return "/admin/nthApply_ex";}
     @GetMapping("/apply")
     public String apply(){return "/admin/nthApply";}
     @GetMapping("/interviewPass")
