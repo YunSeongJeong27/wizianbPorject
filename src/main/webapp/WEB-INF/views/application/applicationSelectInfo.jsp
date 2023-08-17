@@ -92,6 +92,26 @@
     save_btn.addEventListener("click", function(){
         window.location.href = "/userInfo";
     })
+
+
+    const editedData = [
+        { name: 'Updated Name 1', age: 30 },
+        { name: 'Updated Name 2', age: 25 },
+        // ... 편집된 데이터
+    ];
+
+    $.ajax({
+        url: '/update-data',
+        type: 'POST',
+        contentType: 'application/json',
+        data: editedData,
+        success: function(response) {
+            // 서버에서의 응답 처리
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>

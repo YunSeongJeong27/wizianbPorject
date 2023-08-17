@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class ApplicationInfo {
 
+    /*지원자직업,비밀번호,비밀번호확인*/
     private String aplyNo;
     private String courseDiv;
     private String nameKor;

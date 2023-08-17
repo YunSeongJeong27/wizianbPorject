@@ -16,7 +16,15 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     private final ApplicationInfoRepository applicationInfoRepository;
 
     @Override
-    public List<ApplicationInfo> findAplyInfoByMemIdAndRcrtNo(String memId, String rcrtNo) {
-        return applicationInfoRepository.findAplyInfoByMemIdAndRcrtNo(memId,rcrtNo);
+    public List<ApplicationInfo> findByMemIdAndRcrtNo(String memId, String rcrtNo) {
+        return applicationInfoRepository.findByMemIdAndRcrtNo(memId,rcrtNo);
+    }
+
+    @Override
+    public ApplicationInfo join(ApplicationInfo applicationInfo) {
+
+        /*중복검증?*/
+
+        return applicationInfoRepository.save(applicationInfo);
     }
 }
