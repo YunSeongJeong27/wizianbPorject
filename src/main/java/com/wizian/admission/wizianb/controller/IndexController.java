@@ -32,10 +32,11 @@ public class IndexController {
     public String interviewPass(){return "/admin/nthInterviewPass";}
     @GetMapping("/applicationPass")
     public String applicationPass(){return "/admin/nthApplicationPass";}
+
     @GetMapping("/finalPass")
     public String finalPass() { return "/admin/nthFinal";}
-    @GetMapping("/evaluationResults")
-    public String evaluationResults() { return "/admin/evaluationResults";}
-    @GetMapping("/appInfo")
-    public String applyInfo(){ return "/application/applicationInfo";}
+    @GetMapping("/nthEvResults")
+    public String evaluationResults() { return "/admin/nthEvResults";}
+
+
 }

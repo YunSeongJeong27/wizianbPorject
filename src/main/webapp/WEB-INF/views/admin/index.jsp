@@ -93,7 +93,7 @@
     </div>
 
 <!-- 오 -->
-    <div style="width: calc(100% - 250px);">
+    <div style="width: 100%">
         <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
     </div>
 </div>
