@@ -20,6 +20,7 @@
         gap: 50px;
         max-width: 1300px;
         margin: 0 auto;
+        cursor: pointer;
     }
 
     .col-md-auto {
@@ -47,7 +48,7 @@
         margin-top: 15px;
         color: gray;
     }
-    #appBtn{
+    .appBtn{
         margin-top: 50px;
         width: 80%;
         height: 50px;
@@ -57,7 +58,7 @@
         margin-left: 35px ;
     }
 
-    #appBtn:hover {
+    .appBtn:hover {
         background: #003A78;
         color: white;
     }
@@ -83,7 +84,7 @@
 <div id="selTx" >모집전형선택</div>
 <img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
 
-<div class="container-fluid wrap">
+<div class="container-fluid wrap" onclick="window.location.href ='/selectInfo';">
     <%--hidden으로 첫번째요소는 숨겨야됨--%>
     <div id="selectionContainerId" class="selectionContainer" hidden>
         <div class="col-md-auto status"></div>
@@ -100,7 +101,8 @@
         <div class="col-md-auto writeDocumentPre"></div>
         <div class="col-md-auto tx" >최종합격자발표</div>
         <div class="col-md-auto finalDocumentPre"></div>
-        <button id="appBtn">접수바로가기</button>
+        <button class="appBtn">접수바로가기</button>
+
     </div>
 
 </div>
@@ -135,6 +137,12 @@
     }
 
     fetchData();
+
+    const selectionContainerId = document.getElementById("selectionContainerId");
+    selectionContainerId.addEventListener("click", function(){
+        console.log("test");
+    })
+
 </script>
 
 <%@include file="../user/footer.jsp" %>
