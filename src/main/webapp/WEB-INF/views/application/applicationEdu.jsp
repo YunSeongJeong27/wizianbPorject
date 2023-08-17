@@ -11,37 +11,6 @@
 <head>
     <title>학력사항</title>
     <style>
-        .breadcrumbs,
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .page-title {
-            font-size: 36px;
-            font-weight: 600;
-        }
-
-        .breadcrumbs li {
-            display: inline-block;
-            font-size: 13px;
-        }
-
-        .menu ul li a {
-            display: inline-block;
-            color: #646464;
-            padding: 10px;
-            font-weight: 600;
-        }
-
-        .menu ul li a.active {
-            color: #003A78;
-        }
-
-        #apply_current {
-            font-weight: bolder;
-        }
 
         #add_eduInfo, #save_btn{
             background: #003A78;
@@ -66,37 +35,21 @@
 </head>
 <body>
 <div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">학력사항</p>
-            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumb-item"><i class="fas fa-sharp fa-light fa-house"></i></li>
-                    <li class="breadcrumb-item">원서작성</li>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">학력사항</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
-
-<div class="my-5 container">
     <div class="row">
         <div class="col-lg-3 mb-3">
             <div class="menu h-auto px-3 border rounded-3">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userInfo" class="active">기본정보</a>
+                        <a href="/userInfo" class="active">기본정보</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userEdu">학력사항</a>
+                        <a href="/userEdu">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userExp">경력사항</a>
+                        <a href="/userExp">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="userIntroduce">자기소개서</a>
+                        <a href="/userIntroduce">자기소개서</a>
                     </li>
                 </ul>
             </div>
@@ -173,24 +126,25 @@
                         </div>
                     </div>
                 </div>
-                    <%--추가반복 여기까지--%>
-                    <%--추가할 폼위치--%>
+                <%--추가반복 여기까지--%>
+                <%--추가할 폼위치--%>
 
-                    <div class="d-flex justify-content-end mt-5">
-                        <button type="button" class="btn btn-dark" id="add_eduInfo">학력추가</button>
-                    </div>
-
-                    <%--버튼--%>
-                    <div class="d-flex justify-content-between mt-5 ">
-                        <button type="button" class="btn btn-second">이전</button>
-                        <button type="button" id="save_btn" class="btn btn-dark">저장</button>
-                        <button type="button" class="btn btn-second">저장 후 이동</button>
-                    </div>
+                <div class="d-flex justify-content-end mt-5">
+                    <button type="button" class="btn btn-dark" id="add_eduInfo">학력추가</button>
                 </div>
-            </form>
+
+                <%--버튼--%>
+                <div class="d-flex justify-content-between mt-5 ">
+                    <button type="button" class="btn btn-second">이전</button>
+                    <button type="button" id="save_btn" class="btn btn-dark">저장</button>
+                    <button type="button" class="btn btn-second">저장 후 이동</button>
+                </div>
         </div>
+        </form>
     </div>
 </div>
+</div>
+<script src="jquery-3.6.4.js"></script>
 <script>
     var idx=1;
     $(document).ready(function (){

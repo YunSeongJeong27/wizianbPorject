@@ -5,40 +5,14 @@
 <head>
     <title>Title</title>
     <style>
-        #img1{
+        #img1 {
             width: 100%;
             height: auto;
             object-fit: contain;
 
         }
-        .breadcrumbs,
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
 
-        .page-title {
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-        .breadcrumbs li {
-            display: inline-block;
-            font-size: 12px;
-        }
-
-        .menu ul li a {
-            display: inline-block;
-            color: #646464;
-            padding: 10px;
-            font-weight: 600;
-        }
-
-        #apply_current {
-            font-weight: bolder;
-        }
-        #apply_addFile{
+        #apply_addFile {
             padding: 8px;
         }
 
@@ -51,14 +25,17 @@
         #apply_table td:nth-child(2) {
             text-align: center;
         }
-        #apply_table colgroup col:first-child, col:nth-child(2){
+
+        #apply_table colgroup col:first-child, col:nth-child(2) {
             width: 20%;
 
         }
-        #apply_table colgroup col:nth-child(3){
+
+        #apply_table colgroup col:nth-child(3) {
             width: 60%;
         }
-        #apply_table tbody input{
+
+        #apply_table tbody input {
             background: #f9f9f9;
             border-style: none;
             height: 30px;
@@ -73,40 +50,50 @@
             outline: none;
             box-shadow: none;
         }
+
         #application_member .member_id {
             color: #f00;
         }
+
         #application_member {
             font-weight: 600;
         }
+
         #apply_prev {
             margin: 0 2px;
             padding: 10px 15px;
         }
+
         #application_btn .btn {
             margin: 0 2px;
             padding: 10px 15px;
         }
-        #apply_complete .btn{
+
+        #apply_complete .btn {
             padding: 10px 18px;
             background-color: lightgray;
             border-style: none;
             color: #000000;
         }
-        .fbt1{
+
+        .fbt1 {
             margin: 0 10px;
         }
+
         .fbt2 {
             margin-right: 13px;
         }
+
         /*전체모달*/
-        .modals{
+        .modals {
             font-size: 11px;
         }
-        .stn{
+
+        .stn {
             font-weight: bold;
         }
-        .modalContent{
+
+        .modalContent {
             max-height: 80vh; /* 최대 높이를 화면 높이의 80%로 설정 */
             overflow-y: auto; /* 세로 스크롤을 추가하고 내용이 넘치면 스크롤이 생성되도록 함 */
         }
@@ -116,103 +103,89 @@
             margin-top: 3px;
             margin-bottom: 3px;
         }
+
         /*모달 헤더,프터 밑에선*/
-        .modalContent .modal-header{
+        .modalContent .modal-header {
             border-bottom: 2px solid #524e4e;
         }
+
         .modalContent .modal-footer {
             border-top: 2px solid #524e4e;
         }
-        .documentBtns1{
+
+        .documentBtns1 {
             height: 30px;
             width: 60px;
             font-size: 10px;
         }
-        .documentBtns2{
+
+        .documentBtns2 {
             margin-left: 3px;
             height: 30px;
             width: 65px;
             font-size: 10px;
         }
-        .documentBtns3{
+
+        .documentBtns3 {
             margin-left: 3px;
             height: 30px;
             width: 55px;
             font-size: 10px;
         }
+
         .truncate-text {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .fileCol{
-            padding-left:0;
+
+        .fileCol {
+            padding-left: 0;
         }
 
         /*추가서류제출의 테이블 조절*/
-        @media all  and (max-width:767px) {
-            #apply_table{
+        @media all  and (max-width: 767px) {
+            #apply_table {
                 width: 550px;
                 font-size: 10px;
             }
-            .truncate-text{
+
+            .truncate-text {
                 width: 85%;
                 margin-bottom: 3px;
             }
-            .fileCol{
+
+            .fileCol {
                 width: 85%;
             }
         }
-
-
     </style>
 
 </head>
 <body>
 <div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">지원서확인</p>
-
-            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumb-item">홈</li>
-                    <li class="breadcrumb-item">마이페이지</li>
-                    <%--탭에맞게 바뀌게--%>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">지원서확인</li>
-                </ul>
+    <div class="row">
+        <%--좌측탭--%>
+        <div class="col-lg-2 p-2 d-flex flex-column justify-content-between">
+            <div class="list-group" id="list-tab" role="tablist">
+                <div id="firstTap-li">
+                    <a class="fw-bold list-group-item list-group-item-action active"
+                       id="first-tap-list" data-bs-toggle="list"
+                       href="#first-tap" role="tab" aria-controls="first-tap">지원서확인</a>
+                </div>
+                <div id="secondTap-li">
+                    <a class="fw-bold list-group-item list-group-item-action"
+                       id="second-tap-list" data-bs-toggle="list" href="#second-tap"
+                       role="tab" aria-controls="second-tap">추가제출서류</a>
+                </div>
             </div>
         </div>
-        <div>
-            <div></div>
-        </div>
-    </div>
-    </div>
-    <img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
-
-<div class="my-5 container">
-    <div class="row">
-       <%--좌측탭--%>
-           <div class="col-lg-2 p-2 d-flex flex-column justify-content-between">
-               <div class="list-group" id="list-tab" role="tablist">
-                   <div id="firstTap-li" >
-                       <a class="fw-bold list-group-item list-group-item-action active"
-                          id="first-tap-list" data-bs-toggle="list"
-                          href="#first-tap" role="tab" aria-controls="first-tap">지원서확인</a>
-                   </div>
-                   <div id="secondTap-li">
-                       <a class="fw-bold list-group-item list-group-item-action"
-                          id="second-tap-list" data-bs-toggle="list" href="#second-tap"
-                          role="tab" aria-controls="second-tap">추가제출서류</a>
-                   </div>
-               </div>
-           </div>
         <%--우측탭1--%>
-           <div class="tab-pane fade active show col-lg-9"
-                id="first-tap" role="tabpanel"
-                aria-labelledby="first-tap-list">
+        <div class="tab-pane fade active show col-lg-9"
+             id="first-tap" role="tabpanel"
+             aria-labelledby="first-tap-list">
             <div class="mb-3">
-                <select  class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
+                <select class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
                         aria-label="select_list">
                     <option selected>자바기반 풀스택 개발자 취업과정</option>
                 </select>
@@ -234,12 +207,14 @@
                         <td class="text-center">확인완료</td>
                         <td class="text-center">
                             <button type="button"
-                            class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                            data-bs-target="#basicInfo">보기</button>
+                                    class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
+                                    data-bs-target="#basicInfo">보기
+                            </button>
                         </td>
                         <td class="text-center">
                             <button type="button"
-                            class="btn btn-sm btn-light btn-outline-dark">확인</button>
+                                    class="btn btn-sm btn-light btn-outline-dark">확인
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -248,7 +223,8 @@
                         <td class="text-center">
                             <button type="button"
                                     class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#educationBackground">보기</button>
+                                    data-bs-target="#educationBackground">보기
+                            </button>
                         </td>
                         <td class="text-center">
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
@@ -260,7 +236,8 @@
                         <td class="text-center">
                             <button type="button"
                                     class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#experienceBackground">보기</button>
+                                    data-bs-target="#experienceBackground">보기
+                            </button>
                         </td>
                         <td class="text-center">
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
@@ -272,7 +249,8 @@
                         <td class="text-center">
                             <button type="button"
                                     class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#selfIntroduction">보기</button>
+                                    data-bs-target="#selfIntroduction">보기
+                            </button>
                         </td>
                         <td class="text-center">
                             <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
@@ -299,185 +277,229 @@
         </div>
 
 
+        <%--우측탭2--%>
+        <div class="tab-pane fade col-lg-9 d-none" id="second-tap"
+             role="tabpanel" aria-labelledby="second-tap-list">
+            <div class="mb-3">
+                <select class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
+                        aria-label="select_list">
+                    <option selected>자바기반 풀스택 개발자 취업과정</option>
+                </select>
+            </div>
+            <h3 class="title mt-5 mb-1">추가제출서류</h3>
+            <%-- Buttons --%>
+            <div id="application_btn" class="d-flex justify-content-end mb-3">
+                <button type="button" id="apply_addFile" class="btn btn-primary btn-sm" onclick="addFile()">서류추가
+                </button>
+            </div>
+            <div class="border-top border-dark border-2">
+                <table id="apply_table" class="table table-hover align-middle">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead class="table-light text-center">
+                    <tr>
+                        <th>제출서류</th>
+                        <th>기관명</th>
+                        <th>첨부파일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            <%--우측탭2--%>
-               <div class="tab-pane fade col-lg-9 d-none" id="second-tap"
-                    role="tabpanel" aria-labelledby="second-tap-list">
-               <div class="mb-3">
-                   <select  class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
-                           aria-label="select_list">
-                       <option selected>자바기반 풀스택 개발자 취업과정</option>
-                   </select>
-               </div>
-               <h3 class="title mt-5 mb-1">추가제출서류</h3>
-               <%-- Buttons --%>
-               <div id="application_btn" class="d-flex justify-content-end mb-3">
-                   <button type="button" id="apply_addFile" class="btn btn-primary btn-sm" onclick="addFile()">서류추가</button>
-               </div>
-               <div class="border-top border-dark border-2">
-                   <table id="apply_table" class="table table-hover align-middle">
-                       <colgroup>
-                           <col>
-                           <col>
-                           <col>
-                       </colgroup>
-                       <thead class="table-light text-center">
-                       <tr>
-                           <th>제출서류</th>
-                           <th>기관명</th>
-                           <th>첨부파일</th>
-                       </tr>
-                       </thead>
-                       <tbody>
+                    <tr>
+                        <td>
+                            <div>지원서(필기용)</div>
+                        </td>
+                        <td>삼성sds</td>
+                        <td class="row">
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어 파일파일파일
+                            </div>
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                       <tr>
-                           <td><div>지원서(필기용)</div></td>
-                           <td>삼성sds</td>
-                           <td class="row">
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어 파일파일파일</div>
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
-                       </tr>
+                    <tr>
+                        <td>
+                            <div>지원서</div>
+                        </td>
+                        <td>삼성sds</td>
 
-                       <tr>
-                           <td><div>지원서</div></td>
-                           <td>삼성sds</td>
+                        <td class="row">
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어
+                            </div>
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                           <td class="row">
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어</div>
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
-                       </tr>
+                    <tr>
+                        <td>
+                            <div>학위증명서</div>
+                        </td>
+                        <td>삼성sds</td>
 
-                       <tr>
-                           <td><div>학위증명서</div></td>
-                           <td>삼성sds</td>
+                        <td class="row">
 
-                           <td class="row">
-
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어</div>
-
-
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
-                       </tr>
-
-                       <tr>
-                           <td><div>활동이력증명</div></td>
-                           <td>삼성sds</td>
-
-                           <td class="row">
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어</div>
-
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
-                       </tr>
-
-                       <tr>
-                           <td><div>필기고사답안지</div></td>
-                           <td>삼성sds</td>
-
-                           <td class="row">
-
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어</div>
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어
+                            </div>
 
 
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                       </tr>
+                    <tr>
+                        <td>
+                            <div>활동이력증명</div>
+                        </td>
+                        <td>삼성sds</td>
 
-                       <tr>
-                           <td><div>지원서(보관용)</div></td>
-                           <td><div>삼성sds</div></td>
+                        <td class="row">
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어
+                            </div>
 
-                           <td class="row">
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                               <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                   넣어파일이름 여기넣어</div>
+                    <tr>
+                        <td>
+                            <div>필기고사답안지</div>
+                        </td>
+                        <td>삼성sds</td>
+
+                        <td class="row">
+
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어
+                            </div>
 
 
-                               <div class="col-12 col-md-5 d-flex fileCol">
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                   </div>
-                                   <div class="col-5 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button>
-                                   </div>
-                                   <div class="col-4 d-flex justify-content-center">
-                                       <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button>
-                                   </div>
-                               </div>
-                           </td>
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
 
-                       </tr>
+                    </tr>
 
-                       </tbody>
-                   </table>
+                    <tr>
+                        <td>
+                            <div>지원서(보관용)</div>
+                        </td>
+                        <td>
+                            <div>삼성sds</div>
+                        </td>
 
-                   <div  class="d-flex justify-content-start mt-4 application_btn1">
-                       <button type="button" id="apply_prev" class="btn btn-secondary">이전</button>
-                   </div>
-               </div>
-           </div>
+                        <td class="row">
 
-           </div>
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
+                                넣어파일이름 여기넣어
+                            </div>
+
+
+                            <div class="col-12 col-md-5 d-flex fileCol">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                </div>
+                                <div class="col-5 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
+                                        다운로드
+                                    </button>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-start mt-4 application_btn1">
+                    <button type="button" id="apply_prev" class="btn btn-secondary">이전</button>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
 
 
 <%--기본정보 Modal--%>
@@ -619,14 +641,14 @@
                             <div id="certificationFile" class="btn btn-sm btn-light btn-outline-dark p-2 ">다운로드</div>
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="btn btn-primary">수정하기</div>
-            </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="btn btn-primary">수정하기</div>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <%--경력사항 Modal--%>
@@ -672,18 +694,19 @@
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="activeCertificationFile" class="me-1 col-6 stn">활동증명파일</label>
-                            <div id="activeCertificationFile" class="btn btn-sm btn-light btn-outline-dark p-2 ">다운로드</div>
+                            <div id="activeCertificationFile" class="btn btn-sm btn-light btn-outline-dark p-2 ">다운로드
+                            </div>
                         </div>
                     </div>
 
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="btn btn-primary">수정하기</div>
-            </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="btn btn-primary">수정하기</div>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <%--자기소개서 Modal--%>
@@ -702,90 +725,92 @@
                         <div class="col-12 col-md-12 align-items-center">
                             <label for="applicationReason" class="me-1 col-6 stn">지원동기(공백포함-700자)</label>
                             <div id="applicationReason" class="p-2 border rounded col"
-                            style="height: 300px;">dddd</div>
+                                 style="height: 300px;">dddd
+                            </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-12 col-md-12 align-items-center">
                             <label for="futurePlan" class="me-1 col-6 stn">앞으로의 계획</label>
                             <div id="futurePlan" class="p-2 border rounded col"
-                                 style="height: 300px;">네카라쿠베</div>
+                                 style="height: 300px;">네카라쿠베
+                            </div>
 
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="btn btn-primary">수정하기</div>
-            </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="btn btn-primary">수정하기</div>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>
-</div>
 
 <script>
-/*추가제출서류 파일추가*/
-function addFile(){
+    /*추가제출서류 파일추가*/
+    function addFile() {
 
-    var table = document.getElementById('apply_table');
+        var table = document.getElementById('apply_table');
 
-    var newRow = table.insertRow();
+        var newRow = table.insertRow();
 
-    var newCell1 = newRow.insertCell(0);
-    var newCell2 = newRow.insertCell(1);
-    var newCell3 = newRow.insertCell(2);
+        var newCell1 = newRow.insertCell(0);
+        var newCell2 = newRow.insertCell(1);
+        var newCell3 = newRow.insertCell(2);
 
-    newCell1.innerHTML='<div><select id="apply_select" class="form-select" aria-label="Default select example">' +
-        '<option selected></option>'+
-        '<option value="학위증명서">학위증명서</option>' +
-        '<option value="활동이력증명">활동이력증명</option>'+
-        '</select></div>';
-    newCell2.innerHTML="<div></div>";
-    newCell3.className = "row";
-    newCell3.innerHTML='<div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어넣어파일이름 여기넣어</div>' +
-        '<div class="col-12 col-md-5 d-flex fileCol">' +
-        '<div class="col-4 d-flex justify-content-center">' +
-        '<button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button></div>'+
-        '<div class="col-5 d-flex justify-content-center">'+
-        '<button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button></div>'+
-        '<div class="col-4 d-flex justify-content-center">'+
-        '<button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button></div></div>';
-}
+        newCell1.innerHTML = '<div><select id="apply_select" class="form-select" aria-label="Default select example">' +
+            '<option selected></option>' +
+            '<option value="학위증명서">학위증명서</option>' +
+            '<option value="활동이력증명">활동이력증명</option>' +
+            '</select></div>';
+        newCell2.innerHTML = "<div></div>";
+        newCell3.className = "row";
+        newCell3.innerHTML = '<div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어넣어파일이름 여기넣어</div>' +
+            '<div class="col-12 col-md-5 d-flex fileCol">' +
+            '<div class="col-4 d-flex justify-content-center">' +
+            '<button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button></div>' +
+            '<div class="col-5 d-flex justify-content-center">' +
+            '<button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">다운로드</button></div>' +
+            '<div class="col-4 d-flex justify-content-center">' +
+            '<button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">삭제</button></div></div>';
+    }
 
-//탭 기능 d-none
-document.addEventListener('DOMContentLoaded', function () {
-    // Tab links
-    const attributeTabLink = document.getElementById('first-tap-list');
-    const profileTabLink = document.getElementById('second-tap-list');
+    //탭 기능 d-none
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tab links
+        const attributeTabLink = document.getElementById('first-tap-list');
+        const profileTabLink = document.getElementById('second-tap-list');
 
-    // Tab panes
-    const attributeTab = document.getElementById('first-tap');
-    const profileTab = document.getElementById('second-tap');
+        // Tab panes
+        const attributeTab = document.getElementById('first-tap');
+        const profileTab = document.getElementById('second-tap');
 
-    // 링크 클릭 이벤트
-    attributeTabLink.addEventListener('click', function () {
-        profileTab.classList.add('d-none');
-        attributeTab.classList.remove('d-none');
-    });
+        // 링크 클릭 이벤트
+        attributeTabLink.addEventListener('click', function () {
+            profileTab.classList.add('d-none');
+            attributeTab.classList.remove('d-none');
+        });
 
-    profileTabLink.addEventListener('click', function () {
-        attributeTab.classList.add('d-none');
-        profileTab.classList.remove('d-none');
-    });
-});
-
-//상단에 홈>마이페이지> (텍스트값 주는 코드)
-document.addEventListener('DOMContentLoaded', function () {
-    const tabLinks = document.querySelectorAll('.list-group-item-action'); // 탭 링크들을 선택
-
-    tabLinks.forEach(tabLink => {
-        tabLink.addEventListener('click', function () {
-            const tabText = this.innerText; // 클릭한 탭의 텍스트를 가져옴
-            const applyCurrent = document.getElementById('apply_current'); // apply_current 요소를 가져옴
-            applyCurrent.textContent = tabText; // apply_current의 텍스트를 변경
+        profileTabLink.addEventListener('click', function () {
+            attributeTab.classList.add('d-none');
+            profileTab.classList.remove('d-none');
         });
     });
-});
+
+    //상단에 홈>마이페이지> (텍스트값 주는 코드)
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabLinks = document.querySelectorAll('.list-group-item-action'); // 탭 링크들을 선택
+
+        tabLinks.forEach(tabLink => {
+            tabLink.addEventListener('click', function () {
+                const tabText = this.innerText; // 클릭한 탭의 텍스트를 가져옴
+                const applyCurrent = document.getElementById('apply_current'); // apply_current 요소를 가져옴
+                applyCurrent.textContent = tabText; // apply_current의 텍스트를 변경
+            });
+        });
+    });
 
 </script>
 <%@include file="../user/footer.jsp" %>

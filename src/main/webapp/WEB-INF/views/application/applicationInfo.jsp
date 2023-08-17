@@ -11,38 +11,6 @@
 <head>
     <title>원서작성_기본정보</title>
     <style>
-        .breadcrumbs,
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .page-title {
-            font-size: 36px;
-            font-weight: 600;
-        }
-
-        .breadcrumbs li {
-            display: inline-block;
-            font-size: 13px;
-        }
-
-        .menu ul li a {
-            display: inline-block;
-            color: #646464;
-            padding: 10px;
-            font-weight: 600;
-        }
-
-        .menu ul li a.active {
-            color: #003A78;
-        }
-
-        #apply_current {
-            font-weight: bolder;
-        }
-
         #info_pw {
             font-size: 13px;
             color: red;
@@ -74,39 +42,21 @@
 </head>
 <body>
 <div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">기본정보</p>
-            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumb-item"><i class="fas fa-sharp fa-light fa-house"></i></li>
-                    <li class="breadcrumb-item">원서작성</li>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">기본정보</li>
-                </ul>
-            </div>
-        </div>
-        <div>
-            <div></div>
-        </div>
-    </div>
-</div>
-    <img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920">
-<div class="my-5 container">
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-lg-3 mb-3">
-            <div class="menu h-auto px-3 border rounded-3 me-5">
+            <div class="menu h-auto px-3 border rounded-3">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userInfo" class="active">기본정보</a>
+                        <a href="/userInfo" class="active">기본정보</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userEdu">학력사항</a>
+                        <a href="/userEdu">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="userExp">경력사항</a>
+                        <a href="/userExp">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="userIntroduce">자기소개서</a>
+                        <a href="/userIntroduce">자기소개서</a>
                     </li>
                 </ul>
             </div>
@@ -147,7 +97,6 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             이메일
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
@@ -161,7 +110,6 @@
                         </div>
                         <div class="col-lg-2">
                             비밀번호
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <div>
@@ -186,14 +134,12 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             비밀번호확인
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
                             성별구분
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <select class="form-select">
@@ -207,14 +153,12 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             성명
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
                             생년월일
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="date" class="form-control">
@@ -223,7 +167,6 @@
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             성명(영어)
-                            <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
@@ -255,7 +198,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            전화번호
+                            지원자직업명
                         </div>
                         <div class="col-lg-4">
                             <input type="text" class="form-control">
@@ -269,21 +212,20 @@
                             <input type="text" class="form-control">
                         </div>
                         <div class="col-lg-2">
-                            휴대폰번호
+                            상세주소
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control">
+                            <input type="date" class="form-control">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-2">
-                            상세주소
+                            전화번호
                         </div>
                         <div class="col-lg-10">
                             <input type="text" class="form-control">
                         </div>
                     </div>
-
 
                     <%-- Buttons --%>
                     <div id="application_btn" class="d-flex justify-content-center mt-4">
