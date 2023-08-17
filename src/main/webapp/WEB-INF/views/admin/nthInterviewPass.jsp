@@ -9,9 +9,13 @@
 <html>
 <head>
     <title>Title</title>
-    <style>
-
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <div class="container-table m-2">
@@ -19,50 +23,302 @@
             <div class="d-flex flex-row justify-content-end mb-1">
                 <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
             </div>
-            
-            <%@ include file="nthTopScreening.jsp"%>
 
-            <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
-                <div class="d-flex flex-row align-items-center">
-                    <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
-                    <p class="subResult text-secondary me-2">검색결과:0건</p>
-                    <select class="form-select w-auto">
-                        <option selected>5</option>
-                        <option>7</option>
-                        <option>50</option>
-                        <option>70</option>
-                        <option>100</option>
-                    </select>
-                </div>
-
-                <div class="d-flex flex-row align-items-center">
-                    <div class="d-flex flex-row align-items-center me-3">
-                        <p class="subTitle fw-bold me-2">안내문종류</p>
-                        <select class="form-select w-auto me-1">
-                            <option selected>최종합격자안내메일</option>
+            <%--TOP--%>
+            <div class="col-12">
+                <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+                    <div class="col-2 align-middle tableSearch">수강년도/분기</div>
+                    <div class="col-1 me-1"><input type="text" class="form-control"></div>
+                    <div class="col-1 me-2">
+                        <select class="form-select">
+                            <option selected>1분기</option>
+                            <option>2분기</option>
+                            <option>3분기</option>
+                            <option>4분기</option>
                         </select>
-                        <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
                     </div>
-                    <div class="d-flex flex-row align-items-center">
-                        <p class="subTitle fw-bold me-2">선발결과</p>
-                        <select id="passDiv" class="form-select w-auto me-1">
-                            <option value="0" selected>선택</option>
-                            <option value="1">합격</option>
-                            <option value="2">불합격</option>
+
+                    <div class="col-2 tableSearch">과정구분</div>
+                    <div class="col-2 me-2">
+                        <select class="form-select">
+                            <option selected>Java</option>
+                            <option>Python</option>
+                            <option>C++</option>
                         </select>
-                        <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                        <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
+                    </div>
+
+                    <div class="col-2 tableSearch">과정명</div>
+                    <div class="col-2"><input type="text" class="form-control"></div>
+                </div>
+            </div>
+
+            <%--HEAD--%>
+            <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+                <div class="col-4 d-flex flex-row align-items-center">
+                    <p class="subTitle fw-bold me-2">모집전형정보</p>
+                    <p class="subResult text-secondary me-2">검색결과:00건</p>
+                    <div>
+                        <select class="form-select" id="nthTablePage">
+                            <option selected>5</option>
+                            <option>30</option>
+                            <option>50</option>
+                            <option>70</option>
+                            <option>100</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <div class="d-flex flex-row justify-content-between mt-2 h-50 bg-white border border-gray-100 rounded-2">
-                <div id="interviewTable" class="w-100 h-50"></div>
+            <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+                <div id="nthTable"></div>
+
+                <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
+                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
+                 </div>--%>
+            </div>
+
+            <div class="h-50">
+                <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
+                    <div class="d-flex flex-row align-items-center">
+                        <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
+                        <p class="subResult text-secondary me-2">검색결과:0건</p>
+                        <select class="form-select w-auto" id="interviewTablePage">
+                            <option selected>5</option>
+                            <option>7</option>
+                            <option>50</option>
+                            <option>70</option>
+                            <option>100</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex flex-row align-items-center me-3">
+                            <p class="subTitle fw-bold me-2">안내문종류</p>
+                            <select class="form-select w-auto me-1">
+                                <option selected>최종합격자안내메일</option>
+                            </select>
+                            <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <p class="subTitle fw-bold me-2">선발결과</p>
+                            <select id="passDiv" class="form-select w-auto me-1">
+                                <option value="0" selected>선택</option>
+                                <option value="1">합격</option>
+                                <option value="2">불합격</option>
+                            </select>
+                            <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                            <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-between mt-2 bg-white border border-gray-100 rounded-2">
+                <div id="interviewTable" class="w-100"></div>
+            </div>
             </div>
         </div>
     </div>
 
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
+    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const gridTheme = new tui.Grid.applyTheme('default', {
+            cell: {
+                normal: {
+                    background: '#fff',
+                    border: '#E1E1E1',
+                    showVerticalBorder: true
+                },
+                header: {
+                    background: '#EFEFEF',
+                    border: '#E1E1E1'
+                },
+                rowHeader: {
+                    background: '#EFEFEF',
+                    border: '#E1E1E1'
+                }
+                ,
+                evenRow: {
+                    background: '#F2F3F5',
+                    border: '#000'
+                },
+                oddRow: {
+                    background: '#FFF',
+                    border: '#000'
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const data = [
+                {
+                    COURSE_DIV: 'COURSE_DIV',
+                    COURSE_NAME: 'COURSE_NAME',
+                    NTH_CODE: 'NTH_CODE',
+                    ENT_YEAR: 'ENT_YEAR',
+                    TERM_DIV: 'TERM_DIV',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '30'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                },
+                {
+                    COURSE_DIV: 'COURSE_DIV2',
+                    COURSE_NAME: 'COURSE_NAME2',
+                    NTH_CODE: 'NTH_CODE2',
+                    ENT_YEAR: 'ENT_YEAR2',
+                    TERM_DIV: 'TERM_DIV2',
+                    EDU_START_DATE: '2023-08-01',
+                    EDU_END_DATE: '2023-08-01',
+                    PLAN_CNT: '20'
+                }
+            ];
+            function educationPeriodFormatter({row}) {
+                const startDate = row.EDU_START_DATE;
+                const endDate = row.EDU_END_DATE;
+                return startDate + "~" + endDate;
+            }
+            const nthTable = new tui.Grid({
+                el: document.getElementById('nthTable'),
+                data: data,
+                pageOptions: {
+                    useClient: true,	// front에서만 페이징 하는 속성
+                    perPage: 5,		//한번에 보여줄 데이터 수
+                    visiblePages: 10
+                },
+                scrollX: true,
+                scrollY: true,
+                bodyHeight: 217,
+                columns: [
+                    {
+                        header: '과정구분',
+                        name: 'COURSE_DIV',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        header: '과정명',
+                        name: 'COURSE_NAME',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        header: '기수코드',
+                        name: 'NTH_CODE',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+                    },
+                    {
+                        header: '수강년도',
+                        name: 'ENT_YEAR',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+                    },
+                    {
+                        header: '분기',
+                        name: 'TERM_DIV',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+                    },
+                    {
+                        header: '교육기간',
+                        name: 'EDU_DATE',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center',
+                        formatter: educationPeriodFormatter
+                    },
+                    {
+                        header: '선발예정인원',
+                        name: 'PLAN_CNT',
+                        sortingType: 'asc',
+                        sortable: false, align: 'center'
+                    }
+                ],
+                columnOptions: {
+                    resizable: true
+                },
+
+                draggable: true,
+
+                // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+                onGridMounted() {
+                    nthTable.focus(0, 'COURSE_DIV', true);
+                    subTableLoad(0);
+                }
+            });
+            nthTable.on('click', function (ev) {
+                subTableLoad(ev.rowKey);
+            });
+
+            const nthTablePage = document.querySelector('#nthTablePage');
+
+            // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+            nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
+        });
+
+
         // interview테이블 grid
         // nthTable row 누를 때마다 interviewTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
@@ -73,15 +329,59 @@
                 interviewData = [
                     {
                         NAME_KOR: '홍길동',
-                        EV_SCORE: '86.6',
+                        EV_AVG_SCORE: '86.6',
                         PREL_ORD: '1',
-                        FNL_PASS_YN: '1'
+                        FNL_PASS_YN: '1',
+                        NOTE: '비고'
                     },
                     {
                         NAME_KOR: '이길동',
-                        EV_SCORE: '50.4',
+                        EV_AVG_SCORE: '50.4',
                         PREL_ORD: '2',
-                        FNL_PASS_YN: '2'
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
+                    },
+                    {
+                        NAME_KOR: '이길동',
+                        EV_AVG_SCORE: '50.4',
+                        PREL_ORD: '2',
+                        FNL_PASS_YN: '2',
+                        NOTE: '비고2'
                     }
                 ];
             }
@@ -93,7 +393,6 @@
                 el: interviewEl,
                 data: interviewData,
                 rowHeaders: ['checkbox'],
-                bodyHeight: 340,
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -101,6 +400,7 @@
                 },
                 scrollX: true,
                 scrollY: true,
+                bodyHeight: 217,
                 columns: [
                     {
                         header: '지원자명',
@@ -111,7 +411,7 @@
                     },
                     {
                         header: '평균점수',
-                        name: 'EV_SCORE',
+                        name: 'EV_AVG_SCORE',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
@@ -139,6 +439,13 @@
                                 ]
                             }
                         }
+                    },
+                    {
+                        header: '비고',
+                        name: 'NOTE',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center'
                     }
                 ],
                 columnOptions: {
@@ -152,6 +459,10 @@
                 }
             });
 
+            const interviewTablePage = document.querySelector('#interviewTablePage');
+
+            // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+            interviewTablePage.addEventListener('change', function(){handlePerPageChange(this, interviewTable)});
 
             // 체크박스 전체 선택/해제
             interviewTable.on('checkAll', function (ev) {
@@ -214,6 +525,11 @@
 
         }
 
+        // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+        function handlePerPageChange(event, table) {
+            const perPage = parseInt(event.value, 10);
+            table.setPerPage(perPage);
+        }
 
     </script>
 </body>

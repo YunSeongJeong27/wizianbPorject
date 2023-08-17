@@ -48,7 +48,7 @@
 
             <%@ include file="nthTopScreening.jsp"%>
 
-            <div class="d-flex flex-row justify-content-between mt-4 h-100">
+            <div class="d-flex flex-row justify-content-between mt-4 h-75">
                 <div class="col-4 me-3" style="min-width: 449px;">
                     <div class="searchResult">
                         <div class="d-flex flex-row justify-content-between mb-2">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="noticeTable h-75 bg-white border border-gray-100 rounded-2">
+                    <div class="noticeTable bg-white border border-gray-100 rounded-2">
                         <div id="noticeTable"></div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
 
-                        <div class="border border-gray-100 rounded-2 bg-white h-50 p-3">
+                        <div class="border border-gray-100 rounded-2 bg-white h-75 p-3">
                             "$"{저장해놓은 Editor 값}
                         </div>
                     </div>
@@ -183,7 +183,6 @@
             }
 
             var noticeEl = document.getElementById('noticeTable');
-            const noticeTablePage = document.querySelector('#noticeTablePage');
             noticeEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
             const noticeTable = new tui.Grid({
@@ -198,6 +197,7 @@
                 },
                 scrollX: true,
                 scrollY: true,
+                bodyHeight: 217,
                 //editingEvent: 'click',
                 columns: [
                     {
@@ -248,13 +248,20 @@
                     rowDataLoad(0, noticeTable, "noticeInfoTable");
                 }
             });
-            // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+
+
+            const noticeTablePage = document.querySelector('#noticeTablePage');
+
+            // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+            noticeTablePage.addEventListener('change', function(){handlePerPageChange(this, noticeTable)});
+
+            /*// perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
             function handlePerPageChange(event) {
                 const perPage = parseInt(event.target.value, 10);
                 noticeTable.setPerPage(perPage);
             }
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
-            noticeTablePage.addEventListener('change', handlePerPageChange);
+            noticeTablePage.addEventListener('change', handlePerPageChange);*/
 
             // row 클릭 시 하단에 해당 row 데이터 load
             noticeTable.on('click', function (ev) {
@@ -264,7 +271,6 @@
             });
 
             // 체크박스 전체 선택/해제
-
             noticeTable.on('checkAll', function (ev) {
                 var id = ev.instance['el'].id;
                 var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
@@ -288,18 +294,6 @@
             });
             noticeTable.on('uncheck', function (ev) {
                 noticeTable.removeRowClassName(ev.rowKey, "checkCell");
-            });
-
-            // 데이터 변경 후
-            noticeTable.on('afterChange', ev => {
-                var changes = ev["changes"][0];
-                var rowKey = changes['rowKey']
-                //var datas = noticeData[noticeTable.getIndexOfRow(rowKey)];
-                //datas[changes['columnName']] = changes['value'];
-
-                //noticeTable.resetData(noticeData);
-
-                noticeTable.setValue(rowKey, changes['columnName'], changes['value'], false);
             });
 
             noticeTable.on('drop', ev => {
@@ -348,6 +342,12 @@
                     });
                 }
             }
+        }
+
+        // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+        function handlePerPageChange(event, table) {
+            const perPage = parseInt(event.value, 10);
+            table.setPerPage(perPage);
         }
 
         // Toast Editor
