@@ -14,9 +14,6 @@
         .table .tableColor{
             background-color: #FAFAFA;
         }
-        .table .tableColorHead{
-            background-color: #EFEFEF;
-        }
 
         .divBtn{
             border-top-left-radius: 5px;
@@ -31,18 +28,6 @@
         .nav-pills > .nav-item > .active {
             color: #224FA8 !important;
             background-color: white !important;
-        }
-
-        .infoInput::-webkit-inner-spin-button {
-            appearance: none;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-        }
-        .infoInput{
-            background: none;
-            border: none;
-            text-align: center;
-            cursor: pointer;
         }
         .tableInput{
             background-color: inherit;
@@ -63,23 +48,23 @@
 
     <div class="nav nav-pills nav-tabs fw-bold text-center col-4 d-flex justify-content-between mt-4" id="infoNav" role="tablist">
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn active" id="select" data-bs-toggle="tab" type="button" onclick="tabContent(this)">모집전형설정</div>
+            <div class="p-2 divBtn active" id="select" data-bs-toggle="tab" onclick="tabContent(this)">모집전형설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="person" data-bs-toggle="tab" type="button" onclick="tabContent(this)">모집인원설정</div>
+            <div class="p-2 divBtn" id="person" data-bs-toggle="tab" onclick="tabContent(this)">모집인원설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="schedule" data-bs-toggle="tab" type="button" onclick="tabContent(this)">전형일정설정</div>
+            <div class="p-2 divBtn" id="schedule" data-bs-toggle="tab" onclick="tabContent(this)">전형일정설정</div>
         </div>
         <div class="nav-item" role="presentation" style="width: 24%;">
-            <div class="p-2 divBtn" id="document" data-bs-toggle="tab" type="button" onclick="tabContent(this)">제출서류설정</div>
+            <div class="p-2 divBtn" id="document" data-bs-toggle="tab" onclick="tabContent(this)">제출서류설정</div>
         </div>
     </div>
 
     <div class="tab-content pt-3 bg-white" id="infoNavContent">
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
-            <div class="d-flex col-4 align-items-center" style="height: 40px";>
+            <div class="d-flex col-4 align-items-center" style="height: 40px">
                 <div class="col-4 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
@@ -159,7 +144,7 @@
 
         <!-- 모집인원설정 Content -->
         <div id="person-pane" style="display: none">
-            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
@@ -178,7 +163,7 @@
 
         <!-- 전형일정설정 Content -->
         <div id="schedule-pane" style="display: none">
-            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
@@ -197,7 +182,7 @@
 
         <!-- 제출서류설정 Content -->
         <div id="document-pane" style="display: none;">
-            <div class="d-flex justify-content-between align-items-center" style="height: 40px";>
+            <div class="d-flex justify-content-between align-items-center" style="height: 40px">
                 <div class="d-flex ms-3 fw-bold">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
@@ -257,9 +242,7 @@
 
         render(props) {
             const hiddenInput = this.el.querySelector('.hidden-input');
-            const checked = Boolean(props.value);
-
-            hiddenInput.checked = checked;
+            hiddenInput.checked = Boolean(props.value);
         }
     }
 
@@ -275,7 +258,8 @@
         });
 
         const content = document.getElementById(e.id+"-pane");
-
+        console.log(e.id)
+        console.log(content)
         if(e.id === "select"){
             content.setAttribute("style","display:block");
         }else if(e.id === "person"){

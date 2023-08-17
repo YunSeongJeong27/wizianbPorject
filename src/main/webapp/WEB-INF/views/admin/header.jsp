@@ -5,6 +5,7 @@
   Time: 오후 7:51
   To change this template use File | Settings | File Templates.
 --%>
+<%@ include file="../tag.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -31,12 +32,12 @@
 
 <body>
 <div class="border-bottom border-3">
-    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
-        <div class="h-100 col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat;">
+    <div class="d-flex justify-content-between align-items-center mx-auto" style="/*max-width: 1440px;*/ height: 105px;">
+        <div class="col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat; height: 85px; width: 232px;">
             <a href="/admin"></a>
         </div>
-        <div class="h-50 col-3 d-flex justify-content-around me-3 align-items-center">
-            <div class="dropdown col-5">
+        <div class="h-50 d-flex justify-content-end me-3 align-items-center" style="width: 350px">
+            <div class="dropdown">
                 <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false">
                     세션 이름
                 </div>
@@ -44,12 +45,12 @@
                     <div><a class="dropdown-item" href="#">로그아웃</a></div>
                 </div>
             </div>
-            <div class="col-3 fw-bold">
+            <div class="fw-bold me-3 text-center">
                 <i class="bi bi-clock mx-2"></i>
                 <span>60:00</span>
             </div>
-            <div class="col-4 text-center">
-                <div class="btn btn-outline-secondary w-100 fw-bold">시간연장</div>
+            <div class="text-center">
+                <div class="btn btn-sm btn-outline-secondary fw-bold" style="width: 74px;">시간연장</div>
             </div>
         </div>
     </div>

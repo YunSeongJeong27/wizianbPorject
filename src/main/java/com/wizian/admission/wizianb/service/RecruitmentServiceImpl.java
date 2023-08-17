@@ -14,12 +14,12 @@ import java.util.List;
 @Service
 @Component
 @RequiredArgsConstructor
-public class RecruitmentServiceImpl implements RecruitmentService{
+public class RecruitmentServiceImpl implements RecruitmentService {
 
-        private final RecruitmentRepository recruitmentRepository;
+    private final RecruitmentRepository recruitmentRepository;
 
-        @Override
-        public List<Recruitment> findAll() {
-            return recruitmentRepository.findAll();
-        }
+    @Override
+    public List<Recruitment> findAll() {
+        return recruitmentRepository.findAll();
+    }
 }

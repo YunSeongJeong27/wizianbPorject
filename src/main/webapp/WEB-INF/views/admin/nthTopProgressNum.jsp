@@ -58,16 +58,16 @@
         .tui-grid-scrollbar-left-bottom,
         .tui-grid-scrollbar-right-bottom,
         .tui-grid-scrollbar-right-top{
-            background-color: #fff;
+            background-color: #fff !important;
         }
 
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
         .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid;
-            border-right-color: #E1E1E1;
+            border-right-style: solid !important;
+            border-right-color: #E1E1E1 !important;
         }
         .tui-grid-cell{
-            border-left-width: 1px;
+            border-left-width: 1px !important;
         }
 
         /* 선택한 row */
@@ -94,7 +94,7 @@
 
         /* 페이징 */
         .tui-pagination{
-            background-color: #fff;
+            background-color: #fff !important;
             margin:0 !important;
             padding: 20px 0 12px;
         }
@@ -233,40 +233,40 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        var firstColumName = 'CORS_DIV';
+        var firstColumName = 'COURSE_DIV';
 
         var nthData = [
             {
-                CORS_DIV: 'Java',
-                SEL_NM: '자바과정 풀스택',
-                NTH_NM: '3',
-                ENT_YR: '2023',
+                COURSE_DIV: 'Java',
+                COURSE_NAME: '자바과정 풀스택',
+                NTH_CODE: '3',
+                ENT_YEAR: '2023',
                 TERM_DIV: '1',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-01',
-                YR_CNT: '6',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                EDU_MONTH: '6',
                 NOTE: '기수 비고 1'
             },
             {
-                CORS_DIV: 'Python',
-                SEL_NM: '파이썬',
-                NTH_NM: '2',
-                ENT_YR: '2023',
+                COURSE_DIV: 'Python',
+                COURSE_NAME: '파이썬',
+                NTH_CODE: '2',
+                ENT_YEAR: '2023',
                 TERM_DIV: '1',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-02',
-                YR_CNT: '6',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-02',
+                EDU_MONTH: '6',
                 NOTE: '기수 비고 2'
             },
             {
-                CORS_DIV: 'C++',
-                SEL_NM: 'C++ 코딩테스트',
-                NTH_NM: '4',
-                ENT_YR: '2023',
+                COURSE_DIV: 'C++',
+                COURSE_NAME: 'C++ 코딩테스트',
+                NTH_CODE: '4',
+                ENT_YEAR: '2023',
                 TERM_DIV: '1',
-                EDU_ST_DT: '2023-08-01',
-                EDU_END_DT: '2023-08-03',
-                YR_CNT: '6',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-03',
+                EDU_MONTH: '6',
                 NOTE: '기수 비고 3'
             }
         ];
@@ -284,27 +284,27 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'CORS_DIV',
+                    name: 'COURSE_DIV',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'SEL_NM',
+                    name: 'COURSE_NAME',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
-                    header: '기수',
-                    name: 'NTH_NM',
+                    header: '기수코드',
+                    name: 'NTH_CODE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수강년도',
-                    name: 'ENT_YR',
+                    name: 'ENT_YEAR',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -316,19 +316,19 @@
                 },
                 {
                     header: '교육시작일',
-                    name: 'EDU_ST_DT',
+                    name: 'EDU_START_DATE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육종료일',
-                    name: 'EDU_END_DT',
+                    name: 'EDU_END_DATE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수업개월수',
-                    name: 'YR_CNT',
+                    name: 'EDU_MONTH',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -416,7 +416,7 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="CORS_DIV" || tiName==="TERM_DIV"){
+                    if(tiName==="COURSE_DIV" || tiName==="TERM_DIV"){
                         $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
                     }
                     ti.value = datas[tiName];
@@ -428,14 +428,14 @@
         document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
-                    CORS_DIV: '',
-                    SEL_NM: '',
-                    NTH_NM: '',
-                    ENT_YR: '',
+                    COURSE_DIV: '',
+                    COURSE_NAME: '',
+                    NTH_CODE: '',
+                    ENT_YEAR: '',
                     TERM_DIV: '',
-                    EDU_ST_DT: '',
-                    EDU_END_DT: '',
-                    YR_CNT: '',
+                    EDU_START_DATE: '',
+                    EDU_END_DATE: '',
+                    EDU_MONTH: '',
                     NOTE: ''
                 }
             ];

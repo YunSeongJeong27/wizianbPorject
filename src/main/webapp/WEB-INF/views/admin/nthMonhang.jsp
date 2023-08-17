@@ -57,19 +57,17 @@
         // nthTable row 누를 때마다 monhangTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rowKey){
             var monhangData = [];
-            var firstColumName = 'Field';
+            var firstColumName = 'ITEM_NAME';
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
                 monhangData = [
                     {
-                        Field: '1',
-                        ITEM_NM: '지원동기',
+                        ITEM_NAME: '지원동기',
                         MAX_CHAR: '2000',
                         ITEM_EXPL: 'WIZIAN 정보처리학원에 지원한 동기에 대해서 기술'
                     },
                     {
-                        Field: '2',
-                        ITEM_NM: '프로그래밍 경험',
+                        ITEM_NAME: '프로그래밍 경험',
                         MAX_CHAR: '1000',
                         ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
                     }
@@ -93,16 +91,8 @@
                 scrollY: true,
                 columns: [
                     {
-                        header: '문항표시코드',
-                        name: 'Field',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center',
-                        editor: 'text'
-                    },
-                    {
                         header: '문항명',
-                        name: 'ITEM_NM',
+                        name: 'ITEM_NAME',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -181,8 +171,7 @@
             document.getElementById("monhangInsertBtn").addEventListener("click", function () {
                 const rowData = [
                     {
-                        Field: '',
-                        ITEM_NM: '',
+                        ITEM_NAME: '',
                         MAX_CHAR: '',
                         ITEM_EXPL: ''
                     }

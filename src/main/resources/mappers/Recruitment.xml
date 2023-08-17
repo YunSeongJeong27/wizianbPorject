@@ -3,7 +3,7 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.RecruitmentRepository">
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.Recruitment">
-        select * from ent_sel_mst;
+        SELECT * FROM ENTRY_SEL_MASTER
     </select>
 
 </mapper>
