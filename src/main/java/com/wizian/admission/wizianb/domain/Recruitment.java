@@ -10,16 +10,16 @@ import lombok.*;
 @Setter
 public class Recruitment {
 
-    private String id;
-    private String courseCode;
+    private String rcrtNo;
+    private String entYear;
     private String courseName;
-    private String courseType;
-    private String courseSeasonYear;
-    private String courseQuarter;
-    private String courseStartDate;
-    private String courseEndDate;
-    private RecruitmentStatus recruitmentStatus;
-    private int recruitmentPeople;
-    private int applyPeopleCount;
-    private int recruitmentPeopleMax;
+    private String courseDiv;
+    private String termDiv;
+    private String nthCode;
+    private String eduStartDate;
+    private String eduEndDate;
+    private RecruitmentStatus statusDiv;
+    private int rcrtCnt;
+    private int aplyCnt;
+    private int selCnt;
 }
