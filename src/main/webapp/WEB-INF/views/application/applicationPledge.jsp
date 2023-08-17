@@ -10,11 +10,8 @@
 <html>
 <head>
     <title>등록서약/포기</title>
+    <script src="jquery-3.6.4.js"></script>
     <style>
-        .page-title {
-            font-size: 36px;
-            font-weight: 600;
-        }
         #radioBox{
             display: inline-block;
         }
@@ -33,15 +30,6 @@
     </style>
 </head>
 <body>
-<div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">등록 서약/포기</p>
-        </div>
-    </div>
-</div>
-<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
-
 <div class="container-lg mt-5">
     <div>
         <form>

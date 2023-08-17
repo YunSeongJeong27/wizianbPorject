@@ -26,15 +26,19 @@ public class IndexController {
     public String notice(){return "/admin/nthNotice"; }
     @GetMapping("/monhang")
     public String monhang(){return "/admin/nthMonhang"; }
+    @GetMapping("/apply_ex")
+    public String apply_ex(){return "/admin/nthApply_ex";}
     @GetMapping("/apply")
     public String apply(){return "/admin/nthApply";}
     @GetMapping("/interviewPass")
     public String interviewPass(){return "/admin/nthInterviewPass";}
     @GetMapping("/applicationPass")
     public String applicationPass(){return "/admin/nthApplicationPass";}
+
     @GetMapping("/finalPass")
     public String finalPass() { return "/admin/nthFinal";}
-    @GetMapping("/evaluationResults")
-    public String evaluationResults() { return "/admin/evaluationResults";}
+    @GetMapping("/nthEvResults")
+    public String evaluationResults() { return "/admin/nthEvResults";}
+
 
 }

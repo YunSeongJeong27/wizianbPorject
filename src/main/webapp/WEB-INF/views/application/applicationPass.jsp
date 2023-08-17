@@ -11,33 +11,6 @@
             object-fit: contain;
 
         }
-        .breadcrumbs,
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .page-title {
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-        .breadcrumbs li {
-            display: inline-block;
-            font-size: 12px;
-        }
-
-        .menu ul li a {
-            display: inline-block;
-            color: #646464;
-            padding: 10px;
-            font-weight: 600;
-        }
-
-        #apply_current {
-            font-weight: bolder;
-        }
 
         .title {
             font-size: 16px;
@@ -70,27 +43,6 @@
 
 </head>
 <body>
-<div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">합격자발표</p>
-
-            <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumb-item">홈</li>
-                    <li class="breadcrumb-item">합격자발표</li>
-                    <%--탭에맞게 바뀌게--%>
-                    <li id="apply_current" class="breadcrumb-item" aria-current="page">합격자발표</li>
-                </ul>
-            </div>
-        </div>
-        <div>
-            <div></div>
-        </div>
-    </div>
-</div>
-<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
-
 <div class="my-5 container">
     <div class="row">
         <%--좌측탭--%>

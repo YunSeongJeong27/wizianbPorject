@@ -62,28 +62,9 @@
         background: #003A78;
         color: white;
     }
-    #selTx{
-        margin-top: 30px;
-        margin-bottom: 30px;
-        margin-left: 30px;
-        font-weight: 500;
-        font-size: 32px;
-
-    }
-
-    #img1{
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-
-    }
-
 
 </style>
 <body>
-<div id="selTx" >모집전형선택</div>
-<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
-
 <div class="container-fluid wrap" onclick="window.location.href ='/selectInfo';">
     <%--hidden으로 첫번째요소는 숨겨야됨--%>
     <div id="selectionContainerId" class="selectionContainer" hidden>
@@ -104,6 +85,7 @@
         <button class="appBtn">접수바로가기</button>
 
     </div>
+
 </div>
 
 

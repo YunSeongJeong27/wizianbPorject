@@ -13,133 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+    <link rel="stylesheet" href="css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        body{
-            background-color: #F2F3F5;
-            min-width: 1250px;
-        }
-        .container-table .form-select:focus,
-        .container-table .form-control:focus{
-            box-shadow: none;
-            border-color: #9a9a9a;
-        }
-        .container-table .tr{
-            background-color: #fff;
-        }
-
-        /* 과정 검색 */
-        .tableSearch{
-            font-weight: 600;
-        }
-
-        /* 검색 결과 수 */
-        .searchResult .subTitle{
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
-        .searchResult .subResult{
-            font-size: 14px;
-            margin-bottom: 0;
-        }
-        .searchResult select.form-select{
-            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
-        }
-
-        /* 그리드 custom css */
-
-        /* 스크롤 자투리 부분 색 변경 */
-        .tui-grid-scrollbar-left-bottom,
-        .tui-grid-scrollbar-right-bottom,
-        .tui-grid-scrollbar-right-top{
-            background-color: #fff !important;
-        }
-
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid !important;
-            border-right-color: #E1E1E1 !important;
-        }
-        .tui-grid-cell{
-            border-left-width: 1px !important;
-        }
-
-        /* 선택한 row */
-        .tui-grid-cell-current-row td{
-            background-color: #F2F7FF !important;
-            font-weight: 600;
-            color: #245396;
-        }
-        /* 체크된 row */
-        .checkCell{
-            background-color: #D1D1D1 !important;
-        }
-        /* floating row */
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header{
-            background-color: #fff !important;
-        }
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header:nth-child(1){
-            height: 100%;
-            padding: 15px 5px;
-        }
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header .tui-grid-cell-content{
-            text-align: center;
-        }
-
-        /* 페이징 */
-        .tui-pagination{
-            background-color: #fff !important;
-            margin:0 !important;
-            padding: 20px 0 12px;
-        }
-        .tui-is-disabled:hover{
-            background: initial !important;
-        }
-        .tui-page-btn span{
-            margin-top: 9px;
-        }
-        .tui-pagination .tui-page-btn{
-            border: none;
-        }
-        .tui-pagination .tui-page-btn:hover{
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        .tui-pagination .tui-is-selected{
-            border: none !important;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            font-weight: 600;
-            color: #245396;
-        }
-        .tui-page-btn.tui-next-is-ellip.tui-last-child,
-        .tui-page-btn.tui-prev-is-ellip.tui-first-child{
-            display: none;
-        }
-
-        /* text edit */
-        .tui-grid-layer-editing .tui-grid-content-text{
-            height: 100% !important;
-            border: none !important;
-            text-align: center !important;
-        }
-        /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
-            border: none !important;
-        }
-        .tui-select-box-input.tui-select-box-open{
-            border: none !important;
-            border-bottom: 1px solid #aaa !important;
-        }
-
-    </style>
 </head>
 <body>
 <div class="container-table m-2">
@@ -179,7 +55,7 @@
             <p class="subTitle fw-bold me-2">최종합격자명부</p>
             <p class="subResult text-secondary me-2">검색결과:00건</p>
             <div>
-                <select class="form-select">
+                <select class="form-select" id="finalTablePage">
                     <option selected>5</option>
                     <option>30</option>
                     <option>50</option>
@@ -238,7 +114,7 @@
                 AGE : 20,
                 GENDER: 'GENDER',
                 DOC_PASS_YN: '합격',
-                EV_SCORE: '80',
+                EV_AVG_SCORE: '80',
                 PREL_ORD: '1'
             },
             {
@@ -247,7 +123,61 @@
                 AGE : 30,
                 GENDER: 'GENDER2',
                 DOC_PASS_YN: '합격',
-                EV_SCORE: '70',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
+                PREL_ORD: '2'
+            },
+            {
+                APLY_NO: 'APLY_NO2',
+                NAME_KOR: 'NAME_KOR2',
+                AGE : 30,
+                GENDER: 'GENDER2',
+                DOC_PASS_YN: '합격',
+                EV_AVG_SCORE: '70',
                 PREL_ORD: '2'
             }
         ];
@@ -263,13 +193,14 @@
             },
             scrollX: true,
             scrollY: true,
+            bodyHeight: 450,
             header: {
                 height:60,
                 complexColumns: [
                     {
                         header: '면접전형',
                         name: 'INTERVIEW',
-                        childNames: ['EV_SCORE', 'PREL_ORD']
+                        childNames: ['EV_AVG_SCORE', 'PREL_ORD']
                     }
                 ]
             },
@@ -308,7 +239,7 @@
                 },
                 {
                     header: '평균',
-                    name: 'EV_SCORE',
+                    name: 'EV_AVG_SCORE',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -328,12 +259,19 @@
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
                 finalTable.focus(0, 'APLY_NO', true);
-                subTableLoad(0);
             }
         });
-        finalTable.on('click', function (ev) {
-            subTableLoad(ev.rowKey);
-        });
+
+        const finalTablePage = document.querySelector('#finalTablePage');
+
+        // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+        function handlePerPageChange(event) {
+            console.log(event);
+            const perPage = parseInt(event.target.value, 10);
+            finalTable.setPerPage(perPage);
+        }
+        // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+        finalTablePage.addEventListener('change', handlePerPageChange);
     });
 </script>
 

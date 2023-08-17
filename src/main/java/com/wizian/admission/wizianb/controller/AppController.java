@@ -13,6 +13,7 @@ import java.util.Map;
 @Controller
 public class AppController {
 
+    //메인 페이지
     @GetMapping("/app")
     public String application(){
         return "/application/applicationWrite";
@@ -72,5 +73,12 @@ public class AppController {
     @GetMapping("userIntroduce")
     public String userIntroduce(){
         return "/application/applicationIntroduce";
+    }
+
+
+
+    @GetMapping("test")
+    public String test(){
+        return "/user/header";
     }
 }

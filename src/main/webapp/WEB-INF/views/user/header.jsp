@@ -30,6 +30,33 @@
             --bs-nav-link-color: black !important;
             --bs-nav-link-hover-color: black;
         }
+
+        .page-title {
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .breadcrumb,
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .breadcrumb li {
+            display: inline-block;
+            font-size: 12px;
+        }
+        .menu ul li a {
+            display: inline-block;
+            color: #646464;
+            padding: 10px;
+            font-weight: 600;
+        }
+        .menu ul li a.active {
+            color: #003A78;
+        }
+        .breadcrumb {
+            --bs-breadcrumb-item-padding-x: 15px !important;
+        }
     </style>
 </head>
 
@@ -39,21 +66,40 @@
         <div id="logo" class="h-100 col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat; cursor: pointer"></div>
         <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center">
             <div class="nav-item" style="width: 31%;">
-                <a href="/app" class="nav-link">원서작성</a>
+                <a href="/app" class="nav-link headerBtn">원서작성</a>
             </div>
             <div class="nav-item dropdown" style="width: 31%;">
-                <a href="/checked" class="nav-link" id="navbarDropdown" role="button">마이페이지</a>
+                <a href="/checked" class="nav-link headerBtn" id="navbarDropdown" role="button">마이페이지</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/checked">지원서확인</a></li>
-                    <li><a class="dropdown-item" id="checkedAnchor" href="#second-tap">추가제출서류</a></li>
+                    <li><a class="dropdown-item headerBtn" href="/checked">지원서확인</a></li>
+                    <li><a class="dropdown-item headerBtn" id="checkedAnchor" href="#second-tap">추가제출서류</a></li>
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
-                <a href="/pass" class="nav-link">합격자발표</a>
+                <a href="/pass" class="nav-link headerBtn">합격자발표</a>
             </div>
         </div>
     </div>
 </div>
+
+<div class="my-3 d-flex justify-content-center">
+    <div class="container-sub-header" style="width: 1440px;">
+        <div class="d-flex flex-row justify-content-between px-3">
+            <div class="page-title" id="headerText">DB로 작성가능한가요?</div>
+
+            <div class="d-flex align-items-center">
+                <div style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <div class="breadcrumb d-flex align-items-center" id="breadCrumb">
+                        <div class="breadcrumb-item" style="cursor:pointer;" onclick="window.location.href='/app'";>
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -88,6 +134,77 @@
         // 두 번째 <a> 태그의 클릭 이벤트 호출
         applicationCheckedLink[1].click();
     });
+
+
+    var headerBtn = document.querySelectorAll(".headerBtn");
+    headerBtn.forEach(function(Btn){
+        Btn.addEventListener("click", function(e){
+            // e.preventDefault()
+            const breadCrumb = document.getElementById("breadCrumb")
+            function breadCrumb1(text1, controller1){
+                const createDiv = document.createElement("div");
+                createDiv.className = "breadcrumb-item";
+                createDiv.id = "breadCrumb1";
+                createDiv.style.cursor = "pointer";
+                breadCrumb.appendChild(createDiv);
+                const breadCrumb1 = document.getElementById("breadCrumb1");
+                breadCrumb1.textContent = text1;
+                breadCrumb1.addEventListener("click",function(){
+                    window.location.href = controller1;
+                });
+            }
+            function breadCrumb2(text2, controller2){
+                const createDiv = document.createElement("div");
+                createDiv.className = "breadcrumb-item fw-bold";
+                createDiv.id = "breadCrumb2";
+                createDiv.style.cursor = "pointer";
+                breadCrumb.appendChild(createDiv);
+                const breadCrumb2 = document.getElementById("breadCrumb2");
+                breadCrumb2.textContent = text2;
+                breadCrumb2.addEventListener("click",function(){
+                    window.location.href = controller2;
+                })
+            }
+            function breadCrumbRemove(){
+                const breadCrumb1 = document.getElementById("breadCrumb1");
+                const breadCrumb2 = document.getElementById("breadCrumb2");
+                if (breadCrumb1) {
+                    breadCrumb.removeChild(breadCrumb1);
+                }
+                if (breadCrumb2) {
+                    breadCrumb.removeChild(breadCrumb2);
+                }
+            }
+
+            switch (Btn.innerHTML){
+                case "원서작성" :
+                    breadCrumbRemove();
+                    break;
+                case "마이페이지" :
+                    breadCrumbRemove();
+                    breadCrumb1("마이페이지","/checked");
+                    breadCrumb2("지원서확인","/checked")
+                    break;
+                case "지원서확인" :
+                    breadCrumbRemove();
+                    breadCrumb1("마이페이지","/checked");
+                    breadCrumb2("지원서확인","/checked")
+                    break;
+                case "추가제출서류" :
+                    breadCrumbRemove();
+                    breadCrumb1("마이페이지","/checked");
+                    breadCrumb2("추가제출서류","/checked");
+                    break;
+                case "합격자발표" :
+                    breadCrumbRemove();
+                    breadCrumb1("합격자발표","/pass");
+                    breadCrumb2("합격자발표","/pass");
+                    break;
+
+            }
+        })
+    })
+
 </script>
 </body>
 </html>

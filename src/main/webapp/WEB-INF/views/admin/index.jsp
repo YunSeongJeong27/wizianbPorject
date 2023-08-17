@@ -25,10 +25,10 @@
 </head>
 
 <body>
-<div class="d-flex">
+<div class="d-flex" style="height: calc(100vh - 108px);">
     <!-- 왼 -->
-    <div style="width: 300px; height: 100vh;">
-        <div class="d-flex p-2 shadow-sm" style="height: 6%;">
+    <div style="width: 250px; height: 100%;">
+        <div class="d-flex p-2 shadow-sm" style="height: 50px;">
             <div class="col-10">
                 <input class="form-control h-100" type="text" placeholder="검색어를 입력하세요">
             </div>
@@ -36,7 +36,7 @@
                 <i class="bi bi-search"></i>
             </div>
         </div>
-        <div class="p-2 shadow-sm" style="height: 93%;">
+        <div class="p-2 shadow-sm" style="height: calc(100% - 50px); overflow-y: auto;">
            <div class="w-100">
                 <div class="px-2 py-1 w-100 fw-bold text-start btn-lf iconWrap btn" id="indexBtn" onclick="indexBtn(this)">
                     <span class="bi bi-folder2"></span>
@@ -71,7 +71,7 @@
                             원서접수관리
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply')">원서접수관리</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply_ex')">원서접수관리</div>
                         </div>
                     </div>
 
@@ -81,10 +81,10 @@
                             평가관리
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">서류전형합격사정</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">면접전형합격사정</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index()">최종합격자명부</div>
-                            <div class="nav-link p-1 btn-lf indexDiv" onclick="index('evaluationResults')">평가결과등록</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('applicationPass')">서류전형합격사정</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('evaluationResults')">면접평가결과등록</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('interviewPass')">면접전형합격사정</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('finalPass')">최종합격자명부</div>
                         </div>
                     </div>
                 </div>
@@ -131,5 +131,4 @@
     }
 </script>
 </body>
-<%@include file="../user/footer.jsp"%>
 </html>

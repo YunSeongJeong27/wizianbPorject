@@ -6,39 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="../user/header.jsp" %>
+<%@ include file="../user/header.jsp" %>
 <html>
 <head>
     <title>전형정보</title>
     <style>
-        .breadcrumbs,
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .page-title {
-            font-size: 36px;
-            font-weight: 600;
-        }
-
-        .breadcrumbs li {
-            display: inline-block;
-            font-size: 13px;
-        }
-
-        .menu ul li a {
-            display: inline-block;
-            color: #646464;
-            padding: 10px;
-            font-weight: 600;
-        }
-
-        .menu ul li a.active {
-            color: #003A78;
-        }
-
         #save_btn,#saveFirst_btn{
             background: #003A78;
         }
@@ -54,19 +26,6 @@
     </style>
 </head>
 <body>
-<div class="my-5 container">
-    <div class="container-sub-header">
-        <div class="d-flex flex-row justify-content-between px-3">
-            <p class="page-title">전형정보</p>
-            <div aria-label="breadcrumb">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumb-item"><i class="fas fa-sharp fa-light fa-house"></i></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<img id="img1"  src="https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg" alt="keyboard-5017973-1920" >
 <div class="container-lg">
     <div>
         <div id="selecInfo_title" class="pb-2 mb-4 mb-0 mt-3">

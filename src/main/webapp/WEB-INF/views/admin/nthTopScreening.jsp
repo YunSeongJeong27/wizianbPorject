@@ -13,132 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+    <link rel="stylesheet" href="css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        body{
-            background-color: #F2F3F5;
-            min-width: 1250px;
-        }
-        .container-table .form-select:focus,
-        .container-table .form-control:focus{
-            box-shadow: none;
-            border-color: #9a9a9a;
-        }
-        .container-table .tr{
-            background-color: #fff;
-        }
-
-        /* 과정 검색 */
-        .tableSearch{
-            font-weight: 600;
-        }
-
-        /* 검색 결과 수 */
-        .searchResult .subTitle{
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
-        .searchResult .subResult{
-            font-size: 14px;
-            margin-bottom: 0;
-        }
-        .searchResult select.form-select{
-            padding: 0.2rem 1.75rem 0.2rem 0.75rem;
-        }
-
-        /* 그리드 custom css */
-
-        /* 스크롤 자투리 부분 색 변경 */
-        .tui-grid-scrollbar-left-bottom,
-        .tui-grid-scrollbar-right-bottom,
-        .tui-grid-scrollbar-right-top{
-            background-color: #fff !important;
-        }
-
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-header-area .tui-grid-table,
-        .tui-grid-show-lside-area .tui-grid-lside-area .tui-grid-body-area .tui-grid-table{
-            border-right-style: solid !important;
-            border-right-color: #E1E1E1 !important;
-        }
-        .tui-grid-cell{
-            border-left-width: 1px !important;
-        }
-
-        /* 선택한 row */
-        .tui-grid-cell-current-row td{
-            background-color: #F2F7FF !important;
-            font-weight: 600;
-            color: #245396;
-        }
-        /* 체크된 row */
-        .checkCell{
-            background-color: #D1D1D1 !important;
-        }
-        /* floating row */
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header{
-            background-color: #fff !important;
-        }
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header:nth-child(1){
-            height: 100%;
-            padding: 15px 5px;
-        }
-        .tui-grid-floating-row .tui-grid-floating-cell.tui-grid-cell-header .tui-grid-cell-content{
-            text-align: center;
-        }
-
-        /* 페이징 */
-        .tui-pagination{
-            background-color: #fff !important;
-            margin:0 !important;
-            padding: 20px 0 12px;
-        }
-        .tui-is-disabled:hover{
-            background: initial !important;
-        }
-        .tui-page-btn span{
-            margin-top: 9px;
-        }
-        .tui-pagination .tui-page-btn{
-            border: none;
-        }
-        .tui-pagination .tui-page-btn:hover{
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        .tui-pagination .tui-is-selected{
-            border: none !important;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            font-weight: 600;
-            color: #245396;
-        }
-        .tui-page-btn.tui-next-is-ellip.tui-last-child,
-        .tui-page-btn.tui-prev-is-ellip.tui-first-child{
-            display: none;
-        }
-
-        /* text edit */
-        .tui-grid-layer-editing .tui-grid-content-text{
-            height: 100% !important;
-            border: none !important;
-            text-align: center !important;
-        }
-        /* select eidt */
-        .tui-grid-editor-select-box-layer .tui-select-box .tui-select-box-input:not(.tui-select-box-open){
-            border: none !important;
-        }
-        .tui-select-box-input.tui-select-box-open{
-            border: none !important;
-            border-bottom: 1px solid #aaa !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -177,7 +54,7 @@
                 <p class="subTitle fw-bold me-2">모집전형정보</p>
                 <p class="subResult text-secondary me-2">검색결과:00건</p>
                 <div>
-                    <select class="form-select">
+                    <select class="form-select" id="nthTablePage">
                         <option selected>5</option>
                         <option>30</option>
                         <option>50</option>
@@ -196,7 +73,7 @@
                <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
                 </div>--%>
-            </div>
+        </div>
     </div>
 
 <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
@@ -255,6 +132,54 @@
                 ANNOUNCE_DATE: '2023-08-11',
                 SCHDL_NAME: 'SCHDL_NAME2',
                 STEP_DIV: 'STEP_DIV2'
+            },
+            {
+                COURSE_DIV: 'COURSE_DIV2',
+                COURSE_NAME: 'COURSE_NAME2',
+                NTH_CODE: 'NTH_CODE2',
+                ENT_YEAR: 'ENT_YEAR2',
+                TERM_DIV: 'TERM_DIV2',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME2',
+                STEP_DIV: 'STEP_DIV2'
+            },
+            {
+                COURSE_DIV: 'COURSE_DIV2',
+                COURSE_NAME: 'COURSE_NAME2',
+                NTH_CODE: 'NTH_CODE2',
+                ENT_YEAR: 'ENT_YEAR2',
+                TERM_DIV: 'TERM_DIV2',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME2',
+                STEP_DIV: 'STEP_DIV2'
+            },
+            {
+                COURSE_DIV: 'COURSE_DIV2',
+                COURSE_NAME: 'COURSE_NAME2',
+                NTH_CODE: 'NTH_CODE2',
+                ENT_YEAR: 'ENT_YEAR2',
+                TERM_DIV: 'TERM_DIV2',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME2',
+                STEP_DIV: 'STEP_DIV2'
+            },
+            {
+                COURSE_DIV: 'COURSE_DIV2',
+                COURSE_NAME: 'COURSE_NAME2',
+                NTH_CODE: 'NTH_CODE2',
+                ENT_YEAR: 'ENT_YEAR2',
+                TERM_DIV: 'TERM_DIV2',
+                EDU_START_DATE: '2023-08-01',
+                EDU_END_DATE: '2023-08-01',
+                ANNOUNCE_DATE: '2023-08-11',
+                SCHDL_NAME: 'SCHDL_NAME2',
+                STEP_DIV: 'STEP_DIV2'
             }
         ];
         function educationPeriodFormatter({row}) {
@@ -265,7 +190,6 @@
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: data,
-            rowHeaders: ['checkbox'],
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -273,6 +197,7 @@
             },
             scrollX: true,
             scrollY: true,
+            bodyHeight: 217,
             columns: [
                 {
                     header: '과정구분',
@@ -347,6 +272,11 @@
         nthTable.on('click', function (ev) {
             subTableLoad(ev.rowKey);
         });
+
+        const nthTablePage = document.querySelector('#nthTablePage');
+
+        // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+        nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
     });
 </script>
 </body>
