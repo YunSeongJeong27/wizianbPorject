@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationInfoRepository">
 
-    <select id="findAplyInfoByMemIdAndCourseDiv" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT * FROM entry_apply_master
-        WHERE mem_id = #{memId}
-        AND course_div = #{courseDiv}
+    <select id="findByMemIdAndRecruitment" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT ENTRY_APPLY_MASTER.*, ENTRY_SEL_MASTER.rcrt_no
+        FROM ENTRY_APPLY_MASTER
+        INNER JOIN ENTRY_SEL_MASTER ON ENTRY_APPLY_MASTER.rcrt_no = ENTRY_SEL_MASTER.rcrt_no
+        WHERE ENTRY_APPLY_MASTER.mem_id = #{memId}
+        AND ENTRY_APPLY_MASTER.rcrt_no = #{rcrtNo}
     </select>
+
+<!--
+    <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        INSERT INTO ENTRY_APPLY_MASTER
+        VALUES (
+
+               )
+    </insert>
+-->
+
 
 </mapper>

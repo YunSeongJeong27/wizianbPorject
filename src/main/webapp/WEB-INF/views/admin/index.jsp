@@ -16,10 +16,16 @@
     <style>
         .btn-lf:hover{
             background-color: #D1D1D1;
-            color: blue;
+            color: #245396;
+            font-weight: 600;
         }
         .btn-lf:hover span {
             color: initial;
+        }
+        .btn-lf.menuActive{
+            background-color: #F2F7FF;
+            color: #245396;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -49,7 +55,7 @@
                             기수정보
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('info')">모집기수정보</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('info', this)">모집기수정보</div>
                         </div>
                     </div>
 
@@ -59,9 +65,9 @@
                             모집전형설정
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('mozip')">모집전형정보</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('notice')">모집전형안내문관리</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('monhang')">자기소개서문항관리</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('mozip', this)">모집전형정보</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('notice', this)">모집전형안내문관리</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('monhang', this)">자기소개서문항관리</div>
                         </div>
                     </div>
 
@@ -71,7 +77,7 @@
                             원서접수관리
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply_ex')">원서접수관리</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply_ex', this)">원서접수관리</div>
                         </div>
                     </div>
 
@@ -81,10 +87,10 @@
                             평가관리
                         </div>
                         <div class="ms-4 d-none animate__animated">
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('applicationPass')">서류전형합격사정</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('evaluationResults')">면접평가결과등록</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('interviewPass')">면접전형합격사정</div>
-                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('finalPass')">최종합격자명부</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('applicationPass', this)">서류전형합격사정</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('nthEvResults', this)">면접평가결과등록</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('interviewPass', this)">면접전형합격사정</div>
+                            <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('finalPass', this)">최종합격자명부</div>
                         </div>
                     </div>
                 </div>
@@ -93,16 +99,25 @@
     </div>
 
 <!-- 오 -->
-    <div style="width: 100%">
+    <div style="width: calc(100% - 250px);">
         <iframe style="width: 100%; height: 100%" src="/info" id="iframe"></iframe>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function index(address){
+    var prevMenu = "";
+
+    function index(address, e){
         var iframe = document.getElementById("iframe");
         iframe.setAttribute("src",address);
+
+        if(prevMenu !== ""){
+            console.log(prevMenu);
+            prevMenu.classList.remove("menuActive")
+        }
+        e.classList.add("menuActive");
+        prevMenu = e;
     }
 
     function indexBtn(e){

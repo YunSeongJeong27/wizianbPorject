@@ -3,9 +3,9 @@ package com.wizian.admission.wizianb.controller;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,10 +15,17 @@ public class ApplicationInfoController {
 
     private final ApplicationInfoService applicationInfoService;
 
+    /*접수바로가기>기존회원작성> 기존입력정보가 있으면 받아오기*/
     @GetMapping("/application/info")
     public List<ApplicationInfo> getAplyInfo(@RequestParam("memId") String memId,@RequestParam("rcrtNo") String rcrtNo){
-        return applicationInfoService.findAplyInfoByMemIdAndRcrtNo(memId, rcrtNo);
+        return applicationInfoService.findByMemIdAndRcrtNo(memId, rcrtNo);
+
     }
+    @PostMapping("/application/join")
+    public ApplicationInfo setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo){
+        return applicationInfoService.join(applicationInfo);
+    }
+
 
 
 

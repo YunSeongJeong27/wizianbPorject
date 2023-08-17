@@ -38,7 +38,7 @@
         }
         .tableInput{
             background-color: inherit;
-            border: none;
+            /*border: none;*/
         }
     </style>
 </head>
@@ -47,8 +47,8 @@
     <div class="d-flex flex-row justify-content-end mb-1">
         <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
         <button id="mozipInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
-        <button id="saveBtn" class="btn btn-sm btn-light btn-outline-dark me-1">저장</button>
-        <button id="deleteBtn" class="btn btn-sm btn-light btn-outline-dark me-1">삭제</button>
+        <button id="saveBtn" class="btn btn-sm btn-success me-1">저장</button>
+        <button id="deleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
     </div>
 
     <div class="col-12">
@@ -211,8 +211,8 @@
                 </div>
                 <div class="d-flex justify-content-end me-3" style="width: 13%;">
                     <button id="personInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
-                    <button id="personSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
-                    <button id="personDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                    <button id="personSaveBtn" class="btn btn-sm btn-success me-2">저장</button>
+                    <button id="personDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
                 </div>
             </div>
 
@@ -230,8 +230,8 @@
                 </div>
                 <div class="d-flex justify-content-end me-3" style="width: 13%;">
                     <button id="scheduleInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
-                    <button id="scheduleSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
-                    <button id="scheduleDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                    <button id="scheduleSaveBtn" class="btn btn-sm btn-success me-2">저장</button>
+                    <button id="scheduleDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
                 </div>
             </div>
 
@@ -249,8 +249,8 @@
                 </div>
                 <div class="d-flex justify-content-end me-3" style="width: 13%;">
                     <button id="documentInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-2">신규</button>
-                    <button id="documentSaveBtn" class="btn btn-sm btn-light btn-outline-dark me-2">저장</button>
-                    <button id="documentDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                    <button id="documentSaveBtn" class="btn btn-sm btn-success me-2">저장</button>
+                    <button id="documentDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
                 </div>
             </div>
 
@@ -264,7 +264,7 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-/*    class CheckboxRenderer {
+    class CheckboxRenderer {
         constructor(props) {
             const {grid, rowKey} = props;
 
@@ -307,7 +307,7 @@
             const hiddenInput = this.el.querySelector('.hidden-input');
             hiddenInput.checked = Boolean(props.value);
         }
-    }*/
+    }
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
             normal: {

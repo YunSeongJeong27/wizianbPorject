@@ -66,8 +66,8 @@
 
                             <div>
                                 <button id="noticeInsertBtn" class="btn btn-sm btn-light btn-outline-dark">신규</button>
-                                <button id="noticeSaveBtn" class="btn btn-sm btn-light btn-outline-dark">저장</button>
-                                <button id="noticeDeleteBtn" class="btn btn-sm btn-light btn-outline-dark">삭제</button>
+                                <button id="noticeSaveBtn" class="btn btn-sm btn-success">저장</button>
+                                <button id="noticeDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
                             </div>
                         </div>
                     </div>

@@ -8,5 +8,7 @@ import java.util.List;
 @Service
 public interface ApplicationInfoService {
 
-   List<ApplicationInfo> findAplyInfoByMemIdAndRcrtNo(String memId,String rcrtNo);
+   List<ApplicationInfo> findByMemIdAndRcrtNo(String memId,String rcrtNo);
+
+   ApplicationInfo join(ApplicationInfo applicationInfo);
 }

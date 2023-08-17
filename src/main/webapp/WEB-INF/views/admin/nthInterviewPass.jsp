@@ -107,7 +107,7 @@
                                 <option value="2">불합격</option>
                             </select>
                             <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                            <button class="btn btn-sm btn-light btn-outline-dark">저장</button>
+                            <button class="btn btn-sm btn-success">저장</button>
                         </div>
                     </div>
                 </div>
