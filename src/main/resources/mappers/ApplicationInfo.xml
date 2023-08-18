@@ -20,4 +20,11 @@
 -->
 
 
+
+
+    <select id="findByRcrtNo" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT eam.NAME_KOR, eam.DOC_PASS_YN FROM entry_apply_master eam, entry_sel_master esm WHERE eam.RCRT_NO = esm.RCRT_NO AND eam.RCRT_NO = #{rcrtNo}
+    </select>
+
+
 </mapper>
