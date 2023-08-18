@@ -39,18 +39,7 @@
             font-size: 20px;
         }
     </style>
-    <%--주소검색--%>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-        function searchPost(){
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    document.querySelector("#zipcode").value = data.zonecode;
-                    document.querySelector("#addrLocal").value = data.address;
-                }
-            }).open();
-        }
-    </script>
+
 </head>
 <body>
 <div class="my-3 d-flex justify-content-center">
@@ -158,7 +147,7 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="text" class="form-control" name="password">
+                                        <input type="text" class="form-control" id="pw" name="password">
                                     </div>
                                     <div>
                                         <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" disabled>
@@ -179,7 +168,7 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="passwordCheck">
+                            <input type="text" class="form-control" name="passwordCheck" id="pwCheck">
                         </div>
                         <div class="col-lg-2">
                             성별구분
@@ -276,7 +265,7 @@
 
                     <%-- Buttons --%>
                     <div id="application_btn" class="d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn btn-dark">저장</button>
+                        <button type="button" class="btn btn-dark" onclick="pwCheck()">저장</button>
                     </div>
                     <div id="apply_complete" class="d-flex justify-content-end mt-5">
                         <button type="button" class="btn btn-secondary" disabled>저장 후 이동</button>
@@ -297,34 +286,53 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
                     <div class="mb-3">
-                        <div class="d-flex justify-content">
-                            <div class="me-2">
-                                <label for="email" class="col-form-label">이메일</label>
+                        <div>
+                            <label for="emailId" class="col-form-label">이메일</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="flex-fill me-2">
+                                <input type="text" id="emailId" class="form-control" name="email">
                             </div>
-                            <div class="me-2">
-                                <input type="text" id="email" class="form-control" name="email">
+                            <div class="flex-fill">
+                                <span>@</span>
                             </div>
-                            <div>
-                                <button type="button" id="info_email" class="btn btn-sm btn-dark">이메일인증</button>
+                            <div class="flex-fill me-2">
+                                <input type="text" id="emailAddr" class="form-control">
+                            </div>
+                            <div class="flex-fill me-2">
+                                <select class="form-select" id="emailSelect">
+                                    <option>직접입력</option>
+                                    <option>naver.com</option>
+                                    <option>gmail.com</option>
+                                    <option>daum.net</option>
+                                    <option>nate.com</option>
+                                </select>
+                            </div>
+                            <div class="flex-fill">
+                                <button type="button" id="info_email" class="btn btn-sm btn-dark">인증메일발송</button>
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="checkCode" class="col-form-label">인증번호</label>
-                        <input id="checkCode" class="form-control mail-check-input" placeholder="인증번호" maxlength="7" onkeyup="checkAuthNumFn()">
-                        <span id="mail-check-warn" class="mb-2"></span>
+                        <div>
+                            <label for="checkCode" class="col-form-label">인증번호</label>
+                            <span id="mail-check-warn" class="mb-2"></span>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="flex-fill">
+                                <input id="checkCode" class="form-control mail-check-input" placeholder="인증번호" onkeyup="checkAuthNumFn()">
+                            </div>
+                        </div>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">확인</button>
             </div>
         </div>
     </div>
 </div>
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
     function setThumbnail(event){
@@ -352,6 +360,30 @@
         window.location.href = "/userInfo";
     })
 
+    <%--주소검색--%>
+    function searchPost(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.querySelector("#zipcode").value = data.zonecode;
+                document.querySelector("#addrLocal").value = data.address;
+            }
+        }).open();
+    }
+
+    //select이메일주소
+    const emailSelect = document.getElementById('emailSelect');
+    const emailInput = document.getElementById('emailAddr');
+
+    emailSelect.addEventListener('change', function() {
+        const selectedValue = emailSelect.value;
+
+        if (selectedValue !== '직접입력') {
+            emailInput.value = selectedValue;
+        }else{
+            emailInput.value="";
+        }
+    });
+
 
 
     //이메일인증
@@ -359,7 +391,10 @@
 
     mailCheck.addEventListener("click",()=>{
 
-        const email = document.querySelector("#email").value;
+        const emailId = document.querySelector("#emailId").value;
+        const emailAddr = document.querySelector("#emailAddr").value;
+        const email = emailId+"@"+emailAddr
+
         const member = {
             username: email
             }
@@ -402,22 +437,37 @@
         }
     }
 
-
     //이메일인증 모달창 띄우기
     const emailModal = document.getElementById('emailModal')
     if (emailModal) {
 
-        const emailInput = emailModal.querySelector('#email'); // 모달창 이메일 입력 필드
+        const emailIdInput = emailModal.querySelector('#emailId'); // 모달창 이메일 입력 필드
+        const emailAddrInput = emailModal.querySelector('#emailAddr');
         const modalMessageInput = document.querySelector('#modalMessage'); // 메시지 입력 필드
 
         emailModal.addEventListener('show.bs.modal', event => {
         });
         emailModal.addEventListener('hidden.bs.modal', event => {
-
-            modalMessageInput.value = emailInput.value; // 이메일 입력값을 메시지 입력 필드로 복사
+            modalMessageInput.value = emailIdInput.value+"@"+emailAddrInput.value; // 이메일 입력값을 메시지 입력 필드로 복사
             document.querySelector('#modalMessage').setAttribute('disabled');
         });
     }
+/*
+
+    function pwCheck(){
+        const firstPw = document.querySelector('#pw');
+        const secondPw = document.querySelector('#pwCheck');
+        const joinForm = document.getElementById('joinForm');
+
+        if(firstPw.value===secondPw.value){
+            joinForm.submit();
+        }else{
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+    }
+*/
+
+
 </script>
 </body>
 </html>
