@@ -103,8 +103,8 @@
                     <p class="subTitle fw-bold me-2">선발결과</p>
                     <select id="passDiv" class="form-select w-auto me-1">
                         <option value="0" selected>선택</option>
-                        <option value="y">합격</option>
-                        <option value="n">불합격</option>
+                        <option value="Y">합격</option>
+                        <option value="N">불합격</option>
                     </select>
                     <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                     <button class="btn btn-sm btn-success">저장</button>
@@ -151,99 +151,19 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            /*const data = [
-                {
-                    COURSE_DIV: 'COURSE_DIV',
-                    COURSE_NAME: 'COURSE_NAME',
-                    NTH_CODE: 'NTH_CODE',
-                    ENT_YEAR: 'ENT_YEAR',
-                    TERM_DIV: 'TERM_DIV',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '30'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                }
-            ];*/
+            let data;
+            const nthTablePage = document.querySelector('#nthTablePage');
+
             function educationPeriodFormatter({row}) {
-                const startDate = row.eduStartDate;
-                const endDate = row.eduEndDate;
+                const startDate = row.eduStartDate.substring(0,10);
+                const endDate = row.eduEndDate.substring(0,10);
                 return startDate + "~" + endDate;
             }
-            let data;
             const nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
                 data: {
                     api: {
-                        readData: { url: '/recruitment/list', method: 'GET' ,initParams: { param: 'a111' }}
+                        readData: { url: '/recruitment/list', method: 'GET'}
                     }
                 },
                 pageOptions: {
@@ -320,8 +240,6 @@
                 subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
 
-            const nthTablePage = document.querySelector('#nthTablePage');
-
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
             nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
         });
@@ -369,8 +287,8 @@
                             type: 'select',
                             options: {
                                 listItems: [
-                                    { text: '합격', value: 'y' },
-                                    { text: '불합격', value: 'n' }
+                                    { text: '합격', value: 'Y' },
+                                    { text: '불합격', value: 'N' }
                                 ]
                             }
                         }
