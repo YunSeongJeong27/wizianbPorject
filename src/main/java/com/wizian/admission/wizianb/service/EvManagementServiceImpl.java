@@ -1,8 +1,9 @@
 package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.EvalResults;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.EvManagementRepository;
-import dto.ToastUiResponseDto;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

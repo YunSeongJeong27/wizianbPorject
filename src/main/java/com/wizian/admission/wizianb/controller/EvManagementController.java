@@ -1,8 +1,8 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.EvalResults;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.EvManagementService;
-import dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

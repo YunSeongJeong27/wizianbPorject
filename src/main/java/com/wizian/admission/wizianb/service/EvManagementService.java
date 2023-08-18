@@ -1,6 +1,8 @@
 package com.wizian.admission.wizianb.service;
 
-import dto.ToastUiResponseDto;
+
+
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 
 import java.util.List;
 
