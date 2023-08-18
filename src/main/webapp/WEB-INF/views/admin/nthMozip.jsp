@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <div class="tab-content pt-3 bg-white" id="infoNavContent">
+    <div class="tab-content pt-3 bg-white h-50 border border-gray-100 rounded-bottom-2" id="infoNavContent">
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
             <div class="d-flex col-4 align-items-center" style="height: 40px">
@@ -129,7 +129,7 @@
                     </div>
                     <div>전형일정단계/상태</div>
                 </div>
-                <div class="col-3">
+                <%--<div class="col-3">
                     <select class="form-select">
                         <option selected>(미선택)</option>
                         <option>테스트접수</option>
@@ -146,55 +146,45 @@
                 </div>
                 <div class="col-2 ms-2">
                     <div class="btn btn-sm btn-outline-secondary fw-bold">변경</div>
-                </div>
+                </div>--%>
             </div>
             <div class="p-3">
-                <table class="table border fw-bold align-middle">
+                <table id="inputTable" class="table border fw-bold align-middle">
                     <tr>
                         <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
-                        <td class="col-2">
-                            <select class="form-select tableInput" aria-label="Default select">
-                                <option selected>[S] CORS_DIV [LM0010]</option>
+                        <td class="">
+                            <select class="form-select tableInput" name="courseDiv">
+                                <option selected>Java</option>
+                                <option>Python</option>
+                                <option>C++</option>
                             </select>
                         </td>
                         <td class="col-2 tableColor">수강년도<span class="text-danger">*</span></td>
-                        <td class="col-2"><input class="form-control tableInput" type="text" value="ENT_YR"></td>
+                        <td class="col-2"><input class="form-control tableInput" name="entYear" type="text"></td>
                         <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
-                        <td class="col-2">
-                            <select class="form-select tableInput" aria-label="Default select">
-                                <option selected>[S] TERM_DIV [CO0005]</option>
-                            </select>
-                        </td>
+                        <td class=""><input class="form-control tableInput" name="termDiv" type="text"></td>
                     </tr>
                     <tr>
                         <td class="tableColor">과정명</td>
-                        <td class=""><input class="form-control tableInput" type="text" value="[S] NTH_NM"></td>
+                        <td class="col-2"><input class="form-control tableInput" name="courseName" type="text"></td>
                         <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" type="date" value="[CAL] EDU_ST_DT(자동)"></td>
+                        <td class=""><input class="form-control tableInput" name="eduStartDate" type="date"></td>
                         <td class=" tableColor">교육종료일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" type="date" value="[CAL] EDU_END_DT(자동)"></td>
+                        <td class=""><input class="form-control tableInput" name="eduEndDate" type="date"></td>
                     </tr>
                     <tr>
-                        <td class="tableColor">모집전형명</td>
-                        <td class="" colspan="3"><input class="form-control tableInput" type="text" value="SEL_NM"></td>
                         <td class="tableColor">모집전형번호</td>
-                        <td class=""><input class="form-control tableInput" type="text" value="SEL_CD (자동)"></td>
-                    </tr>
-                    <tr>
-                        <td class="tableColor">현재 전형일정</td>
-                        <td class=""><input class="form-control tableInput" type="text" value="[S] SCHDL_DIV[LMB020]" readonly></td>
-                        <td class="tableColor">전형평가단계</td>
+                        <td class=""><input class="form-control tableInput" name="rcrtNo" type="text" disabled></td>
+                        <td class="tableColor">현재전형일정</td>
+                        <td class=""><input class="form-control tableInput" name="schdlName" type="text" disabled></td>
+                        <%--<td class="tableColor">전형평가단계</td>
                         <td class="">
                             <select class="form-select tableInput">
                                 <option selected>[S] STEP_DIV[LM0140]</option>
                             </select>
-                        </td>
+                        </td>--%>
                         <td class="tableColor">단계진행상태</td>
-                        <td class="">
-                            <select class="form-select tableInput">
-                                <option selected>[S] STEP_STS_DIV[LM0040]</option>
-                            </select>
-                        </td>
+                        <td class=""><input class="form-control tableInput" name="statusDiv" type="text" disabled></td>
                     </tr>
                 </table>
             </div>
@@ -264,50 +254,6 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    class CheckboxRenderer {
-        constructor(props) {
-            const {grid, rowKey} = props;
-
-            const label = document.createElement('label');
-            label.className = 'checkbox tui-grid-row-header-checkbox';
-            label.setAttribute('for', String(rowKey));
-
-            const hiddenInput = document.createElement('input');
-            hiddenInput.className = 'hidden-input';
-            hiddenInput.id = String(rowKey);
-
-            const customInput = document.createElement('span');
-            customInput.className = 'custom-input';
-
-            label.appendChild(hiddenInput);
-            label.appendChild(customInput);
-
-            hiddenInput.type = 'checkbox';
-            label.addEventListener('click', (ev) => {
-                ev.preventDefault();
-
-                if (ev.shiftKey) {
-                    grid[!hiddenInput.checked ? 'checkBetween' : 'uncheckBetween'](rowKey);
-                    return;
-                }
-
-                grid[!hiddenInput.checked ? 'check' : 'uncheck'](rowKey);
-            });
-
-            this.el = label;
-
-            this.render(props);
-        }
-
-        getElement() {
-            return this.el;
-        }
-
-        render(props) {
-            const hiddenInput = this.el.querySelector('.hidden-input');
-            hiddenInput.checked = Boolean(props.value);
-        }
-    }
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
             normal: {
@@ -336,79 +282,15 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        var firstColumName = 'COURSE_DIV';
+        var firstColumName = 'courseDiv';
 
-        var nthData = [
-            {
-                COURSE_DIV: 'Java',
-                COURSE_NAME: '자바과정 풀스택',
-                NTH_CODE: '3',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            },
-            {
-                COURSE_DIV: 'Python',
-                COURSE_NAME: '파이썬',
-                NTH_CODE: '2',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-02',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                SCHDL_NAME: '지원서접수',
-                STEP_DIV: '원서접수'
-            }
-        ];
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: nthData,
+            data: {
+                api: {
+                    readData: { url: '/recruitment/list', method: 'GET' }
+                }
+            },
             rowHeaders: ['checkbox'],
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
@@ -421,59 +303,53 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'COURSE_DIV',
+                    name: 'courseDiv',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'COURSE_NAME',
+                    name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '기수코드',
-                    name: 'NTH_CODE',
+                    name: 'nthCode',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수강년도',
-                    name: 'ENT_YEAR',
+                    name: 'entYear',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '분기',
-                    name: 'TERM_DIV',
+                    name: 'termDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육시작일',
-                    name: 'EDU_START_DATE',
+                    name: 'eduStartDate',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '교육종료일',
-                    name: 'EDU_END_DATE',
+                    name: 'eduEndDate',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '전형일정',
-                    name: 'SCHDL_NAME',
+                    name: 'schdlName',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
-                },
-                {
-                    header: '전형평가단계',
-                    name: 'STEP_DIV',
-                    sortingType: 'asc',
-                    sortable: false, align: 'center'
                 }
             ],
             columnOptions: {
@@ -484,6 +360,20 @@
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
                 nthTable.focus(0, firstColumName, true);
+                rowDataLoad(0, nthTable, "inputTable");
+
+                document.querySelector("#inputTable tbody").setAttribute("id", "row0");
+
+                // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
+                // 데이터 업데이트..
+                var tableInput = document.querySelectorAll("#inputTable .tableInput");
+                tableInput.forEach((ti) => {
+                    ti.addEventListener("change", function(){
+                        var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
+
+                        nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
+                    })
+                });
             }
         });
 
@@ -497,6 +387,14 @@
 
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthTablePage.addEventListener('change', handlePerPageChange);
+
+        // row 클릭 시 하단에 해당 row 데이터 load
+        nthTable.on('click', function (ev) {
+            if(ev.rowKey == null) return;       // 헤더 클릭 시
+
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
+            rowDataLoad(ev.rowKey, nthTable, "inputTable");
+        });
 
         // 체크박스 전체 선택/해제
         nthTable.on('checkAll', function (ev) {
@@ -528,19 +426,38 @@
             firstColumName = nthTable.getColumns()[0]['name'];
         });
 
+        // 하단 table 데이터 넣기
+        function rowDataLoad(rowKey, table, id){
+            var datas = table.getRow(rowKey);
+            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
+            if(datas == null ) {        // 데이터 x
+                tableInput.forEach((ti) => {
+                    ti.value = "";
+                });
+            }else{
+                tableInput.forEach((ti) => {
+                    var tiName = ti.getAttribute("name");
+                    if(tiName==="courseDiv"){
+                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    }
+                    ti.value = datas[tiName];
+                });
+            }
+        }
+
         // 신규 버튼 클릭 이벤트
         document.getElementById("mozipInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
-                    COURSE_DIV: '',
-                    COURSE_NAME: '',
-                    NTH_CODE: '',
-                    ENT_YEAR: '',
-                    TERM_DIV: '',
-                    EDU_START_DATE: '',
-                    EDU_END_DATE: '',
-                    SCHDL_NAME: '',
-                    STEP_DIV: ''
+                    courseDiv: '',
+                    courseName: '',
+                    nthCode: '',
+                    entYear: '',
+                    termDiv: '',
+                    eduStartDate: '',
+                    eduEndDate: '',
+                    schdlName: ''
+                    /*stepDiv: ''*/
                 }
             ];
 
@@ -550,7 +467,13 @@
                 focus: true
             });
 
-            nthData = nthTable.getData();
+            // 하단 table 초기화
+            var tableInput = document.querySelectorAll("#inputTable .tableInput");
+            document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+            tableInput.forEach((ti) => {
+                ti.value = "";
+            });
+            document.querySelector(".courseName").disabled = false;
         });
     });
 
@@ -785,20 +708,7 @@
                 documentGrid = new tui.Grid({
                     el: document.getElementById(e.id+'GridDiv'),
                     data: documentData,
-                    rowHeaders: [
-                        {
-                            type: 'checkbox',
-                            header: `
-          <label for="all-checkbox" class="checkbox">
-            <input type="checkbox" id="all-checkbox" class="hidden-input" name="_checked" />
-            <span class="custom-input"></span>
-          </label>
-        `,
-                            renderer: {
-                                type: CheckboxRenderer
-                            }
-                        }
-                    ],
+                    rowHeaders: ['checkbox'],
                     pagination: true,
                     scrollX: true,
                     scrollY: true,

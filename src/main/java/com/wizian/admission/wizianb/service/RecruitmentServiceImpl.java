@@ -3,7 +3,7 @@ package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.repository.RecruitmentRepository;
-import dto.ToastUiResponseDto;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

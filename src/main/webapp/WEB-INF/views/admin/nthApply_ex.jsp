@@ -78,7 +78,7 @@
         <div class="py-3 px-5 border border-gray-100 rounded-2 tr">
             <div class="row mb-2">
                 <div class="col-4 d-flex align-items-center">
-                    <div class="align-middle me-5">
+                    <div class="align-middle me-5 fw-bold">
                         <label for="sugang">수강년도/분기</label>
                     </div>
                     <div class="ms-5 col">
