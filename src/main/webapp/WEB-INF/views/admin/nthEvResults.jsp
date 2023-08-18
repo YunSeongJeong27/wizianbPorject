@@ -130,89 +130,15 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const data = [
-
-            {
-
-                //서류도넣기
-                CORS_DIV: 'CORS_DIV',
-                NTH_NM: 'NTH_NM',
-                NTH_CD: 'NTH_CD',
-                ENT_YR: 'ENT_YR',
-                TERM_DIV: 'TERM_DIV',
-                STEP_DIV: 'STEP_DIV', //평가단계
-                TGT_CNT:'TGT_CNT', //평가대상인원
-                PLAN_CNT:'PLAN_CNT', //진행상태
-
-                //서브테이블에뜨는 임시 데이터(빽에서 받아오기)
-                nthEvaluationInfo:[{
-                    APLY_NO:'APLY_NO',   //지원번호
-                    NM_KOR:'NM_KOR',    //성명
-                    EV_PDF_FILE_NO:'EV_PDF_FILE_NO', //평가용지원서PDF파일번호
-                    EV1_SCORE:10,//평가점수
-                    EV2_SCORE:30,
-                    EV3_SCORE:30,
-                    DOC_QLFY_YN:'DOC_QLFY_YN',//서류전형적격여부
-                    TOTAL:10+30+30,
-                    NOTE:'NOTE' //비고
-
-                },
-                {
-                    APLY_NO:'APLY_NO22',   //지원번호
-                    NM_KOR:'NM_KOR22',    //성명
-                    EV_PDF_FILE_NO:'EV_PDF_FILE_NO', //평가용지원서PDF파일번호
-                    EV1_SCORE:10,//평가점수
-                    EV2_SCORE:30,
-                    EV3_SCORE:30,
-                    DOC_QLFY_YN:'DOC_QLFY_YN',//서류전형적격여부
-                    TOTAL:10+30+30,
-                    NOTE:'NOTE22' //비고
-
-                }]
-            },
-            {
-                CORS_DIV: 'CORS_DIV2',
-                NTH_NM: 'NTH_NM2',
-                NTH_CD: 'NTH_CD2',
-                ENT_YR: 'ENT_YR2',
-                TERM_DIV: 'TERM_DIV2',
-                STEP_DIV: 'STEP_DIV2',
-                TGT_CNT:'TGT_CNT2', //평가대상인원
-                PLAN_CNT:'PLAN_CNT2',
-
-                //서브테이블에뜨는 임시 데이터(빽에서 받아오기)
-                nthEvaluationInfo:[{
-                    APLY_NO:'APLY_NO',   //지원번호
-                    NM_KOR:'NM_KOR',    //성명
-                    EV_PDF_FILE_NO:'EV_PDF_FILE_NO', //평가용지원서PDF파일번호
-                    EV1_SCORE:10,//평가점수
-                    EV2_SCORE:30,
-                    EV3_SCORE:30,
-                    DOC_QLFY_YN:'DOC_QLFY_YN',//서류전형적격여부
-                    TOTAL:10+30+30,
-                    NOTE:'NOTE' //비고
-
-                },
-                    {
-                        APLY_NO:'APLY_NO33',   //지원번호
-                        NM_KOR:'NM_KOR33',    //성명
-                        EV_PDF_FILE_NO:'EV_PDF_FILE_NO33', //평가용지원서PDF파일번호
-                        EV1_SCORE:10,//평가점수
-                        EV2_SCORE:30,
-                        EV3_SCORE:30,
-                        DOC_QLFY_YN:'DOC_QLFY_YN',//서류전형적격여부
-                        TOTAL:10+30+30,
-                        NOTE:'NOTE332' //비고
-
-                    } ]
-
-
-            }
-        ];
 
         const nthEvaluationTable = new tui.Grid({
             el: document.getElementById('nthEvaluationTable'),
-            data: data,
+            data: {
+                api: {
+                    readData: { url: '/eval/result/info',
+                        method: 'GET' }
+                }
+            },
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -224,52 +150,52 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'CORS_DIV',
+                    name: 'courseDiv',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'NTH_NM',
+                    name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '기수',
-                    name: 'NTH_CD',
+                    name: 'nthCode',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '수강년도',
-                    name: 'ENT_YR',
+                    name: 'entYear',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '분기',
-                    name: 'TERM_DIV',
+                    name: 'termDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
 
                 {
                     header: '평가단계',
-                    name: 'STEP_DIV',
+                    name: 'stepDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
                 },
                 {
                     header: '대상인원',
-                    name: 'TGT_CNT',
+                    name: 'selCnt',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '진행상태',
-                    name: 'PLAN_CNT',
+                    name: 'statusDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }
@@ -299,7 +225,7 @@
         //nthEvaluationRegistTable테이블
         function subTableLoad(rowKey){
             const rowData = nthEvaluationTable.getRow(rowKey);
-            const subData = rowData.nthEvaluationInfo; //배열형태가 만약 아니라면[]씌워서 배열형태로 바꿔줘야됨
+            const rcrtNo = rowData.rcrtNo;
 
             const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
             // nthEvaluationRegistTable div 요소를 초기화
@@ -307,7 +233,12 @@
 
             const nthEvaluationRegistTable = new tui.Grid({
                 el: nthEvnRegistTable,
-                data: subData,
+                data:{
+                    api: {
+                        readData: { url: '/eval/result/subinfo/'+rcrtNo,
+                            method: 'GET' }
+                    }
+                } ,
                 rowHeaders: ['rowNum'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
@@ -320,61 +251,61 @@
                 columns: [
                     {
                         header: '지원번호',
-                        name: 'APLY_NO',
+                        name: 'aplyNo',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '성명',
-                        name: 'NM_KOR',
+                        name: 'nameKor',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '지원서조회',
-                        name: 'EV_PDF_FILE_NO',
+                        name: 'evPdfFileNo',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '문항1(30)',
-                        name: 'EV1_SCORE',
+                        name: 'ev1Score',
                         sortingType: 'asc',
                         sortable: true, align: 'center',
                         editor: 'text'
                     },
                     {
                         header: '문항2(30)',
-                        name: 'EV2_SCORE',
+                        name: 'ev2Score',
                         sortingType: 'asc',
                         sortable: true, align: 'center',
                         editor: 'text'
                     },
                     {
                         header: '문항3(40)',
-                        name: 'EV3_SCORE',
+                        name: 'ev3Score',
                         sortingType: 'asc',
                         sortable: true, align: 'center',
                         editor: 'text'
                     },
                     {
                         header: '서류평가',
-                        name: 'DOC_QLFY_YN',
+                        name: 'docPassYn',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '합계(100점)',
-                        name: 'TOTAL',
+                        name: "total" ,
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
 
                     {
                         header: '비고',
-                        name: 'NOTE',
+                        name: 'note',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     }
@@ -401,6 +332,21 @@
         const perPage = parseInt(event.value, 10);
         table.setPerPage(perPage);
     }
+
+
+    //전체 데이터 불러오기
+   /* async function evResultData() {
+        const response = await fetch('/eval/result/info');
+        const dataList = await response.json();
+
+        const data = []
+        dataList.map((data, index) => {
+
+
+
+
+        });
+    }*/
 </script>
 
 </body>
