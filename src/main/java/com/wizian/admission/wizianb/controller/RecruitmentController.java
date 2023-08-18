@@ -1,16 +1,14 @@
 package com.wizian.admission.wizianb.controller;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.service.RecruitmentService;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -27,8 +25,9 @@ public class RecruitmentController {
     }
 
     @PostMapping("/recruitment/save")
-    public ResponseEntity<ToastUiResponseDto> saveRecruitment(){
-        return null;
+    public ResponseEntity<ToastUiResponseDto> insertRecruitment(@RequestBody JsonNode recruitment) {
+        ToastUiResponseDto insertRecruitmentList = recruitmentService.insertRecruitment(recruitment);
+        return ResponseEntity.ok(insertRecruitmentList);
     }
 
     @PutMapping("/recruitment/save")

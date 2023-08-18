@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>

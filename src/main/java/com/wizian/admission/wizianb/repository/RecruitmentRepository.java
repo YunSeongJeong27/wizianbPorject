@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RecruitmentRepository {
     List<Recruitment> findAll();
+
+    void save(List<Recruitment> recruitmentList);
 }

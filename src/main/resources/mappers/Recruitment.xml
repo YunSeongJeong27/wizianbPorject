@@ -3,7 +3,19 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.RecruitmentRepository">
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.Recruitment">
-        SELECT * FROM ENTRY_SEL_MASTER
+        SELECT *
+        FROM ENTRY_SEL_MASTER
     </select>
+
+    <insert id="save" parameterType="list">
+        INSERT INTO ENTRY_SEL_MASTER (RCRT_NO, COURSE_DIV, NTH_CODE, COURSE_NAME, ENT_YEAR, TERM_DIV, EDU_START_DATE,
+        EDU_END_DATE, COURSE_MONTH, STATUS_DIV, NOTE)
+        VALUES
+        <foreach collection="recruitmentList" item="recruitment" separator=",">
+            (#{recruitment.rcrtNo}, #{recruitment.courseDiv}, #{recruitment.nthCode}, #{recruitment.courseName},
+            #{recruitment.entYear}, #{recruitment.termDiv}, #{recruitment.eduStartDate}, #{recruitment.eduEndDate},
+            #{recruitment.courseMonth}, #{recruitment.statusDiv}, #{recruitment.note})
+        </foreach>
+    </insert>
 
 </mapper>
