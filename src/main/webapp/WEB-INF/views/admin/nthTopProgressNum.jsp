@@ -18,62 +18,64 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-    <div class="container-table">
-        <%--TOP--%>
-        <div class="col-12">
-            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                <div class="col-1 me-1"><input type="text" class="form-control"></div>
-                <div class="col-1 me-2">
-                    <select class="form-select">
-                        <option selected>1분기</option>
-                        <option>2분기</option>
-                        <option>3분기</option>
-                        <option>4분기</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정구분</div>
-                <div class="col-2 me-2">
-                    <select class="form-select">
-                        <option selected>Java</option>
-                        <option>Python</option>
-                        <option>C++</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정명</div>
-                <div class="col-2"><input type="text" class="form-control"></div>
+<div class="container-table">
+    <%--TOP--%>
+    <div class="col-12">
+        <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+            <div class="col-2 align-middle tableSearch">수강년도/분기</div>
+            <div class="col-1 me-1"><input type="text" class="form-control"></div>
+            <div class="col-1 me-2">
+                <select class="form-select">
+                    <option selected>(전체)</option>
+                    <option>1분기</option>
+                    <option>2분기</option>
+                    <option>3분기</option>
+                    <option>4분기</option>
+                </select>
             </div>
-        </div>
 
-        <%--HEAD--%>
-        <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-4 d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">모집기수정보</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
-                <div>
-                    <select class="form-select" id="nthTablePage">
-                        <option selected>5</option>
-                        <option>30</option>
-                        <option>50</option>
-                        <option>70</option>
-                        <option>100</option>
-                    </select>
-                </div>
+            <div class="col-2 tableSearch">과정구분</div>
+            <div class="col-2 me-2">
+                <select class="form-select">
+                    <option selected>(전체)</option>
+                    <option>Java</option>
+                    <option>Python</option>
+                    <option>C++</option>
+                </select>
             </div>
-        </div>
 
-        <%--BODY--%>
-        <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-            <div id="nthTable"></div>
-
-            <%-- 페이징 --%>
-<%--                <div class="position-absolute top-50 end-0 translate-middle-y">--%>
-<%--                    <p class="pageLoc">현재:1/전체:14(1~5)</p>--%>
-<%--                </div>--%>
+            <div class="col-2 tableSearch">과정명</div>
+            <div class="col-2"><input type="text" class="form-control"></div>
         </div>
     </div>
+
+    <%--HEAD--%>
+    <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+        <div class="col-4 d-flex flex-row align-items-center">
+            <p class="subTitle fw-bold me-2">모집기수정보</p>
+            <p class="subResult text-secondary me-2">검색결과:00건</p>
+            <div>
+                <select class="form-select" id="nthTablePage">
+                    <option selected>5</option>
+                    <option>30</option>
+                    <option>50</option>
+                    <option>70</option>
+                    <option>100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <%--BODY--%>
+    <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+        <div id="nthTable"></div>
+
+        <%-- 페이징 --%>
+        <%--                <div class="position-absolute top-50 end-0 translate-middle-y">--%>
+        <%--                    <p class="pageLoc">현재:1/전체:14(1~5)</p>--%>
+        <%--                </div>--%>
+    </div>
+</div>
 
 
 <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
@@ -114,7 +116,9 @@
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: {
+                initialRequest: true,
                 api: {
+                    hideLoadingBar: false,
                     readData: { url: '/recruitment/list', method: 'GET' },
                     createData: { url: 'recruitment/save', method: 'POST' },
                     updateData: { url: 'recruitment/save', method: 'PUT' },
@@ -139,17 +143,18 @@
                     align: 'center'
                 },
                 {
-                    header: '과정명',
-                    name: 'courseName',
+                    header: '기수코드',
+                    name: 'nthCode',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
-                    header: '기수코드',
-                    name: 'nthCode',
+                    header: '과정명',
+                    name: 'courseName',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true,
+                    align: 'center'
                 },
                 {
                     header: '수강년도',
@@ -174,6 +179,20 @@
                     name: 'eduEndDate',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
+                },
+                {
+                    header: '수업개월수',
+                    name: 'courseMonth',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '비고',
+                    name: 'note',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
                 }
             ],
             columnOptions: {
@@ -279,7 +298,9 @@
                     entYear: '',
                     termDiv: '',
                     eduStartDate: '',
-                    eduEndDate: ''
+                    eduEndDate: '',
+                    note: '',
+                    courseMonth: ''
                 }
             ];
 
@@ -288,6 +309,8 @@
                 extendPrevRowSpan: true,
                 focus: true
             });
+
+            nthData = nthTable.getData();
 
             // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
@@ -312,6 +335,15 @@
                 }
             }
         });
+        const nthSaveBtn = document.getElementById("nthSaveBtn");
+        nthSaveBtn.addEventListener('click', () => {
+            nthTable.request('createData');
+        })
+        const nthSelectBtn = document.getElementById("nthSelectBtn");
+        nthSelectBtn.addEventListener('click', () => {
+            nthTable.onGridMounted;
+            nthTable.request('readData');
+        })
     });
 </script>
 </body>
