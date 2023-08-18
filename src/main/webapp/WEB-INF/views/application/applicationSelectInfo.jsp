@@ -71,26 +71,6 @@
         window.location.href = "/userInfo";
     })
 
-
-    const editedData = [
-        { name: 'Updated Name 1', age: 30 },
-        { name: 'Updated Name 2', age: 25 },
-        // ... 편집된 데이터
-    ];
-
-    $.ajax({
-        url: '/update-data',
-        type: 'POST',
-        contentType: 'application/json',
-        data: editedData,
-        success: function(response) {
-            // 서버에서의 응답 처리
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-
     ////상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
     breadcrumbDiv1.addEventListener("click",function(){

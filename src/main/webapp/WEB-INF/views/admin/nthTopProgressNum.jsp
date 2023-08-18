@@ -120,10 +120,10 @@
                 api: {
                     hideLoadingBar: false,
                     readData: { url: '/recruitment/list', method: 'GET' },
-                    createData: { url: 'recruitment/save', method: 'POST' },
+                    createData: { url: 'recruitment/save', method: 'POST', contentType: 'application/json' },
                     updateData: { url: 'recruitment/save', method: 'PUT' },
                     deleteData: { url: 'recruitment/delete', method: 'DELETE' }
-                }
+                },
             },
             rowHeaders: ['checkbox'],
             pageOptions: {
@@ -341,8 +341,8 @@
         })
         const nthSelectBtn = document.getElementById("nthSelectBtn");
         nthSelectBtn.addEventListener('click', () => {
-            nthTable.onGridMounted;
-            nthTable.request('readData');
+            nthTable.readData(1, '/recruitment/list', false);
+            console.log(nthTable.request('readData'));
         })
     });
 </script>

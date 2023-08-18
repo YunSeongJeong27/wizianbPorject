@@ -123,7 +123,7 @@
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
             <div class="d-flex col-4 align-items-center" style="height: 40px">
-                <div class="col-4 ms-3 fw-bold d-flex">
+                <div class="col-6 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
@@ -287,8 +287,13 @@
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: {
+                initialRequest: true,
                 api: {
-                    readData: { url: '/recruitment/list', method: 'GET' }
+                    hideLoadingBar: false,
+                    readData: { url: '/recruitment/list', method: 'GET' },
+                    createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
+                    updateData: { url: 'recruitment/save', method: 'PUT' },
+                    deleteData: { url: 'recruitment/delete', method: 'DELETE' }
                 }
             },
             rowHeaders: ['checkbox'],
@@ -309,17 +314,18 @@
                     align: 'center'
                 },
                 {
-                    header: '과정명',
-                    name: 'courseName',
+                    header: '기수코드',
+                    name: 'nthCode',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
-                    header: '기수코드',
-                    name: 'nthCode',
+                    header: '과정명',
+                    name: 'courseName',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true,
+                    align: 'center'
                 },
                 {
                     header: '수강년도',
@@ -346,10 +352,18 @@
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '전형일정',
-                    name: 'schdlName',
+                    header: '수업개월수',
+                    name: 'courseMonth',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '비고',
+                    name: 'note',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
                 }
             ],
             columnOptions: {
@@ -360,6 +374,7 @@
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
                 nthTable.focus(0, firstColumName, true);
+
                 rowDataLoad(0, nthTable, "inputTable");
 
                 document.querySelector("#inputTable tbody").setAttribute("id", "row0");
@@ -384,7 +399,6 @@
             const perPage = parseInt(event.target.value, 10);
             nthTable.setPerPage(perPage);
         }
-
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthTablePage.addEventListener('change', handlePerPageChange);
 
@@ -399,7 +413,7 @@
         // 체크박스 전체 선택/해제
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
                 nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
@@ -407,7 +421,7 @@
         });
         nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
             rowKeys.forEach((rowKey) => {
                 nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
@@ -437,7 +451,7 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="courseDiv"){
+                    if(tiName==="courseDiv" || tiName==="termDiv"){
                         $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
                     }
                     ti.value = datas[tiName];
@@ -446,7 +460,7 @@
         }
 
         // 신규 버튼 클릭 이벤트
-        document.getElementById("mozipInsertBtn").addEventListener("click", function () {
+        document.getElementById("nthInsertBtn").addEventListener("click", function () {
             const rowData = [
                 {
                     courseDiv: '',
@@ -456,8 +470,8 @@
                     termDiv: '',
                     eduStartDate: '',
                     eduEndDate: '',
-                    schdlName: ''
-                    /*stepDiv: ''*/
+                    note: '',
+                    courseMonth: ''
                 }
             ];
 
@@ -467,14 +481,40 @@
                 focus: true
             });
 
+            nthData = nthTable.getData();
+
             // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
             document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
             tableInput.forEach((ti) => {
                 ti.value = "";
             });
-            document.querySelector(".courseName").disabled = false;
         });
+
+        // 삭제 버튼 클릭 이벤트
+        document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+            if(confirm("삭제하시겠습니까?")){
+                nthTable.removeCheckedRows(false);
+
+                if(nthTable.getData().length !== 0){
+                    var rowKey = nthTable.getRowAt(0)['rowKey'];
+
+                    nthTable.focus(rowKey, firstColumName, true);
+                    rowDataLoad(rowKey, nthTable, "inputTable");
+                }else{                                              // 데이터 x
+                    rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
+                }
+            }
+        });
+        const saveBtn = document.getElementById("saveBtn");
+        saveBtn.addEventListener('click', () => {
+            nthTable.request('createData');
+        });
+        const nthSelectBtn = document.getElementById("nthSelectBtn");
+        nthSelectBtn.addEventListener('click', () => {
+            nthTable.request('readData');
+            console.log(nthTable.request('readData'));
+        })
     });
 
 

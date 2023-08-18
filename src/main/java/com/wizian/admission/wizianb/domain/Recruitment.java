@@ -22,4 +22,6 @@ public class Recruitment {
     private int rcrtCnt;
     private int aplyCnt;
     private int selCnt;
+    private int courseMonth;
+    private String note;
 }
