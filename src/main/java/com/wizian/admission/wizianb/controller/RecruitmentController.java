@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Slf4j
@@ -17,10 +18,14 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @GetMapping("/recruitment/view")
-    public ResponseEntity<ToastUiResponseDto> view() {
+    @GetMapping("/recruitment/list")
+    public ResponseEntity<ToastUiResponseDto> allRecruitmentList() {
         ToastUiResponseDto recruitmentList = recruitmentService.findAll();
-        log.debug("resultList :: " + recruitmentList);
         return ResponseEntity.ok(recruitmentList);
+    }
+
+    @PostMapping("/recruitment/insert")
+    public ResponseEntity<ToastUiResponseDto> insertRecruitment(){
+        return null;
     }
 }

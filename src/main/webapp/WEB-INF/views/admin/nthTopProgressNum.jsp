@@ -115,7 +115,7 @@
             el: document.getElementById('nthTable'),
             data: {
                 api: {
-                    readData: { url: '/recruitment/view', method: 'GET' }
+                    readData: { url: '/recruitment/list', method: 'GET' }
                 }
             },
             rowHeaders: ['checkbox'],
