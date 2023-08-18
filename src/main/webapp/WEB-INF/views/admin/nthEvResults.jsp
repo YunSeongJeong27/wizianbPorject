@@ -334,19 +334,6 @@
     }
 
 
-    //전체 데이터 불러오기
-   /* async function evResultData() {
-        const response = await fetch('/eval/result/info');
-        const dataList = await response.json();
-
-        const data = []
-        dataList.map((data, index) => {
-
-
-
-
-        });
-    }*/
 </script>
 
 </body>
