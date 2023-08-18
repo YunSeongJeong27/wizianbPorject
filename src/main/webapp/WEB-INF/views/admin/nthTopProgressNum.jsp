@@ -115,7 +115,10 @@
             el: document.getElementById('nthTable'),
             data: {
                 api: {
-                    readData: { url: '/recruitment/list', method: 'GET' }
+                    readData: { url: '/recruitment/list', method: 'GET' },
+                    createData: { url: 'recruitment/save', method: 'POST' },
+                    updateData: { url: 'recruitment/save', method: 'PUT' },
+                    deleteData: { url: 'recruitment/delete', method: 'DELETE' }
                 }
             },
             rowHeaders: ['checkbox'],

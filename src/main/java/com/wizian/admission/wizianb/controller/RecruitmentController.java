@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 @Slf4j
@@ -24,8 +26,18 @@ public class RecruitmentController {
         return ResponseEntity.ok(recruitmentList);
     }
 
-    @PostMapping("/recruitment/insert")
-    public ResponseEntity<ToastUiResponseDto> insertRecruitment(){
+    @PostMapping("/recruitment/save")
+    public ResponseEntity<ToastUiResponseDto> saveRecruitment(){
+        return null;
+    }
+
+    @PutMapping("/recruitment/save")
+    public ResponseEntity<ToastUiResponseDto> updateRecruitment(){
+        return null;
+    }
+
+    @DeleteMapping("/recruitment/delete")
+    public ResponseEntity<ToastUiResponseDto> deleteRecruitment(){
         return null;
     }
 }
