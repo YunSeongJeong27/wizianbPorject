@@ -256,7 +256,7 @@
                 el: applicationEl,
                 data: {
                     api: {
-                        readData: { url: '/recruitment/application_list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
+                        readData: { url: '/pass/list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
                     }
                 },
                 rowHeaders: ['checkbox'],
@@ -354,7 +354,7 @@
 
                     var rowKeys = applicationTable.getCheckedRowKeys();
                     rowKeys.forEach(rowKey => {
-                        applicationTable.setValue(rowKey, 'DOC_PASS_YN', passDiv.options[passDiv.selectedIndex].value, false);
+                        applicationTable.setValue(rowKey, 'docPassYn', passDiv.options[passDiv.selectedIndex].value, false);
                     });
                 }
             });

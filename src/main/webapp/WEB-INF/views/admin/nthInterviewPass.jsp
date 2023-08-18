@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -103,8 +103,8 @@
                             <p class="subTitle fw-bold me-2">선발결과</p>
                             <select id="passDiv" class="form-select w-auto me-1">
                                 <option value="0" selected>선택</option>
-                                <option value="1">합격</option>
-                                <option value="2">불합격</option>
+                                <option value="Y">합격</option>
+                                <option value="N">불합격</option>
                             </select>
                             <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                             <button class="btn btn-sm btn-success">저장</button>
@@ -152,6 +152,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             let data;
+            const nthTablePage = document.querySelector('#nthTablePage');
 
             function educationPeriodFormatter({row}) {
                 const startDate = row.eduStartDate.substring(0, 10);
@@ -239,8 +240,6 @@
                 subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
 
-            const nthTablePage = document.querySelector('#nthTablePage');
-
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
             nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
         });
@@ -249,7 +248,6 @@
         // interview테이블 grid
         // nthTable row 누를 때마다 interviewTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         function subTableLoad(rcrtNo){
-            var interviewData = [];
             var firstColumName = 'nameKor';
 
             var interviewEl = document.getElementById('interviewTable');
@@ -260,7 +258,7 @@
                 data: {
                     api: {
                         // url 변경
-                        //readData: { url: '/recruitment/application_list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
+                        readData: { url: '/pass/list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
                     }
                 },
                 rowHeaders: ['checkbox'],
@@ -282,21 +280,21 @@
                     },
                     {
                         header: '평균점수',
-                        name: 'EV_AVG_SCORE',
+                        name: 'evAvgScore',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '예비순위',
-                        name: 'PREL_ORD',
+                        name: 'prelOrd',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '선발결과',
-                        name: 'FNL_PASS_YN',
+                        name: 'fnlPassYn',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -305,19 +303,19 @@
                             type: 'select',
                             options: {
                                 listItems: [
-                                    { text: '합격', value: '1' },
-                                    { text: '불합격', value: '2' }
+                                    { text: '합격', value: 'Y' },
+                                    { text: '불합격', value: 'N' }
                                 ]
                             }
                         }
                     },
-                    {
+                    /*{
                         header: '비고',
                         name: 'NOTE',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
-                    }
+                    }*/
                 ],
                 columnOptions: {
                     resizable: true
@@ -362,16 +360,6 @@
                 interviewTable.removeRowClassName(ev.rowKey, "checkCell");
             });
 
-            // 데이터 변경 후
-            interviewTable.on('afterChange', ev => {
-                var changes = ev["changes"][0];
-                var rowKey = changes['rowKey']
-                //var datas = interviewData[interviewTable.getIndexOfRow(rowKey)];
-                //datas[changes['columnName']] = changes['value'];
-
-                interviewTable.setValue(rowKey, changes['columnName'], changes['value'], false);
-            });
-
             interviewTable.on('drop', ev => {
                 firstColumName = interviewTable.getColumns()[0]['name'];
             });
@@ -389,7 +377,7 @@
 
                     var rowKeys = interviewTable.getCheckedRowKeys();
                     rowKeys.forEach(rowKey => {
-                        interviewTable.setValue(rowKey, 'FNL_PASS_YN', passDiv.options[passDiv.selectedIndex].value, false);
+                        interviewTable.setValue(rowKey, 'fnlPassYn', passDiv.options[passDiv.selectedIndex].value, false);
                     });
                 }
             });

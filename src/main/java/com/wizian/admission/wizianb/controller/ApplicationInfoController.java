@@ -1,7 +1,6 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
-import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.MailSendService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,12 +41,4 @@ public class ApplicationInfoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(authNum);
     }
-
-    // 서류전형 결과 출력
-    @GetMapping("/recruitment/application_list")
-    public ResponseEntity<ToastUiResponseDto> applicationPassList(@RequestParam("rcrtNo") String rcrtNo){
-        ToastUiResponseDto applicationInfoList = applicationInfoService.findByRcrtNo(rcrtNo);
-        return ResponseEntity.ok(applicationInfoList);
-    }
-
 }

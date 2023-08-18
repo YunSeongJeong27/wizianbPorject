@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -107,84 +107,13 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-        const data = [
-            {
-                APLY_NO: 'APLY_NO',
-                NAME_KOR: 'NAME_KOR',
-                AGE : 20,
-                GENDER: 'GENDER',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '80',
-                PREL_ORD: '1'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            },
-            {
-                APLY_NO: 'APLY_NO2',
-                NAME_KOR: 'NAME_KOR2',
-                AGE : 30,
-                GENDER: 'GENDER2',
-                DOC_PASS_YN: '합격',
-                EV_AVG_SCORE: '70',
-                PREL_ORD: '2'
-            }
-        ];
-
         const finalTable = new tui.Grid({
             el: document.getElementById('finalTable'),
-            data: data,
+            data: {
+                api: {
+                    readData: { url: '/pass/listAll', method: 'GET'}
+                }
+            },
             rowHeaders: ['rowNum'], //인덱스
             pageOptions: {
                 useClient: true,   // front에서만 페이징 하는 속성
@@ -200,52 +129,52 @@
                     {
                         header: '면접전형',
                         name: 'INTERVIEW',
-                        childNames: ['EV_AVG_SCORE', 'PREL_ORD']
+                        childNames: ['evAvgScore', 'prelOrd']
                     }
                 ]
             },
             columns: [
                 {
                     header: '지원서번호',
-                    name: 'APLY_NO',
+                    name: 'aplyNo',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '지원자명',
-                    name: 'NAME_KOR',
+                    name: 'nameKor',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '연령',
-                    name: 'AGE',
+                    name: 'age',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '성별',
-                    name: 'GENDER',
+                    name: 'gender',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '서류전형',
-                    name: 'DOC_PASS_YN',
+                    name: 'docPassYn',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '평균',
-                    name: 'EV_AVG_SCORE',
+                    name: 'evAvgScore',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '순위',
-                    name: 'PREL_ORD',
+                    name: 'prelOrd',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }
@@ -258,7 +187,7 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                finalTable.focus(0, 'APLY_NO', true);
+                finalTable.focus(0, 'aplyNo', true);
             }
         });
 
