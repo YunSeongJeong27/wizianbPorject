@@ -39,6 +39,18 @@
             font-size: 20px;
         }
     </style>
+    <%--주소검색--%>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function searchPost(){
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    document.querySelector("#zipcode").value = data.zonecode;
+                    document.querySelector("#addrLocal").value = data.address;
+                }
+            }).open();
+        }
+    </script>
 </head>
 <body>
 <div class="my-3 d-flex justify-content-center">
@@ -90,6 +102,8 @@
             </div>
             <div class="border-top border-dark border-2">
                 <form action="/application/join" method="post" enctype="multipart/form-data">
+
+
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             사진
@@ -105,6 +119,9 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             모집과정명
@@ -117,6 +134,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             이메일
@@ -125,10 +143,10 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" class="form-control" name="email">
+                                    <input type="text" id="modalMessage" class="form-control" name="email" disabled="disabled">
                                 </div>
                                 <div>
-                                    <button type="button" id="info_email" class="btn btn-sm btn-dark">이메일인증</button>
+                                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#emailModal">이메일인증</button>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +172,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="row mt-3">
                         <div class="col-lg-2">
@@ -220,10 +237,10 @@
                         <div class="col-lg-4">
                             <div class="row g-3">
                                 <div class="col-auto">
-                                    <input type="text" class="form-control" name="zipcode">
+                                    <input type="text" id="zipcode" class="form-control" name="zipcode">
                                 </div>
                                 <div class="col-auto">
-                                    <button type="button" class="btn btn-sm btn-dark">검색</button>
+                                    <button type="button" class="btn btn-sm btn-dark" onclick="searchPost()">검색</button>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +256,7 @@
                             주소
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="addrLocal">
+                            <input type="text" id="addrLocal" class="form-control" name="addrLocal">
                         </div>
                         <div class="col-lg-2">
                             휴대폰번호
@@ -257,7 +274,6 @@
                         </div>
                     </div>
 
-
                     <%-- Buttons --%>
                     <div id="application_btn" class="d-flex justify-content-center mt-4">
                         <button type="submit" class="btn btn-dark">저장</button>
@@ -270,6 +286,45 @@
         </div>
     </div>
 </div>
+
+
+<%--이메일인증 모달--%>
+<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">이메일인증</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content">
+                            <div class="me-2">
+                                <label for="email" class="col-form-label">이메일</label>
+                            </div>
+                            <div class="me-2">
+                                <input type="text" id="email" class="form-control" name="email">
+                            </div>
+                            <div>
+                                <button type="button" id="info_email" class="btn btn-sm btn-dark">이메일인증</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="checkCode" class="col-form-label">인증번호</label>
+                        <input id="checkCode" class="form-control mail-check-input" placeholder="인증번호" maxlength="7" onkeyup="checkAuthNumFn()">
+                        <span id="mail-check-warn" class="mb-2"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
     function setThumbnail(event){
@@ -296,6 +351,73 @@
     breadcrumbDiv3.addEventListener("click",function(){
         window.location.href = "/userInfo";
     })
+
+
+
+    //이메일인증
+    const mailCheck = document.querySelector("#info_email");
+
+    mailCheck.addEventListener("click",()=>{
+
+        const email = document.querySelector("#email").value;
+        const member = {
+            username: email
+            }
+        const url = "/api/mailcheck";
+
+        fetch(url,{
+            method: "POST",
+            body: JSON.stringify(member),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                if(json != null){
+                    alert("인증메일 전송 성공");
+                    authNum = json;
+                    console.log(authNum);
+                    document.querySelector('.mail-check-input').removeAttribute('disabled');
+                }else{
+                    alert("인증메일 전송 실패");
+                }
+            });
+    })
+
+    //인증코드 맞는지 확인.
+    function checkAuthNumFn(){
+        const mailCheckInput = document.querySelector(".mail-check-input").value;
+        const mailCheckWarn = document.getElementById("mail-check-warn");
+
+        if (mailCheckInput != authNum) {
+            mailCheckWarn.textContent = "  인증번호가 다릅니다.";
+            mailCheckWarn.style.color = 'red';
+            return;
+        } else {
+            mailCheckWarn.textContent = "  인증되었습니다.";
+            mailCheckWarn.style.color = 'blue';
+            authResult = true;
+            return;
+        }
+    }
+
+
+    //이메일인증 모달창 띄우기
+    const emailModal = document.getElementById('emailModal')
+    if (emailModal) {
+
+        const emailInput = emailModal.querySelector('#email'); // 모달창 이메일 입력 필드
+        const modalMessageInput = document.querySelector('#modalMessage'); // 메시지 입력 필드
+
+        emailModal.addEventListener('show.bs.modal', event => {
+        });
+        emailModal.addEventListener('hidden.bs.modal', event => {
+
+            modalMessageInput.value = emailInput.value; // 이메일 입력값을 메시지 입력 필드로 복사
+            document.querySelector('#modalMessage').setAttribute('disabled');
+        });
+    }
 </script>
 </body>
 </html>
