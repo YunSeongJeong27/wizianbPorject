@@ -103,8 +103,8 @@
                     <p class="subTitle fw-bold me-2">선발결과</p>
                     <select id="passDiv" class="form-select w-auto me-1">
                         <option value="0" selected>선택</option>
-                        <option value="1">합격</option>
-                        <option value="2">불합격</option>
+                        <option value="Y">합격</option>
+                        <option value="N">불합격</option>
                     </select>
                     <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
                     <button class="btn btn-sm btn-success">저장</button>
@@ -151,96 +151,21 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const data = [
-                {
-                    COURSE_DIV: 'COURSE_DIV',
-                    COURSE_NAME: 'COURSE_NAME',
-                    NTH_CODE: 'NTH_CODE',
-                    ENT_YEAR: 'ENT_YEAR',
-                    TERM_DIV: 'TERM_DIV',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '30'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                }
-            ];
+            let data;
+            const nthTablePage = document.querySelector('#nthTablePage');
+
             function educationPeriodFormatter({row}) {
-                const startDate = row.EDU_START_DATE;
-                const endDate = row.EDU_END_DATE;
+                const startDate = row.eduStartDate.substring(0,10);
+                const endDate = row.eduEndDate.substring(0,10);
                 return startDate + "~" + endDate;
             }
             const nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
-                data: data,
+                data: {
+                    api: {
+                        readData: { url: '/recruitment/list', method: 'GET'}
+                    }
+                },
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -252,46 +177,47 @@
                 columns: [
                     {
                         header: '과정구분',
-                        name: 'COURSE_DIV',
+                        name: 'courseDiv',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '과정명',
-                        name: 'COURSE_NAME',
+                        name: 'courseName',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '기수코드',
-                        name: 'NTH_CODE',
+                        name: 'nthCode',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '수강년도',
-                        name: 'ENT_YEAR',
+                        name: 'entYear',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '분기',
-                        name: 'TERM_DIV',
+                        name: 'termDiv',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '교육기간',
-                        name: 'EDU_DATE',
+                        name: 'eduDate',
                         sortingType: 'asc',
                         sortable: true, align: 'center',
+                        width: 220,
                         formatter: educationPeriodFormatter
                     },
                     {
                         header: '선발예정인원',
-                        name: 'PLAN_CNT',
+                        name: 'rcrtCnt',
                         sortingType: 'asc',
                         sortable: false, align: 'center'
                     }
@@ -304,15 +230,15 @@
 
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
-                    nthTable.focus(0, 'COURSE_DIV', true);
-                    subTableLoad(0);
+                    data = nthTable.getData();
+
+                    nthTable.focus(0, 'courseDiv', true);
+                    subTableLoad(data[0]['rcrtNo']);
                 }
             });
             nthTable.on('click', function (ev) {
-                subTableLoad(ev.rowKey);
+                subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
-
-            const nthTablePage = document.querySelector('#nthTablePage');
 
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
             nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
@@ -320,29 +246,19 @@
 
         // application테이블 grid
         // nthTable row 누를 때마다 applicationTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
-        function subTableLoad(rowKey){
-            var applicationData = [];
-            var firstColumName = 'NAME_KOR';
-            if(rowKey == null) return;       // 헤더 클릭 시
-            else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
-                applicationData = [
-                    {
-                        NAME_KOR: '홍길동',
-                        DOC_PASS_YN: '1'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        DOC_PASS_YN: '2'
-                    }
-                ];
-            }
+        function subTableLoad(rcrtNo){
+            var firstColumName = 'nameKor';
 
             var applicationEl = document.getElementById('applicationTable');
             applicationEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
             const applicationTable = new tui.Grid({
                 el: applicationEl,
-                data: applicationData,
+                data: {
+                    api: {
+                        readData: { url: '/recruitment/application_list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
+                    }
+                },
                 rowHeaders: ['checkbox'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
@@ -355,14 +271,14 @@
                 columns: [
                     {
                         header: '지원자명',
-                        name: 'NAME_KOR',
+                        name: 'nameKor',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '합격여부',
-                        name: 'DOC_PASS_YN',
+                        name: 'docPassYn',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -371,8 +287,8 @@
                             type: 'select',
                             options: {
                                 listItems: [
-                                    { text: '합격', value: '1' },
-                                    { text: '불합격', value: '2' }
+                                    { text: '합격', value: 'Y' },
+                                    { text: '불합격', value: 'N' }
                                 ]
                             }
                         }
@@ -419,17 +335,6 @@
             });
             applicationTable.on('uncheck', function (ev) {
                 applicationTable.removeRowClassName(ev.rowKey, "checkCell");
-            });
-
-            // 데이터 변경 후
-            applicationTable.on('afterChange', ev => {
-                var changes = ev["changes"][0];
-                var rowKey = changes['rowKey']
-                //var datas = applicationData[applicationTable.getIndexOfRow(rowKey)];
-                //datas[changes['columnName']] = changes['value'];
-
-                //applicationTable.resetData(applicationData);
-                applicationTable.setValue(rowKey, changes['columnName'], changes['value'], false);
             });
 
             applicationTable.on('drop', ev => {

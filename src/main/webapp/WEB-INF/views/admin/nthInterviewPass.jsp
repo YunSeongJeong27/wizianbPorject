@@ -151,96 +151,20 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const data = [
-                {
-                    COURSE_DIV: 'COURSE_DIV',
-                    COURSE_NAME: 'COURSE_NAME',
-                    NTH_CODE: 'NTH_CODE',
-                    ENT_YEAR: 'ENT_YEAR',
-                    TERM_DIV: 'TERM_DIV',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '30'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                },
-                {
-                    COURSE_DIV: 'COURSE_DIV2',
-                    COURSE_NAME: 'COURSE_NAME2',
-                    NTH_CODE: 'NTH_CODE2',
-                    ENT_YEAR: 'ENT_YEAR2',
-                    TERM_DIV: 'TERM_DIV2',
-                    EDU_START_DATE: '2023-08-01',
-                    EDU_END_DATE: '2023-08-01',
-                    PLAN_CNT: '20'
-                }
-            ];
+            let data;
+
             function educationPeriodFormatter({row}) {
-                const startDate = row.EDU_START_DATE;
-                const endDate = row.EDU_END_DATE;
+                const startDate = row.eduStartDate.substring(0, 10);
+                const endDate = row.eduEndDate.substring(0, 10);
                 return startDate + "~" + endDate;
             }
             const nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
-                data: data,
+                data: {
+                    api: {
+                        readData: { url: '/recruitment/list', method: 'GET'}
+                    }
+                },
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -252,46 +176,47 @@
                 columns: [
                     {
                         header: '과정구분',
-                        name: 'COURSE_DIV',
+                        name: 'courseDiv',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '과정명',
-                        name: 'COURSE_NAME',
+                        name: 'courseName',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'
                     },
                     {
                         header: '기수코드',
-                        name: 'NTH_CODE',
+                        name: 'nthCode',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '수강년도',
-                        name: 'ENT_YEAR',
+                        name: 'entYear',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '분기',
-                        name: 'TERM_DIV',
+                        name: 'termDiv',
                         sortingType: 'asc',
                         sortable: true, align: 'center'
                     },
                     {
                         header: '교육기간',
-                        name: 'EDU_DATE',
+                        name: 'eduDate',
                         sortingType: 'asc',
                         sortable: true, align: 'center',
+                        width: 220,
                         formatter: educationPeriodFormatter
                     },
                     {
                         header: '선발예정인원',
-                        name: 'PLAN_CNT',
+                        name: 'rcrtCnt',
                         sortingType: 'asc',
                         sortable: false, align: 'center'
                     }
@@ -304,12 +229,14 @@
 
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
-                    nthTable.focus(0, 'COURSE_DIV', true);
-                    subTableLoad(0);
+                    data = nthTable.getData();
+
+                    nthTable.focus(0, 'courseDiv', true);
+                    subTableLoad(data[0]['rcrtNo']);
                 }
             });
             nthTable.on('click', function (ev) {
-                subTableLoad(ev.rowKey);
+                subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
 
             const nthTablePage = document.querySelector('#nthTablePage');
@@ -321,77 +248,21 @@
 
         // interview테이블 grid
         // nthTable row 누를 때마다 interviewTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
-        function subTableLoad(rowKey){
+        function subTableLoad(rcrtNo){
             var interviewData = [];
-            var firstColumName = 'NAME_KOR';
-            if(rowKey == null) return;       // 헤더 클릭 시
-            else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
-                interviewData = [
-                    {
-                        NAME_KOR: '홍길동',
-                        EV_AVG_SCORE: '86.6',
-                        PREL_ORD: '1',
-                        FNL_PASS_YN: '1',
-                        NOTE: '비고'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    },
-                    {
-                        NAME_KOR: '이길동',
-                        EV_AVG_SCORE: '50.4',
-                        PREL_ORD: '2',
-                        FNL_PASS_YN: '2',
-                        NOTE: '비고2'
-                    }
-                ];
-            }
+            var firstColumName = 'nameKor';
 
             var interviewEl = document.getElementById('interviewTable');
             interviewEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
             const interviewTable = new tui.Grid({
                 el: interviewEl,
-                data: interviewData,
+                data: {
+                    api: {
+                        // url 변경
+                        //readData: { url: '/recruitment/application_list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
+                    }
+                },
                 rowHeaders: ['checkbox'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
@@ -404,7 +275,7 @@
                 columns: [
                     {
                         header: '지원자명',
-                        name: 'NAME_KOR',
+                        name: 'nameKor',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center'

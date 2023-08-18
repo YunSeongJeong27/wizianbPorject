@@ -123,7 +123,7 @@
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
             <div class="d-flex col-4 align-items-center" style="height: 40px">
-                <div class="col-4 ms-3 fw-bold d-flex">
+                <div class="col-6 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
