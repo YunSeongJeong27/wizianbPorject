@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.EvManagementRepository">
+
+
+    <select id="evResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
+        select rcrt_no, course_div, course_name,
+               nth_code, ent_year, term_div,
+               step_div, sel_cnt, status_div  from entry_sel_master
+    </select>
+    <select id="evSubResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
+        select c.aply_no, c.doc_pass_yn,c.name_kor,
+               d.ev_pdf_file_no, d.note,
+               e.ev1_score, e.ev2_score, e.ev3_score,
+               (e.ev1_score+ e.ev2_score + e.ev3_score) as total
+        from  entry_apply_master as c
+            inner join entry_ev_target as d on c.aply_no = d.aply_no and c.rcrt_no = d.rcrt_no
+            inner join sel_ev_score as e on e.aply_no = d.aply_no and e.rcrt_no = d.rcrt_no
+            where c.rcrt_no=#{rcrtNo}
+
+    </select>
+
+
+
+</mapper>

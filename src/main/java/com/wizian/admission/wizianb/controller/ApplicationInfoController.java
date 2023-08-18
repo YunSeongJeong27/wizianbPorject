@@ -1,6 +1,7 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.MailSendService;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +44,11 @@ public class ApplicationInfoController {
         return ResponseEntity.status(HttpStatus.OK).body(authNum);
     }
 
+    // 서류전형 결과 출력
+    @GetMapping("/recruitment/application_list")
+    public ResponseEntity<ToastUiResponseDto> applicationPassList(@RequestParam("rcrtNo") String rcrtNo){
+        ToastUiResponseDto applicationInfoList = applicationInfoService.findByRcrtNo(rcrtNo);
+        return ResponseEntity.ok(applicationInfoList);
+    }
 
 }
