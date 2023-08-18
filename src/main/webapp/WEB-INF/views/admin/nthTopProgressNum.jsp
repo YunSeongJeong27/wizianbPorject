@@ -289,8 +289,6 @@
                 focus: true
             });
 
-            nthData = nthTable.getData();
-
             // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
             document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
