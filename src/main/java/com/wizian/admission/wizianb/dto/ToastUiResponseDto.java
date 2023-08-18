@@ -1,4 +1,4 @@
-package dto;
+package com.wizian.admission.wizianb.dto;
 
 import lombok.*;
 import java.util.HashMap;

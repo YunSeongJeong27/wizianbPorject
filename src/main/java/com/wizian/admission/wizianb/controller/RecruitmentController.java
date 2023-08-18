@@ -2,7 +2,7 @@ package com.wizian.admission.wizianb.controller;
 
 
 import com.wizian.admission.wizianb.service.RecruitmentService;
-import dto.ToastUiResponseDto;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
