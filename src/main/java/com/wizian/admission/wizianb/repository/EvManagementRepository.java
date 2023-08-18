@@ -7,4 +7,5 @@ import java.util.List;
 public interface EvManagementRepository {
     List<EvalResults> evResultInfo();
     List<EvalResults> evSubResultInfo(String rcrtNo);
+    void updateScore(EvalResults evalResultDto);
 }

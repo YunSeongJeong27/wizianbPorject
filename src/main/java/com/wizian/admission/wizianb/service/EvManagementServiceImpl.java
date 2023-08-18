@@ -35,6 +35,12 @@ public class EvManagementServiceImpl implements EvManagementService {
 
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
+    //점수 업데이트
+    @Override
+    public void updateScore(EvalResults evalResultDto){
+        System.out.println("evalResultDto.getAplyNo()!!!!!!: "+evalResultDto.getAplyNo());
+        evManagementRepository.updateScore(evalResultDto);
+    }
 
 
 

@@ -6,13 +6,12 @@ import com.wizian.admission.wizianb.service.EvManagementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+
+@RestController
 @RequiredArgsConstructor
 public class EvManagementController {
 
@@ -35,6 +34,27 @@ public class EvManagementController {
         return new ResponseEntity<>(evSubResultList, HttpStatus.OK);
     }
 
+    @PostMapping("/eval/result/update")
+    public ResponseEntity<String> updateScore(@RequestBody List<EvalResults> changes){
+
+        for (EvalResults changedColumn : changes) {
+            EvalResults evalResultDto=new EvalResults();
+            String aplyNo = changedColumn.getAplyNo();
+            String rcrtNo = changedColumn.getRcrtNo();
+            int ev1Score = changedColumn.getEv1Score();
+            int ev2Score = changedColumn.getEv2Score();
+            int ev3Score = changedColumn.getEv3Score();
+            evalResultDto.setAplyNo(aplyNo);
+            evalResultDto.setRcrtNo(rcrtNo);
+            evalResultDto.setEv1Score(ev1Score);
+            evalResultDto.setEv2Score(ev2Score);
+            evalResultDto.setEv3Score(ev3Score);
+            System.out.println("ㄱ고고고고"+evalResultDto.getAplyNo());
+            evManagementService.updateScore(evalResultDto);
+        }
+
+        return ResponseEntity.ok("Value updated successfully");
+    }
 
 
 

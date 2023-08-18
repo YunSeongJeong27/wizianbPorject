@@ -9,7 +9,7 @@
                step_div, sel_cnt, status_div  from entry_sel_master
     </select>
     <select id="evSubResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
-        select c.aply_no, c.doc_pass_yn,c.name_kor,
+        select c.aply_no, c.doc_pass_yn,c.name_kor,c.rcrt_no,
                d.ev_pdf_file_no, d.note,
                e.ev1_score, e.ev2_score, e.ev3_score,
                (e.ev1_score+ e.ev2_score + e.ev3_score) as total
@@ -19,6 +19,14 @@
             where c.rcrt_no=#{rcrtNo}
 
     </select>
+
+    <update id="updateScore" parameterType="com.wizian.admission.wizianb.domain.EvalResults">
+        update sel_ev_score set ev1_score=#{ev1Score},
+                    ev2_score=#{ev2Score},ev3_score=#{ev3Score}
+        where  rcrt_no=#{rcrtNo} and aply_no=#{aplyNo}
+    </update>
+
+
 
 
 

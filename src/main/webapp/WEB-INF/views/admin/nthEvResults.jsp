@@ -85,7 +85,7 @@
 
                 <div class="d-flex flex-row justify-content-end col-5 gap-2">
                     <button class="btn btn-sm btn-danger">완료취소</button>
-                    <button class="btn btn-sm btn-success">저장</button>
+                    <button id="saveButton"  class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
 
@@ -319,6 +319,35 @@
 
             });
 
+            // 저장 버튼 클릭 시
+            document.getElementById('saveButton').addEventListener('click',    function saveBtn() {
+
+                const changes = [];
+
+                // nthEvaluationRegistTable에서 변경된 값을 수집하여 changes 배열에 저장
+                const rows = nthEvaluationRegistTable.getData();
+                for (const row of rows) {
+                    changes.push({
+                        aplyNo: row.aplyNo,
+                        rcrtNo: row.rcrtNo,
+                        ev1Score: row.ev1Score,
+                        ev2Score: row.ev2Score,
+                        ev3Score: row.ev3Score
+                        // 추가로 변경된 열들의 정보를 추가해주세요
+                    });
+                }
+
+                if(confirm('변경된 내용을 저장하시겠습니까?')) {
+                    $.ajax({
+                        url: '/eval/result/update',
+                        method: 'POST',
+                        data: JSON.stringify(changes),
+                        contentType: 'application/json'
+                    });
+                }
+            });
+
+
             const nthEvaluationRegistTablePage = document.querySelector('#nthEvaluationRegistTablePage');
 
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
@@ -327,12 +356,41 @@
 
     });
 
+
+    // 저장 버튼 클릭 시
+    function saveBtn() {
+
+        const changes = [];
+
+        // nthEvaluationRegistTable에서 변경된 값을 수집하여 changes 배열에 저장
+        const rows = nthEvaluationRegistTable.getData();
+        for (const row of rows) {
+            changes.push({
+                aplyNo: row.aplyNo,
+                rcrtNo: row.rcrtNo,
+                ev1Score: row.ev1Score,
+                ev2Score: row.ev2Score,
+                ev3Score: row.ev3Score
+                // 추가로 변경된 열들의 정보를 추가해주세요
+            });
+        }
+
+        if (confirm('변경된 내용을 저장하시겠습니까?')) {
+            $.ajax({
+                url: '/eval/result/update',
+                method: 'POST',
+                data: JSON.stringify(changes),
+                contentType: 'application/json'
+            });
+        }
+
+    }
+
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
     function handlePerPageChange(event, table) {
         const perPage = parseInt(event.value, 10);
         table.setPerPage(perPage);
     }
-
 
 </script>
 
