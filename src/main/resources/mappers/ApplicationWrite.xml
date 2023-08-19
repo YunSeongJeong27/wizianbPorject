@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.ApplicationWriteRepository">
+
+    <select id="entrySelMaster" resultType="com.wizian.admission.wizianb.domain.ApplicationWrite">
+        select*from entry_sel_master;
+    </select>
+
+    <select id="entrySelSchdl" resultType="com.wizian.admission.wizianb.domain.ApplicationWrite">
+        select*from entry_sel_schdl;
+    </select>
+
+    <select id="selectInfoHead" resultType="java.lang.String">
+        select course_name from entry_sel_master where rcrt_NO = #{entryRcrtNo};
+    </select>
+
+    <select id="selectInfoContent" resultType="com.wizian.admission.wizianb.domain.ApplicationWrite">
+        select msg_div, msg_cont from entry_sel_msg as msg where msg.RCRT_NO = #{entryRcrtNo} and msg.MSG_DIV = #{msgDiv};
+    </select>
+</mapper>

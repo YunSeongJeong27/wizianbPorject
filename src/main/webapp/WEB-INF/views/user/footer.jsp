@@ -16,7 +16,7 @@
 <div class="bg-secondary bg-opacity-25">
     <div class="mx-auto" style="width: 1440px; height: 170px;">
         <div class="d-flex justify-content-between align-items-center h-75 border-bottom border-3 border-secondary">
-            <div class="col-2 h-75" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat;"></div>
+            <div class="col-3 h-50" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat;"></div>
             <div class="col-6 fs-5 fw-bold">
                 <div>서울특별시 마포구 신촌로 176(대흥동) 위지언정보처리학원</div>
                 <div>대표자 : 위지언B 사업자등록번호 : 100-10-10000</div>
