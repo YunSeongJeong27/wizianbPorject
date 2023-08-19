@@ -98,11 +98,15 @@
     });
 
     //statusDiv 상태변화에 따른 disable 유무
-    var statusDivs = document.querySelectorAll(".statusDiv");
-    statusDivs.forEach(function(statusDiv){
-        if(statusDiv.innerText != "준비중"){
-            statusDiv.parentElement.disabled = true;
-        }
+    document.addEventListener("DOMContentLoaded", function(){
+        var statusDivs = document.querySelectorAll(".statusDiv");
+        statusDivs.forEach(function(statusDiv){
+            if(statusDiv.innerText !== "준비중"){
+                statusDiv.parentElement.parentElement.disabled = true;
+            }else{
+                statusDiv.parentElement.parentElement.disabled = false;
+            }
+        });
     });
 </script>
 
