@@ -13,4 +13,7 @@ public interface ApplicationWriteService {
 
     public String selectInfoHead(String entryRcrtNo);
     public List<ApplicationWrite> selectInfoContent(String entryRcrtNo, String msgDiv);
+
+    public String emailCheck(String email);
+    public String passwordCheck(String email, String password);
 }

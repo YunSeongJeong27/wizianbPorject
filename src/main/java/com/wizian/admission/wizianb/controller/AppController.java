@@ -31,11 +31,6 @@ public class AppController {
         return "/application/applicationPledge";
     }
 
-    @GetMapping("userInfo")
-    public String userInfo(Model model){
-        model.addAttribute("title","기본정보");
-        return "/application/applicationInfo";
-    }
     @GetMapping("userEdu")
     public String userEdu(Model model){
         model.addAttribute("title","학력사항");
@@ -56,6 +51,6 @@ public class AppController {
 
     @GetMapping("test")
     public String test(){
-        return "/user/header";
+        return "/application/applicationLogin";
     }
 }

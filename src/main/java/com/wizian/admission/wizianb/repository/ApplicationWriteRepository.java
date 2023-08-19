@@ -11,4 +11,7 @@ public interface ApplicationWriteRepository {
 
     String selectInfoHead(String entryRcrtNo);
     List<ApplicationWrite> selectInfoContent(String entryRcrtNo, String msgDiv);
+
+    String emailCheck(String email);
+    String passwordCheck(String email, String password);
 }

@@ -50,7 +50,7 @@
         </div>
 
         <form id="frm" method="get" class="d-flex justify-content-center m-5">
-            <input type="hidden" value="${rcrtNo}">
+            <input type="hidden" name="rcrtNo" value="${rcrtNo}">
             <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
             <div id="existingUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">기존회원작성</div>
         </form>
@@ -90,11 +90,11 @@
     const newUserBtn = document.getElementById("newUserBtn");
     const existingUserBtn = document.getElementById("existingUserBtn");
     newUserBtn.addEventListener("click", function(){
-        frm.action = "/log";
+        frm.action = "/userInfo";
         frm.submit();
     })
     existingUserBtn.addEventListener("click", function (){
-        frm.action = "/userInfo";
+        frm.action = "/login";
         frm.submit();
     })
 </script>

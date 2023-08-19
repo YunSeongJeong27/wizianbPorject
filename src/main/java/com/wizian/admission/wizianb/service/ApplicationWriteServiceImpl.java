@@ -36,4 +36,14 @@ public class ApplicationWriteServiceImpl implements ApplicationWriteService{
         return applicationWriteRepository.selectInfoContent(entryRcrtNo, msgDiv);
     }
 
+    @Override
+    public String emailCheck(String email) {
+        return applicationWriteRepository.emailCheck(email);
+    }
+
+    @Override
+    public String passwordCheck(String email, String password) {
+        return applicationWriteRepository.passwordCheck(email, password);
+    }
+
 }

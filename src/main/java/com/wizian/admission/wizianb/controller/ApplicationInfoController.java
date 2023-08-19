@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +22,12 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
 
+    //기본정보
+    @GetMapping("/userInfo")
+    public String userInfo(HttpServletRequest request, Model model){
+        model.addAttribute("title","기본정보");
+        return "/application/applicationInfo";
+    }
 
     @PostMapping("/application/join")
     public ApplicationInfo setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo){
