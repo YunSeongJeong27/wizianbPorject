@@ -32,10 +32,8 @@
 
 <body>
 <div class="border-bottom border-3">
-    <div class="d-flex justify-content-between align-items-center mx-auto" style="/*max-width: 1440px;*/ height: 105px;">
-        <div class="col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat; height: 85px; width: 232px;">
-            <a href="/admin"></a>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mx-auto px-3" style="/*max-width: 1440px;*/ height: 105px;">
+        <div id="logo" class="h-75" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer; width: 360px;"></div>
         <div class="h-50 d-flex justify-content-end me-3 align-items-center" style="width: 350px">
             <div class="dropdown">
                 <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,8 +47,8 @@
                 <i class="bi bi-clock mx-2"></i>
                 <span>60:00</span>
             </div>
-            <div class="text-center">
-                <div class="btn btn-sm btn-outline-secondary fw-bold" style="width: 74px;">시간연장</div>
+            <div class="text-center col-3">
+                <div class="btn btn-sm btn-outline-secondary fw-bold w-100" style="width: 74px;">시간연장</div>
             </div>
         </div>
     </div>
@@ -59,9 +57,11 @@
     <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <script>
-
+        const logo = document.getElementById("logo");
+        logo.addEventListener("click", function(){
+            window.location.href = "/admin";
+        })
     </script>
 </body>
 </html>

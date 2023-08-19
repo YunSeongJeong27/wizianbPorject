@@ -63,7 +63,7 @@
 <body>
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
-        <div id="logo" class="h-100 col-3" style="background-image: url(https://i.ibb.co/MfHDQ8C/image.png); background-size: contain; background-repeat: no-repeat; cursor: pointer"></div>
+        <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer;"></div>
         <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center">
             <div class="nav-item" style="width: 31%;">
                 <a href="/app" class="nav-link headerBtn">원서작성</a>
