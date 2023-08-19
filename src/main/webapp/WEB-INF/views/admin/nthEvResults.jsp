@@ -129,8 +129,6 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-
         const nthEvaluationTable = new tui.Grid({
             el: document.getElementById('nthEvaluationTable'),
             data: {
@@ -222,169 +220,117 @@
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthEvaluationTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationTable)});
 
-        //nthEvaluationRegistTable테이블
-        function subTableLoad(rowKey){
-            const rowData = nthEvaluationTable.getRow(rowKey);
-            const rcrtNo = rowData.rcrtNo;
-
-            const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
-            // nthEvaluationRegistTable div 요소를 초기화
-            nthEvnRegistTable.innerHTML = '';
-
-            const nthEvaluationRegistTable = new tui.Grid({
-                el: nthEvnRegistTable,
-                data:{
-                    api: {
-                        readData: { url: '/eval/result/subinfo/'+rcrtNo,
-                            method: 'GET' }
-                    }
-                } ,
-                rowHeaders: ['rowNum'],
-                pageOptions: {
-                    useClient: true,	// front에서만 페이징 하는 속성
-                    perPage: 5,		//한번에 보여줄 데이터 수
-                    visiblePages: 10
-                },
-                scrollX: true,
-                scrollY: true,
-                bodyHeight: 217,
-                columns: [
-                    {
-                        header: '지원번호',
-                        name: 'aplyNo',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
-                        header: '성명',
-                        name: 'nameKor',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center'
-                    },
-                    {
-                        header: '지원서조회',
-                        name: 'evPdfFileNo',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '문항1(30)',
-                        name: 'ev1Score',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center',
-                        editor: 'text'
-                    },
-                    {
-                        header: '문항2(30)',
-                        name: 'ev2Score',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center',
-                        editor: 'text'
-                    },
-                    {
-                        header: '문항3(40)',
-                        name: 'ev3Score',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center',
-                        editor: 'text'
-                    },
-                    {
-                        header: '서류평가',
-                        name: 'docPassYn',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-                    {
-                        header: '합계(100점)',
-                        name: "total" ,
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    },
-
-                    {
-                        header: '비고',
-                        name: 'note',
-                        sortingType: 'asc',
-                        sortable: true, align: 'center'
-                    }
-
-                ],
-                columnOptions: {
-                    resizable: true
-                },
-
-                draggable: true
-
-            });
-
-            // 저장 버튼 클릭 시
-            document.getElementById('saveButton').addEventListener('click',    function saveBtn() {
-
-                const changes = [];
-
-                // nthEvaluationRegistTable에서 변경된 값을 수집하여 changes 배열에 저장
-                const rows = nthEvaluationRegistTable.getData();
-                for (const row of rows) {
-                    changes.push({
-                        aplyNo: row.aplyNo,
-                        rcrtNo: row.rcrtNo,
-                        ev1Score: row.ev1Score,
-                        ev2Score: row.ev2Score,
-                        ev3Score: row.ev3Score
-                        // 추가로 변경된 열들의 정보를 추가해주세요
-                    });
-                }
-
-                if(confirm('변경된 내용을 저장하시겠습니까?')) {
-                    $.ajax({
-                        url: '/eval/result/update',
-                        method: 'POST',
-                        data: JSON.stringify(changes),
-                        contentType: 'application/json'
-                    });
-                }
-            });
 
 
-            const nthEvaluationRegistTablePage = document.querySelector('#nthEvaluationRegistTablePage');
+    let nthEvaluationRegistTable;
+    //nthEvaluationRegistTable테이블
+    function subTableLoad(rowKey){
+        const rowData = nthEvaluationTable.getRow(rowKey);
+        const rcrtNo = rowData.rcrtNo;
 
-            // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
-            nthEvaluationRegistTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationRegistTable)});
-        }
+        const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
+        // nthEvaluationRegistTable div 요소를 초기화
+        nthEvnRegistTable.innerHTML = '';
 
-    });
+         nthEvaluationRegistTable = new tui.Grid({
+             el: nthEvnRegistTable,
+             data: {
+                 api: {
+                     readData: {url: '/eval/result/subinfo/' + rcrtNo, method: 'GET'},
+                     updateData: {url: '/eval/result/update', method: 'PUT',
+                         contentType:'application/json'},
+                 },
+             },
+             rowHeaders: ['rowNum'],
+             pageOptions: {
+                 useClient: true,	// front에서만 페이징 하는 속성
+                 perPage: 5,		//한번에 보여줄 데이터 수
+                 visiblePages: 10
+             },
+             scrollX: true,
+             scrollY: true,
+             bodyHeight: 217,
+             columns: [
+                 {
+                     header: '지원번호',
+                     name: 'aplyNo',
+                     sortingType: 'asc',
+                     sortable: true,
+                     align: 'center'
+                 },
+                 {
+                     header: '성명',
+                     name: 'nameKor',
+                     sortingType: 'asc',
+                     sortable: true,
+                     align: 'center'
+                 },
+                 {
+                     header: '지원서조회',
+                     name: 'evPdfFileNo',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center'
+                 },
+                 {
+                     header: '문항1(30)',
+                     name: 'ev1Score',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center',
+                     editor: 'text'
+                 },
+                 {
+                     header: '문항2(30)',
+                     name: 'ev2Score',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center',
+                     editor: 'text'
+                 },
+                 {
+                     header: '문항3(40)',
+                     name: 'ev3Score',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center',
+                     editor: 'text'
+                 },
+                 {
+                     header: '서류평가',
+                     name: 'docPassYn',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center'
+                 },
+                 {
+                     header: '합계(100점)',
+                     name: "total",
+                     sortingType: 'asc',
+                     sortable: true, align: 'center'
+                 },
+
+                 {
+                     header: '비고',
+                     name: 'note',
+                     sortingType: 'asc',
+                     sortable: true, align: 'center'
+                 }
+
+             ],
+             columnOptions: {
+                 resizable: true
+             },
+
+             draggable: true
+         });
+
+        const nthEvaluationRegistTablePage = document.querySelector('#nthEvaluationRegistTablePage');
+
+        // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+        nthEvaluationRegistTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationRegistTable)});
+    }
 
 
     // 저장 버튼 클릭 시
-    function saveBtn() {
-
-        const changes = [];
-
-        // nthEvaluationRegistTable에서 변경된 값을 수집하여 changes 배열에 저장
-        const rows = nthEvaluationRegistTable.getData();
-        for (const row of rows) {
-            changes.push({
-                aplyNo: row.aplyNo,
-                rcrtNo: row.rcrtNo,
-                ev1Score: row.ev1Score,
-                ev2Score: row.ev2Score,
-                ev3Score: row.ev3Score
-                // 추가로 변경된 열들의 정보를 추가해주세요
-            });
-        }
-
-        if (confirm('변경된 내용을 저장하시겠습니까?')) {
-            $.ajax({
-                url: '/eval/result/update',
-                method: 'POST',
-                data: JSON.stringify(changes),
-                contentType: 'application/json'
-            });
-        }
-
-    }
+    document.getElementById("saveButton").addEventListener("click", () => {
+        nthEvaluationRegistTable.request('updateData')
+    });
 
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
     function handlePerPageChange(event, table) {

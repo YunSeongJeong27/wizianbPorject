@@ -1,13 +1,11 @@
 package com.wizian.admission.wizianb.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvalResults {
     //모집전형 테이블
     private String rcrtNo;
@@ -36,7 +34,7 @@ public class EvalResults {
     private int total;
 
     //점수업데이트
-    /*@Builder
+    @Builder
     EvalResults(String rcrtNo,String aplyNo,
             int ev1Score,int ev2Score,int ev3Score){
         this.rcrtNo=rcrtNo;
@@ -45,6 +43,6 @@ public class EvalResults {
         this.ev2Score=ev2Score;
         this.ev3Score=ev3Score;
 
-    }*/
+    }
 
 }
