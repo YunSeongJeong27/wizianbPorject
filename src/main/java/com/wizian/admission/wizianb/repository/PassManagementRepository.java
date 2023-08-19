@@ -9,4 +9,8 @@ public interface PassManagementRepository {
     List<PassManagement> findAll();
 
     List<PassManagement> findByRcrtNo(String rcrtNo);
+
+    void updatePass(PassManagement data);
+
+
 }

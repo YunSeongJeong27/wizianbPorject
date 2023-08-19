@@ -1,5 +1,6 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.PassManagementService;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,9 @@ public class PassMnagementController {
         return ResponseEntity.ok(passList);
     }
 
+    // 수정 test
+    @PutMapping("/pass/update")
+    public ResponseEntity<ToastUiResponseDto> passUpdate(@RequestBody JsonNode passUpdateList) {
+        return ResponseEntity.ok(passManagementService.updatePass(passUpdateList));
+    }
 }

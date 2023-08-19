@@ -106,8 +106,8 @@
                         <option value="Y">합격</option>
                         <option value="N">불합격</option>
                     </select>
-                    <button id="passBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                    <button class="btn btn-sm btn-success">저장</button>
+                    <button id="PassBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                    <button id="PassSaveBtn" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             let data;
             const nthTablePage = document.querySelector('#nthTablePage');
-
+            console.log("11");
             function educationPeriodFormatter({row}) {
                 const startDate = row.eduStartDate.substring(0,10);
                 const endDate = row.eduEndDate.substring(0,10);
@@ -231,13 +231,12 @@
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
                     data = nthTable.getData();
-
-                    nthTable.focus(0, 'courseDiv', true);
-                    subTableLoad(data[0]['rcrtNo']);
+                    subTableLoad(0);
                 }
             });
             nthTable.on('click', function (ev) {
-                subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
+                if(data.length === 0) data = nthTable.getData();
+                if(typeof ev.rowKey !== "undefined") subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
 
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
@@ -246,17 +245,20 @@
 
         // application테이블 grid
         // nthTable row 누를 때마다 applicationTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
+        let applicationTable;
         function subTableLoad(rcrtNo){
             var firstColumName = 'nameKor';
+            const applicationTablePage = document.querySelector('#applicationTablePage');
 
             var applicationEl = document.getElementById('applicationTable');
             applicationEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
-            const applicationTable = new tui.Grid({
+            applicationTable = new tui.Grid({
                 el: applicationEl,
                 data: {
                     api: {
-                        readData: { url: '/pass/list', method: 'GET', initParams: { rcrtNo: rcrtNo } }
+                        readData: { url: '/pass/list', method: 'GET', initParams: { rcrtNo: rcrtNo } },
+                        updateData: { url: '/pass/update', method: 'PUT' , contentType: 'application/json' }
                     }
                 },
                 rowHeaders: ['checkbox'],
@@ -305,8 +307,6 @@
                 }
             });
 
-            const applicationTablePage = document.querySelector('#applicationTablePage');
-
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
             applicationTablePage.addEventListener('change', function(){handlePerPageChange(this, applicationTable)});
 
@@ -340,24 +340,6 @@
             applicationTable.on('drop', ev => {
                 firstColumName = applicationTable.getColumns()[0]['name'];
             });
-
-            // 일괄처리 버튼 이벤트
-            document.getElementById("passBtn").addEventListener("click", function(){
-                if(confirm("일괄처리하시겠습니까?")){
-                    var passDiv = document.getElementById("passDiv");
-                    var val = passDiv.options[passDiv.selectedIndex].value;
-
-                    if(val === "0"){
-                        alert("선발결과를 선택해주세요.");
-                        return;
-                    }
-
-                    var rowKeys = applicationTable.getCheckedRowKeys();
-                    rowKeys.forEach(rowKey => {
-                        applicationTable.setValue(rowKey, 'docPassYn', passDiv.options[passDiv.selectedIndex].value, false);
-                    });
-                }
-            });
         }
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -365,6 +347,31 @@
             const perPage = parseInt(event.value, 10);
             table.setPerPage(perPage);
         }
+
+        // 일괄처리 버튼 이벤트
+        const PassBatchBtn = document.getElementById("PassBatchBtn");
+        PassBatchBtn.addEventListener("click", function(){
+            console.log("123");
+            if(confirm("일괄처리하시겠습니까?")){
+                var passDiv = document.getElementById("passDiv");
+                var val = passDiv.options[passDiv.selectedIndex].value;
+
+                if(val === "0"){
+                    alert("선발결과를 선택해주세요.");
+                    return;
+                }
+
+                var rowKeys = applicationTable.getCheckedRowKeys();
+                rowKeys.forEach(rowKey => {
+                    applicationTable.setValue(rowKey, 'docPassYn', passDiv.options[passDiv.selectedIndex].value, false);
+                });
+            }
+        });
+
+        const PassSaveBtn = document.getElementById("PassSaveBtn");
+        PassSaveBtn.addEventListener('click', () => {
+            applicationTable.request('updateData');
+        })
 
     </script>
 </body>

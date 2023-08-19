@@ -231,13 +231,12 @@
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
                     data = nthTable.getData();
-
-                    nthTable.focus(0, 'courseDiv', true);
-                    subTableLoad(data[0]['rcrtNo']);
+                    subTableLoad(0);
                 }
             });
             nthTable.on('click', function (ev) {
-                subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
+                if(data.length === 0) data = nthTable.getData();
+                if(typeof ev.rowKey !== "undefined") subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
             });
 
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
