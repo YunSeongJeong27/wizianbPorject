@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface ApplicationInfoRepository {
 
-    List<ApplicationInfo> findByMemIdAndRcrtNo(String memId,String rcrtNo);
     ApplicationInfo save(ApplicationInfo applicationInfo);
 }

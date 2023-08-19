@@ -20,19 +20,14 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
 
-    /*접수바로가기>기존회원작성> 기존입력정보가 있으면 받아오기*/
-    @GetMapping("/application/info")
-    public List<ApplicationInfo> getAplyInfo(@RequestParam("memId") String memId,@RequestParam("rcrtNo") String rcrtNo){
-        return applicationInfoService.findByMemIdAndRcrtNo(memId, rcrtNo);
 
-    }
     @PostMapping("/application/join")
     public ApplicationInfo setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo){
         return applicationInfoService.join(applicationInfo);
     }
 
 
-    /*메일인증테스트*/
+    /*메일인증*/
     @PostMapping(value = "/api/mailcheck",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> mailCheck(@RequestBody HashMap<String,Object> member){
 
@@ -41,4 +36,6 @@ public class ApplicationInfoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(authNum);
     }
+
+
 }
