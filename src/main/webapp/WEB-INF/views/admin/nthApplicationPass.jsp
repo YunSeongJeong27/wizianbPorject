@@ -106,8 +106,8 @@
                         <option value="Y">합격</option>
                         <option value="N">불합격</option>
                     </select>
-                    <button id="PassBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                    <button id="PassSaveBtn" class="btn btn-sm btn-success">저장</button>
+                    <button id="passBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                    <button id="passSaveBtn" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
         </div>
@@ -246,6 +246,7 @@
         // application테이블 grid
         // nthTable row 누를 때마다 applicationTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
         let applicationTable;
+
         function subTableLoad(rcrtNo){
             var firstColumName = 'nameKor';
             const applicationTablePage = document.querySelector('#applicationTablePage');
@@ -258,7 +259,7 @@
                 data: {
                     api: {
                         readData: { url: '/pass/list', method: 'GET', initParams: { rcrtNo: rcrtNo } },
-                        updateData: { url: '/pass/update', method: 'PUT' , contentType: 'application/json' }
+                        updateData: { url: '/pass/updateDocPass', method: 'PUT' , contentType: 'application/json' }
                     }
                 },
                 rowHeaders: ['checkbox'],
@@ -337,7 +338,7 @@
                 applicationTable.removeRowClassName(ev.rowKey, "checkCell");
             });
 
-            applicationTable.on('drop', ev => {
+            applicationTable.on('drop', function (ev) {
                 firstColumName = applicationTable.getColumns()[0]['name'];
             });
         }
@@ -349,9 +350,8 @@
         }
 
         // 일괄처리 버튼 이벤트
-        const PassBatchBtn = document.getElementById("PassBatchBtn");
-        PassBatchBtn.addEventListener("click", function(){
-            console.log("123");
+        const passBatchBtn = document.getElementById("passBatchBtn");
+        passBatchBtn.addEventListener("click", function(){
             if(confirm("일괄처리하시겠습니까?")){
                 var passDiv = document.getElementById("passDiv");
                 var val = passDiv.options[passDiv.selectedIndex].value;
@@ -368,10 +368,12 @@
             }
         });
 
-        const PassSaveBtn = document.getElementById("PassSaveBtn");
-        PassSaveBtn.addEventListener('click', () => {
-            applicationTable.request('updateData');
-        })
+        const passSaveBtn = document.getElementById("passSaveBtn");
+        passSaveBtn.addEventListener('click', () => {
+            if(confirm("선발결과를 수정하시겠습니까?")){
+                applicationTable.request('updateData', {showConfirm: false});
+            }
+        });
 
     </script>
 </body>

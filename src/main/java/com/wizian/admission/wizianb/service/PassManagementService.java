@@ -9,5 +9,6 @@ public interface PassManagementService {
 
    ToastUiResponseDto findAll();
    ToastUiResponseDto findByRcrtNo(String rcrtNo);
-   ToastUiResponseDto updatePass(JsonNode jn);
+   ToastUiResponseDto updateDocPass(JsonNode jn);
+   ToastUiResponseDto updateFnlPass(JsonNode jn);
 }

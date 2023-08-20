@@ -10,7 +10,8 @@ public interface PassManagementRepository {
 
     List<PassManagement> findByRcrtNo(String rcrtNo);
 
-    void updatePass(PassManagement data);
+    void updateDocPass(PassManagement data);
 
+    void updateFnlPass(PassManagement data);
 
 }

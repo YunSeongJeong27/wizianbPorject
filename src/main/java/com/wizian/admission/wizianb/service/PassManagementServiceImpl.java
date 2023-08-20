@@ -43,7 +43,7 @@ public class PassManagementServiceImpl implements PassManagementService {
     }
 
     @Override
-    public ToastUiResponseDto updatePass(JsonNode jn) {
+    public ToastUiResponseDto updateDocPass(JsonNode jn) {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
 
@@ -55,7 +55,26 @@ public class PassManagementServiceImpl implements PassManagementService {
                     .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
                     .docPassYn(jnArr.get(i).get("docPassYn").asText()).build();
 
-            passManagementRepository.updatePass(data);
+            passManagementRepository.updateDocPass(data);
+        }
+
+        return ToastUiResponseDto.builder().data(resultMap).build();
+    }
+
+    @Override
+    public ToastUiResponseDto updateFnlPass(JsonNode jn) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("pagination", "");
+
+        JsonNode jnArr = jn.get("updatedRows");
+
+        for (int i=0; i<jnArr.size(); i++) {
+            PassManagement data = PassManagement.builder()
+                    .aplyNo(jnArr.get(i).get("aplyNo").asText())
+                    .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
+                    .FnlPassYn(jnArr.get(i).get("fnlPassYn").asText()).build();
+
+            passManagementRepository.updateFnlPass(data);
         }
 
         return ToastUiResponseDto.builder().data(resultMap).build();
