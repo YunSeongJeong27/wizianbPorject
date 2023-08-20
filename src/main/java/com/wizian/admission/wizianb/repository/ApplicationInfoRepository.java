@@ -6,5 +6,14 @@ import java.util.List;
 
 public interface ApplicationInfoRepository {
 
-    ApplicationInfo save(ApplicationInfo applicationInfo);
+    void save(ApplicationInfo applicationInfo);
+    void saveMember(ApplicationInfo applicationInfo);
+
+    List<ApplicationInfo> findAll();
+
+    Boolean existsByEmail(String email);
+
+    ApplicationInfo findByEmail(String email);
+
+
 }

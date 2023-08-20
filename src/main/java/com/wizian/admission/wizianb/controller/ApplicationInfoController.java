@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,8 +32,9 @@ public class ApplicationInfoController {
     }
 
     @PostMapping("/application/join")
-    public ApplicationInfo setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo){
-        return applicationInfoService.join(applicationInfo);
+    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file) throws IOException {
+        applicationInfoService.join(applicationInfo,file);
+        return "/application/applicationInfo";
     }
 
 

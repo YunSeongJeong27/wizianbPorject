@@ -90,9 +90,11 @@
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
-                <form action="/application/join" method="post" enctype="multipart/form-data">
+                <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
 
-                    <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>
+                   <%-- <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>--%>
+                    <div><input type="hidden" name="rcrtNo" value="10-001"></div>
+                    <div><input type="hidden" name="aplyNo" value="1-002"></div>
 
 <%--사진업로드--%>
                     <div class="row mt-3">
@@ -104,7 +106,7 @@
                                 <img id="image" width="94.4" height="113.3">
                             </div>
                             <div class="d-flex justify-content mt-1">
-                                <input type="file" id="file_add" accept="image/*" name="" onchange="setThumbnail(event);" style="display: none">
+                                <input type="file" id="file_add" accept="image/*" name="pictureUrl" onchange="setThumbnail(event);" style="display: none">
                                 <label for="file_add" class="btn btn-sm btn-dark me-1">업로드</label>
                                 <button type="button" class="btn btn-sm btn-dark" onclick="imgHidden()">삭제</button>
                             </div>
@@ -131,7 +133,7 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" id="modalMessage" class="form-control" name="email" disabled="disabled">
+                                    <input type="text" id="modalMessage" class="form-control" name="email">
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#emailModal">이메일인증</button>
@@ -147,7 +149,7 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="text" class="form-control" id="pw" name="password">
+                                        <input type="text" class="form-control" id="pw" name="pw">
                                     </div>
                                     <div>
                                         <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" disabled>
