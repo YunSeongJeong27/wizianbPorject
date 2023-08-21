@@ -16,13 +16,20 @@
         VALUES (#{nameEng},#{pw},#{email});
     </insert>
 
-
     <select id="findByEmail" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
         select *from entry_apply_master where email=#{email};
     </select>
 
     <select id="existsByEmail" parameterType="java.lang.String" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email})
+        SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email});
     </select>
+
+    <select id="findByMemId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        select * from member where mem_id = #{memId};
+    </select>
+
+<!--    <update id="changePw" parameterType="java.lang.String">-->
+<!--        update member set pw=#{} where pw=#{}-->
+<!--    </update>-->
 
 </mapper>

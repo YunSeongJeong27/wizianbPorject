@@ -18,11 +18,19 @@
         select msg_div, msg_cont from entry_sel_msg as msg where msg.RCRT_NO = #{entryRcrtNo} and msg.MSG_DIV = #{msgDiv};
     </select>
 
+<!--    <select id="emailCheck" resultType="java.lang.String">-->
+<!--        select email from entry_apply_master as master where master.email = #{email};-->
+<!--    </select>-->
+
+<!--    <select id="passwordCheck" resultType="java.lang.String">-->
+<!--        select email from entry_apply_master as master where master.email = #{email} and master.birthday = #{password};-->
+<!--    </select>-->
+
     <select id="emailCheck" resultType="java.lang.String">
-        select email from entry_apply_master as master where master.email = #{email};
+        select login_id from member where login_id = #{email};
     </select>
 
     <select id="passwordCheck" resultType="java.lang.String">
-        select email from entry_apply_master as master where master.email = #{email} and master.birthday = #{password};
+        select pw from member where login_id = #{email};
     </select>
 </mapper>

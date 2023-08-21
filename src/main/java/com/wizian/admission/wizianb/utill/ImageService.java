@@ -3,6 +3,9 @@ package com.wizian.admission.wizianb.utill;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -32,11 +35,15 @@ public class ImageService {
         // 파일을 저장할 경로 생성
         File destinationFile = new File(saveImagePath.toUri());
 
+
         // MultipartFile을 파일로 저장
         multipartFile.transferTo(destinationFile);
 
+
+
         return nextFileNumber;
     }
+
 }
 
 
