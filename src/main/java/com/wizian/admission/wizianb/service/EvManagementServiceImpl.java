@@ -2,6 +2,7 @@ package com.wizian.admission.wizianb.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.EvalResults;
+import com.wizian.admission.wizianb.domain.RecruitmentStatus;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.EvManagementRepository;
 
@@ -51,15 +52,12 @@ public class EvManagementServiceImpl implements EvManagementService {
         } else {
             courseName = "%" + courseName + "%";
         }
-     /*   System.out.println("entYear: "+entYear);
-        System.out.println("termDiv: "+termDiv);
-        System.out.println("courseDiv: "+courseDiv);
-        System.out.println("courseName: "+courseName);*/
-        List<EvalResults> evResultList=evManagementRepository.evResultInfo(termDiv, courseDiv, courseName);
+
+        List<EvalResults> evResultList=evManagementRepository.evResultInfo(termDiv, courseDiv, courseName,
+                RecruitmentStatus.진행중,RecruitmentStatus.완료);
         HashMap<String, Object> resultMap= new HashMap<>();
         resultMap.put("contents",evResultList);
         resultMap.put("pagination", "");
-
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
@@ -98,5 +96,18 @@ public class EvManagementServiceImpl implements EvManagementService {
         }
         return ToastUiResponseDto.builder().data(resultMap).build();
     }
+
+    @Override
+    public void statusComplete(String rcrtNo){
+        evManagementRepository.statusComplete(rcrtNo,RecruitmentStatus.완료);
+    }
+
+    @Override
+    public void statusPrepared(String rcrtNo){
+        evManagementRepository.statusPrepared(rcrtNo,RecruitmentStatus.진행중);
+    }
+
+
+
 
 }

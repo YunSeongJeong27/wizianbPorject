@@ -87,8 +87,9 @@
                 </div>
 
                 <div class="d-flex flex-row justify-content-end col-5 gap-2">
-                    <button class="btn btn-sm btn-danger">완료취소</button>
-                    <button id="saveButton"  class="btn btn-sm btn-success">저장</button>
+                    <button id="statusPrepared" class="btn btn-sm btn-danger">완료취소</button>
+                    <button id="statusComplete" class="btn btn-sm btn-primary">완료</button>
+                    <button id="saveButton"  class="btn btn-sm btn-success">점수저장</button>
                 </div>
             </div>
 
@@ -160,15 +161,15 @@
         courseDiv = document.querySelector('select[name="courseDiv"]').value;
         courseName = document.querySelector('select[name="courseName"]').value;
 
-        const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
-        oldNthEvaluationTableEl.innerHTML = '';
-
         await nthGridLoad(nthEvTableData());
     });
 
     let nthEvaluationTable;
     const nthGridLoad = (nthData) => {
-         nthEvaluationTable = new tui.Grid({
+        const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
+        oldNthEvaluationTableEl.innerHTML = '';
+
+        nthEvaluationTable = new tui.Grid({
             el: document.getElementById('nthEvaluationTable'),
             data: nthData ,
             pageOptions: {
@@ -249,14 +250,14 @@
 
 
 
-
+    const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
     let nthEvaluationRegistTable;
+    let rcrtNo;
     //nthEvaluationRegistTable테이블
     function subTableLoad(rowKey){
         const rowData = nthEvaluationTable.getRow(rowKey);
-        const rcrtNo = rowData.rcrtNo;
+        rcrtNo = rowData.rcrtNo;
 
-        const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
         // nthEvaluationRegistTable div 요소를 초기화
         nthEvnRegistTable.innerHTML = '';
 
@@ -265,8 +266,7 @@
              data: {
                  api: {
                      readData: {url: '/eval/result/subinfo/' + rcrtNo, method: 'GET'},
-                     updateData: {url: '/eval/result/update', method: 'PUT',
-                         contentType:'application/json'},
+                     updateData: { url: '/eval/result/updatescore', method: 'PUT', contentType: 'application/json' } ,
                  },
              },
              rowHeaders: ['rowNum'],
@@ -355,9 +355,36 @@
     }
 
 
-    // 저장 버튼 클릭 시
+    // 점수저장 버튼 클릭 시
     document.getElementById("saveButton").addEventListener("click", () => {
-        nthEvaluationRegistTable.request('updateData')
+        nthEvaluationRegistTable.request("updateData");
+    });
+    //완료버튼
+    document.getElementById("statusComplete").addEventListener("click", async () => {
+        if(confirm("완료 하시겠습니까")) {
+            await fetch('/eval/result/statuscomplete/' + rcrtNo, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        await  nthGridLoad();
+        nthEvnRegistTable.innerHTML = '';
+    });
+
+    //완료취소버튼
+    document.getElementById("statusPrepared").addEventListener("click",async () => {
+        if(confirm("완료 취소 하시겠습니까")) {
+            await fetch('/eval/result/statusprepared/' + rcrtNo, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        await  nthGridLoad();
+        nthEvnRegistTable.innerHTML = '';
     });
 
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)

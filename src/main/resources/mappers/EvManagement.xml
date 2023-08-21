@@ -14,7 +14,8 @@
                  term_div,
                step_div, sel_cnt, status_div  from entry_sel_master
                 where  term_div like #{termDiv} and
-                    course_div like #{courseDiv} and course_name like #{courseName}
+                    course_div like #{courseDiv} and course_name like #{courseName} and
+                    (status_div=#{StatusPrepared} or status_div=#{StatusCompleted})
     </select>
     <select id="evSubResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
         select c.aply_no, c.doc_pass_yn,c.name_kor,c.rcrt_no,
@@ -33,7 +34,13 @@
         where  rcrt_no=#{rcrtNo} and aply_no=#{aplyNo}
     </update>
 
+    <update id="statusComplete">
+    update entry_sel_master set status_div=#{StatusCompleted} where  rcrt_no=#{rcrtNo}
+    </update>
 
+    <update id="statusPrepared">
+        update entry_sel_master set status_div=#{StatusPrepared} where  rcrt_no=#{rcrtNo}
+    </update>
 
 
 

@@ -15,7 +15,7 @@ public class EvalResults {
     private String entYear;
     private String termDiv;
     private int selCnt;
-    private String statusDiv;
+    private RecruitmentStatus statusDiv;
     private String stepDiv;
 
     //지원서기본정보 테이블

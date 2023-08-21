@@ -16,6 +16,9 @@ public interface EvManagementService {
                                     String courseDiv,String courseName);
     ToastUiResponseDto evSubResultInfo(String rcrtNo);
     ToastUiResponseDto updateScore(JsonNode jn);
+    void statusComplete(String rcrtNo);
+    void statusPrepared(String rcrtNo);
+
 
 
 

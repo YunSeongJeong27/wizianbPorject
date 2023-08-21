@@ -35,12 +35,25 @@ public class EvManagementController {
     public ResponseEntity<ToastUiResponseDto> evResultSubInfo(@PathVariable String rcrtNo){
         return ResponseEntity.ok(evManagementService.evSubResultInfo(rcrtNo));
     }
-    //서브 테이블 업데이트
-    @PutMapping("/eval/result/update")
+    //점수저장
+    @PutMapping("/eval/result/updatescore")
     public ResponseEntity<ToastUiResponseDto> updateScore(@RequestBody JsonNode jn){
         return ResponseEntity.ok(evManagementService.updateScore(jn));
     }
 
+    //완료버튼
+    @PutMapping("/eval/result/statuscomplete/{rcrtNo}")
+    public ResponseEntity<String> statusComplete(@PathVariable String rcrtNo){
+        evManagementService.statusComplete(rcrtNo);
+        return ResponseEntity.ok("statuscomplete!!");
+    }
+
+    //완료취소버튼
+    @PutMapping("/eval/result/statusprepared/{rcrtNo}")
+    public ResponseEntity<String> statusPrepared(@PathVariable String rcrtNo){
+        evManagementService.statusPrepared(rcrtNo);
+        return ResponseEntity.ok("statusprepared!!");
+    }
 
 
 }
