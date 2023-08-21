@@ -30,7 +30,7 @@
                     <div class="col-1 align-middle tableSearch">분기</div>
                     <div class="col-1 me-2">
                         <select id="termDiv" class="form-select" onchange="courseSelect();">
-                            <option value="%">(전체)</option>
+                            <option value="0">전체</option>
                             <option value="1">1분기</option>
                             <option value="2">2분기</option>
                             <option value="3">3분기</option>
@@ -41,7 +41,7 @@
                     <div class="col-2 tableSearch">과정구분</div>
                     <div class="col-2 me-2">
                         <select id="courseDiv" class="form-select" onchange="courseSelect();">
-                            <option value="%">(전체)</option>
+                            <option value="0">전체</option>
                             <option value="Java">Java</option>
                             <option value="Python">Python</option>
                             <option value="C++">C++</option>
@@ -97,13 +97,6 @@
                     </div>
 
                     <div class="d-flex flex-row align-items-center">
-                        <div class="d-flex flex-row align-items-center me-3">
-                            <p class="subTitle fw-bold me-2">안내문종류</p>
-                            <select class="form-select w-auto me-1">
-                                <option selected>최종합격자안내메일</option>
-                            </select>
-                            <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
-                        </div>
                         <div class="d-flex flex-row align-items-center">
                             <p class="subTitle fw-bold me-2">선발결과</p>
                             <select id="passDiv" class="form-select w-auto me-1">
@@ -411,6 +404,7 @@
             const termDiv = document.getElementById("termDiv");
             const courseDiv = document.getElementById("courseDiv");
             const courseName = document.getElementById("courseName");
+
             const termDivSelected = termDiv.options[termDiv.selectedIndex].value;
             const courseDivSelected = courseDiv.options[courseDiv.selectedIndex].value;
 
@@ -421,7 +415,7 @@
                 dataType: "json",
                 async: false,						// 실행 결과 기다리지 않고 다음 코드 읽을 것인지
                 success : function(result) { 		// 매개변수에 통신성공시 데이터 저장
-                    courseName.innerHTML = "<option value='%'>(전체)</option>";
+                    courseName.innerHTML = "<option value='0'>전체</option>";
 
                     result.forEach(course => {      // 과정명 option으로 추가
                         var option = document.createElement('option');

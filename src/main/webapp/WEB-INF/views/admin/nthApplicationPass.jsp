@@ -30,7 +30,7 @@
                 <div class="col-1 align-middle tableSearch">분기</div>
                 <div class="col-1 me-2">
                     <select id="termDiv" class="form-select" onchange="courseSelect();">
-                        <option value="%">(전체)</option>
+                        <option value="0">(전체)</option>
                         <option value="1">1분기</option>
                         <option value="2">2분기</option>
                         <option value="3">3분기</option>
@@ -41,7 +41,7 @@
                 <div class="col-2 tableSearch">과정구분</div>
                 <div class="col-2 me-2">
                     <select id="courseDiv" class="form-select" onchange="courseSelect();">
-                        <option value="%">(전체)</option>
+                        <option value="0">(전체)</option>
                         <option value="Java">Java</option>
                         <option value="Python">Python</option>
                         <option value="C++">C++</option>
@@ -84,38 +84,38 @@
 
         <div class="h-50">
             <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
-            <div class="d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
-                <p class="subResult text-secondary me-2">검색결과:0건</p>
-                <select class="form-select w-auto" id="applicationTablePage">
-                    <option selected>5</option>
-                    <option>7</option>
-                    <option>50</option>
-                    <option>70</option>
-                    <option>100</option>
-                </select>
-            </div>
-
-            <div class="d-flex flex-row align-items-center">
-                <div class="d-flex flex-row align-items-center me-3">
-                    <p class="subTitle fw-bold me-2">안내문종류</p>
-                    <select class="form-select w-auto me-1">
-                        <option selected>면접안내메일</option>
-                    </select>
-                    <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
-                </div>
                 <div class="d-flex flex-row align-items-center">
-                    <p class="subTitle fw-bold me-2">선발결과</p>
-                    <select id="passDiv" class="form-select w-auto me-1">
-                        <option value="0" selected>선택</option>
-                        <option value="Y">합격</option>
-                        <option value="N">불합격</option>
+                    <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
+                    <p class="subResult text-secondary me-2">검색결과:0건</p>
+                    <select class="form-select w-auto" id="applicationTablePage">
+                        <option selected>5</option>
+                        <option>7</option>
+                        <option>50</option>
+                        <option>70</option>
+                        <option>100</option>
                     </select>
-                    <button id="passBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                    <button id="passSaveBtn" class="btn btn-sm btn-success">저장</button>
+                </div>
+
+                <div class="d-flex flex-row align-items-center">
+                    <div class="d-flex flex-row align-items-center me-3">
+                        <p class="subTitle fw-bold me-2">안내문종류</p>
+                        <select class="form-select w-auto me-1">
+                            <option selected>면접안내메일</option>
+                        </select>
+                        <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                        <p class="subTitle fw-bold me-2">선발결과</p>
+                        <select id="passDiv" class="form-select w-auto me-1">
+                            <option value="0" selected>선택</option>
+                            <option value="Y">합격</option>
+                            <option value="N">불합격</option>
+                        </select>
+                        <button id="passBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                        <button id="passSaveBtn" class="btn btn-sm btn-success">저장</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <div class="d-flex flex-row justify-content-between mt-2 bg-white border border-gray-100 rounded-2">
             <div id="applicationTable" class="w-100"></div>
@@ -172,7 +172,7 @@
                 el: document.getElementById('nthTable'),
                 data: {
                     api: {
-                        readData: { url: '/pass/nthList', method: 'GET', initParams: {termDiv: '%', courseDiv: '%', rcrtNo: '%'}}
+                        readData: { url: '/pass/nthList', method: 'GET', initParams: {termDiv: '0', courseDiv: '0', rcrtNo: '0'}}
                     }
                 },
                 pageOptions: {
@@ -406,7 +406,7 @@
                 dataType: "json",
                 async: false,						// 실행 결과 기다리지 않고 다음 코드 읽을 것인지
                 success : function(result) { 		// 매개변수에 통신성공시 데이터 저장
-                    courseName.innerHTML = "<option value='%'>(전체)</option>";
+                    courseName.innerHTML = "<option value='0'>(전체)</option>";
 
                     result.forEach(course => {      // 과정명 option으로 추가
                         var option = document.createElement('option');
