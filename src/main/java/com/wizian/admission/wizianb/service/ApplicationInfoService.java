@@ -2,13 +2,15 @@ package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public interface ApplicationInfoService {
 
-   List<ApplicationInfo> findByMemIdAndRcrtNo(String memId,String rcrtNo);
 
-   ApplicationInfo join(ApplicationInfo applicationInfo);
+   ApplicationInfo join(ApplicationInfo applicationInfo, MultipartFile file) throws IOException;
 }

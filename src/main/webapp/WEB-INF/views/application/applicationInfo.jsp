@@ -90,9 +90,13 @@
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
-                <form action="/application/join" method="post" enctype="multipart/form-data">
+                <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
 
+                   <%-- <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>--%>
+                    <div><input type="hidden" name="rcrtNo" value="10-001"></div>
+                    <div><input type="hidden" name="aplyNo" value="1-002"></div>
 
+<%--사진업로드--%>
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             사진
@@ -102,15 +106,12 @@
                                 <img id="image" width="94.4" height="113.3">
                             </div>
                             <div class="d-flex justify-content mt-1">
-                                <input type="file" id="file_add" accept="image/*" name="" onchange="setThumbnail(event);" style="display: none">
+                                <input type="file" id="file_add" accept="image/*" name="pictureUrl" onchange="setThumbnail(event);" style="display: none">
                                 <label for="file_add" class="btn btn-sm btn-dark me-1">업로드</label>
-                                <button type="button" class="btn btn-sm btn-dark">삭제</button>
+                                <button type="button" class="btn btn-sm btn-dark" onclick="imgHidden()">삭제</button>
                             </div>
                         </div>
                     </div>
-
-
-
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             모집과정명
@@ -123,7 +124,7 @@
                             </select>
                         </div>
                     </div>
-
+<%--이메일--%>
                     <div class="row mt-3">
                         <div class="col-lg-2">
                             이메일
@@ -132,13 +133,14 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" id="modalMessage" class="form-control" name="email" disabled="disabled">
+                                    <input type="text" id="modalMessage" class="form-control" name="email">
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#emailModal">이메일인증</button>
                                 </div>
                             </div>
                         </div>
+<%--비밀번호 --%>
                         <div class="col-lg-2">
                             비밀번호
                             <span class="text-danger">*</span>
@@ -147,7 +149,7 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="text" class="form-control" id="pw" name="password">
+                                        <input type="text" class="form-control" id="pw" name="pw">
                                     </div>
                                     <div>
                                         <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" disabled>
@@ -208,15 +210,10 @@
                             <input type="text" class="form-control" name="nameEng">
                         </div>
                         <div class="col-lg-2">
-                            지원자직업
+                            휴대폰번호
                         </div>
                         <div class="col-lg-4">
-                            <select class="form-select" name="">
-                                <option>(선택)</option>
-                                <option>직장인</option>
-                                <option>학생</option>
-                                <option>기타</option>
-                            </select>
+                            <input type="text" class="form-control" name="hpLocal">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -248,24 +245,16 @@
                             <input type="text" id="addrLocal" class="form-control" name="addrLocal">
                         </div>
                         <div class="col-lg-2">
-                            휴대폰번호
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control" name="hpLocal">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-lg-2">
                             상세주소
                         </div>
-                        <div class="col-lg-10">
+                        <div class="col-lg-4">
                             <input type="text" class="form-control" name="addrDetail">
                         </div>
                     </div>
 
-                    <%-- Buttons --%>
+<%-- Buttons --%>
                     <div id="application_btn" class="d-flex justify-content-center mt-4">
-                        <button type="button" class="btn btn-dark" onclick="pwCheck()">저장</button>
+                        <button type="button" class="btn btn-dark" onclick="passwordCheckFn()">저장</button>
                     </div>
                     <div id="apply_complete" class="d-flex justify-content-end mt-5">
                         <button type="button" class="btn btn-secondary" disabled>저장 후 이동</button>
@@ -334,17 +323,26 @@
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
+/*사진업로드*/
     function setThumbnail(event){
         var reader = new FileReader();
 
         reader.onload = function (event) {
             var img = document.getElementById('image');
+
             img.setAttribute("src",event.target.result);
             document.querySelector("div#image_container").appendChild(img);
+            img.style.visibility="visible";
         };
         reader.readAsDataURL(event.target.files[0]);
     }
+
+/*사진삭제버튼*/
+    function imgHidden() {
+        const uploadImg = document.getElementById("image");
+        uploadImg.style.visibility="hidden";
+    }
+
 
     ////상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
@@ -360,7 +358,7 @@
         window.location.href = "/userInfo";
     })
 
-    <%--주소검색--%>
+/*주소검색*/
     function searchPost(){
         new daum.Postcode({
             oncomplete: function(data) {
@@ -370,7 +368,7 @@
         }).open();
     }
 
-    //select이메일주소
+/*select이메일주소*/
     const emailSelect = document.getElementById('emailSelect');
     const emailInput = document.getElementById('emailAddr');
 
@@ -386,7 +384,7 @@
 
 
 
-    //이메일인증
+/*이메일인증*/
     const mailCheck = document.querySelector("#info_email");
 
     mailCheck.addEventListener("click",()=>{
@@ -420,7 +418,8 @@
             });
     })
 
-    //인증코드 맞는지 확인.
+
+/*인증코드 맞는지 확인.(중복이메일 체크도 넣기!!)*/
     function checkAuthNumFn(){
         const mailCheckInput = document.querySelector(".mail-check-input").value;
         const mailCheckWarn = document.getElementById("mail-check-warn");
@@ -437,7 +436,7 @@
         }
     }
 
-    //이메일인증 모달창 띄우기
+/*이메일인증 모달창 띄우기*/
     const emailModal = document.getElementById('emailModal')
     if (emailModal) {
 
@@ -452,20 +451,27 @@
             document.querySelector('#modalMessage').setAttribute('disabled');
         });
     }
-/*
 
-    function pwCheck(){
+/*비밀번호 유효성검사*/
+    function passwordCheckFn(){
         const firstPw = document.querySelector('#pw');
         const secondPw = document.querySelector('#pwCheck');
         const joinForm = document.getElementById('joinForm');
 
+        var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+        var pw = firstPw.value;
+
         if(firstPw.value===secondPw.value){
-            joinForm.submit();
+            if(reg.test(pw)){
+                joinForm.submit();
+            }else{
+                alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+            }
         }else{
             alert("비밀번호가 일치하지 않습니다.");
         }
     }
-*/
 
 
 </script>

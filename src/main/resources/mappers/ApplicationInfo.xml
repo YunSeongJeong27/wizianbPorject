@@ -2,21 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationInfoRepository">
 
-    <select id="findByMemIdAndRecruitment" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT ENTRY_APPLY_MASTER.*, ENTRY_SEL_MASTER.rcrt_no
-        FROM ENTRY_APPLY_MASTER
-        INNER JOIN ENTRY_SEL_MASTER ON ENTRY_APPLY_MASTER.rcrt_no = ENTRY_SEL_MASTER.rcrt_no
-        WHERE ENTRY_APPLY_MASTER.mem_id = #{memId}
-        AND ENTRY_APPLY_MASTER.rcrt_no = #{rcrtNo}
+    <select id="findAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        select*from entry_apply_master;
     </select>
 
-<!--
     <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        INSERT INTO ENTRY_APPLY_MASTER
-        VALUES (
-
-               )
+        INSERT INTO entry_apply_master (aply_no, rcrt_no, course_div, name_kor, name_eng, pic_file_no, birthday, gender, email, zipcode, addr_local, addr_detail, tel_local, hp_local, mem_id)
+        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender}, #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{nameEng});
     </insert>
--->
+
+    <insert id="saveMember" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        INSERT INTO member(mem_id,pw,login_id)
+        VALUES (#{nameEng},#{pw},#{email});
+    </insert>
+
+
+    <select id="findByEmail" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        select *from entry_apply_master where email=#{email};
+    </select>
+
+    <select id="existsByEmail" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email})
+    </select>
 
 </mapper>

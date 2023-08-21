@@ -10,5 +10,12 @@
         SELECT eam.*, eet.EV_AVG_SCORE, eet.PREL_ORD FROM entry_apply_master eam, entry_ev_target eet WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo}
     </select>
 
+    <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
+        UPDATE entry_apply_master SET DOC_PASS_YN = #{docPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </update>
+
+    <update id="updateFnlPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
+        UPDATE entry_apply_master SET FNL_PASS_YN = #{fnlPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </update>
 
 </mapper>

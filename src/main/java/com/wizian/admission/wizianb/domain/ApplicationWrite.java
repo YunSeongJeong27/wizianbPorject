@@ -31,4 +31,7 @@ public class ApplicationWrite {
 
     private String msgDiv;
     private String msgCont;
+
+    private String email;
+    private String birthday;
 }

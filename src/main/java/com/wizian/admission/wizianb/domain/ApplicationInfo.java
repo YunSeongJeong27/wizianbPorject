@@ -2,6 +2,8 @@ package com.wizian.admission.wizianb.domain;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,7 +11,7 @@ import lombok.*;
 @Setter
 public class ApplicationInfo {
 
-    /*지원자직업,비밀번호,비밀번호확인*/
+    /*지원서기본정보*/
     private String aplyNo;
     private String courseDiv;
     private String nameKor;
@@ -29,7 +31,19 @@ public class ApplicationInfo {
     private String docPassYn;
     private String FnlPassYn;
     private int aplyPdfFileNo;
+
+
+    /*회원정보*/
     private String memId;
+    private String pw;
+    private String loginId;
+    private String memDiv;
+    private Date pwdChgDate;
+    private Date pwdErrDate;
+    private Date lastLoginDate;
+
+
+    private String rcrtNo;
 
 
 }

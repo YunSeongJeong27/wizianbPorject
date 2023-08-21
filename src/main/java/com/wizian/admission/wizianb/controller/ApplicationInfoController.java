@@ -8,8 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,19 +24,21 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
 
-    /*접수바로가기>기존회원작성> 기존입력정보가 있으면 받아오기*/
-    @GetMapping("/application/info")
-    public List<ApplicationInfo> getAplyInfo(@RequestParam("memId") String memId,@RequestParam("rcrtNo") String rcrtNo){
-        return applicationInfoService.findByMemIdAndRcrtNo(memId, rcrtNo);
-
+    //기본정보
+    @GetMapping("/userInfo")
+    public String userInfo(HttpServletRequest request, Model model){
+        model.addAttribute("title","기본정보");
+        return "/application/applicationInfo";
     }
+
     @PostMapping("/application/join")
-    public ApplicationInfo setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo){
-        return applicationInfoService.join(applicationInfo);
+    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file) throws IOException {
+        applicationInfoService.join(applicationInfo,file);
+        return "/application/applicationInfo";
     }
 
 
-    /*메일인증테스트*/
+    /*메일인증*/
     @PostMapping(value = "/api/mailcheck",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> mailCheck(@RequestBody HashMap<String,Object> member){
 
@@ -41,4 +47,6 @@ public class ApplicationInfoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(authNum);
     }
+
+
 }

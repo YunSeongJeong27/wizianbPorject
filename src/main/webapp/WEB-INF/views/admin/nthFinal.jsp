@@ -46,7 +46,13 @@
             </div>
 
             <div class="col-2 tableSearch">과정명</div>
-            <div class="col-2"><input type="text" class="form-control"></div>
+            <div class="col-2">
+                <select class="form-select">
+                    <option selected>자바 풀스택</option>
+                    <option>파이썬 빅데이터</option>
+                    <option>C++ 코딩테스트</option>
+                </select>
+            </div>
         </div>
     </div>
 
@@ -107,6 +113,16 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        function ageFormatter({row}) {
+            const birth = Number((row.birthday).substring(0,4));
+            const now = new Date().getFullYear();
+
+            return (now-birth+1);
+        }
+        function docPassYnFormatter({row}) {
+            return (row.docPassYn === "Y") ? "합격" : "불합격";
+        }
+
         const finalTable = new tui.Grid({
             el: document.getElementById('finalTable'),
             data: {
@@ -152,7 +168,8 @@
                     header: '연령',
                     name: 'age',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true, align: 'center',
+                    formatter: ageFormatter
                 },
                 {
                     header: '성별',
@@ -164,7 +181,8 @@
                     header: '서류전형',
                     name: 'docPassYn',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true, align: 'center',
+                    formatter: docPassYnFormatter
                 },
                 {
                     header: '평균',
