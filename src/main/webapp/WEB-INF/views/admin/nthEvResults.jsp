@@ -358,6 +358,7 @@
     // 점수저장 버튼 클릭 시
     document.getElementById("saveButton").addEventListener("click", () => {
         nthEvaluationRegistTable.request("updateData");
+        nthEvnRegistTable.innerHTML = '';
     });
     //완료버튼
     document.getElementById("statusComplete").addEventListener("click", async () => {
@@ -416,7 +417,6 @@
             courseNameSelect.appendChild(option);
         });
     }
-    searchListData()
 
 
 
