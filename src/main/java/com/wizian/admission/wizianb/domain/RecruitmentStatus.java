@@ -2,5 +2,5 @@ package com.wizian.admission.wizianb.domain;
 
 public enum RecruitmentStatus {
 
-    PREPARED, PROGRESS, END, CANCEL
+     준비중, 진행중, 완료
 }
