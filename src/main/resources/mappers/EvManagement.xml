@@ -2,11 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.EvManagementRepository">
 
+    <select id="searchCourseDivInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
+        select  DISTINCT  COURSE_DIV from ENTRY_SEL_MASTER;
+    </select>
+    <select id="searchCourseNameInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
+        select  DISTINCT  COURSE_Name from ENTRY_SEL_MASTER;
+    </select>
 
     <select id="evResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
         select rcrt_no, course_div, course_name,
-               nth_code, ent_year, term_div,
+                 term_div,
                step_div, sel_cnt, status_div  from entry_sel_master
+                where  term_div like #{termDiv} and
+                    course_div like #{courseDiv} and course_name like #{courseName}
     </select>
     <select id="evSubResultInfo" resultType="com.wizian.admission.wizianb.domain.EvalResults">
         select c.aply_no, c.doc_pass_yn,c.name_kor,c.rcrt_no,
@@ -17,7 +25,6 @@
             inner join entry_ev_target as d on c.aply_no = d.aply_no and c.rcrt_no = d.rcrt_no
             inner join sel_ev_score as e on e.aply_no = d.aply_no and e.rcrt_no = d.rcrt_no
             where c.rcrt_no=#{rcrtNo}
-
     </select>
 
     <update id="updateScore" parameterType="com.wizian.admission.wizianb.domain.EvalResults">

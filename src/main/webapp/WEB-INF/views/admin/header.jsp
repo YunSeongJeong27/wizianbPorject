@@ -33,7 +33,7 @@
 <body>
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto px-3" style="/*max-width: 1440px;*/ height: 105px;">
-        <div id="logo" class="h-75" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer; width: 360px;"></div>
+        <div id="logo" class="h-75" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; width: 170px; height: 105px;"></div>
         <div class="h-50 d-flex justify-content-end me-3 align-items-center" style="width: 350px">
             <div class="dropdown">
                 <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false">

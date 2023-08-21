@@ -2,12 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.PassManagementRepository">
 
-    <select id="findAll" resultType="com.wizian.admission.wizianb.domain.PassManagement">
-        SELECT eam.*, eet.EV_AVG_SCORE, eet.PREL_ORD FROM entry_apply_master eam, entry_ev_target eet WHERE eam.APLY_NO = eet.APLY_NO
+    <select id="courseSelect" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT * FROM entry_sel_master WHERE TERM_DIV LIKE #{termDiv} AND COURSE_DIV LIKE #{courseDiv}
     </select>
 
-    <select id="findByRcrtNo" resultType="com.wizian.admission.wizianb.domain.PassManagement">
-        SELECT eam.*, eet.EV_AVG_SCORE, eet.PREL_ORD FROM entry_apply_master eam, entry_ev_target eet WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo}
+    <select id="findNthList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT * FROM entry_sel_master WHERE TERM_DIV LIKE #{termDiv} AND COURSE_DIV LIKE #{courseDiv} AND RCRT_NO LIKE #{rcrtNo}
+    </select>
+
+    <select id="findDocPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
+        SELECT eam.* FROM entry_apply_master eam, entry_ev_target eet WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo}
+    </select>
+
+    <select id="findFnlPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
+        SELECT eam.*, ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+               RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
+        FROM entry_apply_master eam, sel_ev_score ses
+        WHERE eam.APLY_NO = ses.APLY_NO AND eam.RCRT_NO = #{rcrtNo} AND eam.DOC_PASS_YN = 'Y'
+    </select>
+
+    <select id="findPassList" resultType="com.wizian.admission.wizianb.domain.PassManagement">
+        SELECT eam.*, ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+               RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
+        FROM entry_apply_master eam, sel_ev_score ses
+        WHERE eam.RCRT_NO = #{rcrtNo} AND eam.APLY_NO = ses.APLY_NO AND eam.DOC_PASS_YN = 'Y' AND eam.FNL_PASS_YN = 'Y';
     </select>
 
     <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">

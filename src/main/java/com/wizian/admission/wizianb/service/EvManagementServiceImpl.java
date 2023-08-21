@@ -10,16 +10,52 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class EvManagementServiceImpl implements EvManagementService {
 
     private final EvManagementRepository evManagementRepository;
+
+    //검색 리스트들
+    @Override
+    public Map<String, List<EvalResults>> searchList(){
+        Map<String, List<EvalResults>> searchInfo= new HashMap<>();
+        searchInfo.put("courseDivList",evManagementRepository.searchCourseDivInfo()); //과정구분
+        searchInfo.put("courseNameList",evManagementRepository.searchCourseNameInfo()); //과정명
+        return searchInfo;
+    }
+
+
     // 평가결과등록 테이블 전체정보
     @Override
-    public ToastUiResponseDto evResultInfo(){
-        List<EvalResults> evResultList=evManagementRepository.evResultInfo();
+    public ToastUiResponseDto evResultInfo(String termDiv,
+                                           String courseDiv,String courseName){
+
+
+        if (termDiv.equals("nullTermDiv")) {
+            termDiv = "%%";
+        } else {
+            termDiv = "%" + termDiv + "%";
+        }
+
+        if (courseDiv.equals("nullCourseDiv")) {
+            courseDiv = "%%";
+        } else {
+            courseDiv = "%" + courseDiv + "%";
+        }
+
+        if (courseName.equals("nullCourseName")) {
+            courseName = "%%";
+        } else {
+            courseName = "%" + courseName + "%";
+        }
+     /*   System.out.println("entYear: "+entYear);
+        System.out.println("termDiv: "+termDiv);
+        System.out.println("courseDiv: "+courseDiv);
+        System.out.println("courseName: "+courseName);*/
+        List<EvalResults> evResultList=evManagementRepository.evResultInfo(termDiv, courseDiv, courseName);
         HashMap<String, Object> resultMap= new HashMap<>();
         resultMap.put("contents",evResultList);
         resultMap.put("pagination", "");
@@ -62,4 +98,5 @@ public class EvManagementServiceImpl implements EvManagementService {
         }
         return ToastUiResponseDto.builder().data(resultMap).build();
     }
+
 }
