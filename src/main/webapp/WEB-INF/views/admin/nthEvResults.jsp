@@ -14,35 +14,38 @@
 <div class="container-table m-2">
     <div class="col-12">
         <div class="d-flex flex-row justify-content-end mb-1">
-            <button id="selectBtn1" class="btn btn-sm btn-secondary me-1">조회</button>
+            <button id="searchBtn" class="btn btn-sm btn-secondary me-1">조회</button>
         </div>
 
         <div class="container-table">
             <%--TOP--%>
             <div class="col-12">
                 <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                    <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                    <div class="col-1 me-1"><input type="text" class="form-control"></div>
+                    <div class="col-1 align-middle tableSearch">분기</div>
                     <div class="col-1 me-2">
-                        <select class="form-select">
-                            <option selected>1분기</option>
-                            <option>2분기</option>
-                            <option>3분기</option>
-                            <option>4분기</option>
+                        <select class="form-select" name="termDiv">
+                            <option value="" selected>(전체)</option>
+                            <option value="1">1분기</option>
+                            <option value="2">2분기</option>
+                            <option value="3">3분기</option>
+                            <option value="4">4분기</option>
                         </select>
                     </div>
 
                     <div class="col-2 tableSearch">과정구분</div>
                     <div class="col-2 me-2">
-                        <select class="form-select">
-                            <option selected>Java</option>
-                            <option>Python</option>
-                            <option>C++</option>
+                        <select class="form-select" id="courseDiv" name="courseDiv">
+                            <option  value="" selected>(전체)</option>
                         </select>
                     </div>
 
                     <div class="col-2 tableSearch">과정명</div>
-                    <div class="col-2"><input type="text" class="form-control"></div>
+                    <div class="col-4">
+                        <select class="form-select" id="courseName" name="courseName">
+                            <option  value="" selected>(전체)</option>
+
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,7 +104,6 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
             normal: {
@@ -129,14 +131,46 @@
         }
     });
 
-        const nthEvaluationTable = new tui.Grid({
+
+
+  document.addEventListener('DOMContentLoaded', async () =>{
+      await  nthGridLoad();
+      await  searchListData();
+      await subTableLoad();
+    });
+
+    let  termDiv, courseDiv, courseName;
+    const nthEvTableData = () => {
+        termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
+        courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
+        courseName = courseName === "" ? "nullCourseName" : courseName;
+        return{
+            api: {
+                readData: { url: '/eval/result/info/'+termDiv+"/"+courseDiv+"/"+courseName,
+                    method: 'GET' }
+            }
+        };
+    };
+
+
+
+    //조회버튼 클릭시
+    document.getElementById("searchBtn").addEventListener("click", async () => {
+        termDiv = document.querySelector('select[name="termDiv"]').value;
+        courseDiv = document.querySelector('select[name="courseDiv"]').value;
+        courseName = document.querySelector('select[name="courseName"]').value;
+
+        const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
+        oldNthEvaluationTableEl.innerHTML = '';
+
+        await nthGridLoad(nthEvTableData());
+    });
+
+    let nthEvaluationTable;
+    const nthGridLoad = (nthData) => {
+         nthEvaluationTable = new tui.Grid({
             el: document.getElementById('nthEvaluationTable'),
-            data: {
-                api: {
-                    readData: { url: '/eval/result/info',
-                        method: 'GET' }
-                }
-            },
+            data: nthData ,
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -160,18 +194,7 @@
                     sortable: true,
                     align: 'center'
                 },
-                {
-                    header: '기수',
-                    name: 'nthCode',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'entYear',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
+
                 {
                     header: '분기',
                     name: 'termDiv',
@@ -219,6 +242,11 @@
 
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthEvaluationTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationTable)});
+
+    };
+
+
+
 
 
 
@@ -337,6 +365,33 @@
         const perPage = parseInt(event.value, 10);
         table.setPerPage(perPage);
     }
+
+    async function searchListData() {
+        const response = await fetch('/eval/result/searchlist');
+        const dataList = await response.json();
+        const courseDiv= dataList["courseDivList"];
+        const courseName= dataList["courseNameList"];
+
+        const courseDivSelect = document.querySelector("#courseDiv");
+        const courseNameSelect = document.querySelector("#courseName");
+
+        courseDiv.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseDiv;
+            option.text = data.courseDiv;
+            courseDivSelect.appendChild(option);
+        });
+
+        courseName.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseName;
+            option.text = data.courseName;
+            courseNameSelect.appendChild(option);
+        });
+    }
+    searchListData()
+
+
 
 </script>
 
