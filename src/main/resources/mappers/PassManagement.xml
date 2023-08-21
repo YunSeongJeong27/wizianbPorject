@@ -15,14 +15,16 @@
     </select>
 
     <select id="findFnlPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
-        SELECT eam.*, ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+        SELECT eam.NAME_KOR, FNL_PASS_YN,
+               ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
                RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
         FROM entry_apply_master eam, sel_ev_score ses
         WHERE eam.APLY_NO = ses.APLY_NO AND eam.RCRT_NO = #{rcrtNo} AND eam.DOC_PASS_YN = 'Y'
     </select>
 
     <select id="findPassList" resultType="com.wizian.admission.wizianb.domain.PassManagement">
-        SELECT eam.*, ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+        SELECT eam.*,
+               ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
                RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
         FROM entry_apply_master eam, sel_ev_score ses
         WHERE eam.RCRT_NO = #{rcrtNo} AND eam.APLY_NO = ses.APLY_NO AND eam.DOC_PASS_YN = 'Y' AND eam.FNL_PASS_YN = 'Y';
