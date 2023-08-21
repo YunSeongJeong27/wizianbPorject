@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -56,8 +57,8 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         int newFileName = imageService.saveStoreImage(file);
         appInfo.setPicFileNo(newFileName);
 
-        //일단, 멤버번호를 임의로 nameEng로 설정
-        appInfo.setMemId(applicationInfo.getNameEng());
+        String uuid = UUID.randomUUID().toString();
+        appInfo.setMemId(uuid);
         appInfo.setPw(passwordEncoder.encode(applicationInfo.getPw()));
         appInfo.setLoginId(applicationInfo.getEmail());
 

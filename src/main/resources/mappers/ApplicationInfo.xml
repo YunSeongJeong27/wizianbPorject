@@ -8,12 +8,12 @@
 
     <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
         INSERT INTO entry_apply_master (aply_no, rcrt_no, course_div, name_kor, name_eng, pic_file_no, birthday, gender, email, zipcode, addr_local, addr_detail, tel_local, hp_local, mem_id)
-        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender}, #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{nameEng});
+        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender}, #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{memId});
     </insert>
 
     <insert id="saveMember" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
         INSERT INTO member(mem_id,pw,login_id)
-        VALUES (#{nameEng},#{pw},#{email});
+        VALUES (#{memId},#{pw},#{email});
     </insert>
 
     <select id="findByEmail" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
