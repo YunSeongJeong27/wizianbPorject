@@ -71,7 +71,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
                         .eduStartDate(row.get("eduStartDate").asText())
                         .eduEndDate(row.get("eduEndDate").asText())
                         .courseMonth(courseMonth)
-                        .statusDiv(RecruitmentStatus.PREPARED)
+                        .statusDiv(RecruitmentStatus.준비중)
                         .note(row.get("note").asText())
                         .build();
                 recruitmentList.add(recruitVo);
