@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.springframework.security.crypto.password.PasswordEncoder" %><%--
   Created by IntelliJ IDEA.
   User: admin
   Date: 2023-08-10
@@ -91,8 +91,11 @@
             </div>
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
-                    <div><input type="hidden" name="rcrtNo" value="10-001"></div>
-                    <div><input type="hidden" name="aplyNo" value="1-004"></div>
+
+                    <c:if test="${loginId!=null}"/>
+
+                    <div><input type="hidden" name="rcrtNo" value="${appInfo.rcrtNo}"></div>
+                    <div><input type="hidden" name="aplyNo" value="${appInfo.aplyNo}"></div>
 
 <%--사진업로드--%>
                     <div class="row mt-3">
@@ -101,7 +104,7 @@
                         </div>
                         <div class="col">
                             <div id="image_container">
-                                <img id="image" width="94.4" height="113.3">
+                                <img id="image" width="94.4" height="113.3" src="${pageContext.request.contextPath}/profileImage/${appInfo.picFileNo}.png">
                             </div>
                             <div class="d-flex justify-content mt-1">
                                 <input type="file" id="file_add" accept="image/*" name="pictureUrl" onchange="setThumbnail(event);" style="display: none">
@@ -133,10 +136,10 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" id="modalMessage" class="form-control" name="email">
+                                    <input type="text" class="form-control" name="email" value="${appInfo.email}" disabled>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#emailModal">이메일인증</button>
+                                    <button type="button" class="btn btn-sm btn-dark" disabled>이메일인증</button>
                                 </div>
                             </div>
                         </div>
@@ -149,10 +152,10 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="text" class="form-control" id="pw" name="pw">
+                                        <input type="password" class="form-control" id="modalMessage" name="pw" value="${member.pw}">
                                     </div>
                                     <div>
-                                        <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" disabled>
+                                        <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#passwordModal">
                                             비밀번호변경
                                         </button>
                                     </div>
@@ -170,7 +173,7 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="passwordCheck" id="pwCheck">
+                            <input type="password" class="form-control" name="passwordCheck" id="pwCheck" value="${member.pw}">
                         </div>
                         <div class="col-lg-2">
                             성별구분
@@ -178,7 +181,7 @@
                         </div>
                         <div class="col-lg-4">
                             <select class="form-select" name="gender">
-                                <option>(선택)</option>
+                                <option>${appInfo.gender}</option>
                                 <option>남자</option>
                                 <option>여자</option>
                                 <option>기타</option>
@@ -191,14 +194,14 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="nameKor">
+                            <input type="text" class="form-control" name="nameKor" value="${appInfo.nameKor}">
                         </div>
                         <div class="col-lg-2">
                             생년월일
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="date" class="form-control" name="birthday">
+                            <input type="date" class="form-control" name="birthday" value="${appInfo.birthday}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -207,13 +210,13 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="nameEng">
+                            <input type="text" class="form-control" name="nameEng" value="${appInfo.nameEng}">
                         </div>
                         <div class="col-lg-2">
                             휴대폰번호
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="hpLocal">
+                            <input type="text" class="form-control" name="hpLocal" value="${appInfo.hpLocal}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -223,7 +226,7 @@
                         <div class="col-lg-4">
                             <div class="row g-3">
                                 <div class="col-auto">
-                                    <input type="text" id="zipcode" class="form-control" name="zipcode">
+                                    <input type="text" id="zipcode" class="form-control" name="zipcode" value="${appInfo.zipcode}">
                                 </div>
                                 <div class="col-auto">
                                     <button type="button" class="btn btn-sm btn-dark" onclick="searchPost()">검색</button>
@@ -234,7 +237,7 @@
                             전화번호
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="telLocal">
+                            <input type="text" class="form-control" name="telLocal" value="${appInfo.telLocal}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -242,13 +245,13 @@
                             주소
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" id="addrLocal" class="form-control" name="addrLocal">
+                            <input type="text" id="addrLocal" class="form-control" name="addrLocal" value="${appInfo.addrLocal}">
                         </div>
                         <div class="col-lg-2">
                             상세주소
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="addrDetail">
+                            <input type="text" class="form-control" name="addrDetail" value="${appInfo.addrDetail}">
                         </div>
                     </div>
 
@@ -267,56 +270,45 @@
 
 
 <%--이메일인증 모달--%>
-<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">이메일인증</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">비밀번호변경</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <form action="/pwChange" method="post" id="pwChangeForm">
                     <div class="mb-3">
+                        <div><input type="hidden" name="password" value="${member.pw}"></div>
                         <div>
-                            <label for="emailId" class="col-form-label">이메일</label>
+                            <label for="originPassword" class="col-form-label">변경전 비밀번호</label>
+                            <span id="pw-check-warn" class="mb-2"></span>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="flex-fill me-2">
-                                <input type="text" id="emailId" class="form-control" name="email">
-                            </div>
-                            <div class="flex-fill">
-                                <span>@</span>
-                            </div>
-                            <div class="flex-fill me-2">
-                                <input type="text" id="emailAddr" class="form-control">
-                            </div>
-                            <div class="flex-fill me-2">
-                                <select class="form-select" id="emailSelect">
-                                    <option>직접입력</option>
-                                    <option>naver.com</option>
-                                    <option>gmail.com</option>
-                                    <option>daum.net</option>
-                                    <option>nate.com</option>
-                                </select>
-                            </div>
-                            <div class="flex-fill">
-                                <button type="button" id="info_email" class="btn btn-sm btn-dark">인증메일발송</button>
-                            </div>
+                        <div class="flex-fill me-2">
+                            <input type="password" id="originPassword" class="form-control" name="pw">
                         </div>
                     </div>
                     <div class="mb-3">
                         <div>
-                            <label for="checkCode" class="col-form-label">인증번호</label>
-                            <span id="mail-check-warn" class="mb-2" style="color: red">인증되지 않은 상태입니다.</span>
+                            <label for="newPassword" class="col-form-label">변경후 비밀번호</label>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="flex-fill">
-                                <input id="checkCode" class="form-control mail-check-input" placeholder="인증번호" onkeyup="checkAuthNumFn()">
-                            </div>
+                        <div class="flex-fill me-2">
+                            <input type="password" id="newPassword" class="form-control" name="email">
                         </div>
                     </div>
+                <div class="mb-3">
+                    <div>
+                        <label for="newPwCheck" class="col-form-label">비밀번호 확인</label>
+                    </div>
+                    <div class="flex-fill me-2">
+                        <input type="password" id="newPwCheck" class="form-control" name="email">
+                    </div>
+                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">확인</button>
+                <button type="button" class="btn btn-dark" onclick="updatePw()">확인</button>
             </div>
         </div>
     </div>
@@ -383,77 +375,76 @@
     });
 
 
-
-/*이메일인증*/
-    const mailCheck = document.querySelector("#info_email");
-
-    mailCheck.addEventListener("click",()=>{
-
-        const emailId = document.querySelector("#emailId").value;
-        const emailAddr = document.querySelector("#emailAddr").value;
-        const email = emailId+"@"+emailAddr
-
-        const member = {
-            username: email
-            }
-        const url = "/api/mailcheck";
-
-        fetch(url,{
-            method: "POST",
-            body: JSON.stringify(member),
-            headers:{
-                "Content-Type": "application/json"
-            }
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                if(json != null){
-                    alert("인증메일 전송 성공");
-                    authNum = json;
-                    console.log(authNum);
-                    document.querySelector('.mail-check-input').removeAttribute('disabled');
-                }else{
-                    alert("인증메일 전송 실패");
-                }
-            });
-    })
-
-
-/*인증코드 맞는지 확인.(중복이메일 체크도 넣기!!)*/
-    function checkAuthNumFn(){
-        const mailCheckInput = document.querySelector(".mail-check-input").value;
-        const mailCheckWarn = document.getElementById("mail-check-warn");
-
-        if (mailCheckInput != authNum) {
-            mailCheckWarn.textContent = "인증번호가 다릅니다.";
-            mailCheckWarn.style.color = 'red';
-            return;
-        } else {
-            mailCheckWarn.textContent = "인증되었습니다.";
-            mailCheckWarn.style.color = 'blue';
-            authResult = true;
-            return;
-        }
-    }
-
-/*이메일인증 모달창 띄우기*/
-    const emailModal = document.getElementById('emailModal')
+/*비밀번호변경 모달창 띄우기*/
+    const emailModal = document.getElementById('passwordModal')
     if (emailModal) {
 
-        const emailIdInput = emailModal.querySelector('#emailId'); // 모달창 이메일 입력 필드
-        const emailAddrInput = emailModal.querySelector('#emailAddr');
-        const modalMessageInput = document.querySelector('#modalMessage'); // 메시지 입력 필드
-        const mailCheckWarn = document.getElementById("mail-check-warn");
+        const newPwInput = emailModal.querySelector('#newPwCheck'); // 모달창 입력 필드
+        const modalMessageInput = document.querySelector('#modalMessage'); //비밀번호input
+        const pwCheck = document.querySelector('#pwCheck');//비밀번호확인 input
 
         emailModal.addEventListener('show.bs.modal', event => {
         });
         emailModal.addEventListener('hidden.bs.modal', event => {
-            if(mailCheckWarn.textContent=="인증되었습니다."){
-                modalMessageInput.value = emailIdInput.value+"@"+emailAddrInput.value; // 이메일 입력값을 메시지 입력 필드로 복사
-                document.querySelector('#modalMessage').setAttribute('disabled');
-            }
+            modalMessageInput.value = newPwInput.value; // 이메일 입력값을 메시지 입력 필드로 복사
+            modalMessageInput.value = pwCheck.value;
+            document.querySelector('#modalMessage').setAttribute('disabled');
         });
     }
+
+
+    /*비밀번호 체크 form*/
+        function updatePw() {
+
+            const password = document.getElementById('modalMessage').value;
+            const inputPassword = document.getElementById('originPassword').value;
+            const newPw = document.getElementById('newPassword').value;
+            const newPwCheck = document.getElementById('newPwCheck').value;
+            const updatePwForm = document.getElementById('pwChangeForm');
+
+
+            if(inputPassword==""){
+                alert("현재 비밀번호를 입력해주세요");
+                inputPassword.focus();
+                return false;
+            }
+            if(newPw==""){
+                alert("새로운 비밀번호를 입력해주세요.");
+                newPw.focus();
+                return false;
+            }
+            if (newPwCheck==""){
+                alert("비밀번호를 한번 더 입력해주세요.");
+                newPwCheck.focus();
+                return false;
+            }
+            if(newPw!=newPwCheck){
+                alert("비밀번호가 일치하지 않습니다.");
+                newPwCheck.focus();
+                return false;
+            }
+            $.ajax({
+                url: "/pwCheck",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    password: password,
+                    inputPassword: inputPassword
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        alert("패스워드가 틀렸습니다.");
+                        return;
+                    } else {
+                        if (confirm("변경하시겠습니까?")) {
+                            updatePwForm.submit();
+                            $("#passwordModal").modal("hide");
+                        }
+
+                    }
+                }
+            })
+        }
 
 /*비밀번호 유효성검사*/
     function passwordCheckFn(){

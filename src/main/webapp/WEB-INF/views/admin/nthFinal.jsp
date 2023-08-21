@@ -28,7 +28,7 @@
             <div class="col-1 align-middle tableSearch">분기</div>
             <div class="col-1 me-2">
                 <select id="termDiv" class="form-select" onchange="courseSelect();">
-                    <option value="%">(전체)</option>
+                    <option value="0">(전체)</option>
                     <option value="1">1분기</option>
                     <option value="2">2분기</option>
                     <option value="3">3분기</option>
@@ -39,7 +39,7 @@
             <div class="col-2 tableSearch">과정구분</div>
             <div class="col-2 me-2">
                 <select id="courseDiv" class="form-select" onchange="courseSelect();">
-                    <option value="%">(전체)</option>
+                    <option value="0">(전체)</option>
                     <option value="Java">Java</option>
                     <option value="Python">Python</option>
                     <option value="C++">C++</option>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+    <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4 mb-2">
         <div class="col-3 d-flex flex-row align-items-center">
             <p class="subTitle fw-bold me-2">최종합격자명부</p>
             <p class="subResult text-secondary me-2">검색결과:00건</p>
@@ -69,15 +69,19 @@
                 </select>
             </div>
         </div>
+
+
+        <div class="d-flex flex-row align-items-center">
+            <p class="subTitle fw-bold me-2">안내문종류</p>
+            <select class="form-select w-auto me-1">
+                <option selected>최종합격자안내메일</option>
+            </select>
+            <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
+        </div>
     </div>
     <%--BODY--%>
     <div class="text-center border border-gray-100 rounded-2">
         <div id="finalTable"></div>
-
-
-        <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-             <p class="pageLoc">현재:1/전체:14(1~5)</p>
-         </div>--%>
     </div>
 </div>
 <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
@@ -220,7 +224,7 @@
         // 조회 버튼 이벤트
         passFindBtn.addEventListener("click", function(){
             const courseName = document.getElementById("courseName");
-            const rcrtNo = (courseName.options[courseName.selectedIndex].value === '0')? '%' : courseName.options[courseName.selectedIndex].value;
+            const rcrtNo = courseName.options[courseName.selectedIndex].value;
             const params = {rcrtNo: rcrtNo};
 
             finalTable.readData(1, params, true);

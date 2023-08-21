@@ -84,6 +84,7 @@
                         </c:if>
                     </c:forEach>
                 </div>
+                <div><input type="hidden" name="courseDiv" value="${master.courseDiv}"></div>
                 <div class="col-10 text-center p-2 mt-5 fw-bold mx-auto shortCutBtn" style="color: #003A78; border: 1px solid #003A78;">접수바로가기</div>
             </button>
         </form>

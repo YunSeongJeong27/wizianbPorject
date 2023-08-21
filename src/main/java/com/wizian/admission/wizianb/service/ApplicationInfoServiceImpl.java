@@ -37,8 +37,6 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
             return applicationInfoRepository.findByEmail(applicationInfo.getEmail());
         }
 
-        String encodedPassword = passwordEncoder.encode(applicationInfo.getPw());
-
         ApplicationInfo appInfo = new ApplicationInfo();
         appInfo.setAplyNo(applicationInfo.getAplyNo());
         appInfo.setRcrtNo(applicationInfo.getRcrtNo());
@@ -58,9 +56,9 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         int newFileName = imageService.saveStoreImage(file);
         appInfo.setPicFileNo(newFileName);
 
-        // 멤버번호를 이메일로 설정
-        appInfo.setMemId(applicationInfo.getEmail());
-        appInfo.setPw(encodedPassword);
+        //일단, 멤버번호를 임의로 nameEng로 설정
+        appInfo.setMemId(applicationInfo.getNameEng());
+        appInfo.setPw(passwordEncoder.encode(applicationInfo.getPw()));
         appInfo.setLoginId(applicationInfo.getEmail());
 
         // member 테이블에 저장
@@ -70,5 +68,17 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         // entry_apply_master 테이블에 저장
         return appInfo;
     }
+
+    @Override
+    public ApplicationInfo appInfo(String email) {
+       return applicationInfoRepository.findByEmail(email);
+    }
+
+    @Override
+    public ApplicationInfo findMember(String memId) {
+        return applicationInfoRepository.findByMemId(memId);
+    }
+
+
 }
 

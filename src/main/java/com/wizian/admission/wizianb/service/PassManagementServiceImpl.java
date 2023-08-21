@@ -23,11 +23,18 @@ public class PassManagementServiceImpl implements PassManagementService {
 
     @Override
     public List<PassManagement> courseSelect(String termDiv, String courseDiv) {
+        if(termDiv.equals("0")) termDiv = "%";
+        if(courseDiv.equals("0")) courseDiv = "%";
+
         return passManagementRepository.courseSelect(termDiv, courseDiv);
     }
 
     @Override
     public ToastUiResponseDto findNthList(String termDiv, String courseDiv, String rcrtNo) {
+        if(termDiv.equals("0")) termDiv = "%";
+        if(courseDiv.equals("0")) courseDiv = "%";
+        if(rcrtNo.equals("0")) rcrtNo = "%";
+
         List<Recruitment> passManagementList = passManagementRepository.findNthList(termDiv, courseDiv, rcrtNo);
 
         HashMap<String, Object> resultMap = new HashMap<>();

@@ -11,6 +11,12 @@ import java.util.List;
 @Service
 public interface ApplicationInfoService {
 
-
    ApplicationInfo join(ApplicationInfo applicationInfo, MultipartFile file) throws IOException;
+
+   ApplicationInfo appInfo(String email);
+
+   ApplicationInfo findMember(String memId);
+
+
+
 }

@@ -15,5 +15,11 @@ public interface ApplicationInfoRepository {
 
     ApplicationInfo findByEmail(String email);
 
+    ApplicationInfo findByMemId(String memId);
+
+//    void changePw(ApplicationInfo applicationInfo);
+
+
+
 
 }

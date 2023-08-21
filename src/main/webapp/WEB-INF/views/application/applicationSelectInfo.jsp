@@ -51,6 +51,7 @@
 
         <form id="frm" method="get" class="d-flex justify-content-center m-5">
             <input type="hidden" name="rcrtNo" value="${rcrtNo}">
+            <input type="hidden" name="courseDiv" value="${courseDiv}">
             <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
             <div id="existingUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">기존회원작성</div>
         </form>
@@ -58,26 +59,6 @@
 </div>
 
 <script>
-
-    //이건 뭐지?
-    const editedData = [
-        { name: 'Updated Name 1', age: 30 },
-        { name: 'Updated Name 2', age: 25 },
-        // ... 편집된 데이터
-    ];
-
-    $.ajax({
-        url: '/update-data',
-        type: 'POST',
-        contentType: 'application/json',
-        data: editedData,
-        success: function(response) {
-            // 서버에서의 응답 처리
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
 
     //상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");

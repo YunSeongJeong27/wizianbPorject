@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +24,24 @@ public class ApplicationInfoController {
 
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
+    private final PasswordEncoder passwordEncoder;
 
     //기본정보
     @GetMapping("/userInfo")
     public String userInfo(HttpServletRequest request, Model model){
         model.addAttribute("title","기본정보");
+//        model.addAttribute("rcrtNo",rcrtNo);
+//        model.addAttribute("courseDiv",courseDiv);
         return "/application/applicationInfo";
     }
 
+    /*지원서작성,회원가입*/
     @PostMapping("/application/join")
-    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file) throws IOException {
+    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model) throws IOException {
+
         applicationInfoService.join(applicationInfo,file);
-        return "/application/applicationInfo";
+
+        return "/application/applicationInfoAfterLogin";
     }
 
 
@@ -47,6 +54,22 @@ public class ApplicationInfoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(authNum);
     }
+
+
+    /* 현재비밀번호 체크*/
+    @PostMapping(value = "/pwCheck")
+    @ResponseBody
+    public int pwCheck(@RequestParam("password")String password,@RequestParam("inputPassword")String inputPassword){
+
+        if(passwordEncoder.matches(inputPassword,password)){
+            return 1;
+        }else {
+            return 0;
+        }
+
+    }
+
+    /*비밀번호 변경*/
 
 
 }
