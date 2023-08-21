@@ -2,6 +2,7 @@ package com.wizian.admission.wizianb.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.PassManagement;
+import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.PassManagementRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,13 @@ public class PassManagementServiceImpl implements PassManagementService {
     private final PassManagementRepository passManagementRepository;
 
     @Override
-    public ToastUiResponseDto findAll() {
-        List<PassManagement> passManagementList = passManagementRepository.findAll();
+    public List<PassManagement> courseSelect(String termDiv, String courseDiv) {
+        return passManagementRepository.courseSelect(termDiv, courseDiv);
+    }
+
+    @Override
+    public ToastUiResponseDto findNthList(String termDiv, String courseDiv, String rcrtNo) {
+        List<Recruitment> passManagementList = passManagementRepository.findNthList(termDiv, courseDiv, rcrtNo);
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", passManagementList);
@@ -32,8 +38,30 @@ public class PassManagementServiceImpl implements PassManagementService {
     }
 
     @Override
-    public ToastUiResponseDto findByRcrtNo(String rcrtNo){
-        List<PassManagement> passManagementList = passManagementRepository.findByRcrtNo(rcrtNo);
+    public ToastUiResponseDto findPassList(String rcrtNo) {
+        List<PassManagement> passManagementList = passManagementRepository.findPassList(rcrtNo);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("contents", passManagementList);
+        resultMap.put("pagination", "");
+
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    @Override
+    public ToastUiResponseDto findDocPass(String rcrtNo){
+        List<PassManagement> passManagementList = passManagementRepository.findDocPass(rcrtNo);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("contents", passManagementList);
+        resultMap.put("pagination", "");
+
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    @Override
+    public ToastUiResponseDto findFnlPass(String rcrtNo){
+        List<PassManagement> passManagementList = passManagementRepository.findFnlPass(rcrtNo);
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", passManagementList);

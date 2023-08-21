@@ -21,7 +21,7 @@ public class PassManagement {
     private String FnlPassYn;
 
     // 전형평가 대상자
-    private int evAvgScore;
+    private float evAvgScore;
     private int prelOrd;
 
 }

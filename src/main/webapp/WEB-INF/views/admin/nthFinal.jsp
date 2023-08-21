@@ -20,37 +20,36 @@
 <body>
 <div class="container-table m-2">
     <div class="d-flex flex-row justify-content-end mb-1">
-        <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
+        <button id="passFindBtn" class="btn btn-sm btn-secondary me-1">조회</button>
     </div>
     <%--TOP--%>
     <div class="col-12">
         <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-            <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-            <div class="col-1 me-1"><input type="text" class="form-control"></div>
+            <div class="col-1 align-middle tableSearch">분기</div>
             <div class="col-1 me-2">
-                <select class="form-select">
-                    <option selected>1분기</option>
-                    <option>2분기</option>
-                    <option>3분기</option>
-                    <option>4분기</option>
+                <select id="termDiv" class="form-select" onchange="courseSelect();">
+                    <option value="%">(전체)</option>
+                    <option value="1">1분기</option>
+                    <option value="2">2분기</option>
+                    <option value="3">3분기</option>
+                    <option value="4">4분기</option>
                 </select>
             </div>
 
             <div class="col-2 tableSearch">과정구분</div>
             <div class="col-2 me-2">
-                <select class="form-select">
-                    <option selected>Java</option>
-                    <option>Python</option>
-                    <option>C++</option>
+                <select id="courseDiv" class="form-select" onchange="courseSelect();">
+                    <option value="%">(전체)</option>
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                    <option value="C++">C++</option>
                 </select>
             </div>
 
-            <div class="col-2 tableSearch">과정명</div>
-            <div class="col-2">
-                <select class="form-select">
-                    <option selected>자바 풀스택</option>
-                    <option>파이썬 빅데이터</option>
-                    <option>C++ 코딩테스트</option>
+            <div class="col-2 tableSearch">과정명<span class="text-danger">*</span></div>
+            <div class="col-4">
+                <select id="courseName" class="form-select">
+
                 </select>
             </div>
         </div>
@@ -62,8 +61,8 @@
             <p class="subResult text-secondary me-2">검색결과:00건</p>
             <div>
                 <select class="form-select" id="finalTablePage">
-                    <option selected>5</option>
-                    <option>30</option>
+                    <option>5</option>
+                    <option selected>30</option>
                     <option>50</option>
                     <option>70</option>
                     <option>100</option>
@@ -113,6 +112,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        courseSelect();
+
+        const finalTablePage = document.querySelector('#finalTablePage');
+        const passFindBtn = document.getElementById("passFindBtn");
+
         function ageFormatter({row}) {
             const birth = Number((row.birthday).substring(0,4));
             const now = new Date().getFullYear();
@@ -126,14 +130,15 @@
         const finalTable = new tui.Grid({
             el: document.getElementById('finalTable'),
             data: {
+                initialRequest: false,
                 api: {
-                    readData: { url: '/pass/listAll', method: 'GET'}
+                    readData: { url: '/pass/passList', method: 'GET'}
                 }
             },
             rowHeaders: ['rowNum'], //인덱스
             pageOptions: {
                 useClient: true,   // front에서만 페이징 하는 속성
-                perPage: 5,      //한번에 보여줄 데이터 수
+                perPage: 30,      //한번에 보여줄 데이터 수
                 visiblePages: 10
             },
             scrollX: true,
@@ -201,27 +206,58 @@
                 resizable: true
             },
 
-            draggable: true,
-
-            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-            onGridMounted() {
-                finalTable.focus(0, 'aplyNo', true);
-            }
+            draggable: true
         });
-
-        const finalTablePage = document.querySelector('#finalTablePage');
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
         function handlePerPageChange(event) {
-            console.log(event);
             const perPage = parseInt(event.target.value, 10);
             finalTable.setPerPage(perPage);
         }
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         finalTablePage.addEventListener('change', handlePerPageChange);
+
+        // 조회 버튼 이벤트
+        passFindBtn.addEventListener("click", function(){
+            const courseName = document.getElementById("courseName");
+            const rcrtNo = (courseName.options[courseName.selectedIndex].value === '0')? '%' : courseName.options[courseName.selectedIndex].value;
+            const params = {rcrtNo: rcrtNo};
+
+            finalTable.readData(1, params, true);
+        });
     });
+
+    // 과정명 필터
+    function courseSelect(){
+        const termDiv = document.getElementById("termDiv");
+        const courseDiv = document.getElementById("courseDiv");
+        const courseName = document.getElementById("courseName");
+        const termDivSelected = termDiv.options[termDiv.selectedIndex].value;
+        const courseDivSelected = courseDiv.options[courseDiv.selectedIndex].value;
+
+        $.ajax({
+            url: "/pass/courseSelect", 			//통신할 url
+            type: "GET",						//통신할 메소드 타입
+            data: {termDiv : termDivSelected, courseDiv: courseDivSelected},	//전송할 데이터
+            dataType: "json",
+            async: false,						// 실행 결과 기다리지 않고 다음 코드 읽을 것인지
+            success : function(result) { 		// 매개변수에 통신성공시 데이터 저장
+                courseName.innerHTML = "";
+
+                result.forEach(course => {      // 과정명 option으로 추가
+                    var option = document.createElement('option');
+                    option.innerHTML = course['courseName'];
+                    option.value = course['rcrtNo']
+                    courseName.appendChild(option);
+                });
+            },
+            error : function (status, error) {	//통신 실패
+                console.log('통신실패');
+                console.log(status, error);
+            }
+        });
+    }
+
 </script>
-
-
 </body>
 </html>
