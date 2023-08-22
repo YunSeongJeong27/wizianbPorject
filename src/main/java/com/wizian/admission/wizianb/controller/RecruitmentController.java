@@ -26,7 +26,11 @@ public class RecruitmentController {
         ToastUiResponseDto recruitmentList = recruitmentService.findAll();
         return ResponseEntity.ok(recruitmentList);
     }
-
+    @GetMapping("/recruitment/list/{rcrtNo}/{courseDiv}")
+    public ResponseEntity<ToastUiResponseDto> searchRecruitmentList(@PathVariable String rcrtNo, @PathVariable String courseDiv) {
+        ToastUiResponseDto recruitmentList = recruitmentService.findAll();
+        return ResponseEntity.ok(recruitmentList);
+    }
     @PutMapping("/recruitment/save")
     public ResponseEntity<?> saveRecruitment(@RequestBody JsonNode recruitment) {
         List<ToastUiResponseDto> response = new ArrayList<>();

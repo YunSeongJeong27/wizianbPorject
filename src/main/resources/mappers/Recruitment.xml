@@ -7,6 +7,13 @@
         FROM ENTRY_SEL_MASTER ORDER BY EDU_START_DATE DESC
     </select>
 
+    <select id="searchList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT *
+        FROM ENTRY_SEL_MASTER
+        WHERE COURSE_DIV = #{courseDiv} AND
+        ORDER BY EDU_START_DATE DESC
+    </select>
+
     <insert id="insert" parameterType="com.wizian.admission.wizianb.domain.Recruitment">
         INSERT INTO ENTRY_SEL_MASTER (RCRT_NO, COURSE_DIV, COURSE_NAME, TERM_DIV, EDU_START_DATE, EDU_END_DATE, COURSE_MONTH, STATUS_DIV, NOTE)
         VALUES

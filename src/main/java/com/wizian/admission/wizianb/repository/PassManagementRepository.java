@@ -16,7 +16,7 @@ public interface PassManagementRepository {
     List<PassManagement> findDocPass(String rcrtNo);
     List<PassManagement> findFnlPass(String rcrtNo);
 
-    String findEvTarget(EvTarget data);
+    Boolean existEvTarget(EvTarget data);
     void insertEvTarget(EvTarget data);
     void deleteEvTarget(EvTarget data);
 
