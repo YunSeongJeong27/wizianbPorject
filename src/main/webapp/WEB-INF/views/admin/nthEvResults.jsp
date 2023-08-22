@@ -14,7 +14,7 @@
 <div class="container-table m-2">
     <div class="col-12">
         <div class="d-flex flex-row justify-content-end mb-1">
-            <button id="searchBtn" class="btn btn-sm btn-secondary me-1">조회</button>
+            <button onclick="searchBtn()" class="btn btn-sm btn-secondary me-1">조회</button>
         </div>
 
         <div class="container-table">
@@ -156,15 +156,17 @@
 
 
     //조회버튼 클릭시
-    document.getElementById("searchBtn").addEventListener("click", async () => {
+    async function searchBtn(){
         termDiv = document.querySelector('select[name="termDiv"]').value;
         courseDiv = document.querySelector('select[name="courseDiv"]').value;
         courseName = document.querySelector('select[name="courseName"]').value;
 
         await nthGridLoad(nthEvTableData());
-    });
+        nthEvnRegistTable.innerHTML = '';
+    }
 
     let nthEvaluationTable;
+    let rowKeyEvent;
     const nthGridLoad = (nthData) => {
         const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
         oldNthEvaluationTableEl.innerHTML = '';
@@ -236,6 +238,7 @@
             }
         });
         nthEvaluationTable.on('click', function (ev) {
+            rowKeyEvent=ev.rowKey
             subTableLoad(ev.rowKey);
         });
 
@@ -255,6 +258,12 @@
     let rcrtNo;
     //nthEvaluationRegistTable테이블
     function subTableLoad(rowKey){
+        function sum({row}){
+            let num1 = parseInt(row.ev1Score);
+            let num2 = parseInt(row.ev2Score);
+            let num3 = parseInt(row.ev3Score);
+            return num1+ num2 +num3;
+        }
         const rowData = nthEvaluationTable.getRow(rowKey);
         rcrtNo = rowData.rcrtNo;
 
@@ -328,9 +337,9 @@
                  },
                  {
                      header: '합계(100점)',
-                     name: "total",
                      sortingType: 'asc',
-                     sortable: true, align: 'center'
+                     sortable: true, align: 'center',
+                     formatter:sum
                  },
 
                  {
@@ -356,9 +365,8 @@
 
 
     // 점수저장 버튼 클릭 시
-    document.getElementById("saveButton").addEventListener("click", () => {
+    document.getElementById("saveButton").addEventListener("click", async () => {
         nthEvaluationRegistTable.request("updateData");
-        nthEvnRegistTable.innerHTML = '';
     });
     //완료버튼
     document.getElementById("statusComplete").addEventListener("click", async () => {
@@ -371,7 +379,7 @@
             });
         }
         await  nthGridLoad();
-        nthEvnRegistTable.innerHTML = '';
+        await searchBtn();
     });
 
     //완료취소버튼
@@ -385,7 +393,7 @@
             });
         }
         await  nthGridLoad();
-        nthEvnRegistTable.innerHTML = '';
+        await searchBtn();
     });
 
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -394,6 +402,7 @@
         table.setPerPage(perPage);
     }
 
+    //검색조회 항목들 리스트불러오기
     async function searchListData() {
         const response = await fetch('/eval/result/searchlist');
         const dataList = await response.json();
