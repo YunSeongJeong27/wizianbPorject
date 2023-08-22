@@ -7,5 +7,9 @@ import java.util.List;
 public interface RecruitmentRepository {
     List<Recruitment> findAll();
 
-    void save(List<Recruitment> recruitmentList);
+    int insert(Recruitment insertRows);
+
+    int update(Recruitment updateRows);
+
+    String findRcrtNo(String rcrtNo);
 }
