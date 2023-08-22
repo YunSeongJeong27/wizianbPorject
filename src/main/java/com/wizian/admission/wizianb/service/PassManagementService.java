@@ -17,4 +17,5 @@ public interface PassManagementService {
    ToastUiResponseDto findFnlPass(String rcrtNo);
    ToastUiResponseDto updateDocPass(JsonNode jn);
    ToastUiResponseDto updateFnlPass(JsonNode jn);
+   void sendPassMail(JsonNode jn);
 }

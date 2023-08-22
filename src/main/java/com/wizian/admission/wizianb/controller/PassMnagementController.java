@@ -60,4 +60,11 @@ public class PassMnagementController {
     public ResponseEntity<ToastUiResponseDto> updateFnlPass(@RequestBody JsonNode passUpdateList) {
         return ResponseEntity.ok(passManagementService.updateFnlPass(passUpdateList));
     }
+
+
+    @PostMapping("/pass/sendMail")
+    public ResponseEntity.BodyBuilder sendMail(@RequestBody JsonNode data){
+        passManagementService.sendPassMail(data);
+        return ResponseEntity.ok();
+    }
 }

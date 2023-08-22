@@ -16,6 +16,19 @@
     <link rel="stylesheet" href="/css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+
+        .passNotice{
+            color: #f66;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .passNotice:before{
+            content: "\203B";
+            padding-right: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container-table m-2">
@@ -76,10 +89,6 @@
 
             <div class="nthInfoTable text-center border border-gray-100 rounded-2">
                 <div id="nthTable"></div>
-
-                <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
-                 </div>--%>
             </div>
 
             <div class="h-50">
@@ -125,8 +134,7 @@
     </div>
 
     <%-- 메일 내용 확인 모달 --%>
-    <div class="modal fade" id="mailModal" tabindex="-1"
-         role="dialog" aria-hidden="true">
+    <div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" id="dialog">
             <div class="modal-content">
                 <div class="modal-header border-0">
@@ -139,11 +147,14 @@
                     </div>
                 </div>
                 <div class="modal-body pt-0">
-                    <form action="#" method="post">
-                        <div class="d-flex align-items-center justify-content-end">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="passNotice">서류 평가 합격자에게만 발송됩니다.</p>
+                                <p class="passNotice">메일 발송에 다소 시간이 소요됩니다.</p>
+                            </div>
                             <div class="d-flex align-items-center">
-                                <input type="submit" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" value="저장">
-                                <input type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" data-bs-dismiss="modal" value="닫기">
+                                <button id="sendBtn" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">메일발송</button>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -151,24 +162,22 @@
                                 <div class="border border-gray-100 rounded-2 mb-2">
                                     <div class="d-flex flex-row align-items-center border-bottom border-gray-100">
                                         <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">메일제목</div>
-                                        <div class="col-10 p-2"><input  class="form-control tableInput" type="text" name="SUBJECT" value=""></div>
+                                        <div class="col-10 p-2"><input id="subject" class="form-control tableInput" type="text" name="subject" disabled></div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
                                         <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">첨부파일</div>
-                                        <div class="col-10 p-2 d-flex flex-row align-items-center">
+                                        <div class="col-10 p-2 d-flex flex-row align-items-center justify-content-between">
                                             <input class="form-control" type="text" disabled style="width: 95%;">
-                                            <input id="addFile" class="form-control d-none" type="file">
-                                            <label class="ms-3" style="width: 4%; font-size: 20px;"><i class="bi bi-search"></i></label>
+                                            <i class="bi bi-search" style="width: 4%; font-size: 20px;"></i>
                                         </div>
                                     </div>
                                 </div>
+                                <div id="msgCont" class="border border-gray-100 rounded-2 bg-white p-3" style="height: 300px">
 
-                                <div class="border border-gray-100 rounded-2 bg-white h-75 p-3">
-                                    "$"{저장해놓은 Editor 값}
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,6 +214,7 @@
             }
         });
 
+        let nthRcrtNo = 0;
         document.addEventListener('DOMContentLoaded', function () {
             courseSelect();
 
@@ -286,7 +296,10 @@
                     data = nthTable.getData();
                     passFindFlag = false;
                 }
-                if(typeof ev.rowKey !== "undefined") subTableLoad(data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo']);
+                if(typeof ev.rowKey !== "undefined") {
+                    nthRcrtNo = data[nthTable.getIndexOfRow(ev.rowKey)]['rcrtNo'];
+                    subTableLoad(nthRcrtNo);
+                }
             });
 
             // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
@@ -417,8 +430,12 @@
 
         // 일괄처리 버튼 이벤트
         const passBatchBtn = document.getElementById("passBatchBtn");
+        var dataFlag;
         passBatchBtn.addEventListener("click", function(){
-            if(confirm("일괄처리하시겠습니까?")){
+            dataFlag = document.querySelector("#applicationTable .tui-grid-body-area tr");
+
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("일괄처리하시겠습니까?")){
                 var passDiv = document.getElementById("passDiv");
                 var val = passDiv.options[passDiv.selectedIndex].value;
 
@@ -436,7 +453,10 @@
 
         const passSaveBtn = document.getElementById("passSaveBtn");
         passSaveBtn.addEventListener('click', () => {
-            if(confirm("선발 결과를 수정하시겠습니까?")){
+            dataFlag = document.querySelector("#applicationTable .tui-grid-body-area tr");
+
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("선발 결과를 수정하시겠습니까?")){
                 applicationTable.request('updateData', {showConfirm: false});
             }
         });
@@ -471,6 +491,82 @@
                 }
             });
         }
+
+        // 모달 관련
+        const modal = document.getElementById("mailModal");
+        const msgCont = document.getElementById("msgCont");
+        const mailSendBtn = document.getElementById("mailSendBtn");
+        const sendBtn = document.getElementById("sendBtn");
+
+        modal.addEventListener('show.bs.modal', function (e) {
+            dataFlag = document.querySelector("#applicationTable .tui-grid-body-area tr");
+
+            if(dataFlag == null) {
+                alert("데이터가 없습니다.");
+                e.preventDefault();
+            }
+        });
+        // 모달이 열릴 때 이벤트 핸들러 등록
+        modal.addEventListener('hide.bs.modal', function () {
+            var dialog = document.getElementById("dialog");
+            if (dialog.classList.contains('modal-fullscreen')) {
+                dialog.classList.remove("modal-fullscreen");
+                dialog.classList.add("modal-lg");
+                msgCont.style.height = '300px';
+            }
+        });
+
+        //모달 크기 조정
+        function sizeChange(){
+            var dialog = document.getElementById("dialog");
+            if (dialog.classList.contains("modal-fullscreen")) {
+                dialog.classList.remove("modal-fullscreen");
+                dialog.classList.add("modal-lg");
+                msgCont.style.height = '300px';
+            } else {
+                dialog.classList.remove("modal-lg");
+                dialog.classList.add("modal-fullscreen");
+                msgCont.style.height = '90%';
+            }
+        }
+
+        // 메일보내기 버튼 클릭 이벤트
+        mailSendBtn.addEventListener('click', function(){
+            //const response = await fetch('/pass/findMail');
+            //const dataList = await response.json();
+            //const title = dataList['SUBJECT'];
+            //const content = dataList['MSG_CONT'];
+
+            const subject = document.getElementById("subject");
+
+            subject.value = "title";
+            msgCont.innerHTML = "content";
+        });
+
+        // 메일 보내기
+        sendBtn.addEventListener('click', function(){
+            fetch("/pass/sendMail", {
+                method: 'POST',
+                body: JSON.stringify({
+                    rcrtNo: nthRcrtNo,
+                    subject: "title",
+                    msgCont: "content"
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    if(data['status'] !== 500){
+                        alert("메일을 발송하였습니다.");
+                    }else{
+                        alert("메일을 발송하지 못했습니다.");
+                    }
+                });
+        })
+
 
     </script>
 </body>

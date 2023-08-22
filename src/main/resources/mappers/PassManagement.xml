@@ -2,18 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.PassManagementRepository">
 
+    <!-- 과정명 필터링 -->
     <select id="courseSelect" resultType="com.wizian.admission.wizianb.domain.Recruitment">
         SELECT * FROM entry_sel_master WHERE TERM_DIV LIKE #{termDiv} AND COURSE_DIV LIKE #{courseDiv}
     </select>
 
+    <!-- 과정 리스트 -->
     <select id="findNthList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
         SELECT * FROM entry_sel_master WHERE TERM_DIV LIKE #{termDiv} AND COURSE_DIV LIKE #{courseDiv} AND RCRT_NO LIKE #{rcrtNo}
     </select>
 
+    <!-- 서류 평가 대상자 리스트 -->
     <select id="findDocPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
         SELECT * FROM entry_apply_master WHERE RCRT_NO = #{rcrtNo}
     </select>
 
+    <!-- 면접 평가 대상자 리스트 -->
     <select id="findFnlPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
         SELECT eam.*,
                ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
@@ -22,6 +26,7 @@
         WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo} AND eam.DOC_PASS_YN = 'Y'
     </select>
 
+    <!-- 최종 합격자 리스트 -->
     <select id="findPassList" resultType="com.wizian.admission.wizianb.domain.PassManagement">
         SELECT eam.*,
                ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
@@ -30,8 +35,20 @@
         WHERE eam.RCRT_NO = #{rcrtNo} AND eam.APLY_NO = eet.APLY_NO AND eam.DOC_PASS_YN = 'Y' AND eam.FNL_PASS_YN = 'Y';
     </select>
 
-    <select id="findEvTarget" parameterType="String">
-        SELECT APLY_NO FROM entry_ev_target WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    <!-- 서류 평가 결과 수정 -->
+    <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
+        UPDATE entry_apply_master SET DOC_PASS_YN = #{docPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </update>
+
+    <!-- 면접 평가 결과 수정 -->
+    <update id="updateFnlPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
+        UPDATE entry_apply_master SET FNL_PASS_YN = #{fnlPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </update>
+
+
+    <!-- 전형평가대상자 테이블 관련 -->
+    <select id="existEvTarget" parameterType="com.wizian.admission.wizianb.domain.EvTarget" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_ev_target WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo})
     </select>
 
     <insert id="insertEvTarget" parameterType="com.wizian.admission.wizianb.domain.EvTarget">
@@ -42,13 +59,4 @@
     <delete id="deleteEvTarget" parameterType="com.wizian.admission.wizianb.domain.EvTarget">
         DELETE FROM entry_ev_target WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </delete>
-
-    <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
-        UPDATE entry_apply_master SET DOC_PASS_YN = #{docPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
-    </update>
-
-    <update id="updateFnlPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
-        UPDATE entry_apply_master SET FNL_PASS_YN = #{fnlPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
-    </update>
-
 </mapper>

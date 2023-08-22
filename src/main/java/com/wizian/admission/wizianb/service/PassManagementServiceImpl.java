@@ -21,6 +21,7 @@ import java.util.List;
 public class PassManagementServiceImpl implements PassManagementService {
 
     private final PassManagementRepository passManagementRepository;
+    private final MailSendService mailSendService;
 
     @Override
     public List<PassManagement> courseSelect(String termDiv, String courseDiv) {
@@ -99,10 +100,10 @@ public class PassManagementServiceImpl implements PassManagementService {
 
             passManagementRepository.updateDocPass(data);
 
-            String findEvTarget = passManagementRepository.findEvTarget(target);
+            boolean findEvTarget = passManagementRepository.existEvTarget(target);
 
-            if(findEvTarget != null && docPassYn.equals("N")) passManagementRepository.deleteEvTarget(target);
-            else if(findEvTarget == null && docPassYn.equals("Y")) passManagementRepository.insertEvTarget(target);
+            if(findEvTarget && docPassYn.equals("N")) passManagementRepository.deleteEvTarget(target);
+            else if(!findEvTarget && docPassYn.equals("Y")) passManagementRepository.insertEvTarget(target);
         }
 
         return ToastUiResponseDto.builder().data(resultMap).build();
@@ -125,5 +126,14 @@ public class PassManagementServiceImpl implements PassManagementService {
         }
 
         return ToastUiResponseDto.builder().data(resultMap).build();
+    }
+
+    @Override
+    public void sendPassMail(JsonNode jn) {
+        List<PassManagement> passManagementList = passManagementRepository.findFnlPass(jn.get("rcrtNo").asText());
+        mailSendService.mailSend("message", "aaa@naver.com", "title");
+        for(PassManagement data: passManagementList) {
+            //mailSendService.mailSend("message", data.getEmail(), "title");
+        }
     }
 }
