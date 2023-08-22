@@ -10,6 +10,8 @@ public interface RecruitmentService {
 
     ToastUiResponseDto findAll();
 
+    ToastUiResponseDto searchRecruitmentList(String rcrtNo, String courseDiv);
+
     ToastUiResponseDto insertRecruitment(JsonNode insertRows);
 
     ToastUiResponseDto updateRecruitment(JsonNode updateRows);

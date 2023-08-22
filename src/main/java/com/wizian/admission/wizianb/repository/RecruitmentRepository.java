@@ -9,6 +9,8 @@ import java.util.List;
 public interface RecruitmentRepository {
     List<Recruitment> findAll();
 
+    List<Recruitment> searchList(String rcrtNo, String courseDiv);
+
     int insert(Recruitment insertRows);
 
     int update(Recruitment updateRows);

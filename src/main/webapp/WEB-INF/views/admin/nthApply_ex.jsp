@@ -871,6 +871,14 @@
                 //rowDataLoad(0, nthTable, "inputTable");
             }
         });
+        nthTable.on('click', function(e) {
+            if (e.rowKey === 'cell') {
+                var row = e.row;
+                var data = nthTable.columnName(row);
+
+                console.log(data);
+            }
+        });
 
 
 

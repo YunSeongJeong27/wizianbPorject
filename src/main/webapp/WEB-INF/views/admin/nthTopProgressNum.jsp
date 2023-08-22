@@ -115,6 +115,13 @@
 
     let firstColumName = 'courseDiv';
     const gridLoad = () => {
+        function calculateMonthDifference(date1, date2) {
+            const firstDate = new Date(date1);
+            const secondDate = new Date(date2);
+            const diffInMilliseconds = secondDate - firstDate;
+            const diffInMonths = diffInMilliseconds / (1000 * 60 * 60 * 24 * 30);
+            return Math.floor(diffInMonths);
+        }
         const Grid = tui.Grid;
         const nthTable = new Grid({
             el: document.getElementById('nthTable'),
@@ -209,7 +216,22 @@
                 });
             }
         });
+        nthTable.on('afterChange', function (e) {
+            const { rowKey, columnName, value } = e.changes[0];
+            const rowData = nthTable.getRow(rowKey);
 
+            if (columnName === 'eduStartDate' || columnName === 'eduEndDate') {
+                if (rowData.eduStartDate && rowData.eduEndDate) {
+                    rowData.courseMonth = calculateMonthDifference(rowData.eduStartDate, rowData.eduEndDate);
+
+                    // 계산된 개월 수 차이를 저장하고 화면에 표시
+                    nthTable.setValue(rowKey, 'courseMonth', rowData.courseMonth);
+                }
+                const eduStartDate = new Date(rowData.eduStartDate);
+                rowData.termDiv = Math.ceil((eduStartDate.getMonth() + 1) / 3);
+                nthTable.setValue(rowKey, 'termDiv', rowData.termDiv);
+            }
+        });
         const nthTablePage = document.querySelector('#nthTablePage');
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -326,11 +348,15 @@
         const nthSaveBtn = document.getElementById("nthSaveBtn");
         nthSaveBtn.addEventListener('click', () => {
             nthTable.request('modifyData');
-            nthTable.reloadData();
+            nthTable.resetData(nthTable.getData());
         });
         const nthSelectBtn = document.getElementById("nthSelectBtn");
         nthSelectBtn.addEventListener('click', () => {
-            nthTable.request('readData');
+            const courseName = document.getElementById("courseName");
+            const rcrtNo = courseName.options[courseName.selectedIndex].value;
+            const params = {rcrtNo: rcrtNo};
+
+            nthTable.readData(1, params, true);
         });
 
     }
