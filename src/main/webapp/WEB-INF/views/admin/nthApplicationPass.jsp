@@ -18,111 +18,161 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-<div class="container-table m-2">
-    <div class="col-12">
-        <div class="d-flex flex-row justify-content-end mb-1">
-            <button id="passFindBtn" class="btn btn-sm btn-secondary me-1">조회</button>
-        </div>
-
-        <%--TOP--%>
+    <div class="container-table m-2">
         <div class="col-12">
-            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                <div class="col-1 align-middle tableSearch">분기</div>
-                <div class="col-1 me-2">
-                    <select id="termDiv" class="form-select" onchange="courseSelect();">
-                        <option value="0">(전체)</option>
-                        <option value="1">1분기</option>
-                        <option value="2">2분기</option>
-                        <option value="3">3분기</option>
-                        <option value="4">4분기</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정구분</div>
-                <div class="col-2 me-2">
-                    <select id="courseDiv" class="form-select" onchange="courseSelect();">
-                        <option value="0">(전체)</option>
-                        <option value="Java">Java</option>
-                        <option value="Python">Python</option>
-                        <option value="C++">C++</option>
-                    </select>
-                </div>
-
-                <div class="col-2 tableSearch">과정명<span class="text-danger">*</span></div>
-                <div class="col-4">
-                    <select id="courseName" class="form-select">
-
-                    </select>
-                </div>
+            <div class="d-flex flex-row justify-content-end mb-1">
+                <button id="passFindBtn" class="btn btn-sm btn-secondary me-1">조회</button>
             </div>
-        </div>
 
-        <%--HEAD--%>
-        <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-4 d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">모집전형정보</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
-                <div>
-                    <select class="form-select" id="nthTablePage">
-                        <option selected>5</option>
-                        <option>30</option>
-                        <option>50</option>
-                        <option>70</option>
-                        <option>100</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-            <div id="nthTable"></div>
-
-            <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-                 <p class="pageLoc">현재:1/전체:14(1~5)</p>
-             </div>--%>
-        </div>
-
-        <div class="h-50">
-            <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
-                <div class="d-flex flex-row align-items-center">
-                    <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
-                    <p class="subResult text-secondary me-2">검색결과:0건</p>
-                    <select class="form-select w-auto" id="applicationTablePage">
-                        <option selected>5</option>
-                        <option>7</option>
-                        <option>50</option>
-                        <option>70</option>
-                        <option>100</option>
-                    </select>
-                </div>
-
-                <div class="d-flex flex-row align-items-center">
-                    <div class="d-flex flex-row align-items-center me-3">
-                        <p class="subTitle fw-bold me-2">안내문종류</p>
-                        <select class="form-select w-auto me-1">
-                            <option selected>면접안내메일</option>
+            <%--TOP--%>
+            <div class="col-12">
+                <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+                    <div class="col-1 align-middle tableSearch">분기</div>
+                    <div class="col-1 me-2">
+                        <select id="termDiv" class="form-select" onchange="courseSelect();">
+                            <option value="0">(전체)</option>
+                            <option value="1">1분기</option>
+                            <option value="2">2분기</option>
+                            <option value="3">3분기</option>
+                            <option value="4">4분기</option>
                         </select>
-                        <button class="btn btn-sm btn-light btn-outline-dark me-2">합격안내메일</button>
                     </div>
+
+                    <div class="col-2 tableSearch">과정구분</div>
+                    <div class="col-2 me-2">
+                        <select id="courseDiv" class="form-select" onchange="courseSelect();">
+                            <option value="0">(전체)</option>
+                            <option value="Java">Java</option>
+                            <option value="Python">Python</option>
+                            <option value="C++">C++</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2 tableSearch">과정명<span class="text-danger">*</span></div>
+                    <div class="col-4">
+                        <select id="courseName" class="form-select">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <%--HEAD--%>
+            <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+                <div class="col-4 d-flex flex-row align-items-center">
+                    <p class="subTitle fw-bold me-2">모집전형정보</p>
+                    <p class="subResult text-secondary me-2">검색결과:00건</p>
+                    <div>
+                        <select class="form-select" id="nthTablePage">
+                            <option selected>5</option>
+                            <option>30</option>
+                            <option>50</option>
+                            <option>70</option>
+                            <option>100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+                <div id="nthTable"></div>
+
+                <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
+                     <p class="pageLoc">현재:1/전체:14(1~5)</p>
+                 </div>--%>
+            </div>
+
+            <div class="h-50">
+                <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
                     <div class="d-flex flex-row align-items-center">
-                        <p class="subTitle fw-bold me-2">선발결과</p>
-                        <select id="passDiv" class="form-select w-auto me-1">
-                            <option value="0" selected>선택</option>
-                            <option value="Y">합격</option>
-                            <option value="N">불합격</option>
+                        <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
+                        <p class="subResult text-secondary me-2">검색결과:0건</p>
+                        <select class="form-select w-auto" id="applicationTablePage">
+                            <option selected>5</option>
+                            <option>7</option>
+                            <option>50</option>
+                            <option>70</option>
+                            <option>100</option>
                         </select>
-                        <button id="passBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
-                        <button id="passSaveBtn" class="btn btn-sm btn-success">저장</button>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex flex-row align-items-center me-3">
+                            <p class="subTitle fw-bold me-2">안내문종류</p>
+                            <select class="form-select w-auto me-1">
+                                <option selected>면접안내메일</option>
+                            </select>
+                            <button id="mailSendBtn" class="btn btn-sm btn-light btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#mailModal">합격안내메일</button>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <p class="subTitle fw-bold me-2">선발결과</p>
+                            <select id="passDiv" class="form-select w-auto me-1">
+                                <option value="0" selected>선택</option>
+                                <option value="Y">합격</option>
+                                <option value="N">불합격</option>
+                            </select>
+                            <button id="passBatchBtn" class="btn btn-sm btn-light btn-outline-dark me-2">일괄반영</button>
+                            <button id="passSaveBtn" class="btn btn-sm btn-success">저장</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="d-flex flex-row justify-content-between mt-2 bg-white border border-gray-100 rounded-2">
-            <div id="applicationTable" class="w-100"></div>
-        </div>
+                <div class="d-flex flex-row justify-content-between mt-2 bg-white border border-gray-100 rounded-2">
+                <div id="applicationTable" class="w-100"></div>
+            </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <%-- 메일 내용 확인 모달 --%>
+    <div class="modal fade" id="mailModal" tabindex="-1"
+         role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" id="dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <div class="modal-title fw-bold">
+                        중앙정보처리학원
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-files biIcon fw-bolder fs-4 btn p-1" onclick="sizeChange()"></i>
+                        <i class="bi bi-x biIcon fw-bolder fs-2 btn p-1" data-bs-dismiss="modal"></i>
+                    </div>
+                </div>
+                <div class="modal-body pt-0">
+                    <form action="#" method="post">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <div class="d-flex align-items-center">
+                                <input type="submit" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" value="저장">
+                                <input type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" data-bs-dismiss="modal" value="닫기">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div id="noticeInfoTable" class="text-start mb-3 mt-2">
+                                <div class="border border-gray-100 rounded-2 mb-2">
+                                    <div class="d-flex flex-row align-items-center border-bottom border-gray-100">
+                                        <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">메일제목</div>
+                                        <div class="col-10 p-2"><input  class="form-control tableInput" type="text" name="SUBJECT" value=""></div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="col-2 fw-bold inputTitle d-flex align-items-center ps-2 fw-bold inputTitle">첨부파일</div>
+                                        <div class="col-10 p-2 d-flex flex-row align-items-center">
+                                            <input class="form-control" type="text" disabled style="width: 95%;">
+                                            <input id="addFile" class="form-control d-none" type="file">
+                                            <label class="ms-3" style="width: 4%; font-size: 20px;"><i class="bi bi-search"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border border-gray-100 rounded-2 bg-white h-75 p-3">
+                                    "$"{저장해놓은 Editor 값}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
     <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
