@@ -11,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,21 +40,21 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public ToastUiResponseDto insertRecruitment(JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         int result = 0;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             for (JsonNode row : inputRows) {
                 String eduStartDateStr = row.get("eduStartDate").asText();
                 String eduEndDateStr = row.get("eduEndDate").asText();
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date eduStartDate = dateFormat.parse(eduStartDateStr);
-                Date eduEndDate = dateFormat.parse(eduEndDateStr);
+                LocalDate eduStartDate = LocalDate.parse(eduStartDateStr, dateFormatter);
+                LocalDate eduEndDate = LocalDate.parse(eduEndDateStr, dateFormatter);
 
-                int month = Integer.parseInt(eduStartDateStr.substring(5, 7));
+                int month = eduStartDate.getMonthValue();
                 int termDiv = (month - 1) / 3 + 1;
 
-                long diffInMilliseconds = eduEndDate.getTime() - eduStartDate.getTime();
-                long diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
-                int courseMonth = (int) Math.floor(diffInDays / 30.0);
+                long diffInDays = ChronoUnit.DAYS.between(eduStartDate, eduEndDate);
+                int courseMonth = (int) Math.floor((double) diffInDays / 30.0);
+
                 Recruitment recruitVo = Recruitment.builder()
                         .rcrtNo(generateRecruitmentNo(row.get("courseDiv").asText(), eduStartDateStr))
                         .courseDiv(row.get("courseDiv").asText())
@@ -78,21 +79,21 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public ToastUiResponseDto updateRecruitment(JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         int result = 0;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
             for (JsonNode row : inputRows) {
                 String eduStartDateStr = row.get("eduStartDate").asText();
                 String eduEndDateStr = row.get("eduEndDate").asText();
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date eduStartDate = dateFormat.parse(eduStartDateStr);
-                Date eduEndDate = dateFormat.parse(eduEndDateStr);
+                LocalDate eduStartDate = LocalDate.parse(eduStartDateStr, dateFormatter);
+                LocalDate eduEndDate = LocalDate.parse(eduEndDateStr, dateFormatter);
 
-                int month = Integer.parseInt(eduStartDateStr.substring(5, 7));
+                int month = eduStartDate.getMonthValue();
                 int termDiv = (month - 1) / 3 + 1;
 
-                long diffInMilliseconds = eduEndDate.getTime() - eduStartDate.getTime();
-                long diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
-                int courseMonth = (int) Math.floor(diffInDays / 30.0);
+                long diffInDays = ChronoUnit.DAYS.between(eduStartDate, eduEndDate);
+                int courseMonth = (int) Math.floor((double) diffInDays / 30.0);
+
                 Recruitment recruitVo = Recruitment.builder()
                         .rcrtNo(row.get("rcrtNo").asText())
                         .courseDiv(row.get("courseDiv").asText())

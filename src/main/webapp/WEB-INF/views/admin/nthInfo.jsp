@@ -59,36 +59,5 @@
         </tbody>
     </table>
 </div>
-
-
-<script>
-    const eduStartDateInput = document.getElementById("eduStartDate");
-    const eduEndDateInput = document.getElementById("eduEndDate");
-    const courseMonthInput = document.getElementById("monthInput");
-    const termDivSelect = document.getElementById("termDiv");
-
-    eduStartDateInput.addEventListener("change", calculateCourseMonths);
-    eduStartDateInput.addEventListener("change", calculateTerm);
-    eduEndDateInput.addEventListener("change", calculateCourseMonths);
-
-    function calculateCourseMonths() {
-        const startDate = new Date(eduStartDateInput.value);
-        const endDate = new Date(eduEndDateInput.value);
-
-        const diffInMilliseconds = endDate - startDate;
-        const diffInMonths = diffInMilliseconds / (1000 * 60 * 60 * 24 * 30);
-
-        if (!isNaN(diffInMonths) && diffInMonths >= 0) {
-            courseMonthInput.value = Math.floor(diffInMonths);
-        } else {
-            courseMonthInput.value = "";
-        }
-    }
-    function calculateTerm() {
-        const startDate = new Date(eduStartDateInput.value);
-
-        termDivSelect.value = Math.ceil((startDate.getMonth() + 1) / 3);
-    }
-</script>
 </body>
 </html>

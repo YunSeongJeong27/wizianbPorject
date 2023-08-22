@@ -151,30 +151,30 @@
             <div class="p-3">
                 <table id="inputTable" class="table border fw-bold align-middle">
                     <tr>
+                        <td class="tableColor">과정명</td>
+                        <td class="col-2">
+                            <select class="form-select tableInput" name="courseName">
+
+                            </select>
+                        </td>
                         <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                         <td class="">
-                            <select class="form-select tableInput" name="courseDiv">
+                            <select class="form-select tableInput" name="courseDiv" disabled>
                                 <option selected>Java</option>
                                 <option>Python</option>
                                 <option>C++</option>
                             </select>
                         </td>
-                        <td class="col-2 tableColor">수강년도<span class="text-danger">*</span></td>
-                        <td class="col-2"><input class="form-control tableInput" name="entYear" type="text"></td>
-                        <td class="col-2 tableColor">분기구분<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" name="termDiv" type="text"></td>
-                    </tr>
-                    <tr>
-                        <td class="tableColor">과정명</td>
-                        <td class="col-2"><input class="form-control tableInput" name="courseName" type="text"></td>
-                        <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" name="eduStartDate" type="date"></td>
-                        <td class=" tableColor">교육종료일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" name="eduEndDate" type="date"></td>
-                    </tr>
-                    <tr>
                         <td class="tableColor">모집전형번호</td>
                         <td class=""><input class="form-control tableInput" name="rcrtNo" type="text" disabled></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
+                        <td class=""><input class="form-control tableInput" name="eduStartDate" type="date" disabled></td>
+                        <td class=" tableColor">교육종료일<span class="text-danger">*</span></td>
+                        <td class=""><input class="form-control tableInput" name="eduEndDate" type="date" disabled></td>
+                    </tr>
+                    <tr>
                         <td class="tableColor">현재전형일정</td>
                         <td class=""><input class="form-control tableInput" name="schdlName" type="text" disabled></td>
                         <%--<td class="tableColor">전형평가단계</td>
@@ -284,6 +284,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         var firstColumName = 'courseDiv';
 
+        function educationPeriodFormatter({row}) {
+            const startDate = row.eduStartDate;
+            const endDate = row.eduEndDate;
+            return startDate + "~" + endDate;
+        }
+
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: {
@@ -307,20 +313,6 @@
             bodyHeight: 217,
             columns: [
                 {
-                    header: '과정구분',
-                    name: 'courseDiv',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '기수코드',
-                    name: 'nthCode',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
                     header: '과정명',
                     name: 'courseName',
                     sortingType: 'asc',
@@ -328,10 +320,11 @@
                     align: 'center'
                 },
                 {
-                    header: '수강년도',
-                    name: 'entYear',
+                    header: '과정구분',
+                    name: 'courseDiv',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true,
+                    align: 'center'
                 },
                 {
                     header: '분기',
@@ -340,16 +333,11 @@
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '교육시작일',
-                    name: 'eduStartDate',
+                    header: '모집기간',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '교육종료일',
-                    name: 'eduEndDate',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true, align: 'center',
+                    width: 220,
+                    formatter: educationPeriodFormatter
                 },
                 {
                     header: '수업개월수',
