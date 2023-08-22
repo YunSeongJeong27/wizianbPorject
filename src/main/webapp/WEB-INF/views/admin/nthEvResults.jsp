@@ -166,7 +166,6 @@
     }
 
     let nthEvaluationTable;
-    let rowKeyEvent;
     const nthGridLoad = (nthData) => {
         const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
         oldNthEvaluationTableEl.innerHTML = '';
@@ -238,7 +237,6 @@
             }
         });
         nthEvaluationTable.on('click', function (ev) {
-            rowKeyEvent=ev.rowKey
             subTableLoad(ev.rowKey);
         });
 
