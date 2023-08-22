@@ -1,6 +1,7 @@
 package com.wizian.admission.wizianb.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.wizian.admission.wizianb.domain.EvTarget;
 import com.wizian.admission.wizianb.domain.PassManagement;
 import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
@@ -85,12 +86,23 @@ public class PassManagementServiceImpl implements PassManagementService {
         JsonNode jnArr = jn.get("updatedRows");
 
         for (int i=0; i<jnArr.size(); i++) {
+            String docPassYn = jnArr.get(i).get("docPassYn").asText();
+
             PassManagement data = PassManagement.builder()
                     .aplyNo(jnArr.get(i).get("aplyNo").asText())
                     .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
-                    .docPassYn(jnArr.get(i).get("docPassYn").asText()).build();
+                    .docPassYn(docPassYn).build();
+
+            EvTarget target = EvTarget.builder()
+                    .aplyNo(jnArr.get(i).get("aplyNo").asText())
+                    .rcrtNo(jnArr.get(i).get("rcrtNo").asText()).build();
 
             passManagementRepository.updateDocPass(data);
+
+            String findEvTarget = passManagementRepository.findEvTarget(target);
+
+            if(findEvTarget != null && docPassYn.equals("N")) passManagementRepository.deleteEvTarget(target);
+            else if(findEvTarget == null && docPassYn.equals("Y")) passManagementRepository.insertEvTarget(target);
         }
 
         return ToastUiResponseDto.builder().data(resultMap).build();

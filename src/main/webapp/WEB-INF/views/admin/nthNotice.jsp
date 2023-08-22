@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2023-08-08
-  Time: 오후 5:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -42,9 +35,7 @@
 <body>
     <div class="container-table m-2">
         <div class="col-12">
-            <div class="d-flex flex-row justify-content-end mb-1">
-                <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
-            </div>
+
 
             <%@ include file="nthTopScreening.jsp"%>
 
@@ -154,15 +145,6 @@
         function subTableLoad(rowKey){
             var noticeData = [];
             var firstColumName = 'STEP_DIV';
-
-            /*  //!*쓰는 예시 *
-           // 선택된 행의 데이터를 가져옵니다.
-           const rowData = noticeTable.getRow(rowKey);
-           // 방법1. 원하는 데이터만 추출합니다.
-           const stepDivNm = rowData.STEP_DIV;
-           const msgDivNm = rowData.MSG_DIV;
-           // 방법2. 원하는 데이터만 추출합니다.
-           const { STEP_DIV: stepDivNm, MSG_DIV: msgDivNm } = rowData;*/
 
             if(rowKey == null) return;       // 헤더 클릭 시
             else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..

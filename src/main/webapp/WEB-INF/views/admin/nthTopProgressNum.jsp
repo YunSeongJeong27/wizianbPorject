@@ -5,15 +5,15 @@
   Time: 오전 11:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -83,6 +83,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        await gridLoad();
+    });
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
             normal: {
@@ -110,19 +113,18 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var firstColumName = 'courseDiv';
-
-        const nthTable = new tui.Grid({
+    let firstColumName = 'courseDiv';
+    const gridLoad = () => {
+        const Grid = tui.Grid;
+        const nthTable = new Grid({
             el: document.getElementById('nthTable'),
             data: {
                 initialRequest: true,
                 api: {
                     hideLoadingBar: false,
-                    readData: { url: '/recruitment/list', method: 'GET' },
-                    createData: { url: 'recruitment/save', method: 'POST', contentType: 'application/json' },
-                    updateData: { url: 'recruitment/save', method: 'PUT' },
-                    deleteData: { url: 'recruitment/delete', method: 'DELETE' }
+                    readData: {url: '/recruitment/list', method: 'GET'},
+                    modifyData: {url: 'recruitment/save', method: 'PUT', contentType: 'application/json'},
+                    deleteData: {url: 'recruitment/delete', method: 'DELETE'}
                 },
             },
             rowHeaders: ['checkbox'],
@@ -143,24 +145,11 @@
                     align: 'center'
                 },
                 {
-                    header: '기수코드',
-                    name: 'nthCode',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
                     header: '과정명',
                     name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'entYear',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
                 },
                 {
                     header: '분기',
@@ -210,9 +199,9 @@
 
                 // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
                 // 데이터 업데이트..
-                var tableInput = document.querySelectorAll("#inputTable .tableInput");
+                const tableInput = document.querySelectorAll("#inputTable .tableInput");
                 tableInput.forEach((ti) => {
-                    ti.addEventListener("change", function(){
+                    ti.addEventListener("change", function () {
                         var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
 
                         nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
@@ -228,21 +217,22 @@
             const perPage = parseInt(event.target.value, 10);
             nthTable.setPerPage(perPage);
         }
+
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthTablePage.addEventListener('change', handlePerPageChange);
 
         // row 클릭 시 하단에 해당 row 데이터 load
         nthTable.on('click', function (ev) {
-            if(ev.rowKey == null) return;       // 헤더 클릭 시
+            if (ev.rowKey == null) return;       // 헤더 클릭 시
 
-            document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
+            document.querySelector("#inputTable tbody").setAttribute("id", "row" + ev.rowKey);
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
         // 체크박스 전체 선택/해제
         nthTable.on('checkAll', function (ev) {
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
 
             rowKeys.forEach((rowKey) => {
                 nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
@@ -250,7 +240,7 @@
         });
         nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
             var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
 
             rowKeys.forEach((rowKey) => {
                 nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
@@ -270,18 +260,18 @@
         });
 
         // 하단 table 데이터 넣기
-        function rowDataLoad(rowKey, table, id){
+        function rowDataLoad(rowKey, table, id) {
             var datas = table.getRow(rowKey);
-            var tableInput = document.querySelectorAll("#"+id+" .tableInput");
-            if(datas == null ) {        // 데이터 x
+            var tableInput = document.querySelectorAll("#" + id + " .tableInput");
+            if (datas == null) {        // 데이터 x
                 tableInput.forEach((ti) => {
                     ti.value = "";
                 });
-            }else{
+            } else {
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="courseDiv" || tiName==="termDiv"){
-                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
+                    if (tiName === "courseDiv" || tiName === "termDiv") {
+                        $('select[name=' + tiName + ']').val(datas[tiName]).prop("selected", true);
                     }
                     ti.value = datas[tiName];
                 });
@@ -294,8 +284,6 @@
                 {
                     courseDiv: '',
                     courseName: '',
-                    nthCode: '',
-                    entYear: '',
                     termDiv: '',
                     eduStartDate: '',
                     eduEndDate: '',
@@ -305,7 +293,7 @@
             ];
 
             nthTable.appendRow(rowData[0], {
-                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey']) + 1,
                 extendPrevRowSpan: true,
                 focus: true
             });
@@ -314,7 +302,7 @@
 
             // 하단 table 초기화
             var tableInput = document.querySelectorAll("#inputTable .tableInput");
-            document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+            document.querySelector("#inputTable tbody").setAttribute("id", "row" + nthTable.getFocusedCell()['rowKey']);
             tableInput.forEach((ti) => {
                 ti.value = "";
             });
@@ -322,29 +310,30 @@
 
         // 삭제 버튼 클릭 이벤트
         document.getElementById("nthDeleteBtn").addEventListener("click", function () {
-            if(confirm("삭제하시겠습니까?")){
+            if (confirm("삭제하시겠습니까?")) {
                 nthTable.removeCheckedRows(false);
 
-                if(nthTable.getData().length !== 0){
+                if (nthTable.getData().length !== 0) {
                     var rowKey = nthTable.getRowAt(0)['rowKey'];
 
                     nthTable.focus(rowKey, firstColumName, true);
                     rowDataLoad(rowKey, nthTable, "inputTable");
-                }else{                                              // 데이터 x
+                } else {                                              // 데이터 x
                     rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
                 }
             }
         });
         const nthSaveBtn = document.getElementById("nthSaveBtn");
         nthSaveBtn.addEventListener('click', () => {
-            nthTable.request('createData');
-        })
+            nthTable.request('modifyData');
+            nthTable.reloadData();
+        });
         const nthSelectBtn = document.getElementById("nthSelectBtn");
         nthSelectBtn.addEventListener('click', () => {
-            nthTable.readData(1, '/recruitment/list', false);
-            console.log(nthTable.request('readData'));
-        })
-    });
+            nthTable.request('readData');
+        });
+
+    }
 </script>
 </body>
 </html>

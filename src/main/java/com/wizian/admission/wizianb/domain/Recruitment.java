@@ -11,11 +11,9 @@ import lombok.*;
 public class Recruitment {
 
     private String rcrtNo;
-    private String entYear;
     private String courseName;
     private String courseDiv;
     private String termDiv;
-    private String nthCode;
     private String eduStartDate;
     private String eduEndDate;
     private RecruitmentStatus statusDiv;

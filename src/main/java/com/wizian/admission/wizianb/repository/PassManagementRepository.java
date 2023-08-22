@@ -1,5 +1,6 @@
 package com.wizian.admission.wizianb.repository;
 
+import com.wizian.admission.wizianb.domain.EvTarget;
 import com.wizian.admission.wizianb.domain.PassManagement;
 import com.wizian.admission.wizianb.domain.Recruitment;
 
@@ -14,6 +15,10 @@ public interface PassManagementRepository {
 
     List<PassManagement> findDocPass(String rcrtNo);
     List<PassManagement> findFnlPass(String rcrtNo);
+
+    String findEvTarget(EvTarget data);
+    void insertEvTarget(EvTarget data);
+    void deleteEvTarget(EvTarget data);
 
     void updateDocPass(PassManagement data);
     void updateFnlPass(PassManagement data);
