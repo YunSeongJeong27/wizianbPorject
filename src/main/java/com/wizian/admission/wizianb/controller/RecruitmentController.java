@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Slf4j
 @Controller
@@ -24,15 +27,20 @@ public class RecruitmentController {
         return ResponseEntity.ok(recruitmentList);
     }
 
-    @PostMapping("/recruitment/save")
-    public ResponseEntity<ToastUiResponseDto> insertRecruitment(@RequestBody JsonNode recruitment) {
-        ToastUiResponseDto insertRecruitmentList = recruitmentService.insertRecruitment(recruitment);
-        return ResponseEntity.ok(insertRecruitmentList);
-    }
-
     @PutMapping("/recruitment/save")
-    public ResponseEntity<ToastUiResponseDto> updateRecruitment(){
-        return null;
+    public ResponseEntity<?> saveRecruitment(@RequestBody JsonNode recruitment) {
+        List<ToastUiResponseDto> response = new ArrayList<>();
+        if(recruitment.get("createdRows") != null){
+            JsonNode insertRows = recruitment.get("createdRows");
+            ToastUiResponseDto insert = recruitmentService.insertRecruitment(insertRows);
+            response.add(insert);
+        }
+        if (recruitment.get("updatedRows") != null){
+            JsonNode updateRows = recruitment.get("updatedRows");
+            ToastUiResponseDto update = recruitmentService.updateRecruitment(updateRows);
+            response.add(update);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/recruitment/delete")

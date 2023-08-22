@@ -10,5 +10,7 @@ public interface RecruitmentService {
 
     ToastUiResponseDto findAll();
 
-    ToastUiResponseDto insertRecruitment(JsonNode recruitment);
+    ToastUiResponseDto insertRecruitment(JsonNode insertRows);
+
+    ToastUiResponseDto updateRecruitment(JsonNode updateRows);
 }

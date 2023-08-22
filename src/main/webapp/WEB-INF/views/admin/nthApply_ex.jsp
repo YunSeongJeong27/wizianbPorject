@@ -174,8 +174,7 @@
                     </div>
                 </div>
                 <div>
-                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1"
-                            onclick="fn_excel_grid2_onclick()">
+                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1">
                         엑셀내보내기(전체)
                     </button>
                 </div>
@@ -278,7 +277,7 @@
                                                     <td class="align-middle">
                                                         <select id="slt_gen_div"
                                                                 class="form-select"
-                                                                style="">
+                                                                style="" disabled>
                                                             <option value=" ">(미선택)</option>
                                                             <option value="10">남자</option>
                                                             <option value="20">여자</option>
@@ -295,8 +294,8 @@
                                                             <!-- <button class="btn_email btn_slt button_sm noShrink" title="이메일인증" onclick="location.href='./EN0220P.html'">이메일인증</button> -->
                                                         </div>
                                                     </td>
-                                                    <td rowspan="7" class="align-middle">사진</td>
-                                                    <td rowspan="7" class="align-middle">
+                                                    <td rowspan="4" class="align-middle">사진</td>
+                                                    <td rowspan="4" class="align-middle">
                                                         <div class="profile-pic dp_inlineblk"
                                                              style="vertical-align: bottom;">
                                                             <img id="img_preview" class="profile-pic" src="/일본어_김현진.jpg">
@@ -339,26 +338,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="align-middle">지원자직업</td>
-                                                    <td class="align-middle">
-                                                        <select id="slt_job_div" class="form-select">
-                                                            <option value=" ">(미선택)</option>
-                                                            <option value="10">직장인</option>
-                                                            <option value="20">학생(졸업예정)</option>
-                                                            <option value="30">학생(졸업)</option>
-                                                            <option value="90">기타</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">지원자직업명</td>
-                                                    <td class="align-middle">
-                                                        <input type="text" id="txt_inp1_job_nm"
-                                                               class="form-control" maxlength="50"
-                                                               disabled="disabled">
-                                                    </td>
-                                                </tr>
+
                                                 <tr>
                                                     <td class="align-middle">우편번호</td>
                                                     <td class="align-middle">
@@ -671,44 +651,6 @@
                 APLY_DT: '2023-08-01 15:32'
             }
         ];
-        /*const data2 = [
-            {
-                CORS_DIV: 'JAVA',
-                SEL_NM: '자바과정 풀스택',
-                NTH_NM: '3',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
-                수업개월수: '6',
-                EDU_ST_DT: '2023-08-01 15:32',
-                EDU_END_DT: '2023-08-01 15:32',
-                발표일자: '2023-08-01 15:32',
-                NOTE: '장사때려침'
-            },
-            {
-                CORS_DIV: 'Python',
-                SEL_NM: '파이썬',
-                NTH_NM: '2',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
-                수업개월수: '6',
-                EDU_ST_DT: '2023-08-01 15:32',
-                EDU_END_DT: '2023-08-01 15:32',
-                발표일자: '2023-08-01 15:32',
-                NOTE: '장사때려침'
-            },
-            {
-                CORS_DIV: 'C++',
-                SEL_NM: 'C++ 코딩테스트',
-                NTH_NM: '4',
-                ENT_YR: '2023',
-                TERM_DIV: '1',
-                수업개월수: '6',
-                EDU_ST_DT: '2023-08-01 15:32',
-                EDU_END_DT: '2023-08-01 15:32',
-                발표일자: '2023-08-01 15:32',
-                NOTE: '장사때려침'
-            }
-        ];*/
         const data3 = [
             {
                 gigwan: "블라블라대학",
@@ -745,8 +687,8 @@
         ]
 
         function educationPeriodFormatter({row}) {
-            const startDate = row.EDU_START_DATE;
-            const endDate = row.EDU_END_DATE;
+            const startDate = row.eduStartDate;
+            const endDate = row.eduEndDate;
             return startDate + "~" + endDate;
         }
 
@@ -849,7 +791,9 @@
         grid.on('drop', ev => {
             firstColumName = grid.getColumns()[0]['name'];
         });
-
+        document.querySelector('#btn_grid2_excel_export').addEventListener('click', () => {
+            grid.export('xlsx');
+        });
         /*const grid2 = new tui.Grid({
             el: document.getElementById('grid2'),
             data: data2,
@@ -937,48 +881,15 @@
             console.log('drag', ev);
         });*/
 
-        var nthData = [
-            {
-                COURSE_DIV: 'Java',
-                COURSE_NAME: '자바과정 풀스택',
-                NTH_CODE: '3',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                발표일자: '2023-08-02',
-                STEP_DIV: '전형단계',
-                STATUS_DIV: '진행완료'
-            },
-            {
-                COURSE_DIV: 'Python',
-                COURSE_NAME: '파이썬',
-                NTH_CODE: '2',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-02',
-                발표일자: '2023-08-03',
-                STEP_DIV: '전형단계2',
-                STATUS_DIV: '진행완료'
-            },
-            {
-                COURSE_DIV: 'C++',
-                COURSE_NAME: 'C++ 코딩테스트',
-                NTH_CODE: '4',
-                ENT_YEAR: '2023',
-                TERM_DIV: '1',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-03',
-                발표일자: '2023-08-05',
-                STEP_DIV: '전형단계3',
-                STATUS_DIV: '진행중'
-
-            }
-        ];
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: nthData,
+            data: {
+                initialRequest: true,
+                api: {
+                    hideLoadingBar: false,
+                    readData: {url: '/recruitment/list', method: 'GET'}
+                },
+            },
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -990,33 +901,21 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'COURSE_DIV',
+                    name: 'courseDiv',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'COURSE_NAME',
+                    name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
-                    header: '기수코드',
-                    name: 'NTH_CODE',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'ENT_YEAR',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
                     header: '분기',
-                    name: 'TERM_DIV',
+                    name: 'termDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
@@ -1035,13 +934,13 @@
                 },
                 {
                     header: '전형단계',
-                    name: 'STEP_DIV',
+                    name: 'stepDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '진행상태',
-                    name: 'STATUS_DIV',
+                    name: 'statusDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 }
