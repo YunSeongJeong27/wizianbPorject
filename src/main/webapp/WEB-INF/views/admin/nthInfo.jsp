@@ -59,5 +59,27 @@
         </tbody>
     </table>
 </div>
+
+
+<script>
+    function calculateCourseMonths({row}) {
+        const startDate = row.eduStartDate;
+        const endDate = row.eduEndDate;
+
+        const diffInMilliseconds = endDate - startDate;
+        const diffInMonths = diffInMilliseconds / (1000 * 60 * 60 * 24 * 30);
+
+        if (!isNaN(diffInMonths) && diffInMonths >= 0) {
+            return Math.floor(diffInMonths);
+        } else {
+            return "";
+        }
+    }
+    function calculateTerm() {
+        const startDate = new Date(eduStartDateInput.value);
+
+        termDivSelect.value = Math.ceil((startDate.getMonth() + 1) / 3);
+    }
+</script>
 </body>
 </html>

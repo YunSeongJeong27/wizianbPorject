@@ -11,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,41 +34,37 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
+    public ToastUiResponseDto searchRecruitmentList(String rcrtNo, String courseDiv) {
+        List<Recruitment> recruitmentList = recruitmentRepository.searchList(rcrtNo, courseDiv);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("contents", recruitmentList);
+        resultMap.put("pagination", "");
+
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    @Override
     public ToastUiResponseDto insertRecruitment(JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         int result = 0;
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        try {
-            for (JsonNode row : inputRows) {
-                String eduStartDateStr = row.get("eduStartDate").asText();
-                String eduEndDateStr = row.get("eduEndDate").asText();
-
-                LocalDate eduStartDate = LocalDate.parse(eduStartDateStr, dateFormatter);
-                LocalDate eduEndDate = LocalDate.parse(eduEndDateStr, dateFormatter);
-
-                int month = eduStartDate.getMonthValue();
-                int termDiv = (month - 1) / 3 + 1;
-
-                long diffInDays = ChronoUnit.DAYS.between(eduStartDate, eduEndDate);
-                int courseMonth = (int) Math.floor((double) diffInDays / 30.0);
-
-                Recruitment recruitVo = Recruitment.builder()
-                        .rcrtNo(generateRecruitmentNo(row.get("courseDiv").asText(), eduStartDateStr))
-                        .courseDiv(row.get("courseDiv").asText())
-                        .courseName(row.get("courseName").asText())
-                        .termDiv(String.valueOf(termDiv))
-                        .eduStartDate(row.get("eduStartDate").asText())
-                        .eduEndDate(row.get("eduEndDate").asText())
-                        .courseMonth(courseMonth)
-                        .statusDiv(RecruitmentStatus.준비중)
-                        .note(row.get("note").asText())
-                        .build();
-                result = recruitmentRepository.insert(recruitVo);
-            }
-            resultMap.put("message", "입력하신"+ result +" 건의 모집전형이 저장되었습니다.");
-        } catch (Exception e) {
-            log.debug("insertRecruitment 에러남 : {}", e.getMessage());
+        for (JsonNode row : inputRows) {
+            String eduStartDateStr = row.get("eduStartDate").asText();
+            Recruitment recruitVo = Recruitment.builder()
+                    .rcrtNo(generateRecruitmentNo(row.get("courseDiv").asText(), eduStartDateStr))
+                    .courseDiv(row.get("courseDiv").asText())
+                    .courseName(row.get("courseName").asText())
+                    .termDiv(row.get("termDiv").asText())
+                    .eduStartDate(row.get("eduStartDate").asText())
+                    .eduEndDate(row.get("eduEndDate").asText())
+                    .courseMonth(row.get("courseMonth").asInt())
+                    .statusDiv(RecruitmentStatus.준비중)
+                    .note(row.get("note").asText())
+                    .build();
+            result = recruitmentRepository.insert(recruitVo);
         }
+        resultMap.put("message", "입력하신" + result + " 건의 모집전형이 저장되었습니다.");
+
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
@@ -79,38 +72,22 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public ToastUiResponseDto updateRecruitment(JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         int result = 0;
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        try {
-            for (JsonNode row : inputRows) {
-                String eduStartDateStr = row.get("eduStartDate").asText();
-                String eduEndDateStr = row.get("eduEndDate").asText();
-
-                LocalDate eduStartDate = LocalDate.parse(eduStartDateStr, dateFormatter);
-                LocalDate eduEndDate = LocalDate.parse(eduEndDateStr, dateFormatter);
-
-                int month = eduStartDate.getMonthValue();
-                int termDiv = (month - 1) / 3 + 1;
-
-                long diffInDays = ChronoUnit.DAYS.between(eduStartDate, eduEndDate);
-                int courseMonth = (int) Math.floor((double) diffInDays / 30.0);
-
-                Recruitment recruitVo = Recruitment.builder()
-                        .rcrtNo(row.get("rcrtNo").asText())
-                        .courseDiv(row.get("courseDiv").asText())
-                        .courseName(row.get("courseName").asText())
-                        .termDiv(String.valueOf(termDiv))
-                        .eduStartDate(row.get("eduStartDate").asText())
-                        .eduEndDate(row.get("eduEndDate").asText())
-                        .courseMonth(courseMonth)
-                        .statusDiv(RecruitmentStatus.준비중)
-                        .note(row.get("note").asText())
-                        .build();
-                result = recruitmentRepository.update(recruitVo);
-            }
-            resultMap.put("message", "입력하신"+ result +" 건의 모집전형이 수정되었습니다.");
-        } catch (Exception e) {
-            log.debug("insertRecruitment 에러남 : {}", e.getMessage());
+        for (JsonNode row : inputRows) {
+            Recruitment recruitVo = Recruitment.builder()
+                    .rcrtNo(row.get("rcrtNo").asText())
+                    .courseDiv(row.get("courseDiv").asText())
+                    .courseName(row.get("courseName").asText())
+                    .termDiv(row.get("termDiv").asText())
+                    .eduStartDate(row.get("eduStartDate").asText())
+                    .eduEndDate(row.get("eduEndDate").asText())
+                    .courseMonth(row.get("courseMonth").asInt())
+                    .statusDiv(RecruitmentStatus.준비중)
+                    .note(row.get("note").asText())
+                    .build();
+            result = recruitmentRepository.update(recruitVo);
         }
+        resultMap.put("message", "입력하신" + result + " 건의 모집전형이 수정되었습니다.");
+
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
