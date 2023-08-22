@@ -80,6 +80,18 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         return applicationInfoRepository.findByMemId(memId);
     }
 
+    /*비밀번호변경*/
+    @Override
+    public ApplicationInfo savePassword(String loginId,String password) {
+
+        ApplicationInfo memberInfo =  applicationInfoRepository.findByLoginId(loginId);
+        String newPassword = passwordEncoder.encode(password);
+
+        applicationInfoRepository.savePassword(loginId,newPassword);
+
+        return memberInfo;
+    }
+
 
 }
 

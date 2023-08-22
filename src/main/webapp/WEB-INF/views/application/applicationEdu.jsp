@@ -135,7 +135,8 @@
                                 <div class="col-lg-10">
                                     <div class="d-flex justify-content">
                                         <input name="gradFile" type="text" class="form-control me-1" disabled>
-                                        <label class="btn btn-sm btn-outline-dark me-1">업로드</label>
+                                        <label for="addFile" class="btn btn-sm btn-outline-dark me-1">업로드</label>
+                                        <input type="file" id="addFile" onchange="uploadFile()" style="display: none">
                                         <button type="button" class="btn btn-sm btn-outline-dark me-1">다운로드</button>
                                         <button type="button" class="btn btn-sm btn-outline-dark">삭제</button>
                                     </div>
@@ -216,6 +217,10 @@
         window.location.href = "/userEdu";
     })
 
+
+    function uploadFile() {
+
+    }
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>

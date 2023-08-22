@@ -92,7 +92,7 @@
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
                     <div><input type="hidden" name="rcrtNo" value="10-001"></div>
-                    <div><input type="hidden" name="aplyNo" value="1-004"></div>
+                    <div><input type="hidden" name="aplyNo" value="1-001"></div>
 
 <%--사진업로드--%>
                     <div class="row mt-3">
@@ -101,7 +101,14 @@
                         </div>
                         <div class="col">
                             <div id="image_container">
-                                <img id="image" width="94.4" height="113.3">
+                                <c:choose>
+                                    <c:when test="${loginId==null}">
+                                        <img id="image" width="94.4" height="113.3">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img id="image" width="94.4" height="113.3" src="${pageContext.request.contextPath}/profileImage/${appInfo.picFileNo}.png">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div class="d-flex justify-content mt-1">
                                 <input type="file" id="file_add" accept="image/*" name="pictureUrl" onchange="setThumbnail(event);" style="display: none">

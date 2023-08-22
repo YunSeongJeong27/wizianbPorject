@@ -3,7 +3,7 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationInfoRepository">
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        select*from entry_apply_master;
+        SELECT * FROM entry_apply_master;
     </select>
 
     <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
@@ -17,7 +17,7 @@
     </insert>
 
     <select id="findByEmail" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        select *from entry_apply_master where email=#{email};
+        SELECT * FROM entry_apply_master WHERE email=#{email};
     </select>
 
     <select id="existsByEmail" parameterType="java.lang.String" resultType="java.lang.Boolean">
@@ -25,11 +25,14 @@
     </select>
 
     <select id="findByMemId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        select * from member where mem_id = #{memId};
+        SELECT * FROM member WHERE mem_id = #{memId};
     </select>
 
-<!--    <update id="changePw" parameterType="java.lang.String">-->
-<!--        update member set pw=#{} where pw=#{}-->
-<!--    </update>-->
+    <select id="findByLoginId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM member WHERE login_id = #{loginId};
+    </select>
+    <update id="savePassword" parameterType="java.lang.String">
+        UPDATE member SET pw=#{password} WHERE login_id=#{loginId};
+    </update>
 
 </mapper>
