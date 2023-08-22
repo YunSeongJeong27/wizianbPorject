@@ -19,34 +19,40 @@
 </head>
 
 <body>
+<div class="d-flex flex-row justify-content-end mb-1">
+    <button id="selectBtn" class="btn btn-sm btn-secondary me-1" onclick="searchBtn()">조회</button>
+</div>
     <div class="container-table">
         <%--TOP--%>
-        <div class="col-12">
-            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                <div class="col-1 me-1"><input type="text" class="form-control"></div>
-                <div class="col-1 me-2">
-                    <select class="form-select">
-                        <option selected>1분기</option>
-                        <option>2분기</option>
-                        <option>3분기</option>
-                        <option>4분기</option>
-                    </select>
-                </div>
+            <div class="col-12">
+                <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+                    <div class="col-1 align-middle tableSearch">분기</div>
+                    <div class="col-1 me-2">
+                        <select class="form-select" name="termDiv">
+                            <option value="" selected>(전체)</option>
+                            <option value="1">1분기</option>
+                            <option value="2">2분기</option>
+                            <option value="3">3분기</option>
+                            <option value="4">4분기</option>
+                        </select>
+                    </div>
 
-                <div class="col-2 tableSearch">과정구분</div>
-                <div class="col-2 me-2">
-                    <select class="form-select">
-                        <option selected>Java</option>
-                        <option>Python</option>
-                        <option>C++</option>
-                    </select>
-                </div>
+                    <div class="col-2 tableSearch">과정구분</div>
+                    <div class="col-2 me-2">
+                        <select class="form-select" id="courseDiv" name="courseDiv">
+                            <option  value="" selected>(전체)</option>
+                        </select>
+                    </div>
 
-                <div class="col-2 tableSearch">과정명</div>
-                <div class="col-2"><input type="text" class="form-control"></div>
+                    <div class="col-2 tableSearch">과정명</div>
+                    <div class="col-4">
+                        <select class="form-select" id="courseName" name="courseName">
+                            <option  value="" selected>(전체)</option>
+
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
 
         <%--HEAD--%>
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
@@ -107,89 +113,55 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const data = [
-            {
-                COURSE_DIV: 'COURSE_DIV',
-                COURSE_NAME: 'COURSE_NAME',
-                NTH_CODE: 'NTH_CODE',
-                ENT_YEAR: 'ENT_YEAR',
-                TERM_DIV: 'TERM_DIV',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME',
-                STEP_DIV: 'STEP_DIV'
-            },
-            {
-                COURSE_DIV: 'COURSE_DIV2',
-                COURSE_NAME: 'COURSE_NAME2',
-                NTH_CODE: 'NTH_CODE2',
-                ENT_YEAR: 'ENT_YEAR2',
-                TERM_DIV: 'TERM_DIV2',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME2',
-                STEP_DIV: 'STEP_DIV2'
-            },
-            {
-                COURSE_DIV: 'COURSE_DIV2',
-                COURSE_NAME: 'COURSE_NAME2',
-                NTH_CODE: 'NTH_CODE2',
-                ENT_YEAR: 'ENT_YEAR2',
-                TERM_DIV: 'TERM_DIV2',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME2',
-                STEP_DIV: 'STEP_DIV2'
-            },
-            {
-                COURSE_DIV: 'COURSE_DIV2',
-                COURSE_NAME: 'COURSE_NAME2',
-                NTH_CODE: 'NTH_CODE2',
-                ENT_YEAR: 'ENT_YEAR2',
-                TERM_DIV: 'TERM_DIV2',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME2',
-                STEP_DIV: 'STEP_DIV2'
-            },
-            {
-                COURSE_DIV: 'COURSE_DIV2',
-                COURSE_NAME: 'COURSE_NAME2',
-                NTH_CODE: 'NTH_CODE2',
-                ENT_YEAR: 'ENT_YEAR2',
-                TERM_DIV: 'TERM_DIV2',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME2',
-                STEP_DIV: 'STEP_DIV2'
-            },
-            {
-                COURSE_DIV: 'COURSE_DIV2',
-                COURSE_NAME: 'COURSE_NAME2',
-                NTH_CODE: 'NTH_CODE2',
-                ENT_YEAR: 'ENT_YEAR2',
-                TERM_DIV: 'TERM_DIV2',
-                EDU_START_DATE: '2023-08-01',
-                EDU_END_DATE: '2023-08-01',
-                ANNOUNCE_DATE: '2023-08-11',
-                SCHDL_NAME: 'SCHDL_NAME2',
-                STEP_DIV: 'STEP_DIV2'
+    document.addEventListener('DOMContentLoaded', async () =>{
+        await  nthGridLoad();
+        await  searchListData();
+        await subTableLoad();
+    });
+
+
+    let  termDiv, courseDiv, courseName;
+    const nthTableData = () => {
+        termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
+        courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
+        courseName = courseName === "" ? "nullCourseName" : courseName;
+        return{
+            api: {
+                readData: { url: 'topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
+                    method: 'GET' }
             }
-        ];
-        function educationPeriodFormatter({row}) {
-            const startDate = row.EDU_START_DATE;
-            const endDate = row.EDU_END_DATE;
-            return startDate + "~" + endDate;
-        }
-        const nthTable = new tui.Grid({
+        };
+    };
+    //조회버튼 클릭시
+    async function searchBtn(){
+        termDiv = document.querySelector('select[name="termDiv"]').value;
+        courseDiv = document.querySelector('select[name="courseDiv"]').value;
+        courseName = document.querySelector('select[name="courseName"]').value;
+
+        await nthGridLoad(nthTableData());
+        // 이 function에 추가로 서브테이블 이름에
+        // 서브테이블.innerHTML = ''; 이거 각뷰에추가하면좋음
+    }
+
+
+
+    function recruitmentPeriodFormatter({row}) {
+        return row.recruitStartDate + "~" + row.recruitEndDate;
+    }
+
+    function announcementPeriodFormatter({row}) {
+        return row.announcementStartDate + "~" + row.announcementEndDate;
+    }
+
+    let nthTable;
+    const nthGridLoad = (nthData) => {
+
+        const oldnNhTable = document.getElementById('nthTable');
+        oldnNhTable.innerHTML = '';
+
+         nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
-            data: data,
+            data: nthData,
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -201,59 +173,47 @@
             columns: [
                 {
                     header: '과정구분',
-                    name: 'COURSE_DIV',
+                    name: 'courseDiv',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
                 {
                     header: '과정명',
-                    name: 'COURSE_NAME',
+                    name: 'courseName',
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center'
                 },
-                {
-                    header: '기수코드',
-                    name: 'NTH_CODE',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'ENT_YEAR',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
+
                 {
                     header: '분기',
-                    name: 'TERM_DIV',
+                    name: 'termDiv',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
-                    header: '교육기간',
-                    name: 'EDU_DATE',
+                    header: '모집기간',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
                     width: 220,
-                    formatter: educationPeriodFormatter
+                    formatter: recruitmentPeriodFormatter
                 },
                 {
                     header: '발표일자',
-                    name: 'ANNOUNCE_DATE',
                     sortingType: 'asc',
-                    sortable: true, align: 'center'
+                    sortable: true, align: 'center',
+                    formatter: announcementPeriodFormatter
                 },
                 {
                     header: '전형일정',
-                    name: 'SCHDL_NAME',
+                    name: 'schdlName',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
                 {
                     header: '전형평가단계',
-                    name: 'STEP_DIV',
+                    name: 'stepDiv',
                     sortingType: 'asc',
                     sortable: false, align: 'center'
                 }
@@ -277,8 +237,36 @@
         const nthTablePage = document.querySelector('#nthTablePage');
 
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
-        nthTablePage.addEventListener('change', function(){handlePerPageChange(this, nthTable)});
-    });
+        nthTablePage.addEventListener('change', function () {
+            handlePerPageChange(this, nthTable)
+        });
+    }
+
+
+    //검색조회 항목들 리스트불러오기(일단 EvManagementController에서불러옴 시간남으면 위치수정)
+    async function searchListData() {
+        const response = await fetch('/eval/result/searchlist');
+        const dataList = await response.json();
+        const courseDiv= dataList["courseDivList"];
+        const courseName= dataList["courseNameList"];
+
+        const courseDivSelect = document.querySelector("#courseDiv");
+        const courseNameSelect = document.querySelector("#courseName");
+
+        courseDiv.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseDiv;
+            option.text = data.courseDiv;
+            courseDivSelect.appendChild(option);
+        });
+
+        courseName.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseName;
+            option.text = data.courseName;
+            courseNameSelect.appendChild(option);
+        });
+    }
 </script>
 </body>
 </html>
