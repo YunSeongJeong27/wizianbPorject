@@ -16,9 +16,6 @@
 <body>
     <div class="container-table m-2">
         <div class="col-12">
-            <div class="d-flex flex-row justify-content-end mb-1">
-                <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
-            </div>
 
             <%@ include file="nthTopScreening.jsp"%>
 
