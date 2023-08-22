@@ -11,24 +11,37 @@
     </select>
 
     <select id="findDocPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
-        SELECT eam.* FROM entry_apply_master eam, entry_ev_target eet WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo}
+        SELECT * FROM entry_apply_master WHERE RCRT_NO = #{rcrtNo}
     </select>
 
     <select id="findFnlPass" resultType="com.wizian.admission.wizianb.domain.PassManagement">
         SELECT eam.*,
-               ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
-               RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
-        FROM entry_apply_master eam LEFT JOIN sel_ev_score ses ON eam.APLY_NO = ses.APLY_NO
-        WHERE eam.RCRT_NO = #{rcrtNo} AND eam.DOC_PASS_YN = 'Y'
+               ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+               RANK() OVER (ORDER BY ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
+        FROM entry_apply_master eam, entry_ev_target eet
+        WHERE eam.APLY_NO = eet.APLY_NO AND eam.RCRT_NO = #{rcrtNo} AND eam.DOC_PASS_YN = 'Y'
     </select>
 
     <select id="findPassList" resultType="com.wizian.admission.wizianb.domain.PassManagement">
         SELECT eam.*,
-               ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
-               RANK() OVER (ORDER BY ROUND((ses.EV1_SCORE+ses.EV2_SCORE+ses.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
-        FROM entry_apply_master eam, sel_ev_score ses
-        WHERE eam.RCRT_NO = #{rcrtNo} AND eam.APLY_NO = ses.APLY_NO AND eam.DOC_PASS_YN = 'Y' AND eam.FNL_PASS_YN = 'Y';
+               ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) AS EV_AVG_SCORE,
+               RANK() OVER (ORDER BY ROUND((eet.EV1_SCORE+eet.EV2_SCORE+eet.EV3_SCORE)/3 , 1) DESC) AS PREL_ORD
+        FROM entry_apply_master eam, entry_ev_target eet
+        WHERE eam.RCRT_NO = #{rcrtNo} AND eam.APLY_NO = eet.APLY_NO AND eam.DOC_PASS_YN = 'Y' AND eam.FNL_PASS_YN = 'Y';
     </select>
+
+    <select id="findEvTarget" parameterType="String">
+        SELECT APLY_NO FROM entry_ev_target WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </select>
+
+    <insert id="insertEvTarget" parameterType="com.wizian.admission.wizianb.domain.EvTarget">
+        INSERT INTO entry_ev_target(APLY_NO, RCRT_NO, EV1_SCORE, EV2_SCORE, EV3_SCORE, RSLT_DIV)
+        VALUE (#{aplyNo}, #{rcrtNo}, 0, 0, 0, '면접전형')
+    </insert>
+
+    <delete id="deleteEvTarget" parameterType="com.wizian.admission.wizianb.domain.EvTarget">
+        DELETE FROM entry_ev_target WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </delete>
 
     <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
         UPDATE entry_apply_master SET DOC_PASS_YN = #{docPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}

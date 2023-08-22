@@ -269,7 +269,7 @@
 </div>
 
 
-<%--이메일인증 모달--%>
+<%--비밀번호 변경 모달--%>
 <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -278,8 +278,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/pwChange" method="post" id="pwChangeForm">
+                <form action="/updatePassword" method="post" id="pwChangeForm">
                     <div class="mb-3">
+                        <input type="hidden" name="loginId" value="${member.loginId}">
                         <div><input type="hidden" name="password" value="${member.pw}"></div>
                         <div>
                             <label for="originPassword" class="col-form-label">변경전 비밀번호</label>
@@ -294,7 +295,7 @@
                             <label for="newPassword" class="col-form-label">변경후 비밀번호</label>
                         </div>
                         <div class="flex-fill me-2">
-                            <input type="password" id="newPassword" class="form-control" name="email">
+                            <input type="password" id="newPassword" class="form-control" name="newPw">
                         </div>
                     </div>
                 <div class="mb-3">
@@ -302,7 +303,7 @@
                         <label for="newPwCheck" class="col-form-label">비밀번호 확인</label>
                     </div>
                     <div class="flex-fill me-2">
-                        <input type="password" id="newPwCheck" class="form-control" name="email">
+                        <input type="password" id="newPwCheck" class="form-control">
                     </div>
                 </div>
                 </form>
@@ -401,6 +402,7 @@
             const newPw = document.getElementById('newPassword').value;
             const newPwCheck = document.getElementById('newPwCheck').value;
             const updatePwForm = document.getElementById('pwChangeForm');
+            const pwModal = document.getElementById('passwordModal')
 
 
             if(inputPassword==""){
@@ -438,7 +440,7 @@
                     } else {
                         if (confirm("변경하시겠습니까?")) {
                             updatePwForm.submit();
-                            $("#passwordModal").modal("hide");
+                            pwModal.modal("hide");
                         }
 
                     }

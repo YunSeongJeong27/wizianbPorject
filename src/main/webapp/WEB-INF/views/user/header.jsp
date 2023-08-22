@@ -64,6 +64,16 @@
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
         <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer;"></div>
+        <div>
+            <c:choose>
+                <c:when test="${loginId==null}">
+                    <a href="/login">로그인</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/logout">로그아웃</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
         <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center">
             <div class="nav-item" style="width: 31%;">
                 <a href="/app" class="nav-link headerBtn">원서작성</a>
@@ -71,7 +81,7 @@
             <div class="nav-item dropdown" style="width: 31%;">
                 <a href="/checked" class="nav-link headerBtn" id="navbarDropdown" role="button">마이페이지</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item headerBtn" href="/checked">지원서확인</a></li>
+                    <li><a class="dropdown-item headerBtn" href="/loginAplyInfo">지원서확인</a></li>
                     <li><a class="dropdown-item headerBtn" id="checkedAnchor" href="#">추가제출서류</a></li>
                 </ul>
             </div>

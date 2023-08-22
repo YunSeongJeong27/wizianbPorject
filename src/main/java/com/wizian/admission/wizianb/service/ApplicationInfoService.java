@@ -17,6 +17,6 @@ public interface ApplicationInfoService {
 
    ApplicationInfo findMember(String memId);
 
-
+   ApplicationInfo savePassword(String loginId,String password);
 
 }

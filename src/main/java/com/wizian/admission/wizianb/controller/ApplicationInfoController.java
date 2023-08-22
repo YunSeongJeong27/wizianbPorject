@@ -35,6 +35,9 @@ public class ApplicationInfoController {
         return "/application/applicationInfo";
     }
 
+
+
+
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
     public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model) throws IOException {
@@ -70,6 +73,17 @@ public class ApplicationInfoController {
     }
 
     /*비밀번호 변경*/
+    @PostMapping("/updatePassword")
+    public String setPassword(@RequestParam("loginId")String loginId,@RequestParam("newPw")String newPw){
+
+        applicationInfoService.savePassword(loginId, newPw);
+
+        //비밀번호 변경날짜등록
+
+
+        return "/application/applicationInfoAfterLogin";
+    }
+
 
 
 }
