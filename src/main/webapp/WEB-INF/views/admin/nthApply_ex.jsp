@@ -794,92 +794,6 @@
         document.querySelector('#btn_grid2_excel_export').addEventListener('click', () => {
             grid.export('xlsx');
         });
-        /*const grid2 = new tui.Grid({
-            el: document.getElementById('grid2'),
-            data: data2,
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '과정구분',
-                    name: 'CORS_DIV',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '과정명',
-                    name: 'SEL_NM',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '기수',
-                    name: 'NTH_NM',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'ENT_YR',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '분기',
-                    name: 'TERM_DIV',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수업개월수',
-                    name: '수업개월수',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '교육기간',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center',
-                    formatter: educationPeriodFormatter
-                },
-                {
-                    header: '발표일자',
-                    name: '발표일자',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '비고',
-                    name: 'NOTE',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                }
-            ],
-            columnOptions: {
-                resizable: true
-            },
-
-            draggable: true,
-            pagination: {
-                page: 1,
-                count: 10,
-                useClient: true,
-                useDefault: true
-            }
-
-        });
-        grid2.on('check', function (ev) {
-            console.log('check', ev);
-        });
-
-        grid2.on('uncheck', function (ev) {
-            console.log('uncheck', ev);
-        });
-        grid2.on('drag', function (ev) {
-            console.log('drag', ev);
-        });*/
 
         const nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
@@ -952,7 +866,7 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthTable.focus(0, "COURSE_DIV", true);
+                nthTable.focus(0, "courseDiv", true);
 
                 //rowDataLoad(0, nthTable, "inputTable");
             }
