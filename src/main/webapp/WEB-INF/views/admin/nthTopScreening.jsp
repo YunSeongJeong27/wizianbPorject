@@ -145,17 +145,10 @@
 
 
 
-    function recruitmentPeriodFormatter({row}) {
-        return row.recruitStartDate + "~" + row.recruitEndDate;
-    }
 
-    function announcementPeriodFormatter({row}) {
-        return row.announcementStartDate + "~" + row.announcementEndDate;
-    }
 
     let nthTable;
     const nthGridLoad = (nthData) => {
-
         const oldnNhTable = document.getElementById('nthTable');
         oldnNhTable.innerHTML = '';
 
@@ -194,16 +187,18 @@
                 },
                 {
                     header: '모집기간',
+                    name: 'recruitPeriod',
                     sortingType: 'asc',
                     sortable: true, align: 'center',
                     width: 220,
-                    formatter: recruitmentPeriodFormatter
+
                 },
                 {
                     header: '발표일자',
+                    name: 'announcementPeriod',
                     sortingType: 'asc',
-                    sortable: true, align: 'center',
-                    formatter: announcementPeriodFormatter
+                    sortable: true, align: 'center'
+
                 },
                 {
                     header: '전형일정',

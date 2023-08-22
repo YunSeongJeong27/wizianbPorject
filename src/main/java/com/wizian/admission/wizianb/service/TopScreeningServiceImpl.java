@@ -11,6 +11,7 @@ import com.wizian.admission.wizianb.repository.TopScreeningRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,14 @@ public class TopScreeningServiceImpl implements TopScreeningService {
         List<TopScreeningInfo> nthInfo=topScreeningRepository.nthInfo(termDiv, courseDiv, courseName,
                 RecruitmentStatus.준비중,RecruitmentStatus.진행중,
                 SchdlName.모집,SchdlName.최종합격자발표);
+
+
+        for(TopScreeningInfo nl: nthInfo){
+            nl.formatterPeriod(
+                    nl.getRecruitStartDate(),nl.getRecruitEndDate(),
+                    nl.getAnnouncementStartDate(),nl.getAnnouncementEndDate()
+            );
+        }
         HashMap<String, Object> resultMap= new HashMap<>();
         resultMap.put("contents",nthInfo);
         resultMap.put("pagination", "");
