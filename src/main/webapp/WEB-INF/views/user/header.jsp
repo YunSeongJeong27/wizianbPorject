@@ -61,12 +61,13 @@
 </head>
 
 <body>
+<c:set var="login" value="${sessionScope.login}" />
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
         <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer;"></div>
         <div>
             <c:choose>
-                <c:when test="${loginId==null}">
+                <c:when test="${empty login}">
                     <a href="/login">로그인</a>
                 </c:when>
                 <c:otherwise>

@@ -31,8 +31,8 @@
     <select id="findByLoginId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
         SELECT * FROM member WHERE login_id = #{loginId};
     </select>
-    <update id="savePassword" parameterType="java.lang.String">
-        UPDATE member SET pw=#{password} WHERE login_id=#{loginId};
+    <update id="savePassword" parameterType="map">
+        UPDATE member SET pw=#{password},pwd_chg_date=#{date,jdbcType=TIMESTAMP} WHERE login_id=#{loginId};
     </update>
 
 </mapper>

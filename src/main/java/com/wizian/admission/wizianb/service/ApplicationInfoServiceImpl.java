@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -87,7 +89,8 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         ApplicationInfo memberInfo =  applicationInfoRepository.findByLoginId(loginId);
         String newPassword = passwordEncoder.encode(password);
 
-        applicationInfoRepository.savePassword(loginId,newPassword);
+        LocalDateTime currentDate = LocalDateTime.now();
+        applicationInfoRepository.savePassword(loginId,newPassword,currentDate);
 
         return memberInfo;
     }

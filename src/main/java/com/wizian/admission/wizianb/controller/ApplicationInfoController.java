@@ -2,6 +2,7 @@ package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
+import com.wizian.admission.wizianb.service.ApplicationWriteService;
 import com.wizian.admission.wizianb.service.MailSendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +27,21 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
     private final PasswordEncoder passwordEncoder;
+    private final ApplicationWriteService applicationWriteService;
 
     //기본정보
     @GetMapping("/userInfo")
-    public String userInfo(HttpServletRequest request, Model model){
+    public String userInfo(HttpServletRequest request, Model model,HttpSession session){
         model.addAttribute("title","기본정보");
 //        model.addAttribute("rcrtNo",rcrtNo);
 //        model.addAttribute("courseDiv",courseDiv);
-        return "/application/applicationInfo";
+
+        if(session.getAttribute("login")!=null){
+            return "/application/applicationInfoAfterLogin";
+        }else{
+            return "/application/applicationInfo";
+        }
     }
-
-
 
 
     /*지원서작성,회원가입*/
@@ -77,9 +83,6 @@ public class ApplicationInfoController {
     public String setPassword(@RequestParam("loginId")String loginId,@RequestParam("newPw")String newPw){
 
         applicationInfoService.savePassword(loginId, newPw);
-
-        //비밀번호 변경날짜등록
-
 
         return "/application/applicationInfoAfterLogin";
     }

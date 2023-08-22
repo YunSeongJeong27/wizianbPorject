@@ -54,7 +54,6 @@ public class ApplicationWriteController {
         return "/application/applicationLogin";
     }
 
-
     @PostMapping("/login")
     public String postLogin(HttpServletRequest request, Model model, HttpSession session) {
         String email = request.getParameter("email");
@@ -75,51 +74,17 @@ public class ApplicationWriteController {
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";
         } else if (passwordEncoder.matches(password, passwordCheck)) {
-            session.setAttribute("loginId", emailCheck);
 
-            model.addAttribute("title", "모집전형선택");
-            model.addAttribute("entrySelMaster", applicationWriteService.entrySelMaster());
-            model.addAttribute("entrySelSchdl", applicationWriteService.entrySelSchdl());
-
-            return "/application/applicationWrite";
-        } else {
-            model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
-            return "/application/applicationLogin";
-        }
-
-    }
-
-    @PostMapping("/loginInfo")
-    public String InfoLogin(HttpServletRequest request, Model model, HttpSession session) {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        if (email.isEmpty()) {
-            model.addAttribute("text", "아이디를 입력해주세요.");
-            return "/application/applicationLogin";
-        } else if (password.isEmpty()) {
-            model.addAttribute("text", "비밀번호를 입력해주세요.");
-            return "/application/applicationLogin";
-        }
-
-        String emailCheck = applicationWriteService.emailCheck(email);
-        String passwordCheck = applicationWriteService.passwordCheck(email, password);
-
-
-        if (emailCheck == null || passwordCheck == null) {
-            model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
-            return "/application/applicationLogin";
-        } else if (passwordEncoder.matches(password, passwordCheck)) {
-            session.setAttribute("loginId", emailCheck);
 
             //객체 찾아서 반환
             ApplicationInfo appInfo = applicationInfoService.appInfo(email);
             ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
 
-
+            session.setAttribute("login",member);
             model.addAttribute("appInfo", appInfo);
             model.addAttribute("member", member);
 
-            return "/application/applicationInfo";
+            return "/application/applicationInfoAfterLogin";
         } else {
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";

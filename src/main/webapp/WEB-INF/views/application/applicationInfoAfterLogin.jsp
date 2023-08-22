@@ -92,8 +92,6 @@
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
 
-                    <c:if test="${loginId!=null}"/>
-
                     <div><input type="hidden" name="rcrtNo" value="${appInfo.rcrtNo}"></div>
                     <div><input type="hidden" name="aplyNo" value="${appInfo.aplyNo}"></div>
 
