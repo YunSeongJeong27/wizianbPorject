@@ -465,8 +465,6 @@
                 {
                     courseDiv: '',
                     courseName: '',
-                    nthCode: '',
-                    entYear: '',
                     termDiv: '',
                     eduStartDate: '',
                     eduEndDate: '',

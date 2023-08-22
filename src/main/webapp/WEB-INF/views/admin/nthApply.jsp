@@ -267,11 +267,13 @@
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
             <div class="col-3 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집기수정보</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
+                <p class="subResult text-secondary me-2">검색결과: 00건</p>
             </div>
         </div>
 
-        <div id="grid2"></div>
+        <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+            <div id="nthTable"></div>
+        </div>
     </div>
 
     <div class="row mt-4">
@@ -285,7 +287,7 @@
                         <span class="text-secondary me-2">검색결과 : 0건</span>
                     </div>
                     <div>
-                        <select class="form-select-sm" onchange="fn_grid2_pageRowCount()">
+                        <select class="form-select-sm">
                             <option value="5">5</option>
                             <option value="30" selected="">30</option>
                             <option value="50">50</option>
@@ -295,8 +297,7 @@
                     </div>
                 </div>
                 <div>
-                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1"
-                            onclick="fn_excel_grid2_onclick()">
+                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1">
                         엑셀내보내기(전체)
                     </button>
                 </div>
@@ -329,7 +330,7 @@
                     </div>
                 </div>
             </div>
-            <div id="grid" class="mt-2"></div>
+            <div id="peopleListGrid" class="mt-2"></div>
         </div>
         <!-- 탭 아이디 'mainTab' -->
         <div id="mainTab" class="col-7">
@@ -458,26 +459,6 @@
                                                                 src="/images/icon-calendar.svg"
                                                                 alt="..." title="...">
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">지원자직업</td>
-                                                    <td class="align-middle">
-                                                        <select id="slt_job_div" class="form-select">
-                                                            <option value=" ">(미선택)</option>
-                                                            <option value="10">직장인</option>
-                                                            <option value="20">학생(졸업예정)</option>
-                                                            <option value="30">학생(졸업)</option>
-                                                            <option value="90">기타</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">지원자직업명</td>
-                                                    <td class="align-middle">
-                                                        <input type="text" id="txt_inp1_job_nm"
-                                                               class="form-control" maxlength="50"
-                                                               disabled="disabled">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -834,8 +815,8 @@
             return startDate + "~" + endDate;
         }
 
-        const grid = new tui.Grid({
-            el: document.getElementById('grid'),
+        const peopleListGrid = new tui.Grid({
+            el: document.getElementById('peopleListGrid'),
             data: data,
             rowHeaders: [
                 {
@@ -883,12 +864,15 @@
             },
             draggable: true,
         });
-        grid.on('check', function (ev) {
+        peopleListGrid.on('check', function (ev) {
             console.log('check', ev);
         });
 
-        grid.on('uncheck', function (ev) {
+        peopleListGrid.on('uncheck', function (ev) {
             console.log('uncheck', ev);
+        });
+        document.querySelector('#btn_grid2_excel_export').addEventListener('click',() => {
+            peopleListGrid.export('xlsx');
         });
         const grid2 = new tui.Grid({
             el: document.getElementById('grid2'),
@@ -1391,6 +1375,7 @@
             });
         }
     }
+
 </script>
 </body>
 </html>
