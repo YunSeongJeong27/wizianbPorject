@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationIntroRepository">
 
-    <select id="findAll" resultType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
+    <select id="findItem" resultType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
         SELECT * FROM entry_sel_intro WHERE rcrt_no=#{rcrtNo};
     </select>
 

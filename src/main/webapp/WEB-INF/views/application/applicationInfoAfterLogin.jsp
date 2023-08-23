@@ -78,7 +78,7 @@
                         <a href="/userExp">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="/userIntroduce">자기소개서</a>
+                        <a href="/userIntroduce/${rcrtNo}">자기소개서</a>
                     </li>
                 </ul>
             </div>

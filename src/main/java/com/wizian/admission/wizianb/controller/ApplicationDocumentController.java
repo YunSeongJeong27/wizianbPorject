@@ -20,13 +20,7 @@ public class ApplicationDocumentController {
     @PostMapping("/uploadFile")
     public String uploadFile(@RequestParam MultipartFile[] uploadFile, Model model) throws IllegalStateException, IOException {
 
-        List<ApplicationDocument> list = new ArrayList<>();
-        for(MultipartFile file:uploadFile){
-            if(!file.isEmpty()){
-
-            }
-        }
-
         return null;
     }
+
 }

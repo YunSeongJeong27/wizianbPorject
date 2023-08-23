@@ -91,32 +91,37 @@
             <form class="introduce_form" action="/saveIntroduce" method="Post">
                 <div id="repeat">
                     <%-- 문항반복시작--%>
-                    <div>
-                        <div>▶(한국어)지원동기[글자제한:2000자]</div>
-                        <div class="intro_description">- 번역 및 한국문학에 관심을 가지게 된 계기 등을 위주로 기술</div>
-                        <div id="text_box" class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here"  style="height: 150px; resize: none;"></textarea>
+                    <c:forEach items="${introduceList}" var="intro">
+                        <div>
+                            <c:choose>
+                                <c:when test="${empty intro}">
+                                    <div>▶(한국어)지원동기[글자제한:2000자]</div>
+                                    <div class="intro_description">- 번역 및 한국문학에 관심을 가지게 된 계기 등을 위주로 기술</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>${intro.itemName}[글자제한:${intro.maxChar}자]</div>
+                                    <div class="intro_description">- ${intro.itemExpl}</div>
+                                </c:otherwise>
+                            </c:choose>
+                            <div id="text_box" class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here"
+                                          style="height: 150px; resize: none;"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <span id="text_count">[0/</span>
+                                <c:choose>
+                                    <c:when test="${empty intro}">
+                                        <c:set var="maxLength" value="2000" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="maxLength" value="${intro.maxChar}" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <span>${maxLength} 자]</span>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <span id="text_count">[0/</span>
-                            <span id="maxLength">2000</span>
-                            <span> 자]</span>
-                        </div>
-                    </div>
-                    <%--문항반복끝--%>
-                    <div class="mt-3">
-                        <div>▶문항명 [글자제한: '최대허용글자수'자]</div>
-                        <div class="intro_description">- 문항설명</div>
-                        <div class="form-floating"><%--id값 주기. id="text_box--%>
-                            <textarea class="form-control" placeholder="Leave a comment here" style="height: 150px; resize: none;">답변내용</textarea>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <span>[0/</span><%--id값 주기. id="text_count--%>
-                            <span>최대허용글자수</span>
-                            <span> 자]</span>
-                        </div>
-                    </div>
-
+                    </c:forEach>
+                    <%--반복문끝--%>
                 </div>
                 <%--버튼--%>
                 <div class="d-flex justify-content-between mt-5">
@@ -132,16 +137,16 @@
 
 <script>
     $('#text_box textarea').keyup(function () {
-       var content = $(this).val();
-        $('#text_count').html('['+content.length+"/");
+        var content = $(this).val();
+        $('#text_count').html('[' + content.length + "/");
 
         var maxLengthElement = document.getElementById('maxLength');
         var ml = parseInt(maxLengthElement.innerText, 10);
 
-        if (content.length > ml){
-            alert("최대 "+ml+"자까지 입력 가능합니다.");
+        if (content.length > ml) {
+            alert("최대 " + ml + "자까지 입력 가능합니다.");
             $(this).val(content.substring(0, ml));
-            $('#text_count').html('['+ml+"/");
+            $('#text_count').html('[' + ml + "/");
         }
     });
 
@@ -149,13 +154,13 @@
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
     const breadcrumbDiv2 = document.getElementById("breadcrumbDiv2");
     const breadcrumbDiv3 = document.getElementById("breadcrumbDiv3");
-    breadcrumbDiv1.addEventListener("click",function(){
+    breadcrumbDiv1.addEventListener("click", function () {
         window.location.href = "/app";
     })
-    breadcrumbDiv2.addEventListener("click",function(){
+    breadcrumbDiv2.addEventListener("click", function () {
         window.location.href = "/userInfo";
     })
-    breadcrumbDiv3.addEventListener("click",function(){
+    breadcrumbDiv3.addEventListener("click", function () {
         window.location.href = "/userIntroduce";
     })
 </script>
