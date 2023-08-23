@@ -1,6 +1,8 @@
 package com.wizian.admission.wizianb.repository;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.Careers;
+import com.wizian.admission.wizianb.domain.Education;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,4 +11,14 @@ import java.util.List;
 public interface ApplicationAdminInfoRepository {
 
     List<ApplicationInfo> coursePeopleList(String rcrtNo);
+
+    ApplicationInfo peopleDetails(String aplyNo);
+
+    List<Education> getEducationInfo(String aplyNo);
+
+    void updateEducationInfo(Education education);
+
+    List<Careers> getCareersInfo(String aplyNo);
+
+    void updateCareersInfo(Careers careers);
 }

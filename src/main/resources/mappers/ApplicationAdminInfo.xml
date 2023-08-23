@@ -3,6 +3,48 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationAdminInfoRepository">
 
     <select id="coursePeopleList" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT * FROM entry_apply_master WHERE rcrt_no = #{rcrtNo};
+        SELECT *
+        FROM entry_apply_master
+        WHERE rcrt_no = #{rcrtNo}
     </select>
+
+    <select id="peopleDetails" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT APLY_NO,
+               COURSE_DIV,
+               NAME_KOR,
+               NAME_ENG,
+               PIC_FILE_NO,
+               BIRTHDAY,
+               GENDER,
+               EMAIL,
+               ZIPCODE,
+               ADDR_LOCAL,
+               ADDR_DETAIL,
+               TEL_LOCAL,
+               HP_LOCAL,
+               APLY_STS_DIV,
+               APLY_DATE
+        FROM entry_apply_master
+        WHERE aply_no = #{aplyNo}
+    </select>
+    <select id="getEducationInfo" resultType="com.wizian.admission.wizianb.domain.Education">
+        SELECT *
+        FROM entry_apply_acdm
+        WHERE aply_no = #{aplyNo}
+    </select>
+
+    <select id="getCareersInfo" resultType="com.wizian.admission.wizianb.domain.Careers">
+        SELECT *
+        FROM entry_apply_career
+        WHERE aply_no = #{aplyNo}
+    </select>
+
+    <update id="updateCareers" parameterType="com.wizian.admission.wizianb.domain.Careers">
+        UPDATE entry_apply_career
+        SET PLC_NAME = #{plcName} PLC_JOB = #{plcJob}
+            START_DATE = #{startDate}
+            END_DATE = #{endDate}
+            NOTE = #{note}
+        WHERE aply_no = #{aplyNo}
+    </update>
 </mapper>
