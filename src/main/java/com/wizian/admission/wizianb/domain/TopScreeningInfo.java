@@ -11,6 +11,8 @@ public class TopScreeningInfo {
     private String courseName;  // 과정명
     private String termDiv;     // 분기
     private String stepDiv;     // 전형평가단계
+    private String eduStartDate;  //교육시작일
+    private String eduEndDate; //교욱종료일
 
     // 전형평가단계(EntrySelSchdl)
     private int schdlSeq;       // 일정일련번호(pk)
@@ -21,7 +23,7 @@ public class TopScreeningInfo {
     private String announcementEndDate;     //최종 종료일시
     private String announcementPeriod;       //최종발표기간
     private String schdlName;   // 일정명(=전형일정)
-
+    private String statusDiv;   //진행상태
 
     public void formatterPeriod(String recruitStartDate,String recruitEndDate,
                                  String announcementStartDate,String announcementEndDate){

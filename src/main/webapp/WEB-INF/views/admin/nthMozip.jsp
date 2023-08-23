@@ -45,9 +45,11 @@
 <body>
 <div class="container-table m-2">
 
-
     <div class="d-flex flex-row justify-content-end mb-1">
         <button id="selectBtn" class="btn btn-sm btn-secondary me-1" onclick="searchBtn()">조회</button>
+        <button id="nthInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
+        <button id="nthSaveBtn" class="btn btn-sm btn-success me-1">저장</button>
+        <button id="nthDeleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
     </div>
     <div class="container-table">
         <%--TOP--%>
@@ -55,7 +57,7 @@
             <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
                 <div class="col-1 align-middle tableSearch">분기</div>
                 <div class="col-1 me-2">
-                    <select class="form-select" name="termDiv">
+                    <select class="form-select" id="termDiv1" name="termDiv">
                         <option value="" selected>(전체)</option>
                         <option value="1">1분기</option>
                         <option value="2">2분기</option>
@@ -66,14 +68,14 @@
 
                 <div class="col-2 tableSearch">과정구분</div>
                 <div class="col-2 me-2">
-                    <select class="form-select" id="courseDiv" name="courseDiv">
+                    <select class="form-select" id="courseDiv1" name="courseDiv">
                         <option  value="" selected>(전체)</option>
                     </select>
                 </div>
 
                 <div class="col-2 tableSearch">과정명</div>
                 <div class="col-4">
-                    <select class="form-select" id="courseName" name="courseName">
+                    <select class="form-select" id="courseName1" name="courseName">
                         <option  value="" selected>(전체)</option>
 
                     </select>
@@ -134,41 +136,28 @@
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>전형일정단계/상태</div>
+
                 </div>
-                <%--<div class="col-3">
-                    <select class="form-select">
-                        <option selected>(미선택)</option>
-                        <option>테스트접수</option>
-                        <option>지원서접수</option>
+                <div class="d-flex flex-row justify-content-left mb-1 gap-2">
+                    <select class="form-select" name="schdlName" >
+                        <option value="" selected>(전체)</option>
+                    </select>
+                    <select class="form-select" name="statusDiv" >
+                        <option value="" selected>(전체)</option>
                     </select>
                 </div>
-                <div class="col-3">
-                    <select class="form-select">
-                        <option selected>(미선택)</option>
-                        <option>준비중</option>
-                        <option>진행</option>
-                        <option>완료</option>
-                    </select>
-                </div>
-                <div class="col-2 ms-2">
-                    <div class="btn btn-sm btn-outline-secondary fw-bold">변경</div>
-                </div>--%>
             </div>
             <div class="p-3">
                 <table id="inputTable" class="table border fw-bold align-middle">
                     <tr>
                         <td class="tableColor">과정명</td>
                         <td class="col-2">
-                            <select class="form-select tableInput" name="courseName">
-
+                            <select class="form-select tableInput" id="courseName2" name="courseName" disabled>
                             </select>
                         </td>
                         <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                         <td class="">
-                            <select class="form-select tableInput" name="courseDiv" disabled>
-                                <option selected>Java</option>
-                                <option>Python</option>
-                                <option>C++</option>
+                            <select class="form-select tableInput" id="courseDiv2" name="courseDiv" disabled>
                             </select>
                         </td>
                         <td class="tableColor">모집전형번호</td>
@@ -183,12 +172,8 @@
                     <tr>
                         <td class="tableColor">현재전형일정</td>
                         <td class=""><input class="form-control tableInput" name="schdlName" type="text" disabled></td>
-                        <%--<td class="tableColor">전형평가단계</td>
-                        <td class="">
-                            <select class="form-select tableInput">
-                                <option selected>[S] STEP_DIV[LM0140]</option>
-                            </select>
-                        </td>--%>
+
+
                         <td class="tableColor">단계진행상태</td>
                         <td class=""><input class="form-control tableInput" name="statusDiv" type="text" disabled></td>
                     </tr>
@@ -294,6 +279,7 @@
     });
 
     let  termDiv, courseDiv, courseName;
+    //readData빼고는 전부 (createData,updateData,deleteData)빽엔드아직안함
     const nthTableData = () => {
         termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
         courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
@@ -301,31 +287,34 @@
         return{
             api: {
                 readData: { url: 'topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
-                    method: 'GET' }
+                    method: 'GET' },
+                createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
+                updateData: { url: 'recruitment/save', method: 'PUT' },
+                deleteData: { url: 'recruitment/delete', method: 'DELETE' }
             }
         };
     };
 
     //조회버튼 클릭시
     async function searchBtn(){
-        termDiv = document.querySelector('select[name="termDiv"]').value;
-        courseDiv = document.querySelector('select[name="courseDiv"]').value;
-        courseName = document.querySelector('select[name="courseName"]').value;
+        termDiv = document.querySelector('#termDiv1').value;
+        courseDiv = document.querySelector('#courseDiv1').value;
+        courseName = document.querySelector('#courseName1').value;
 
-        await nthGridLoad(nthTableData());
+        await nthGridLoad();
         // 이 function에 추가로 서브테이블 이름에
         // 서브테이블.innerHTML = ''; 이거 각뷰에추가하면좋음
     }
 
     let nthTable;
-
-    const nthGridLoad = (nthData) => {
+    const nthGridLoad = () => {
             const oldnNhTable = document.getElementById('nthTable');
             oldnNhTable.innerHTML = '';
 
             nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
-                data: nthData,
+                data: nthTableData(),
+                rowHeaders: ['checkbox'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -412,7 +401,7 @@
                 }
 
             });
-      //   요기
+
 
         const nthTablePage = document.querySelector('#nthTablePage');
 
@@ -432,7 +421,35 @@
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
+        // 체크박스 전체 선택/해제
+        nthTable.on('checkAll', function (ev) {
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
+            rowKeys.forEach((rowKey) => {
+                nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+        nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+
+        // 체크박스 개별 선택/해제
+        nthTable.on('check', function (ev) {
+            nthTable.addRowClassName(ev.rowKey, "checkCell");
+        });
+        nthTable.on('uncheck', function (ev) {
+            nthTable.removeRowClassName(ev.rowKey, "checkCell");
+        });
+
+        nthTable.on('drop', ev => {
+            firstColumName = nthTable.getColumns()[0]['name'];
+        });
 
 
 
@@ -454,29 +471,97 @@
                 });
             }
         }
+
+
     }
 
+    // 신규 버튼 클릭 이벤트
+    document.getElementById("nthInsertBtn").addEventListener("click", function () {
+        const rowData = [
+            {
+                courseDiv: '',
+                courseName: '',
+                termDiv: '',
+                recruitPeriod: '',
+                announcementPeriod: '',
+                schdlName: '',
+                stepDiv: ''
+            }
+        ];
+
+        nthTable.appendRow(rowData[0], {
+            at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+            extendPrevRowSpan: true,
+            focus: true
+        });
+
+        nthData = nthTable.getData();
+
+        // 하단 table 초기화
+        var tableInput = document.querySelectorAll("#inputTable .tableInput");
+        document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+        tableInput.forEach((ti) => {
+            ti.value = "";
+        });
+    });
+
+    // 삭제 버튼 클릭 이벤트
+    document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+        if(confirm("삭제하시겠습니까?")){
+            nthTable.removeCheckedRows(false);
+
+            if(nthTable.getData().length !== 0){
+                var rowKey = nthTable.getRowAt(0)['rowKey'];
+
+                nthTable.focus(rowKey, firstColumName, true);
+                rowDataLoad(rowKey, nthTable, "inputTable");
+            }else{                                              // 데이터 x
+                rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
+            }
+        }
+    });
+    const nthSaveBtn = document.getElementById("nthSaveBtn");
+    nthSaveBtn.addEventListener('click', () => {
+        nthTable.request('createData');
+    });
+
+    //조회리스트들정보
     async function searchListData() {
+        //검색 조회부분
         const response = await fetch('/eval/result/searchlist');
         const dataList = await response.json();
         const courseDiv= dataList["courseDivList"];
         const courseName= dataList["courseNameList"];
 
-        const courseDivSelect = document.querySelector("#courseDiv");
-        const courseNameSelect = document.querySelector("#courseName");
+        const courseDivSelect = document.querySelector("#courseDiv1");
+        const courseNameSelect = document.querySelector("#courseName1");
+
+        //모집전형설정리스트
+        const nthCourseDivSelect = document.querySelector('#courseDiv2');
+        const nthCourseNameSelect = document.querySelector('#courseName2');
 
         courseDiv.map((data) => {
-            const option = document.createElement("option");
-            option.value = data.courseDiv;
-            option.text = data.courseDiv;
-            courseDivSelect.appendChild(option);
+            const option1 = document.createElement("option");
+            option1.value = data.courseDiv;
+            option1.text = data.courseDiv;
+            courseDivSelect.appendChild(option1);
+
+            const option2 = document.createElement("option");
+            option2.value = data.courseDiv;
+            option2.text = data.courseDiv;
+            nthCourseDivSelect.appendChild(option2);
         });
 
         courseName.map((data) => {
-            const option = document.createElement("option");
-            option.value = data.courseName;
-            option.text = data.courseName;
-            courseNameSelect.appendChild(option);
+            const option1 = document.createElement("option");
+            option1.value = data.courseName;
+            option1.text = data.courseName;
+            courseNameSelect.appendChild(option1);
+
+            const option2 = document.createElement("option");
+            option2.value = data.courseName;
+            option2.text = data.courseName;
+            nthCourseNameSelect.appendChild(option2);
         });
     }
 
@@ -734,8 +819,6 @@
             content.setAttribute("style","display:block");
         }
     }
-
-
 </script>
 </body>
 </html>

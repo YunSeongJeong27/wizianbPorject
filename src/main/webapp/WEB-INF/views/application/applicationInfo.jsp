@@ -41,7 +41,8 @@
     </style>
 
 </head>
-<body>
+<body><c:set var="login" value="${sessionScope.login}" />
+
 <div class="my-3 d-flex justify-content-center">
     <div class="container-sub-header" style="width: 1440px;">
         <div class="d-flex flex-row justify-content-between px-3">
@@ -91,8 +92,8 @@
             </div>
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
-                    <div><input type="hidden" name="rcrtNo" value="10-001"></div>
-                    <div><input type="hidden" name="aplyNo" value="1-002"></div>
+                    <div><input type="hidden" name="rcrtNo" value="J23C002"></div>
+                    <div><input type="hidden" name="aplyNo" value="APLY0001"></div>
 
 <%--사진업로드--%>
                     <div class="row mt-3">
@@ -149,7 +150,7 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="text" class="form-control" id="pw" name="pw">
+                                        <input type="password" class="form-control" id="pw" name="pw">
                                     </div>
                                     <div>
                                         <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" disabled>
@@ -170,7 +171,7 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="text" class="form-control" name="passwordCheck" id="pwCheck">
+                            <input type="password" class="form-control" name="passwordCheck" id="pwCheck">
                         </div>
                         <div class="col-lg-2">
                             성별구분
@@ -410,7 +411,7 @@
                 if(json != null){
                     alert("인증메일 전송 성공");
                     authNum = json;
-                    console.log(authNum);
+                    console.log(json);
                     document.querySelector('.mail-check-input').removeAttribute('disabled');
                 }else{
                     alert("인증메일 전송 실패");

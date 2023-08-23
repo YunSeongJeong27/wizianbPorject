@@ -37,8 +37,15 @@ public class ApplicationInfoController {
         model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
 
         if(session.getAttribute("login")!=null){
+            ApplicationInfo appInfo = (ApplicationInfo) session.getAttribute("loginId");
+            //비밀번호 받아와야해서.
+            ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
+
+            model.addAttribute("appInfo",appInfo);
+            model.addAttribute("member",member);
             return "/application/applicationInfoAfterLogin";
         }else{
+
             return "/application/applicationInfo";
         }
     }

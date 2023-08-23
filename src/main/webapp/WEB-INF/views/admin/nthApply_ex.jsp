@@ -13,15 +13,15 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
     <style>
         #mainTab #tabList,
         #mainTab #tab1,
         #mainTab #lbl_tab2_grid1_title,
         #mainTab #lbl_tab3_grid1_title,
         #mainTab #tab4,
-        #mainTab #lbl_tab5_grid1_title{
+        #mainTab #lbl_tab5_grid1_title {
             font-size: 15px !important;
             font-weight: bolder !important;
         }
@@ -47,7 +47,7 @@
             text-align: right !important;
         }
 
-        .divBtn{
+        .divBtn {
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
 
@@ -62,7 +62,7 @@
             background-color: white !important;
         }
 
-        .table>tbody>tr>td:nth-child(odd) {
+        .table > tbody > tr > td:nth-child(odd) {
             background-color: #F5F5F5;
         }
     </style>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div class="d-flex col-4 align-items-center">
-                    <div class="tableSearch me-5" >
+                    <div class="tableSearch me-5">
                         <label for="registrationStatus">상태구분</label>
                     </div>
                     <div class="ms-5 col">
@@ -213,28 +213,33 @@
         <div id="mainTab" class="col-7">
             <ul role="tablist" class="nav nav-tabs col-9" id="tabList" style="width: 658px;">
                 <li role="presentation" class="nav-item me-1 col-2">
-                    <button class="nav-link active divBtn w-100" id="btn_tab1" data-bs-toggle="tab" data-bs-target="#tab1"
-                            type="button" role="tab" aria-controls="tab1" aria-selected="true">기본정보
+                    <button class="nav-link active divBtn w-100" id="btn_tab1" data-bs-toggle="tab"
+                            data-bs-target="#tab1"
+                            type="button" role="tab" aria-controls="tab1" aria-selected="true" disabled>기본정보
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
-                    <button class="nav-link divBtn w-100" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2" type="button"
-                            role="tab" aria-controls="tab2" aria-selected="false">학력사항
+                    <button class="nav-link divBtn w-100" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2"
+                            type="button"
+                            role="tab" aria-controls="tab2" aria-selected="false" disabled>학력사항
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
-                    <button class="nav-link divBtn w-100" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3" type="button"
-                            role="tab" aria-controls="tab3" aria-selected="false">활동이력
+                    <button class="nav-link divBtn w-100" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3"
+                            type="button"
+                            role="tab" aria-controls="tab3" aria-selected="false" disabled>활동이력
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
-                    <button class="nav-link divBtn w-100" id="btn_tab4" data-bs-toggle="tab" data-bs-target="#tab4" type="button"
-                            role="tab" aria-controls="tab4" aria-selected="false">자기소개서
+                    <button class="nav-link divBtn w-100" id="btn_tab4" data-bs-toggle="tab" data-bs-target="#tab4"
+                            type="button"
+                            role="tab" aria-controls="tab4" aria-selected="false" disabled>자기소개서
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
-                    <button class="nav-link divBtn w-100" id="btn_tab5" data-bs-toggle="tab" data-bs-target="#tab5" type="button"
-                            role="tab" aria-controls="tab5" aria-selected="false">제출서류
+                    <button class="nav-link divBtn w-100" id="btn_tab5" data-bs-toggle="tab" data-bs-target="#tab5"
+                            type="button"
+                            role="tab" aria-controls="tab5" aria-selected="false" disabled>제출서류
                     </button>
                 </li>
             </ul>
@@ -260,133 +265,140 @@
                                 <div class="form-basic">
                                     <div class="border-top border-3 border-dark">
                                         <table class="table">
-                                            <thead></thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="align-middle">모집과정명</td>
-                                                    <td class="align-middle">
-                                                        <select id="slt_cors_div" class="form-select"
-                                                                disabled="">
-                                                            <option value="10">정규과정</option>
-                                                            <option value="21">야간과정</option>
-                                                            <option value="30">번역아틀리에</option>
-                                                            <option value="40">문화콘텐츠 번역실무 고급과정</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="align-middle">성별</td>
-                                                    <td class="align-middle">
-                                                        <select id="slt_gen_div"
-                                                                class="form-select"
-                                                                style="" disabled>
-                                                            <option value=" ">(미선택)</option>
-                                                            <option value="10">남자</option>
-                                                            <option value="20">여자</option>
-                                                            <option value="30">기타</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">이메일</td>
-                                                    <td class="align-middle">
-                                                        <div class="input-group">
-                                                            <input type="text" id="txt_transcript_email"
-                                                                   class="form-control" disabled="disabled">
-                                                            <!-- <button class="btn_email btn_slt button_sm noShrink" title="이메일인증" onclick="location.href='./EN0220P.html'">이메일인증</button> -->
-                                                        </div>
-                                                    </td>
-                                                    <td rowspan="4" class="align-middle">사진</td>
-                                                    <td rowspan="4" class="align-middle">
-                                                        <div class="profile-pic dp_inlineblk"
-                                                             style="vertical-align: bottom;">
-                                                            <img id="img_preview" class="profile-pic" src="/일본어_김현진.jpg">
-                                                        </div>
-                                                        <!-- <div class="div_top_gap_06 dp_inlineblk" style="vertical-align: bottom;">
-                                                            <button class="btn_slt button_sm" title="업로드">업로드</button>
-                                                            <button class="btn_slt button_sm" title="삭제">삭제</button>
-                                                        </div> -->
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">성명(한글)</td>
-                                                    <td class="align-middle"><input type="text" id="txt_inp1_nm_kor" value=""
-                                                               class="form-control " maxlength="50"
-                                                               disabled="disabled"></td>
+                                            <tr>
+                                                <td class="align-middle">모집과정명</td>
+                                                <td class="align-middle">
+                                                    <select id="slt_cors_div" class="form-select tab1Form"
+                                                            disabled="">
+                                                        <option value="Java">JAVA</option>
+                                                        <option value="Python">Python</option>
+                                                        <option value="C++">C++</option>
+                                                    </select>
+                                                </td>
+                                                <td class="align-middle">성별</td>
+                                                <td class="align-middle">
+                                                    <select id="slt_gen_div"
+                                                            class="form-select tab1Form"
+                                                            style="" disabled>
+                                                        <option value=" ">(미선택)</option>
+                                                        <option value="남자">남자</option>
+                                                        <option value="여자">여자</option>
+                                                        <option value="30">기타</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">이메일</td>
+                                                <td class="align-middle">
+                                                    <div class="input-group">
+                                                        <input type="text" id="txt_transcript_email"
+                                                               class="form-control tab1Form" disabled="disabled">
+                                                        <!-- <button class="btn_email btn_slt button_sm noShrink" title="이메일인증" onclick="location.href='./EN0220P.html'">이메일인증</button> -->
+                                                    </div>
+                                                </td>
+                                                <td rowspan="4" class="align-middle">사진</td>
+                                                <td rowspan="4" class="align-middle">
+                                                    <div class="profile-pic dp_inlineblk"
+                                                         style="vertical-align: bottom;">
+                                                        <img id="img_preview" class="profile-pic tab1Form"
+                                                             src="/일본어_김현진.jpg">
+                                                    </div>
+                                                    <!-- <div class="div_top_gap_06 dp_inlineblk" style="vertical-align: bottom;">
+                                                        <button class="btn_slt button_sm" title="업로드">업로드</button>
+                                                        <button class="btn_slt button_sm" title="삭제">삭제</button>
+                                                    </div> -->
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">성명(한글)</td>
+                                                <td class="align-middle"><input type="text" id="txt_inp1_nm_kor"
+                                                                                value=""
+                                                                                class="form-control tab1Form"
+                                                                                maxlength="50"
+                                                                                disabled="disabled"></td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="fake_th lbl_chk align-middle">성명(영어)</td>
-                                                    <td class="align-middle"><input type="text" id="txt_inp1_nm_eng" value=""
-                                                               class="form-control" maxlength="50"
-                                                               disabled="disabled"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">생년월일</td>
-                                                    <!-- <td>
-                                                        <span class="bg-icon_calendar div_top_gap_04">
-                                                            <input type="date" id="cal_brdt" class="cal_brdt width_100 ">
-                                                        </span>
-                                                    </td> -->
-                                                    <td class="align-middle">
-                                                        <div class="multi_inputs">
-                                                            <input type="text" id="cal_brdt"
-                                                                   class="cal_brdt txt_default cal_format_kr hasDatepicker"
-                                                                   maxlength="10" autocomplete="off"
-                                                                   disabled="disabled"><img
-                                                                class="ui-datepicker-trigger"
-                                                                src="/images/icon-calendar.svg"
-                                                                alt="..." title="...">
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            </tr>
+                                            <tr>
+                                                <td class="fake_th lbl_chk align-middle">성명(영어)</td>
+                                                <td class="align-middle"><input type="text" id="txt_inp1_nm_eng"
+                                                                                class="form-control tab1Form"
+                                                                                maxlength="50"
+                                                                                disabled="disabled"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">생년월일</td>
+                                                <!-- <td>
+                                                    <span class="bg-icon_calendar div_top_gap_04">
+                                                        <input type="date" id="cal_brdt" class="cal_brdt width_100 ">
+                                                    </span>
+                                                </td> -->
+                                                <td class="align-middle">
+                                                    <div class="multi_inputs">
+                                                        <input type="date" id="cal_brdt"
+                                                               class="form-control tab1Form"
+                                                               maxlength="10" autocomplete="off"
+                                                               disabled="disabled">
+                                                    </div>
+                                                </td>
+                                            </tr>
 
-                                                <tr>
-                                                    <td class="align-middle">우편번호</td>
-                                                    <td class="align-middle">
-                                                        <div class="d-flex">
-                                                            <input type="text" placeholder="" id="txt_inp1_zip_cd"
-                                                                   class="form-control"
-                                                                   disabled="disabled">
-                                                            <button id="btn_zip_cd"
-                                                                    class="btn btn-outline-secondary btn-sm me-2" title="검색"
-                                                                    onclick="fn_inp1_zipcode_onclick()" disabled="disabled">
-                                                                검색
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fake_th align-middle">주소(기본)</td>
-                                                    <td colspan="3" class="align-middle"><input type="text" id="txt_inp1_addr_local"
-                                                                           class="form-control" maxlength="200"
-                                                                           disabled="disabled"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">주소(상세)</td>
-                                                    <td colspan="3" class="align-middle"><input type="text" id="txt_inp1_addr_natv"
-                                                                           class="form-control" maxlength="200"
-                                                                           disabled="disabled"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="align-middle">전화번호</td>
-                                                    <td class="align-middle"><input type="text" id="txt_inp1_tel_local"
-                                                               class="form-control" maxlength="20"
-                                                               oninput="fn_numSign(this)" disabled="disabled"></td>
-                                                    <td class="align-middle">휴대전화</td>
-                                                    <td class="align-middle"><input type="text" id="txt_inp1_tel_natv"
-                                                               class="form-control" maxlength="20"
-                                                               oninput="fn_numSign(this)" disabled="disabled"></td>
-                                                </tr>
-                                                <tr hidden="">
-                                                    <td>
-                                                        <div id="txt_aply_no"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div id="txt_mem_id"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div id="txt_tab1_sel_cd"></div>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td class="align-middle">우편번호</td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex">
+                                                        <input type="text" placeholder="" id="txt_inp1_zip_cd"
+                                                               class="form-control tab1Form"
+                                                               disabled="disabled">
+                                                        <button id="btn_zip_cd"
+                                                                class="btn btn-outline-secondary btn-sm me-2" title="검색"
+                                                                onclick="fn_inp1_zipcode_onclick()" disabled="disabled">
+                                                            검색
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fake_th align-middle">주소(기본)</td>
+                                                <td colspan="3" class="align-middle"><input type="text"
+                                                                                            id="txt_inp1_addr_local"
+                                                                                            class="form-control tab1Form"
+                                                                                            maxlength="200"
+                                                                                            disabled="disabled"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">주소(상세)</td>
+                                                <td colspan="3" class="align-middle"><input type="text"
+                                                                                            id="txt_inp1_addr_natv"
+                                                                                            class="form-control tab1Form"
+                                                                                            maxlength="200"
+                                                                                            disabled="disabled"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">전화번호</td>
+                                                <td class="align-middle"><input type="text" id="txt_inp1_tel_local"
+                                                                                class="form-control tab1Form"
+                                                                                maxlength="20"
+                                                                                oninput="fn_numSign(this)"
+                                                                                disabled="disabled"></td>
+                                                <td class="align-middle">휴대전화</td>
+                                                <td class="align-middle"><input type="text" id="txt_inp1_tel_natv"
+                                                                                class="form-control tab1Form"
+                                                                                maxlength="20"
+                                                                                oninput="fn_numSign(this)"
+                                                                                disabled="disabled"></td>
+                                            </tr>
+                                            <tr hidden="">
+                                                <td>
+                                                    <div id="txt_aply_no"></div>
+                                                </td>
+                                                <td>
+                                                    <div id="txt_mem_id"></div>
+                                                </td>
+                                                <td>
+                                                    <div id="txt_tab1_sel_cd"></div>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -415,7 +427,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="tab2Grid" style="width: 99%"></div>
+                                <div id="tab2Grid" class="tab1Form" style="width: 99%"></div>
                             </div>
                         </div>
                     </div>
@@ -440,7 +452,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="tab3Grid" style="width: 99%"></div>
+                                <div id="tab3Grid" class="tab1Form" style="width: 99%"></div>
                             </div>
                         </div>
                     </div>
@@ -462,11 +474,13 @@
                                             <div>
                                                 <textarea name="ans"
                                                           style="height:175px; overflow-y:scroll;"
-                                                          class="form-control"
+                                                          class="form-control tab1Form"
                                                           onkeyup="fn_answer_keyup(this)"
                                                           onkeydown="fn_answer_keydown(this)"
+                                                          disabled
                                                 ></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(2107 /
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
+                                                (2107 /
                                                 2000 자)</p></div>
                                         </div>
 
@@ -481,11 +495,12 @@
                                             </div>
                                             <div class="div_top_gap_10"><textarea name="ans"
                                                                                   style="height:175px; overflow-y:scroll;"
-                                                                                  class="form-control"
+                                                                                  class="form-control tab1Form"
                                                                                   onkeyup="fn_answer_keyup(this)"
                                                                                   onkeydown="fn_answer_keydown(this)"
                                                                                   disabled="disabled"></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(44 /
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
+                                                (44 /
                                                 2000 자)</p></div>
                                         </div>
                                         <div id="item_no_3" class="form-basic div_top_gap_20" item_no="4" item_expl="">
@@ -498,11 +513,12 @@
                                             </div>
                                             <div class="div_top_gap_10"><textarea name="ans"
                                                                                   style="height:175px; overflow-y:scroll;"
-                                                                                  class="form-control"
+                                                                                  class="form-control tab1Form"
                                                                                   onkeyup="fn_answer_keyup(this)"
                                                                                   onkeydown="fn_answer_keydown(this)"
                                                                                   disabled="disabled"></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">(19 /
+                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
+                                                (19 /
                                                 2000 자)</p></div>
                                         </div>
                                     </div>
@@ -531,7 +547,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="tab5Grid" style="width: 99%"></div>
+                                <div id="tab5Grid" class="tab1Form" style="width: 99%"></div>
                             </div>
                         </div>
                     </div>
@@ -545,6 +561,11 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        await topGridLoad();
+        await leftGridLoad();
+    });
+
     class RowNumberRenderer {
         constructor(props) {
             const el = document.createElement('span');
@@ -587,215 +608,15 @@
             }
         }
     });
+    function educationPeriodFormatter({row}) {
+        const startDate = row.eduStartDate;
+        const endDate = row.eduEndDate;
+        return startDate + "~" + endDate;
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const data = [
-            {
-                APLY_NO: 'EE2232',
-                NM_KOR: '까이멍',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'FQ2232',
-                NM_KOR: '가갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-07-12 15:32123123131231231231232'
-            },
-            {
-                APLY_NO: '3E2232',
-                NM_KOR: '가갑순',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-02 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            },
-            {
-                APLY_NO: 'EQZ2232',
-                NM_KOR: '뭔갑손',
-                APLY_STS_DIV: '접수중',
-                APLY_DT: '2023-08-01 15:32'
-            }
-        ];
-        const data3 = [
-            {
-                gigwan: "블라블라대학",
-                jeongong: "블라블라학과",
-                iphak: "2023 / 08",
-                joloep: "2023 / 09",
-                joloepstatus: "제적"
-            }
-        ];
-        const data4 = [
-            {
-                기관명: "블라블라기관",
-                활동내역: "블라블라활동",
-                비고: "놀았음",
-                활동시작년월: "2020 / 12",
-                활동종료년월: "2021 / 01"
-            }
-        ];
-        const data5 = [
-            {
-                제출서류: "학위증명서",
-                기관명: "2019년 09월 ~ 2023년 08월",
-                첨부파일: "",
-                파일관리: "",
-                미리보기: ""
-            },
-            {
-                제출서류: "기타",
-                기관명: "",
-                첨부파일: "",
-                파일관리: "",
-                미리보기: ""
-            }
-        ]
-
-        function educationPeriodFormatter({row}) {
-            const startDate = row.eduStartDate;
-            const endDate = row.eduEndDate;
-            return startDate + "~" + endDate;
-        }
-
-        var firstColumName = "APLY_NO";
-        const grid = new tui.Grid({
-            el: document.getElementById('grid'),
-            data: data,
-            pageOptions: {
-                useClient: true,	// front에서만 페이징 하는 속성
-                perPage: 5,		//한번에 보여줄 데이터 수
-                visiblePages: 10
-            },
-            rowHeaders: [
-                {
-                    type: 'rowNum',
-                    renderer: {
-                        type: RowNumberRenderer
-                    }
-                },
-                {
-                    type: 'checkbox'
-                }
-            ],
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '지원서번호',
-                    name: 'APLY_NO',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '성명',
-                    name: 'NM_KOR',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '상태',
-                    name: 'APLY_STS_DIV',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '제출일시',
-                    name: 'APLY_DT',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                }
-            ],
-            columnOptions: {
-                resizable: true
-            },
-            draggable: true,
-
-            onGridMounted() {
-                grid.focus(0, firstColumName, true);
-            }
-        });
-
-        const gridTablePage = document.querySelector('#gridTablePage');
-
-        // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
-        function handlePerPageChange(event) {
-            const perPage = parseInt(event.target.value, 10);
-            grid.setPerPage(perPage);
-        }
-        // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
-        gridTablePage.addEventListener('change', handlePerPageChange);
-
-        // 체크박스 전체 선택/해제
-        grid.on('checkAll', function (ev) {
-            var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
-
-            rowKeys.forEach((rowKey) => {
-                grid.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
-            });
-        });
-        grid.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
-            var id = ev.instance['el'].id;
-            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
-
-            rowKeys.forEach((rowKey) => {
-                grid.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
-            });
-        });
-
-        // 체크박스 개별 선택/해제
-        grid.on('check', function (ev) {
-            grid.addRowClassName(ev.rowKey, "checkCell");
-        });
-        grid.on('uncheck', function (ev) {
-            grid.removeRowClassName(ev.rowKey, "checkCell");
-        });
-
-        grid.on('drop', ev => {
-            firstColumName = grid.getColumns()[0]['name'];
-        });
-        document.querySelector('#btn_grid2_excel_export').addEventListener('click', () => {
-            grid.export('xlsx');
-        });
-
-        const nthTable = new tui.Grid({
+    const topGridLoad = () => {
+        const Grid = tui.Grid;
+        const nthTable = new Grid({
             el: document.getElementById('nthTable'),
             data: {
                 initialRequest: true,
@@ -863,213 +684,358 @@
                 resizable: true
             },
             draggable: true,
+        });
+        nthTable.on('click', function (e) {
+            // 클릭한 row의 데이터 가져오기
+            const rowData = nthTable.getRow(e.rowKey);
 
-            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+            // 클릭한 row의 rcrtNo 값을 가져오기
+            const rcrtNo = rowData.rcrtNo;
+            leftGridLoad(rcrtNo);
+            const buttonList = document.querySelectorAll('#tabList > li > button');
+            buttonList.forEach((button) => {
+                button.disabled = true;
+            });
+            document.querySelectorAll('.tab1Form').forEach((form) => {
+                form.innerHTML ="";
+                form.value = "";
+            });
+            document.querySelector('#btn_tab1').click();
+        });
+    }
+
+    let firstColumName = "aplyNo";
+    let grid;
+    const leftGridLoad = (rcrtNo) => {
+        const Grid = tui.Grid;
+        document.getElementById('grid').innerHTML = "";
+        grid = new Grid({
+            el: document.getElementById('grid'),
+            data: {
+                initialRequest: true,
+                api: {
+                    hideLoadingBar: false,
+                    readData: {url: "/admin/apply/" + rcrtNo + "/peopleList", method: 'GET'}
+                },
+            },
+            pageOptions: {
+                useClient: true,	// front에서만 페이징 하는 속성
+                perPage: 5,		//한번에 보여줄 데이터 수
+                visiblePages: 10
+            },
+            rowHeaders: [
+                {
+                    type: 'rowNum',
+                    renderer: {
+                        type: RowNumberRenderer
+                    }
+                },
+                {
+                    type: 'checkbox'
+                }
+            ],
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '지원서번호',
+                    name: 'aplyNo',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '성명',
+                    name: 'nameKor',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '상태',
+                    name: 'aplyStsDiv',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                },
+                {
+                    header: '제출일시',
+                    name: 'aplyDate',
+                    sortingType: 'asc',
+                    sortable: true, align: 'center'
+                }
+            ],
+            columnOptions: {
+                resizable: true
+            },
+            draggable: true,
+
             onGridMounted() {
-                nthTable.focus(0, "courseDiv", true);
-
-                //rowDataLoad(0, nthTable, "inputTable");
-            }
-        });
-        nthTable.on('click', function(e) {
-            if (e.rowKey === 'cell') {
-                var row = e.row;
-                var data = nthTable.columnName(row);
-
-                console.log(data);
+                grid.focus(0, firstColumName, true);
             }
         });
 
 
+        const gridTablePage = document.querySelector('#gridTablePage');
+
+        // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+        function handlePerPageChange(event) {
+            const perPage = parseInt(event.target.value, 10);
+            grid.setPerPage(perPage);
+        }
+
+        // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+        gridTablePage.addEventListener('change', handlePerPageChange);
+
+        // 체크박스 전체 선택/해제
+        grid.on('checkAll', function (ev) {
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
+
+            rowKeys.forEach((rowKey) => {
+                grid.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+        grid.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#" + id + " .tui-grid-table-container .tui-grid-table td[data-column-name='" + firstColumName + "'");
+
+            rowKeys.forEach((rowKey) => {
+                grid.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+
+        // 체크박스 개별 선택/해제
+        grid.on('check', function (ev) {
+            grid.addRowClassName(ev.rowKey, "checkCell");
+        });
+        grid.on('uncheck', function (ev) {
+            grid.removeRowClassName(ev.rowKey, "checkCell");
+        });
+
+        grid.on('drop', ev => {
+            firstColumName = grid.getColumns()[0]['name'];
+        });
+        document.querySelector('#btn_grid2_excel_export').addEventListener('click', () => {
+            grid.export('xlsx');
+        });
+        grid.on('click', (e) => {
+            const rowData = grid.getRow(e.rowKey);
+
+            // 클릭한 row의 rcrtNo 값을 가져오기
+            const aplyNo = rowData.aplyNo;
+            tabAllLoad(aplyNo);
+            tab2GridLoad(aplyNo);
+            tab3GridLoad(aplyNo);
+            tab5GridLoad(aplyNo);
+        })
+    }
+    const tab2GridLoad = (aplyNo) => {
+        const Grid = tui.Grid;
+        document.querySelector('#tab2Grid').innerHTML = "";
+        const tab2Grid = new Grid({
+            el: document.querySelector('#tab2Grid'),
+            data: {
+                initialRequest: true,
+                api: {
+                    hideLoadingBar: false,
+                    readData: {url: "/admin/apply/" + aplyNo + "/education", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + aplyNo + "/education", method: 'PUT'}
+                },
+            },
+            scrollX: false,
+            scrollY: false,
+            columns: [
+                {
+                    header: '기관명',
+                    name: 'orgName'
+                },
+                {
+                    header: '전공',
+                    name: 'deptName'
+                },
+                {
+                    header: '입학년월',
+                    name: 'startDate'
+                },
+                {
+                    header: '졸업년월',
+                    name: 'endDate'
+                },
+                {
+                    header: '졸업상태',
+                    name: 'gradeStatusDiv'
+                }
+            ],
+            columnOptions: {
+                resizable: true
+            },
+
+            draggable: false,
+
+        });
+    }
+
+    const tab3GridLoad = (aplyNo) => {
+        const Grid = tui.Grid;
+        document.querySelector('#tab3Grid').innerHTML = "";
+        const tab3Grid = new Grid({
+            el: document.getElementById('tab3Grid'),
+            data: {
+                initialRequest: true,
+                api: {
+                    hideLoadingBar: false,
+                    readData: {url: "/admin/apply/" + aplyNo + "/careers", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + aplyNo + "/careers", method: 'PUT'}
+                },
+            },
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '기관명',
+                    name: 'plcName'
+                },
+                {
+                    header: '활동내역',
+                    name: 'plcJob'
+                },
+                {
+                    header: '비고',
+                    name: 'note'
+                },
+                {
+                    header: '활동시작연월',
+                    name: 'startDate'
+                },
+                {
+                    header: '활동종료연월',
+                    name: 'endDate'
+                }
+            ],
+            columnOptions: {
+                resizable: true,
+            },
+
+            draggable: false,
+
+        });
+    }
+
+    const tab5GridLoad = (aplyNo) => {
+        const Grid = tui.Grid;
+        document.querySelector('#tab5Grid').innerHTML = "";
+        const tab5Grid = new Grid({
+            el: document.getElementById('tab5Grid'),
+            data: fileData,
+            pagination: true,
+            scrollX: true,
+            scrollY: true,
+            columns: [
+                {
+                    header: '제출서류',
+                    name: '제출서류',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center',
+                    formatter: 'listItemText',
+                    editor: {
+                        type: 'select',
+                        options: {
+                            listItems: [
+                                {text: '', value: '0'},
+                                {text: '학위증명서', value: '1'},
+                                {text: '활동이력증명', value: '2'},
+                                {text: '기타', value: '9'}
+                            ]
+                        }
+                    }
+                },
+                {
+                    header: '기관명',
+                    name: '기관명',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '첨부파일',
+                    name: '첨부파일',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '파일관리',
+                    name: '파일관리',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    header: '미리보기',
+                    name: '미리보기',
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center'
+                }
+            ],
+            columnOptions: {
+                resizable: true,
+            },
+
+            draggable: false,
+
+        });
+    }
+
+    const tabAllLoad = (aplyNo) => {
+        const buttonList = document.querySelectorAll('#tabList > li > button');
+        buttonList.forEach((e, i) => {
+            e.disabled = false;
+        })
+        fetch("/admin/apply/" + aplyNo + "/peopleDetails")
+            .then(response => response.json())
+            .then((list) => {
+                const detail = list.data.contents;
+                document.querySelector('#slt_cors_div').value = detail.courseDiv;
+                document.querySelector('#slt_gen_div').value = detail.gender;
+                document.querySelector('#txt_transcript_email').value = detail.email;
+                document.querySelector('#txt_inp1_nm_kor').value = detail.nameKor;
+                document.querySelector('#txt_inp1_nm_eng').value = detail.nameEng;
+                document.querySelector('#cal_brdt').value = detail.birthday;
+                document.querySelector('#txt_inp1_zip_cd').value = detail.zipcode;
+                document.querySelector('#txt_inp1_addr_local').value = detail.addrLocal;
+                document.querySelector('#txt_inp1_addr_natv').value = detail.addrDetail;
+                document.querySelector('#txt_inp1_tel_local').value = detail.telLocal;
+                document.querySelector('#txt_inp1_tel_natv').value = detail.hpLocal;
+            })
+            .catch(error => console.log(error));
 
 
-        document.querySelectorAll('#tabList > li > button').forEach((e, i) => {
+        buttonList.forEach((e, i) => {
             e.addEventListener('click', () => {
-                tabContent(e);
+                const elements = document.querySelectorAll('#myTabContent > div');
+                elements.forEach((a, i) => {
+                    a.style.display = 'none';
+                })
+                if (e.id === "btn_tab1") {
+                    elements[0].style.display = 'block';
+                } else if (e.id === "btn_tab2") {
+                    tab2GridLoad(aplyNo);
+                    elements[1].style.display = 'block';
+                } else if (e.id === "btn_tab3") {
+                    tab3GridLoad(aplyNo)
+                    elements[2].style.display = 'block';
+                } else if (e.id === "btn_tab4") {
+                    elements[3].style.display = 'block';
+                } else if (e.id === "btn_tab5") {
+                    tab5GridLoad(aplyNo)
+                    elements[4].style.display = 'block';
+                }
             })
         })
-
-        let tab2Grid, tab3Grid, tab5Grid;
-
-        function tabContent(e) {
-            //display 지우기
-            const elements = document.querySelectorAll('#myTabContent > div');
-            elements.forEach((a, i) => {
-                console.log(a)
-                a.style.display = 'none';
-            })
-            if (e.id === "btn_tab1") {
-                elements[0].style.display = 'block';
-            } else if (e.id === "btn_tab2") {
-                if (!tab2Grid) {
-                    const personData = [
-                        {
-                            gigwan: "블라블라대학",
-                            jeongong: "블라블라학과",
-                            iphak: "2023 / 08",
-                            joloep: "2023 / 09",
-                            joloepstatus: "제적"
-                        }
-                    ];
-                    tab2Grid = new tui.Grid({
-                        el: document.getElementById('tab2Grid'),
-                        data: personData,
-                        scrollX: false,
-                        scrollY: false,
-                        columns: [
-                            {
-                                header: '기관명',
-                                name: 'gigwan'
-                            },
-                            {
-                                header: '전공',
-                                name: 'jeongong'
-                            },
-                            {
-                                header: '입학년월',
-                                name: 'iphak'
-                            },
-                            {
-                                header: '졸업년월',
-                                name: 'joloep'
-                            },
-                            {
-                                header: '졸업상태',
-                                name: 'joloepstatus'
-                            }
-                        ],
-                        columnOptions: {
-                            resizable: true
-                        },
-
-                        draggable: false,
-
-                    });
-                }
-                elements[1].style.display = 'block';
-            } else if (e.id === "btn_tab3") {
-                if (!tab3Grid) {
-                    const data3 = [
-                        {
-                            gigwan: "블라블라대학",
-                            jeongong: "블라블라학과",
-                            iphak: "2023 / 08",
-                            joloep: "2023 / 09",
-                            joloepstatus: "제적"
-                        }
-                    ];
-                    tab3Grid = new tui.Grid({
-                        el: document.getElementById('tab3Grid'),
-                        data: data3,
-                        pagination: true,
-                        scrollX: true,
-                        scrollY: true,
-                        columns: [
-                            {
-                                header: '기관명',
-                                name: 'gigwan'
-                            },
-                            {
-                                header: '활동내역',
-                                name: 'jeongong'
-                            }
-                        ],
-                        columnOptions: {
-                            resizable: true,
-                        },
-
-                        draggable: false,
-
-                    });
-                }
-                elements[2].style.display = 'block';
-            } else if (e.id === "btn_tab4") {
-                elements[3].style.display = 'block';
-            } else if (e.id === "btn_tab5") {
-                if (!tab5Grid) {
-                    const fileData = [
-                        {
-                            APLY_NO: 'E12341234',
-                            NM_KOR: '홍길동',
-                            EV_SCORE: '86.6',
-                            PREL_ORD: '1',
-                            RSLT_DIV: '1'
-                        },
-                        {
-                            APLY_NO: 'E98769876',
-                            NM_KOR: '이길동',
-                            EV_SCORE: '50.4',
-                            PREL_ORD: '2',
-                            RSLT_DIV: '2'
-                        }
-                    ];
-                    tab5Grid = new tui.Grid({
-                        el: document.getElementById('tab5Grid'),
-                        data: fileData,
-                        pagination: true,
-                        scrollX: true,
-                        scrollY: true,
-                        columns: [
-                            {
-                                header: '제출서류',
-                                name: '제출서류',
-                                sortingType: 'asc',
-                                sortable: true,
-                                align: 'center',
-                                formatter: 'listItemText',
-                                editor: {
-                                    type: 'select',
-                                    options: {
-                                        listItems: [
-                                            {text: '', value: '0'},
-                                            {text: '학위증명서', value: '1'},
-                                            {text: '활동이력증명', value: '2'},
-                                            {text: '기타', value: '9'}
-                                        ]
-                                    }
-                                }
-                            },
-                            {
-                                header: '기관명',
-                                name: '기관명',
-                                sortingType: 'asc',
-                                sortable: true,
-                                align: 'center'
-                            },
-                            {
-                                header: '첨부파일',
-                                name: '첨부파일',
-                                sortingType: 'asc',
-                                sortable: true,
-                                align: 'center'
-                            },
-                            {
-                                header: '파일관리',
-                                name: '파일관리',
-                                sortingType: 'asc',
-                                sortable: true,
-                                align: 'center'
-                            },
-                            {
-                                header: '미리보기',
-                                name: '미리보기',
-                                sortingType: 'asc',
-                                sortable: true,
-                                align: 'center'
-                            }
-                        ],
-                        columnOptions: {
-                            resizable: true,
-                        },
-
-                        draggable: false,
-
-                    });
-                }
-                elements[4].style.display = 'block';
-            }
-        }
-    });
+    }
 </script>
 <script>
     // 01. 폼 변수 정의 및 그리드 초기화 ----------------------------------------------------------- /
