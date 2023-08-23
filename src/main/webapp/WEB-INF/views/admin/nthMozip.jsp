@@ -45,9 +45,11 @@
 <body>
 <div class="container-table m-2">
 
-
     <div class="d-flex flex-row justify-content-end mb-1">
         <button id="selectBtn" class="btn btn-sm btn-secondary me-1" onclick="searchBtn()">조회</button>
+        <button id="nthInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
+        <button id="nthSaveBtn" class="btn btn-sm btn-success me-1">저장</button>
+        <button id="nthDeleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
     </div>
     <div class="container-table">
         <%--TOP--%>
@@ -294,6 +296,7 @@
     });
 
     let  termDiv, courseDiv, courseName;
+    //readData빼고는 전부 (createData,updateData,deleteData)빽엔드아직안함
     const nthTableData = () => {
         termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
         courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
@@ -301,7 +304,10 @@
         return{
             api: {
                 readData: { url: 'topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
-                    method: 'GET' }
+                    method: 'GET' },
+                createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
+                updateData: { url: 'recruitment/save', method: 'PUT' },
+                deleteData: { url: 'recruitment/delete', method: 'DELETE' }
             }
         };
     };
@@ -312,20 +318,20 @@
         courseDiv = document.querySelector('select[name="courseDiv"]').value;
         courseName = document.querySelector('select[name="courseName"]').value;
 
-        await nthGridLoad(nthTableData());
+        await nthGridLoad();
         // 이 function에 추가로 서브테이블 이름에
         // 서브테이블.innerHTML = ''; 이거 각뷰에추가하면좋음
     }
 
     let nthTable;
-
-    const nthGridLoad = (nthData) => {
+    const nthGridLoad = () => {
             const oldnNhTable = document.getElementById('nthTable');
             oldnNhTable.innerHTML = '';
 
             nthTable = new tui.Grid({
                 el: document.getElementById('nthTable'),
-                data: nthData,
+                data: nthTableData(),
+                rowHeaders: ['checkbox'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
                     perPage: 5,		//한번에 보여줄 데이터 수
@@ -412,7 +418,7 @@
                 }
 
             });
-      //   요기
+
 
         const nthTablePage = document.querySelector('#nthTablePage');
 
@@ -432,7 +438,35 @@
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
         });
 
+        // 체크박스 전체 선택/해제
+        nthTable.on('checkAll', function (ev) {
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
 
+            rowKeys.forEach((rowKey) => {
+                nthTable.addRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+        nthTable.on('uncheckAll', function (ev) {           // 페이지 넘어가도 유지되는지?
+            var id = ev.instance['el'].id;
+            var rowKeys = document.querySelectorAll("#"+id+" .tui-grid-table-container .tui-grid-table td[data-column-name='"+firstColumName+"'");
+
+            rowKeys.forEach((rowKey) => {
+                nthTable.removeRowClassName(parseInt(rowKey.getAttribute("data-row-key")), "checkCell");
+            });
+        });
+
+        // 체크박스 개별 선택/해제
+        nthTable.on('check', function (ev) {
+            nthTable.addRowClassName(ev.rowKey, "checkCell");
+        });
+        nthTable.on('uncheck', function (ev) {
+            nthTable.removeRowClassName(ev.rowKey, "checkCell");
+        });
+
+        nthTable.on('drop', ev => {
+            firstColumName = nthTable.getColumns()[0]['name'];
+        });
 
 
 
@@ -454,8 +488,61 @@
                 });
             }
         }
+
+
     }
 
+    // 신규 버튼 클릭 이벤트
+    document.getElementById("nthInsertBtn").addEventListener("click", function () {
+        const rowData = [
+            {   //수정해
+                courseDiv: '',
+                courseName: '',
+                termDiv: '',
+                eduStartDate: '',
+                eduEndDate: '',
+                note: '',
+                courseMonth: ''
+            }
+        ];
+
+        nthTable.appendRow(rowData[0], {
+            at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+            extendPrevRowSpan: true,
+            focus: true
+        });
+
+        nthData = nthTable.getData();
+
+        // 하단 table 초기화
+        var tableInput = document.querySelectorAll("#inputTable .tableInput");
+        document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+        tableInput.forEach((ti) => {
+            ti.value = "";
+        });
+    });
+
+    // 삭제 버튼 클릭 이벤트
+    document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+        if(confirm("삭제하시겠습니까?")){
+            nthTable.removeCheckedRows(false);
+
+            if(nthTable.getData().length !== 0){
+                var rowKey = nthTable.getRowAt(0)['rowKey'];
+
+                nthTable.focus(rowKey, firstColumName, true);
+                rowDataLoad(rowKey, nthTable, "inputTable");
+            }else{                                              // 데이터 x
+                rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
+            }
+        }
+    });
+    const nthSaveBtn = document.getElementById("nthSaveBtn");
+    nthSaveBtn.addEventListener('click', () => {
+        nthTable.request('createData');
+    });
+
+    //조회리스트들정보
     async function searchListData() {
         const response = await fetch('/eval/result/searchlist');
         const dataList = await response.json();
@@ -478,7 +565,10 @@
             option.text = data.courseName;
             courseNameSelect.appendChild(option);
         });
+
     }
+
+
 
     // 하단 탭 grid
     let personGrid;
