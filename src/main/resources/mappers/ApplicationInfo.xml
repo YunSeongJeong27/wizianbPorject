@@ -35,4 +35,7 @@
         UPDATE member SET pw=#{password},pwd_chg_date=#{date,jdbcType=TIMESTAMP} WHERE login_id=#{loginId};
     </update>
 
+    <select id="courseName" resultType="java.lang.String">
+        select course_name from entry_sel_master where rcrt_no = #{rcrtNo};
+    </select>
 </mapper>

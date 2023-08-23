@@ -33,6 +33,8 @@ public class ApplicationInfoController {
     @GetMapping("/userInfo")
     public String userInfo(HttpServletRequest request, Model model,HttpSession session){
         model.addAttribute("title","기본정보");
+       // Object rcrtNo = session.getAttribute("rcrtNo");
+       // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
 
         //일단,테스트용 rcrtNo 임의로 값 보내기
         model.addAttribute("rcrtNo","10-001");

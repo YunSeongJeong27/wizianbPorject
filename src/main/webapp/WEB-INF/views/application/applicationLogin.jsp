@@ -26,8 +26,38 @@
             cursor: pointer;
             font-size: 0.85rem;
             color: #9A9A9A;
+            border: none;
         }
-    </style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    /* 모달 */
+        .modal{
+            --bs-modal-header-border-width : 0 !important;
+            --bs-modal-footer-border-width : 0 !important;
+            animation: none !important;
+            transition: none !important;
+        }
+        .modal-backdrop{height:0%;}
+        .modal-content{
+            border-radius: 0 !important;
+            border: 2px solid black;
+            width: 800px !important;
+            height: 650px;
+            padding: 100px;
+            display: flex;
+            justify-content: center;
+         }
+        .btn-close{
+            --bs-btn-close-focus-shadow: 0 !important;
+            position: relative;
+            top: -100px;
+            left: 100px;
+        }
+</style>
 </head>
 
 <body>
@@ -45,31 +75,92 @@
                     <input name="email" class="mt-2 d-block form-control" type="email" placeholder="아이디">
                 </div>
                 <div class="mt-3">
-                    <span class="d-block">비밀번호(생년월일)</span>
+                    <span class="d-block">비밀번호</span>
                     <input name="password" class="mt-2 d-block form-control" type="password" placeholder="비밀번호">
                 </div>
                 <div id="submitBtn" class="mt-5 p-2 rounded-1 w-100 text-center text-white" style="background: #3B3B3B; cursor:pointer;">로그인</div>
             </form>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="mx-2 findDIv" data-bs-toggle="modal" data-bs-target="#findIDM">아이디 찾기</div>
-            <div class="mx-2 findDIv">비밀번호 찾기</div>
+            <div class="findDIv btn" data-bs-toggle="modal" data-bs-target="#findIdModal">아이디 찾기</div>
+            <div class="findDIv btn" data-bs-toggle="modal" data-bs-target="#findPwModal">비밀번호 찾기</div>
         </div>
 
     <%-- 모달 --%>
-        <div id="findIdModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
+        <%-- 아이디 찾기 --%>
+        <div id="findIdModal" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Modal body text goes here.</p>
+                        <div class="mb-3 fs-3 fw-bold">아이디 찾기</div>
+                        <div>
+                            <div class="mt-3">
+                                <span class="d-block">성명</span>
+                                <input id="nameModal" class="mt-2 d-block form-control" type="text" placeholder="등록된 성명을 입력하세요.">
+                            </div>
+                            <div class="mt-3">
+                                <span class="d-block">생년월일</span>
+                                <input id="birthModal" class="mt-2 d-block form-control" type="number" placeholder="생년월일을 YYYYMMDD 형식으로 입력하세요.">
+                            </div>
+                            <div class="mt-5 d-flex w-100 justify-content-around">
+                                <div id="findIdBtnModal" class="p-2 rounded-1 text-center text-white" style="background: #3B3B3B; cursor:pointer; width: 48%;">찾기</div>
+                                <div class="p-2 rounded-1 text-center text-white" style="background: #3B3B3B; cursor:pointer; width: 48%;" data-bs-dismiss="modal">취소</div>
+                            </div>
+                        </div>
+                        <div id="findIdModalText" class="text-center text-danger mt-4 fw-bold" style="height: 30px;"></div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+        <%-- 비밀번호 찾기 --%>
+        <div id="findPwModal" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 fs-3 fw-bold">비밀번호 찾기</div>
+                        <div>
+                            <div class="mt-3">
+                                <span class="d-block">아이디(이메일)</span>
+                                <div class="d-flex">
+                                    <div class="mt-2 w-75 d-flex justify-content-between">
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control " placeholder="이메일" aria-label="Email"
+                                                   id="emailModal1">
+                                        </div>
+                                        <div class="col-sm-6 ms-0">
+                                            <select class="form-select form-control" aria-label="Default select example" id="emailModal2">
+                                                <option selected>이메일 선택</option>
+                                                <option value="@naver.com">@naver.com</option>
+                                                <option value="@gmail.com">@gmail.com</option>
+                                                <option value="@daum.net">@daum.net</option>
+                                                <option value="@nate.com">@nate.com</option>
+                                            </select>
+                                        </div>
+                                    </div>
+<%--                                    <input id="emailModal" class="mt-2 form-control w-75" type="text" placeholder="이메일">--%>
+                                    <div id="emailModalBtn" class="w-25 d-flex align-items-center rounded-1 align-self-end text-white justify-content-center" style="height: 38px; background-color:#3B3B3B; cursor:pointer;">인증메일발송</div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <span class="d-block">인증번호</span>
+                                <div class="d-flex">
+                                    <input id="verificationModal" class="form-control mail-check-input mt-2 w-75" placeholder="인증번호 "
+                                           disabled="disabled" maxlength="7">
+<%--                                    <input id="verificationModal" class="mt-2 form-control w-75" type="text" placeholder="인증번호">--%>
+                                    <div id="verificationModalBtn" class="w-25 d-flex align-items-center rounded-1 align-self-end text-white justify-content-center" style="height: 38px; background-color:#3B3B3B; cursor:pointer;">인증번호확인</div>
+                                </div>
+                            </div>
+                            <div class="mt-5 d-flex w-100 justify-content-around">
+                                <div class="p-2 rounded-1 text-center text-white" style="background: #3B3B3B; cursor:pointer; width: 100%;" data-bs-dismiss="modal">닫기</div>
+                            </div>
+                        </div>
+                        <div id="findPwModalText" class="text-center text-danger mt-4 fw-bold" style="height: 30px;"></div>
                     </div>
                 </div>
             </div>
@@ -102,6 +193,114 @@
         submitBtn.addEventListener("click", function(){
             frm.submit();
         })
+
+        //모달
+        //아이디찾기
+        const findIdBtnModal = document.getElementById("findIdBtnModal");
+        const nameModal = document.getElementById("nameModal");
+        const birthModal = document.getElementById("birthModal");
+        const findIdModalText = document.getElementById("findIdModalText");
+        findIdBtnModal.addEventListener("click", function(){
+            findIdModalText.innerText = null;
+            //공백 잡아내기
+            if(/[\s]+/.test(nameModal.value)) {
+                findIdModalText.innerText = "유효하지 않은 형식입니다."
+                nameModal.value = null;
+                nameModal.focus();
+            }else if(nameModal.value.length === 0){
+                findIdModalText.innerText = "성명은 필수 항목입니다."
+            }else if(birthModal.value.length === 0){
+                findIdModalText.innerText = "생년월일은 필수 항목입니다."
+            }else{
+                // 모달 창 유지하며 db 검색
+                $.ajax({
+                    url: "/login/findId", // 호출할 URL 주소
+                    type: "POST", // 전송 방식
+                    contentType: "application/json", // 요청의 컨텐츠 타입
+                    data: JSON.stringify({ // 서버에 보낼 데이터를 JSON 문자열로 변환
+                        userName: nameModal.value,
+                        birthday: birthModal.value
+                    }),
+                    success: function(result){
+                        findIdModalText.innerText = result.text;
+                    },
+                    error: function(request,status,error) {
+                        // AJAX 호출에 실패한 경우 수행할 콜백 함수
+                        console.log("code: " + request.status + "\n" + "error: " + error);
+                    }
+                });
+            }
+        })
+        //비밀번호 찾기
+        const emailModal1 = document.getElementById("emailModal1");
+        const emailModal2 = document.getElementById("emailModal2");
+        let emailModal = null;
+        const emailModalBtn = document.getElementById("emailModalBtn");
+        const verificationModal = document.getElementById("verificationModal");
+        const verificationModalBtn = document.getElementById("verificationModalBtn");
+        const findPwModalText = document.getElementById("findPwModalText");
+        let authNum = null;
+            //인증메일발송
+        emailModalBtn.addEventListener("click", function(){
+            emailModal = emailModal1.value+emailModal2.value;
+            findPwModalText.innerText = null;
+            //공백 잡아내기
+            if (!emailModal.includes("@") || /[\s]+/.test(emailModal) || emailModal1.value.length === 0) {
+                findPwModalText.innerText = "이메일은 필수항목입니다."
+            }else{
+                findPwModalText.innerHTML = `
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div>잠시 기다려주세요</div>
+                        <div class="spinner-border text-danger ms-3" role="status"></div>
+                    </div>
+                `;
+                // 모달 창 유지하며 db 검색
+                $.ajax({
+                    url: "/api/findPwMailcheck", // 호출할 URL 주소
+                    type: "POST", // 전송 방식
+                    contentType: "application/json", // 요청의 컨텐츠 타입
+                    data: JSON.stringify({ // 서버에 보낼 데이터를 JSON 문자열로 변환
+                        username: emailModal
+                    }),
+                    success: function(result){
+                        console.log(result);
+                        authNum = result;
+                        findPwModalText.innerText = "인증번호를 입력해주세요";
+                        verificationModal.removeAttribute('disabled');
+                    },
+                    error: function() {
+                        findPwModalText.innerText = "다시 시도해주세요.";
+                    }
+                });
+            }
+        });
+            //인증번호확인
+        verificationModalBtn.addEventListener("click", function(){
+            findPwModalText.innerText = null;
+            if(verificationModal.value === authNum){
+                $.ajax({
+                    url: "/login/findPwNumCheck",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        email: emailModal
+                    }),
+                    success: function(result){
+                        findPwModalText.innerText = result.text;
+                    },
+                    error: function(result){
+                        console.log("Error status", result.status);
+                        console.log("Error response", result.responseJSON);
+                    }
+                })
+            }else{
+                findPwModalText.innerText = "인증번호가 일치하지 않습니다.";
+                verificationModal.value = null;
+            }
+        });
+
+
+
     </script>
 </body>
 </html>

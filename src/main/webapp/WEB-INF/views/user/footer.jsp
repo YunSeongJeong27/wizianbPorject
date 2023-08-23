@@ -18,8 +18,8 @@
         <div class="d-flex justify-content-between align-items-center h-75 border-bottom border-3 border-secondary">
             <div class="col-3 h-50" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat;"></div>
             <div class="col-6 fs-5 fw-bold">
-                <div>서울특별시 마포구 신촌로 176(대흥동) 위지언정보처리학원</div>
-                <div>대표자 : 위지언B 사업자등록번호 : 100-10-10000</div>
+                <div>서울특별시 마포구 신촌로 176(대흥동) 중앙정보처리학원</div>
+                <div>대표자 : 중앙 / 사업자등록번호 : 100-10-10000</div>
                 <div>Tel : 02-1234-5678 Fax : 02-1234-5678</div>
             </div>
             <div class="col-2 fw-bold">

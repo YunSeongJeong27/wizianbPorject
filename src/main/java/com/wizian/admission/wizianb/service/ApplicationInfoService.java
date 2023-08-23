@@ -19,4 +19,5 @@ public interface ApplicationInfoService {
 
    ApplicationInfo savePassword(String loginId,String password);
 
+   String courseName(Object rcrtNo);
 }

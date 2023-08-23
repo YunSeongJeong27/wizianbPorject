@@ -39,36 +39,18 @@
             <button class="p-4 border shadow-sm btn text-start w-100 h-100 entryWrap">
                 <div class="h-75">
                     <div class="rounded-2 text-white text-center p-1 statusDiv" style="background-color: #003A78; width: 80px;">
-                        <c:choose>
-                            <c:when test="${master.statusDiv eq 'PREPARED'}">준비중</c:when>
-                            <c:when test="${master.statusDiv eq 'PROGRESS'}">면접심사</c:when>
-                            <c:when test="${master.statusDiv eq 'END'}">최종심사</c:when>
-                            <c:when test="${master.statusDiv eq 'CANCEL'}">종료</c:when>
-                        </c:choose>
+                       ${master.statusDiv}
                     </div>
                     <div class="mt-2 fw-bold fs-5">${master.courseName}</div>
-                    <div class="m-1 border-bottom border-1 border-secondary">
-                            ${master.entYear} /
-                        <c:choose>
-                            <c:when test="${fn:startsWith(master.courseDiv, 'CD')}">Java</c:when>
-                            <c:when test="${fn:startsWith(master.courseDiv, 'LM')}">Python</c:when>
-                            <c:otherwise>뭐가 추가된거지 : ${master.courseDiv}</c:otherwise>
-                        </c:choose>
-                        과정 ${master.nthCode}
-                    </div>
+                <%--<div class="m-1 border-bottom border-1 border-secondary"></div>--%>
                     <div class="mt-2 text-secondary fw-bold">기수</div>
                     <div class="mt-1">
-                        <c:choose>
-                            <c:when test="${fn:startsWith(master.courseDiv, 'CD')}">Java</c:when>
-                            <c:when test="${fn:startsWith(master.courseDiv, 'LM')}">Python</c:when>
-                            <c:otherwise>뭐가 추가된거지 : ${master.courseDiv}</c:otherwise>
-                        </c:choose>
-                        과정 ${master.nthCode}
+                        ${master.courseDiv}과정 ${master.courseName}
                     </div>
                     <c:forEach items="${entrySelSchdl}" var="schdl">
                         <c:if test="${schdl.rcrtNo eq master.rcrtNo}">
                             <c:choose>
-                                <c:when test="${schdl.schdlName eq '접수기간'}">
+                                <c:when test="${schdl.schdlName eq '모집'}">
                                     <div class="mt-2 text-secondary fw-bold">${schdl.schdlName}</div>
                                     <div class="mt-1">
                                             ${schdl.startDate} ~ ${schdl.endDate}
@@ -102,7 +84,7 @@
     document.addEventListener("DOMContentLoaded", function(){
         var statusDivs = document.querySelectorAll(".statusDiv");
         statusDivs.forEach(function(statusDiv){
-            if(statusDiv.innerText !== "준비중"){
+            if(statusDiv.innerText !== "진행중"){
                 statusDiv.parentElement.parentElement.disabled = true;
             }else{
                 statusDiv.parentElement.parentElement.disabled = false;

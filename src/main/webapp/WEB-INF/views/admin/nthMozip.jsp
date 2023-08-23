@@ -131,33 +131,38 @@
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
             <div class="d-flex col-4 align-items-center" style="height: 40px">
-                <div class="col-6 ms-3 fw-bold d-flex">
+                <div class="col-4 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>전형일정단계/상태</div>
-
                 </div>
-                <div class="d-flex flex-row justify-content-left mb-1 gap-2">
-                    <select class="form-select" name="schdlName" >
-                        <option value="" selected>(전체)</option>
+                <div class=" d-flex flex-row justify-content-left mb-1 gap-2">
+                    <select class="form-select mt-2" name="schdlName"  id="updateSchdlName"  style="width: 300px; height: 40px;">
+                        <option value="" selected>(미선택)</option>
                     </select>
-                    <select class="form-select" name="statusDiv" >
-                        <option value="" selected>(전체)</option>
+                    <select class="form-select mt-2" name="statusDiv" id="updateStatusDiv" style="width: 130px; height: 40px;" >
+                        <option value="" selected>(미선택)</option>
                     </select>
+
+                    <button id="updateSchdl" class="btn btn-sm btn-light btn-outline-dark me-1"
+                            style="width: 48px; height: 33px; margin-top: 12px;">변경</button>
                 </div>
             </div>
             <div class="p-3">
                 <table id="inputTable" class="table border fw-bold align-middle">
+                    <tbody>
                     <tr>
                         <td class="tableColor">과정명</td>
                         <td class="col-2">
                             <select class="form-select tableInput" id="courseName2" name="courseName" disabled>
+                                <option value="" selected>(미선택)</option>
                             </select>
                         </td>
                         <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                         <td class="">
                             <select class="form-select tableInput" id="courseDiv2" name="courseDiv" disabled>
+                                <option value="" selected>(미선택)</option>
                             </select>
                         </td>
                         <td class="tableColor">모집전형번호</td>
@@ -177,6 +182,7 @@
                         <td class="tableColor">단계진행상태</td>
                         <td class=""><input class="form-control tableInput" name="statusDiv" type="text" disabled></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -384,7 +390,7 @@
                 onGridMounted() {
                     nthTable.focus(0, firstColumName, true);
 
-                    rowDataLoad(0, nthTable, "inputTable");
+                    //rowDataLoad(0, nthTable, "inputTable");
 
                     document.querySelector("#inputTable tbody").setAttribute("id", "row0");
 
@@ -464,16 +470,32 @@
             }else{
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
-                    if(tiName==="courseDiv" || tiName==="termDiv"){
-                        $('select[name='+tiName+']').val(datas[tiName]).prop("selected",true);
-                    }
                     ti.value = datas[tiName];
+                    updatercrtNo=datas['rcrtNo'];
                 });
             }
+
         }
 
 
     }
+    //모집전형번호
+    let updatercrtNo;
+    document.getElementById("updateSchdl").addEventListener("click", function () {
+        if(confirm("변경하시겠습니까?")) {
+
+            if (updatercrtNo == null) {
+                alert("저장 후 변경해 주십시오.")
+            }
+            else{
+                alert(updatercrtNo);
+
+            }
+
+        }
+
+    });
+
 
     // 신규 버튼 클릭 이벤트
     document.getElementById("nthInsertBtn").addEventListener("click", function () {
