@@ -22,65 +22,60 @@
 <div class="d-flex flex-row justify-content-end mb-1">
     <button id="selectBtn" class="btn btn-sm btn-secondary me-1" onclick="searchBtn()">조회</button>
 </div>
-    <div class="container-table">
-        <%--TOP--%>
-            <div class="col-12">
-                <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                    <div class="col-1 align-middle tableSearch">분기</div>
-                    <div class="col-1 me-2">
-                        <select class="form-select" name="termDiv">
-                            <option value="" selected>(전체)</option>
-                            <option value="1">1분기</option>
-                            <option value="2">2분기</option>
-                            <option value="3">3분기</option>
-                            <option value="4">4분기</option>
-                        </select>
-                    </div>
-
-                    <div class="col-2 tableSearch">과정구분</div>
-                    <div class="col-2 me-2">
-                        <select class="form-select" id="courseDiv" name="courseDiv">
-                            <option  value="" selected>(전체)</option>
-                        </select>
-                    </div>
-
-                    <div class="col-2 tableSearch">과정명</div>
-                    <div class="col-4">
-                        <select class="form-select" id="courseName" name="courseName">
-                            <option  value="" selected>(전체)</option>
-
-                        </select>
-                    </div>
-                </div>
+<div class="container-table">
+    <%--TOP--%>
+    <div class="col-12">
+        <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+            <div class="col-1 align-middle tableSearch">분기</div>
+            <div class="col-1 me-2">
+                <select class="form-select" name="termDiv">
+                    <option value="" selected>(전체)</option>
+                    <option value="1">1분기</option>
+                    <option value="2">2분기</option>
+                    <option value="3">3분기</option>
+                    <option value="4">4분기</option>
+                </select>
             </div>
 
-        <%--HEAD--%>
-        <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-            <div class="col-4 d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">모집전형정보</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
-                <div>
-                    <select class="form-select" id="nthTablePage">
-                        <option selected>5</option>
-                        <option>30</option>
-                        <option>50</option>
-                        <option>70</option>
-                        <option>100</option>
-                    </select>
-                </div>
+            <div class="col-2 tableSearch">과정구분</div>
+            <div class="col-2 me-2">
+                <select class="form-select" id="courseDiv" name="courseDiv">
+                    <option  value="" selected>(전체)</option>
+                </select>
             </div>
-        </div>
 
-        <%--BODY--%>
-        <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-            <div id="nthTable"></div>
+            <div class="col-2 tableSearch">과정명</div>
+            <div class="col-4">
+                <select class="form-select" id="courseName" name="courseName">
+                    <option  value="" selected>(전체)</option>
 
-
-               <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-                    <p class="pageLoc">현재:1/전체:14(1~5)</p>
-                </div>--%>
+                </select>
+            </div>
         </div>
     </div>
+
+    <%--HEAD--%>
+    <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+        <div class="col-4 d-flex flex-row align-items-center">
+            <p class="subTitle fw-bold me-2">모집전형정보</p>
+            <p class="subResult text-secondary me-2">검색결과:00건</p>
+            <div>
+                <select class="form-select" id="nthTablePage">
+                    <option selected>5</option>
+                    <option>30</option>
+                    <option>50</option>
+                    <option>70</option>
+                    <option>100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <%--BODY--%>
+    <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+        <div id="nthTable"></div>
+    </div>
+</div>
 
 <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
@@ -116,7 +111,7 @@
     document.addEventListener('DOMContentLoaded', async () =>{
         await  nthGridLoad();
         await  searchListData();
-        await subTableLoad();
+        //await subTableLoad();
     });
 
 
@@ -144,15 +139,12 @@
     }
 
 
-
-
-
     let nthTable;
     const nthGridLoad = (nthData) => {
         const oldnNhTable = document.getElementById('nthTable');
         oldnNhTable.innerHTML = '';
 
-         nthTable = new tui.Grid({
+        nthTable = new tui.Grid({
             el: document.getElementById('nthTable'),
             data: nthData,
             pageOptions: {
@@ -211,25 +203,20 @@
                     name: 'stepDiv',
                     sortingType: 'asc',
                     sortable: false, align: 'center'
+
                 }
             ],
             columnOptions: {
                 resizable: true
             },
 
-            draggable: true,
-
-            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-            onGridMounted() {
-                nthTable.focus(0, 'COURSE_DIV', true);
-                subTableLoad(0);
-            }
+            draggable: true
         });
         nthTable.on('click', function (ev) {
             subTableLoad(ev.rowKey);
         });
 
-         nthTablePage = document.querySelector('#nthTablePage');
+        nthTablePage = document.querySelector('#nthTablePage');
 
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthTablePage.addEventListener('change', function () {

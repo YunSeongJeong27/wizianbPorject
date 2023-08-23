@@ -3,7 +3,7 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.TopScreeningRepository">
 
     <select id="nthInfo" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
-        select a.course_name, a.course_div, a.term_div,a.step_div,
+        select a.rcrt_no, a.course_name, a.course_div, a.term_div,a.step_div,
                (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment}) as recruitStartDate,
                (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment}) as recruitEndDate,
                (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement}) as announcementStartDate,

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +30,14 @@ public class PassManagementServiceImpl implements PassManagementService {
         if(courseDiv.equals("0")) courseDiv = "%";
 
         return passManagementRepository.courseSelect(termDiv, courseDiv);
+    }
+
+    @Override
+    public List<PassManagement> endCourseSelect(String termDiv, String courseDiv) {
+        if(termDiv.equals("0")) termDiv = "%";
+        if(courseDiv.equals("0")) courseDiv = "%";
+
+        return passManagementRepository.endCourseSelect(termDiv, courseDiv);
     }
 
     @Override
@@ -130,10 +139,17 @@ public class PassManagementServiceImpl implements PassManagementService {
 
     @Override
     public void sendPassMail(JsonNode jn) {
-        List<PassManagement> passManagementList = passManagementRepository.findFnlPass(jn.get("rcrtNo").asText());
+        String stepDiv = jn.get("stepDiv").asText();
+        String title = jn.get("subject").asText();
+        String message = jn.get("msgCont").asText();
+        List<PassManagement> passManagementList = new ArrayList<>() {};
+
+        if(stepDiv.equals("interview")) passManagementList = passManagementRepository.findFnlPass(jn.get("rcrtNo").asText());
+        else if(stepDiv.equals("final")) passManagementList = passManagementRepository.findPassList(jn.get("rcrtNo").asText());
+
         mailSendService.mailSend("message", "aaa@naver.com", "title");
         for(PassManagement data: passManagementList) {
-            //mailSendService.mailSend("message", data.getEmail(), "title");
+            //mailSendService.mailSend(message, data.getEmail(), title);
         }
     }
 }
