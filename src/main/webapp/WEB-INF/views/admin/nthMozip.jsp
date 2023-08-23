@@ -44,63 +44,71 @@
 </head>
 <body>
 <div class="container-table m-2">
+
     <div class="d-flex flex-row justify-content-end mb-1">
-        <button id="selectBtn" class="btn btn-sm btn-secondary me-1">조회</button>
-        <button id="mozipInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
-        <button id="saveBtn" class="btn btn-sm btn-success me-1">저장</button>
-        <button id="deleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
+        <button id="selectBtn" class="btn btn-sm btn-secondary me-1" onclick="searchBtn()">조회</button>
+        <button id="nthInsertBtn" class="btn btn-sm btn-light btn-outline-dark me-1">신규</button>
+        <button id="nthSaveBtn" class="btn btn-sm btn-success me-1">저장</button>
+        <button id="nthDeleteBtn" class="btn btn-sm btn-danger me-1">삭제</button>
     </div>
+    <div class="container-table">
+        <%--TOP--%>
+        <div class="col-12">
+            <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
+                <div class="col-1 align-middle tableSearch">분기</div>
+                <div class="col-1 me-2">
+                    <select class="form-select" name="termDiv">
+                        <option value="" selected>(전체)</option>
+                        <option value="1">1분기</option>
+                        <option value="2">2분기</option>
+                        <option value="3">3분기</option>
+                        <option value="4">4분기</option>
+                    </select>
+                </div>
 
-    <div class="col-12">
-        <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-            <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-            <div class="col-1 me-1"><input type="text" class="form-control"></div>
-            <div class="col-1 me-2">
-                <select class="form-select">
-                    <option selected>1분기</option>
-                    <option>2분기</option>
-                    <option>3분기</option>
-                    <option>4분기</option>
-                </select>
-            </div>
+                <div class="col-2 tableSearch">과정구분</div>
+                <div class="col-2 me-2">
+                    <select class="form-select" id="courseDiv" name="courseDiv">
+                        <option  value="" selected>(전체)</option>
+                    </select>
+                </div>
 
-            <div class="col-2 tableSearch">과정구분</div>
-            <div class="col-2 me-2">
-                <select class="form-select">
-                    <option selected>Java</option>
-                    <option>Python</option>
-                    <option>C++</option>
-                </select>
-            </div>
+                <div class="col-2 tableSearch">과정명</div>
+                <div class="col-4">
+                    <select class="form-select" id="courseName" name="courseName">
+                        <option  value="" selected>(전체)</option>
 
-            <div class="col-2 tableSearch">과정명</div>
-            <div class="col-2"><input type="text" class="form-control"></div>
-        </div>
-    </div>
-
-    <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
-        <div class="col-4 d-flex flex-row align-items-center">
-            <p class="subTitle fw-bold me-2">모집전형정보</p>
-            <p class="subResult text-secondary me-2">검색결과:00건</p>
-            <div>
-                <select class="form-select" id="nthTablePage">
-                    <option selected>5</option>
-                    <option>30</option>
-                    <option>50</option>
-                    <option>70</option>
-                    <option>100</option>
-                </select>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="nthInfoTable text-center border border-gray-100 rounded-2">
-        <div id="nthTable"></div>
+        <%--HEAD--%>
+        <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
+            <div class="col-4 d-flex flex-row align-items-center">
+                <p class="subTitle fw-bold me-2">모집전형정보</p>
+                <p class="subResult text-secondary me-2">검색결과:00건</p>
+                <div>
+                    <select class="form-select" id="nthTablePage">
+                        <option selected>5</option>
+                        <option>30</option>
+                        <option>50</option>
+                        <option>70</option>
+                        <option>100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <%--BODY--%>
+        <div class="nthInfoTable text-center border border-gray-100 rounded-2">
+            <div id="nthTable"></div>
 
 
-        <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-             <p class="pageLoc">현재:1/전체:14(1~5)</p>
-         </div>--%>
+            <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
+                 <p class="pageLoc">현재:1/전체:14(1~5)</p>
+             </div>--%>
+        </div>
     </div>
 
 
@@ -281,104 +289,136 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var firstColumName = 'courseDiv';
+    document.addEventListener('DOMContentLoaded', async () =>{
+        await  nthGridLoad();
+        await  searchListData();
 
-        function educationPeriodFormatter({row}) {
-            const startDate = row.eduStartDate;
-            const endDate = row.eduEndDate;
-            return startDate + "~" + endDate;
-        }
+    });
 
-        const nthTable = new tui.Grid({
-            el: document.getElementById('nthTable'),
-            data: {
-                initialRequest: true,
-                api: {
-                    hideLoadingBar: false,
-                    readData: { url: '/recruitment/list', method: 'GET' },
-                    createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
-                    updateData: { url: 'recruitment/save', method: 'PUT' },
-                    deleteData: { url: 'recruitment/delete', method: 'DELETE' }
-                }
-            },
-            rowHeaders: ['checkbox'],
-            pageOptions: {
-                useClient: true,	// front에서만 페이징 하는 속성
-                perPage: 5,		//한번에 보여줄 데이터 수
-                visiblePages: 10
-            },
-            scrollX: true,
-            scrollY: true,
-            bodyHeight: 217,
-            columns: [
-                {
-                    header: '과정명',
-                    name: 'courseName',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '과정구분',
-                    name: 'courseDiv',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '분기',
-                    name: 'termDiv',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '모집기간',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center',
-                    width: 220,
-                    formatter: educationPeriodFormatter
-                },
-                {
-                    header: '수업개월수',
-                    name: 'courseMonth',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '비고',
-                    name: 'note',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                }
-            ],
-            columnOptions: {
-                resizable: true
-            },
-            draggable: true,
-
-            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-            onGridMounted() {
-                nthTable.focus(0, firstColumName, true);
-
-                rowDataLoad(0, nthTable, "inputTable");
-
-                document.querySelector("#inputTable tbody").setAttribute("id", "row0");
-
-                // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
-                // 데이터 업데이트..
-                var tableInput = document.querySelectorAll("#inputTable .tableInput");
-                tableInput.forEach((ti) => {
-                    ti.addEventListener("change", function(){
-                        var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
-
-                        nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
-                    })
-                });
+    let  termDiv, courseDiv, courseName;
+    //readData빼고는 전부 (createData,updateData,deleteData)빽엔드아직안함
+    const nthTableData = () => {
+        termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
+        courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
+        courseName = courseName === "" ? "nullCourseName" : courseName;
+        return{
+            api: {
+                readData: { url: 'topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
+                    method: 'GET' },
+                createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
+                updateData: { url: 'recruitment/save', method: 'PUT' },
+                deleteData: { url: 'recruitment/delete', method: 'DELETE' }
             }
-        });
+        };
+    };
+
+    //조회버튼 클릭시
+    async function searchBtn(){
+        termDiv = document.querySelector('select[name="termDiv"]').value;
+        courseDiv = document.querySelector('select[name="courseDiv"]').value;
+        courseName = document.querySelector('select[name="courseName"]').value;
+
+        await nthGridLoad();
+        // 이 function에 추가로 서브테이블 이름에
+        // 서브테이블.innerHTML = ''; 이거 각뷰에추가하면좋음
+    }
+
+    let nthTable;
+    const nthGridLoad = () => {
+            const oldnNhTable = document.getElementById('nthTable');
+            oldnNhTable.innerHTML = '';
+
+            nthTable = new tui.Grid({
+                el: document.getElementById('nthTable'),
+                data: nthTableData(),
+                rowHeaders: ['checkbox'],
+                pageOptions: {
+                    useClient: true,	// front에서만 페이징 하는 속성
+                    perPage: 5,		//한번에 보여줄 데이터 수
+                    visiblePages: 10
+                },
+                scrollX: true,
+                scrollY: true,
+                bodyHeight: 217,
+                columns: [
+                    {
+                        header: '과정구분',
+                        name: 'courseDiv',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        header: '과정명',
+                        name: 'courseName',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center'
+                    },
+
+                    {
+                        header: '분기',
+                        name: 'termDiv',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+                    },
+                    {
+                        header: '모집기간',
+                        name: 'recruitPeriod',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center',
+                        width: 220,
+
+                    },
+                    {
+                        header: '발표일자',
+                        name: 'announcementPeriod',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+
+                    },
+                    {
+                        header: '전형일정',
+                        name: 'schdlName',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
+                    },
+                    {
+                        header: '전형평가단계',
+                        name: 'stepDiv',
+                        sortingType: 'asc',
+                        sortable: false, align: 'center'
+                    }
+                ],
+                columnOptions: {
+                    resizable: true
+                },
+
+                draggable: true,
+
+
+                // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
+                onGridMounted() {
+                    nthTable.focus(0, firstColumName, true);
+
+                    rowDataLoad(0, nthTable, "inputTable");
+
+                    document.querySelector("#inputTable tbody").setAttribute("id", "row0");
+
+                    // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
+                    // 데이터 업데이트..
+                    var tableInput = document.querySelectorAll("#inputTable .tableInput");
+                    tableInput.forEach((ti) => {
+                        ti.addEventListener("change", function () {
+                            var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
+
+                            nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
+                        })
+                    });
+                }
+
+            });
+
 
         const nthTablePage = document.querySelector('#nthTablePage');
 
@@ -428,6 +468,8 @@
             firstColumName = nthTable.getColumns()[0]['name'];
         });
 
+
+
         // 하단 table 데이터 넣기
         function rowDataLoad(rowKey, table, id){
             var datas = table.getRow(rowKey);
@@ -447,61 +489,85 @@
             }
         }
 
-        // 신규 버튼 클릭 이벤트
-        document.getElementById("nthInsertBtn").addEventListener("click", function () {
-            const rowData = [
-                {
-                    courseDiv: '',
-                    courseName: '',
-                    termDiv: '',
-                    eduStartDate: '',
-                    eduEndDate: '',
-                    note: '',
-                    courseMonth: ''
-                }
-            ];
 
-            nthTable.appendRow(rowData[0], {
-                at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
-                extendPrevRowSpan: true,
-                focus: true
-            });
+    }
 
-            nthData = nthTable.getData();
-
-            // 하단 table 초기화
-            var tableInput = document.querySelectorAll("#inputTable .tableInput");
-            document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
-            tableInput.forEach((ti) => {
-                ti.value = "";
-            });
-        });
-
-        // 삭제 버튼 클릭 이벤트
-        document.getElementById("nthDeleteBtn").addEventListener("click", function () {
-            if(confirm("삭제하시겠습니까?")){
-                nthTable.removeCheckedRows(false);
-
-                if(nthTable.getData().length !== 0){
-                    var rowKey = nthTable.getRowAt(0)['rowKey'];
-
-                    nthTable.focus(rowKey, firstColumName, true);
-                    rowDataLoad(rowKey, nthTable, "inputTable");
-                }else{                                              // 데이터 x
-                    rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
-                }
+    // 신규 버튼 클릭 이벤트
+    document.getElementById("nthInsertBtn").addEventListener("click", function () {
+        const rowData = [
+            {   //수정해
+                courseDiv: '',
+                courseName: '',
+                termDiv: '',
+                eduStartDate: '',
+                eduEndDate: '',
+                note: '',
+                courseMonth: ''
             }
+        ];
+
+        nthTable.appendRow(rowData[0], {
+            at: nthTable.getIndexOfRow(nthTable.getFocusedCell()['rowKey'])+1,
+            extendPrevRowSpan: true,
+            focus: true
         });
-        const saveBtn = document.getElementById("saveBtn");
-        saveBtn.addEventListener('click', () => {
-            nthTable.request('createData');
+
+        nthData = nthTable.getData();
+
+        // 하단 table 초기화
+        var tableInput = document.querySelectorAll("#inputTable .tableInput");
+        document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
+        tableInput.forEach((ti) => {
+            ti.value = "";
         });
-        const nthSelectBtn = document.getElementById("nthSelectBtn");
-        nthSelectBtn.addEventListener('click', () => {
-            nthTable.request('readData');
-            console.log(nthTable.request('readData'));
-        })
     });
+
+    // 삭제 버튼 클릭 이벤트
+    document.getElementById("nthDeleteBtn").addEventListener("click", function () {
+        if(confirm("삭제하시겠습니까?")){
+            nthTable.removeCheckedRows(false);
+
+            if(nthTable.getData().length !== 0){
+                var rowKey = nthTable.getRowAt(0)['rowKey'];
+
+                nthTable.focus(rowKey, firstColumName, true);
+                rowDataLoad(rowKey, nthTable, "inputTable");
+            }else{                                              // 데이터 x
+                rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
+            }
+        }
+    });
+    const nthSaveBtn = document.getElementById("nthSaveBtn");
+    nthSaveBtn.addEventListener('click', () => {
+        nthTable.request('createData');
+    });
+
+    //조회리스트들정보
+    async function searchListData() {
+        const response = await fetch('/eval/result/searchlist');
+        const dataList = await response.json();
+        const courseDiv= dataList["courseDivList"];
+        const courseName= dataList["courseNameList"];
+
+        const courseDivSelect = document.querySelector("#courseDiv");
+        const courseNameSelect = document.querySelector("#courseName");
+
+        courseDiv.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseDiv;
+            option.text = data.courseDiv;
+            courseDivSelect.appendChild(option);
+        });
+
+        courseName.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseName;
+            option.text = data.courseName;
+            courseNameSelect.appendChild(option);
+        });
+
+    }
+
 
 
     // 하단 탭 grid
@@ -758,6 +824,7 @@
             content.setAttribute("style","display:block");
         }
     }
+
 
 </script>
 </body>

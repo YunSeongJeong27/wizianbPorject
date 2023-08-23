@@ -14,6 +14,8 @@
     where a.term_div like #{termDiv} and a.course_div like #{courseDiv}
       and a.course_name like #{courseName} and
         (a.status_div=#{StatusPreparing} or a.status_div=#{StatusPrepared})
+      and b.status_div=#{StatusPrepared}
+
 
     </select>
 
