@@ -57,7 +57,7 @@
             <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
                 <div class="col-1 align-middle tableSearch">분기</div>
                 <div class="col-1 me-2">
-                    <select class="form-select" name="termDiv">
+                    <select class="form-select" id="termDiv1" name="termDiv">
                         <option value="" selected>(전체)</option>
                         <option value="1">1분기</option>
                         <option value="2">2분기</option>
@@ -68,14 +68,14 @@
 
                 <div class="col-2 tableSearch">과정구분</div>
                 <div class="col-2 me-2">
-                    <select class="form-select" id="courseDiv" name="courseDiv">
+                    <select class="form-select" id="courseDiv1" name="courseDiv">
                         <option  value="" selected>(전체)</option>
                     </select>
                 </div>
 
                 <div class="col-2 tableSearch">과정명</div>
                 <div class="col-4">
-                    <select class="form-select" id="courseName" name="courseName">
+                    <select class="form-select" id="courseName1" name="courseName">
                         <option  value="" selected>(전체)</option>
 
                     </select>
@@ -152,16 +152,12 @@
                     <tr>
                         <td class="tableColor">과정명</td>
                         <td class="col-2">
-                            <select class="form-select tableInput" name="courseName">
-
+                            <select class="form-select tableInput" id="courseName2" name="courseName" disabled>
                             </select>
                         </td>
                         <td class="col-2 tableColor">과정구분<span class="text-danger">*</span></td>
                         <td class="">
-                            <select class="form-select tableInput" name="courseDiv" disabled>
-                                <option selected>Java</option>
-                                <option>Python</option>
-                                <option>C++</option>
+                            <select class="form-select tableInput" id="courseDiv2" name="courseDiv" disabled>
                             </select>
                         </td>
                         <td class="tableColor">모집전형번호</td>
@@ -176,12 +172,8 @@
                     <tr>
                         <td class="tableColor">현재전형일정</td>
                         <td class=""><input class="form-control tableInput" name="schdlName" type="text" disabled></td>
-                        <%--<td class="tableColor">전형평가단계</td>
-                        <td class="">
-                            <select class="form-select tableInput">
-                                <option selected>[S] STEP_DIV[LM0140]</option>
-                            </select>
-                        </td>--%>
+
+
                         <td class="tableColor">단계진행상태</td>
                         <td class=""><input class="form-control tableInput" name="statusDiv" type="text" disabled></td>
                     </tr>
@@ -305,9 +297,9 @@
 
     //조회버튼 클릭시
     async function searchBtn(){
-        termDiv = document.querySelector('select[name="termDiv"]').value;
-        courseDiv = document.querySelector('select[name="courseDiv"]').value;
-        courseName = document.querySelector('select[name="courseName"]').value;
+        termDiv = document.querySelector('#termDiv1').value;
+        courseDiv = document.querySelector('#courseDiv1').value;
+        courseName = document.querySelector('#courseName1').value;
 
         await nthGridLoad();
         // 이 function에 추가로 서브테이블 이름에
@@ -486,14 +478,14 @@
     // 신규 버튼 클릭 이벤트
     document.getElementById("nthInsertBtn").addEventListener("click", function () {
         const rowData = [
-            {   //수정해
+            {
                 courseDiv: '',
                 courseName: '',
                 termDiv: '',
-                eduStartDate: '',
-                eduEndDate: '',
-                note: '',
-                courseMonth: ''
+                recruitPeriod: '',
+                announcementPeriod: '',
+                schdlName: '',
+                stepDiv: ''
             }
         ];
 
@@ -535,31 +527,43 @@
 
     //조회리스트들정보
     async function searchListData() {
+        //검색 조회부분
         const response = await fetch('/eval/result/searchlist');
         const dataList = await response.json();
         const courseDiv= dataList["courseDivList"];
         const courseName= dataList["courseNameList"];
 
-        const courseDivSelect = document.querySelector("#courseDiv");
-        const courseNameSelect = document.querySelector("#courseName");
+        const courseDivSelect = document.querySelector("#courseDiv1");
+        const courseNameSelect = document.querySelector("#courseName1");
+
+        //모집전형설정리스트
+        const nthCourseDivSelect = document.querySelector('#courseDiv2');
+        const nthCourseNameSelect = document.querySelector('#courseName2');
 
         courseDiv.map((data) => {
-            const option = document.createElement("option");
-            option.value = data.courseDiv;
-            option.text = data.courseDiv;
-            courseDivSelect.appendChild(option);
+            const option1 = document.createElement("option");
+            option1.value = data.courseDiv;
+            option1.text = data.courseDiv;
+            courseDivSelect.appendChild(option1);
+
+            const option2 = document.createElement("option");
+            option2.value = data.courseDiv;
+            option2.text = data.courseDiv;
+            nthCourseDivSelect.appendChild(option2);
         });
 
         courseName.map((data) => {
-            const option = document.createElement("option");
-            option.value = data.courseName;
-            option.text = data.courseName;
-            courseNameSelect.appendChild(option);
+            const option1 = document.createElement("option");
+            option1.value = data.courseName;
+            option1.text = data.courseName;
+            courseNameSelect.appendChild(option1);
+
+            const option2 = document.createElement("option");
+            option2.value = data.courseName;
+            option2.text = data.courseName;
+            nthCourseNameSelect.appendChild(option2);
         });
-
     }
-
-
 
     // 하단 탭 grid
     let personGrid;

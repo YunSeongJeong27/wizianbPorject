@@ -3,12 +3,13 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.TopScreeningRepository">
 
     <select id="nthInfo" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
-        select a.course_name, a.course_div, a.term_div,a.step_div,
-               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment}) as recruitStartDate,
-               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment}) as recruitEndDate,
-               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement}) as announcementStartDate,
-               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement}) as announcementEndDate,
-               (select schdl_name from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as schdlName
+        select a.course_name, a.course_div, a.term_div,a.step_div,a.EDU_START_DATE,a.EDU_END_DATE,a.RCRT_NO,
+               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment} limit 0,1 ) as recruitStartDate,
+               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment} limit 0,1 ) as recruitEndDate,
+               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement} limit 0,1 ) as announcementStartDate,
+               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement} limit 0,1 ) as announcementEndDate,
+               (select schdl_name from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as schdlName,
+               (select status_div from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as statusDiv
         from entry_sel_master as a
     where a.term_div like #{termDiv} and a.course_div like #{courseDiv}
       and a.course_name like #{courseName} and
