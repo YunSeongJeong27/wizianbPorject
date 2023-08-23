@@ -819,8 +819,6 @@
             content.setAttribute("style","display:block");
         }
     }
-
-
 </script>
 </body>
 </html>
