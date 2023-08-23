@@ -136,25 +136,16 @@
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
                     <div>전형일정단계/상태</div>
+
                 </div>
-                <%--<div class="col-3">
-                    <select class="form-select">
-                        <option selected>(미선택)</option>
-                        <option>테스트접수</option>
-                        <option>지원서접수</option>
+                <div class="d-flex flex-row justify-content-left mb-1 gap-2">
+                    <select class="form-select" name="schdlName" >
+                        <option value="" selected>(전체)</option>
+                    </select>
+                    <select class="form-select" name="statusDiv" >
+                        <option value="" selected>(전체)</option>
                     </select>
                 </div>
-                <div class="col-3">
-                    <select class="form-select">
-                        <option selected>(미선택)</option>
-                        <option>준비중</option>
-                        <option>진행</option>
-                        <option>완료</option>
-                    </select>
-                </div>
-                <div class="col-2 ms-2">
-                    <div class="btn btn-sm btn-outline-secondary fw-bold">변경</div>
-                </div>--%>
             </div>
             <div class="p-3">
                 <table id="inputTable" class="table border fw-bold align-middle">
