@@ -16,19 +16,6 @@
     <link rel="stylesheet" href="/css/custom.css" />
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <style>
-
-        .passNotice{
-            color: #f66;
-            font-size: 13px;
-            font-weight: 600;
-            margin: 0;
-        }
-        .passNotice:before{
-            content: "\203B";
-            padding-right: 5px;
-        }
-    </style>
 </head>
 <body>
     <div class="container-table m-2">
@@ -37,7 +24,6 @@
                 <button id="passFindBtn" class="btn btn-sm btn-secondary me-1">조회</button>
             </div>
 
-            <%--TOP--%>
             <div class="col-12">
                 <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
                     <div class="col-1 align-middle tableSearch">분기</div>
@@ -70,7 +56,6 @@
                 </div>
             </div>
 
-            <%--HEAD--%>
             <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
                 <div class="col-4 d-flex flex-row align-items-center">
                     <p class="subTitle fw-bold me-2">모집전형정보</p>
@@ -136,6 +121,11 @@
     <%-- 메일 내용 확인 모달 --%>
     <div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" id="dialog">
+            <div id="spinner" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <div class="modal-title fw-bold">
@@ -497,6 +487,7 @@
         const msgCont = document.getElementById("msgCont");
         const mailSendBtn = document.getElementById("mailSendBtn");
         const sendBtn = document.getElementById("sendBtn");
+        const spinner = document.getElementById("spinner");
 
         modal.addEventListener('show.bs.modal', function (e) {
             dataFlag = document.querySelector("#applicationTable .tui-grid-body-area tr");
@@ -531,7 +522,7 @@
         }
 
         // 메일보내기 버튼 클릭 이벤트
-        mailSendBtn.addEventListener('click', function(){
+        mailSendBtn.addEventListener('click', function () {
             //const response = await fetch('/pass/findMail');
             //const dataList = await response.json();
             //const title = dataList['SUBJECT'];
@@ -545,10 +536,14 @@
 
         // 메일 보내기
         sendBtn.addEventListener('click', function(){
+            spinner.style.display = 'block';
+            sendBtn.disabled = true;
+
             fetch("/pass/sendMail", {
                 method: 'POST',
                 body: JSON.stringify({
                     rcrtNo: nthRcrtNo,
+                    stepDiv: 'interview',
                     subject: "title",
                     msgCont: "content"
                 }),
@@ -558,16 +553,16 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
                     if(data['status'] !== 500){
                         alert("메일을 발송하였습니다.");
                     }else{
                         alert("메일을 발송하지 못했습니다.");
                     }
+
+                    spinner.style.display = 'none';
+                    sendBtn.disabled = false;
                 });
-        })
-
-
+        });
     </script>
 </body>
 </html>
