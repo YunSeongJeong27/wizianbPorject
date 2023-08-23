@@ -78,6 +78,7 @@ public class ApplicationWriteController {
 
 
         if (emailCheck == null || passwordCheck == null) {
+            System.out.println("여기");
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";
         } else if (passwordEncoder.matches(password, passwordCheck)) {
@@ -94,6 +95,7 @@ public class ApplicationWriteController {
 
             return "/application/applicationWrite";
         } else {
+
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";
         }

@@ -15,7 +15,7 @@ import static com.wizian.admission.wizianb.utill.Constant.IMAGE_PATH;
 
 @Service
 public class ImageService {
-    public int saveStoreImage(MultipartFile multipartFile) throws IOException {
+    public int saveImage(MultipartFile multipartFile) throws IOException {
 
         // 저장할 디렉토리 생성
         File directory = new File(IMAGE_PATH);

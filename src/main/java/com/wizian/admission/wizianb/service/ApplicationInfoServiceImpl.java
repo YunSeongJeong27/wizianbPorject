@@ -56,7 +56,7 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         appInfo.setHpLocal(applicationInfo.getHpLocal());
 
         // 파일 업로드와 저장
-        int newFileName = imageService.saveStoreImage(file);
+        int newFileName = imageService.saveImage(file);
         appInfo.setPicFileNo(newFileName);
 
         String uuid = UUID.randomUUID().toString();
@@ -66,9 +66,9 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
 
         // member 테이블에 저장
         applicationInfoRepository.saveMember(appInfo);
+        // entry_apply_master 테이블에 저장
         applicationInfoRepository.save(appInfo);
 
-        // entry_apply_master 테이블에 저장
         return appInfo;
     }
 

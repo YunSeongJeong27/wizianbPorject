@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.ApplicationDocRepository">
+
+    <insert id="saveFile" parameterType="com.wizian.admission.wizianb.domain.ApplicationDocument">
+        INSERT INTO entry_apply_master (aply_no,rcrt_no,doc_div,file_no,acdm_seq,career_seq)
+        VALUES (#{aplyNo}, #{rcrtNo}, #{docDiv}, #{fileNo}, #{acdmSeq},#{careerSeq});
+    </insert>
+
+</mapper>
