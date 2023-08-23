@@ -117,7 +117,6 @@
         await  nthGridLoad();
         await  searchListData();
         await subTableLoad();
-        await  tabContent();
     });
 
 
