@@ -15,13 +15,6 @@ import java.util.Map;
 @Controller
 public class AppController {
 
-    @GetMapping("/checked")
-    public String checked(HttpSession session, Model model){
-        System.out.println(session.getAttribute("login"));
-        model.addAttribute("title","마이페이지");
-        return "/application/applicationChecked";
-    }
-
     @GetMapping("/pass")
     public String pass(Model model){
         model.addAttribute("title", "합격자발표");

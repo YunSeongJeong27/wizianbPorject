@@ -82,7 +82,6 @@ public class ApplicationWriteController {
             return "/application/applicationLogin";
         } else if (passwordEncoder.matches(password, passwordCheck)) {
 
-
             //객체 찾아서 반환
             ApplicationInfo appInfo = applicationInfoService.appInfo(email);
             ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
