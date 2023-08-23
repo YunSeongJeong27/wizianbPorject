@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class NoticeMessageController {
@@ -20,15 +23,28 @@ public class NoticeMessageController {
         return ResponseEntity.ok(noticeMessageService.findNoticeList(rcrtNo));
     }
 
-    // 안내문 저장 (insert)
-    @PostMapping("/notice/saveInsert")
-    public ResponseEntity<ToastUiResponseDto> insertNotice(@RequestBody JsonNode noticeInsertList){
-        return ResponseEntity.ok(noticeMessageService.insertNotice(noticeInsertList));
+    // 안내문 저장
+    @PutMapping("/notice/save")
+    public ResponseEntity<?> saveNotice(@RequestBody JsonNode noticeList){
+        List<ToastUiResponseDto> response = new ArrayList<>();
+        System.out.println(noticeList);
+        if(noticeList.get("createdRows") != null){
+            JsonNode data = noticeList.get("createdRows");
+            ToastUiResponseDto insert = noticeMessageService.insertNotice(data);
+            response.add(insert);
+        }
+        if (noticeList.get("updatedRows") != null){
+            JsonNode data = noticeList.get("updatedRows");
+            ToastUiResponseDto update = noticeMessageService.updateNotice(data);
+            response.add(update);
+        }
+        return ResponseEntity.ok(response);
     }
 
-    // 안내문 저장 (update)
-    @PutMapping("/notice/saveUdpate")
-    public ResponseEntity<ToastUiResponseDto> updateNotice(@RequestBody JsonNode noticeInsertList) {
-        return ResponseEntity.ok(noticeMessageService.updateNotice(noticeInsertList));
+    // 안내문 삭제 (update)
+    @DeleteMapping("/notice/delete")
+    public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestBody JsonNode noticeList) {
+        System.out.println(noticeList);
+        return ResponseEntity.ok(noticeMessageService.deleteNotice(noticeList));
     }
 }

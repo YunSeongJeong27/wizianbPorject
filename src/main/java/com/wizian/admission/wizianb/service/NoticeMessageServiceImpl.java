@@ -34,12 +34,10 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
     }
 
     @Override
-    public ToastUiResponseDto insertNotice(JsonNode jn) {
-        System.out.println("created:"+jn);
+    public ToastUiResponseDto insertNotice(JsonNode jnArr) {
+        System.out.println("created:"+jnArr);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
-
-        JsonNode jnArr = jn.get("createdRows");
 
         for (int i=0; i<jnArr.size(); i++) {
             NoticeMessage data = NoticeMessage.builder()
@@ -55,12 +53,10 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
     }
 
     @Override
-    public ToastUiResponseDto updateNotice(JsonNode jn) {
-        System.out.println("updated:"+jn);
+    public ToastUiResponseDto updateNotice(JsonNode jnArr) {
+        System.out.println("updated:"+jnArr);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
-
-        JsonNode jnArr = jn.get("updatedRows");
 
         for (int i=0; i<jnArr.size(); i++) {
             NoticeMessage data = NoticeMessage.builder()
@@ -71,6 +67,25 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
                     .msgCont(jnArr.get(i).get("msgCont").asText()).build();
 
             noticeMessageRepository.updateNotice(data);
+        }
+
+        return ToastUiResponseDto.builder().data(resultMap).build();
+    }
+
+    @Override
+    public ToastUiResponseDto deleteNotice(JsonNode jn) {
+        System.out.println("deleted:"+jn);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("pagination", "");
+
+        JsonNode jnArr = jn.get("deletedRows");
+
+        for (int i=0; i<jnArr.size(); i++) {
+            NoticeMessage data = NoticeMessage.builder()
+                    .msgSeq(jnArr.get(i).get("msgSeq").asInt())
+                    .rcrtNo(jnArr.get(i).get("rcrtNo").asText()).build();
+
+            noticeMessageRepository.deleteNotice(data);
         }
 
         return ToastUiResponseDto.builder().data(resultMap).build();

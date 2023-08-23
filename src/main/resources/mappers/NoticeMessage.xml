@@ -17,4 +17,9 @@
     <update id="updateNotice" parameterType="com.wizian.admission.wizianb.domain.NoticeMessage">
         UPDATE entry_sel_msg SET MSG_DIV = #{msgDiv}, SUBJECT = #{subject}, MSG_CONT = #{msgCont} WHERE RCRT_NO = #{rcrtNo} AND MSG_SEQ = #{msgSeq}
     </update>
+
+    <!-- 안내문 삭제 -->
+    <delete id="deleteNotice" parameterType="com.wizian.admission.wizianb.domain.NoticeMessage">
+        DELETE FROM entry_sel_mag WHERE RCRT_NO = #{rcrtNo} AND MSG_SEQ = #{msgSeq}
+    </delete>
 </mapper>

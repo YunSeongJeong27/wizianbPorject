@@ -59,6 +59,7 @@
                                 <button id="noticeInsertBtn" class="btn btn-sm btn-light btn-outline-dark">신규</button>
                                 <button id="noticeSaveBtn" class="btn btn-sm btn-success">저장</button>
                                 <button id="noticeDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
+                                <button id="testBtn" class="btn btn-sm btn-danger">test</button>
                             </div>
                         </div>
                     </div>
@@ -159,8 +160,9 @@
                 data: {
                     api: {
                         readData: { url: '/notice/list', method: 'GET', initParams: {rcrtNo : rcrtNo} },
-                        createData: { url: '/notice/saveInsert', method: 'POST', contentType: 'application/json' },
-                        updateData: { url: '/notice/saveUdpate', method: 'PUT', contentType: 'application/json' }
+                        /*createData: { url: '/notice/save', method: 'POST', contentType: 'application/json' },*/
+                        modifyData: { url: '/notice/save', method: 'PUT', contentType: 'application/json' },
+                        deleteData: { url: '/notice/delete', method: 'DELETE', contentType: 'application/json' }
                     }
                 },
                 rowHeaders: ['checkbox'],
@@ -295,10 +297,22 @@
         // 저장 버튼 클릭 이벤트
         const noticeSaveBtn = document.getElementById("noticeSaveBtn");
         noticeSaveBtn.addEventListener("click", function () {
-            noticeTable.request("createData", {showConfirm: true});
-            noticeTable.request("updateData", {showConfirm: true});
+            //noticeTable.request("createData", {showConfirm: true});
+            noticeTable.request("modifyData", {showConfirm: true});
         });
 
+        // 삭제 버튼 클릭 이벤트
+        const noticeDeleteBtn = document.getElementById("noticeDeleteBtn");
+        noticeDeleteBtn.addEventListener("click", function () {
+
+
+            noticeTable.request("deleteData", {showConfirm: true});
+        });
+
+        document.getElementById("testBtn").addEventListener("click", function (){
+            console.log(noticeTable.getCheckedRows());
+            noticeTable.removeCheckedRows(true);
+        })
 
         // Toast Editor
         const Editor = toastui.Editor;
