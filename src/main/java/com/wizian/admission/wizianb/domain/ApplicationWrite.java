@@ -34,4 +34,6 @@ public class ApplicationWrite {
 
     private String email;
     private String birthday;
+    private String userName;
+    private String text;
 }

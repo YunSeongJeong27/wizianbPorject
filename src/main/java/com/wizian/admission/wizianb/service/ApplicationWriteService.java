@@ -16,4 +16,6 @@ public interface ApplicationWriteService {
 
     public String emailCheck(String email);
     public String passwordCheck(String email, String password);
+
+    public String findId(String name, String birth);
 }

@@ -1,6 +1,7 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.ApplicationWrite;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.ApplicationWriteService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -92,7 +95,20 @@ public class ApplicationWriteController {
     }
 
     @PostMapping("/login/findId")
-    public String findId(){
-        return "/application/applicationLogin";
+    @ResponseBody
+    public ApplicationWrite findId(@RequestBody ApplicationWrite applicationWrite){
+        String name = applicationWrite.getUserName();
+        String birth = applicationWrite.getBirthday();
+
+        String check = applicationWriteService.findId(name, birth);
+
+        if(check != null){
+            applicationWrite.setText("회원님의 아이디는 ["+check+"] 입니다.");
+        }else{
+            applicationWrite.setText("존재하지 않는 회원입니다.");
+        }
+
+        // Ajax 호출 결과를 리턴
+        return applicationWrite;
     }
 }

@@ -46,4 +46,9 @@ public class ApplicationWriteServiceImpl implements ApplicationWriteService{
         return applicationWriteRepository.passwordCheck(email, password);
     }
 
+    @Override
+    public String findId(String name, String birth) {
+        return applicationWriteRepository.findId(name, birth);
+    }
+
 }

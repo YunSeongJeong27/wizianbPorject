@@ -14,4 +14,6 @@ public interface ApplicationWriteRepository {
 
     String emailCheck(String email);
     String passwordCheck(String email, String password);
+
+    String findId(String name, String birth);
 }
