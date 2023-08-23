@@ -51,4 +51,9 @@ public class ApplicationWriteServiceImpl implements ApplicationWriteService{
         return applicationWriteRepository.findId(name, birth);
     }
 
+    @Override
+    public String findPw(String email) {
+        return applicationWriteRepository.findPw(email);
+    }
+
 }

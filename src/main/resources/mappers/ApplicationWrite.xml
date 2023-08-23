@@ -31,10 +31,14 @@
     </select>
 
     <select id="passwordCheck" resultType="java.lang.String">
-        select pw from member where login_id = #{email};
+        select pw from member where login_id = #{email} and pw = #{password};
     </select>
 
     <select id="findId" resultType="java.lang.String">
         select login_id from entry_apply_master as master inner join member on master.mem_id = member.MEM_ID where name_kor = #{name} and birthday = #{birth};
+    </select>
+
+    <select id="findPw" resultType="java.lang.String">
+        select pw from entry_apply_master as master inner join member on master.mem_id = member.mem_id where master.email = #{email};
     </select>
 </mapper>

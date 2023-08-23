@@ -95,6 +95,11 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         return memberInfo;
     }
 
+    @Override
+    public String courseName(Object rcrtNo) {
+        return applicationInfoRepository.courseName(rcrtNo);
+    }
+
 
 }
 

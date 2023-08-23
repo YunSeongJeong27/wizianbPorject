@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.Map;
 public class AppController {
 
     @GetMapping("/checked")
-    public String checked(Model model){
+    public String checked(HttpSession session, Model model){
+        System.out.println(session.getAttribute("login"));
         model.addAttribute("title","마이페이지");
         return "/application/applicationChecked";
     }

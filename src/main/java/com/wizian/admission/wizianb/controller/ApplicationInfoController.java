@@ -33,8 +33,8 @@ public class ApplicationInfoController {
     @GetMapping("/userInfo")
     public String userInfo(HttpServletRequest request, Model model,HttpSession session){
         model.addAttribute("title","기본정보");
-//        model.addAttribute("rcrtNo",rcrtNo);
-//        model.addAttribute("courseDiv",courseDiv);
+        Object rcrtNo = session.getAttribute("rcrtNo");
+        model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
 
         if(session.getAttribute("login")!=null){
             return "/application/applicationInfoAfterLogin";
