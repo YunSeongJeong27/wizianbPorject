@@ -267,6 +267,12 @@
                         name: 'rcrtCnt',
                         sortingType: 'asc',
                         sortable: false, align: 'center'
+                    },
+                    {
+                        header: '진행상태',
+                        name: 'statusDiv',
+                        sortingType: 'asc',
+                        sortable: true, align: 'center'
                     }
                 ],
                 columnOptions: {

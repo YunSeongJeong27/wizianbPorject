@@ -297,7 +297,7 @@
             const courseDivSelected = courseDiv.options[courseDiv.selectedIndex].value;
 
             $.ajax({
-                url: "/pass/courseSelect", 			//통신할 url
+                url: "/pass/endCourseSelect", 			//통신할 url
                 type: "GET",						//통신할 메소드 타입
                 data: {termDiv : termDivSelected, courseDiv: courseDivSelected},	//전송할 데이터
                 dataType: "json",

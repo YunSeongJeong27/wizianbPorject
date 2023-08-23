@@ -9,6 +9,7 @@ import java.util.List;
 public interface PassManagementRepository {
 
     List<PassManagement> courseSelect(String termDiv, String courseDiv);
+    List<PassManagement> endCourseSelect(String termDiv, String courseDiv);
 
     List<Recruitment> findNthList(String termDiv, String courseDiv, String rcrtNo);
     List<PassManagement> findPassList(String rcrtNo);
