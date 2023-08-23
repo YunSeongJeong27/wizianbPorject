@@ -117,6 +117,7 @@
         await  nthGridLoad();
         await  searchListData();
         await subTableLoad();
+        await  tabContent();
     });
 
 
@@ -229,13 +230,22 @@
             subTableLoad(ev.rowKey);
         });
 
-        const nthTablePage = document.querySelector('#nthTablePage');
+         nthTablePage = document.querySelector('#nthTablePage');
 
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthTablePage.addEventListener('change', function () {
             handlePerPageChange(this, nthTable)
         });
     }
+    let nthTablePage = document.querySelector('#nthTablePage');
+
+    // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
+    function handlePerPageChange(event) {
+        const perPage = parseInt(event.target.value, 10);
+        nthTable.setPerPage(perPage);
+    }
+    // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
+    nthTablePage.addEventListener('change', handlePerPageChange);
 
 
     //검색조회 항목들 리스트불러오기(일단 EvManagementController에서불러옴 시간남으면 위치수정)
