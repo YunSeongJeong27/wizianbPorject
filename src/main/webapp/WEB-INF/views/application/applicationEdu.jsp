@@ -134,7 +134,7 @@
                                 <div class="col-lg-2">학위증명서파일등록</div>
                                 <div class="col-lg-10">
                                     <div class="d-flex justify-content">
-                                        <input name="gradFile" type="text" class="form-control me-1" disabled>
+                                        <input name="gradFile" id="gradFile" type="text" class="form-control me-1" disabled>
                                         <label for="addFile" class="btn btn-sm btn-outline-dark me-1">업로드</label>
                                         <input type="file" id="addFile" onchange="uploadFile()" style="display: none">
                                         <button type="button" class="btn btn-sm btn-outline-dark me-1">다운로드</button>
@@ -219,9 +219,28 @@
 
 
     function uploadFile() {
+        var gradFileInput = document.getElementById('gradFile');
+        var addFile = document.getElementById('addFile');
+
+        var formData = new FormData();
+        formData.append("file",gradFileInput.files[0]);
+
+        $.ajax({
+            url: '/uploadFile',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("컨트롤러로 보내기성공")
+                gradFileInput.value = response.fileName; // response에서 실제 파일명 필드에 따라 수정
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
 
     }
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>
-</html>
