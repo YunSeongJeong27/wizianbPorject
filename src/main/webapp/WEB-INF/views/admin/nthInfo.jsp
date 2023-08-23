@@ -42,23 +42,10 @@
                     <option value="C++">C++</option>
                 </select>
             </td>
-            <td class="col-2 tableColor">과정명</td>
+            <td class="col-2 tableColor">과정명<span class="text-danger">*</span></td>
             <td class="col-2"><input class="form-control tableInput" type="text" name="courseName" value="NTH_NM"></td>
-            <td class="col-2 tableColor">기수코드</td>
-            <td class="col-2"><input class="form-control tableInput" type="text" name="nthCode" value="NTH_CD" readonly>
-            </td>
         </tr>
-        <tr>
-            <td class="tableColor">수강년도<span class="text-danger">*</span></td>
-            <td class=""><input class="form-control tableInput" type="text" name="entYear" value="ENT_YR"></td>
-            <td class="tableColor">분기구분<span class="text-danger">*</span></td>
-            <td class="">
-                <input type="text" id="termDiv" class="form-control tableInput" name="termDiv">
-            </td>
-            <td class="tableColor">수업개월수<span class="text-danger">*</span></td>
-            <td class=""><input class="form-control tableInput" type="text" name="courseMonth"
-                                id="monthInput" readonly></td>
-        </tr>
+
         <tr>
             <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
             <td class=""><input class="form-control tableInput" type="date" name="eduStartDate" id="eduStartDate">
@@ -75,26 +62,17 @@
 
 
 <script>
-    const eduStartDateInput = document.getElementById("eduStartDate");
-    const eduEndDateInput = document.getElementById("eduEndDate");
-    const courseMonthInput = document.getElementById("monthInput");
-    const termDivSelect = document.getElementById("termDiv");
-
-    eduStartDateInput.addEventListener("change", calculateCourseMonths);
-    eduStartDateInput.addEventListener("change", calculateTerm);
-    eduEndDateInput.addEventListener("change", calculateCourseMonths);
-
-    function calculateCourseMonths() {
-        const startDate = new Date(eduStartDateInput.value);
-        const endDate = new Date(eduEndDateInput.value);
+    function calculateCourseMonths({row}) {
+        const startDate = row.eduStartDate;
+        const endDate = row.eduEndDate;
 
         const diffInMilliseconds = endDate - startDate;
         const diffInMonths = diffInMilliseconds / (1000 * 60 * 60 * 24 * 30);
 
         if (!isNaN(diffInMonths) && diffInMonths >= 0) {
-            courseMonthInput.value = Math.floor(diffInMonths);
+            return Math.floor(diffInMonths);
         } else {
-            courseMonthInput.value = "";
+            return "";
         }
     }
     function calculateTerm() {

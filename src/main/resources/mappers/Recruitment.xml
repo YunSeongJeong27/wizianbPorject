@@ -4,18 +4,30 @@
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.Recruitment">
         SELECT *
-        FROM ENTRY_SEL_MASTER
+        FROM ENTRY_SEL_MASTER ORDER BY EDU_START_DATE DESC
     </select>
 
-    <insert id="save" parameterType="list">
-        INSERT INTO ENTRY_SEL_MASTER (RCRT_NO, COURSE_DIV, NTH_CODE, COURSE_NAME, ENT_YEAR, TERM_DIV, EDU_START_DATE,
-        EDU_END_DATE, COURSE_MONTH, STATUS_DIV, NOTE)
+    <select id="searchList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT *
+        FROM ENTRY_SEL_MASTER
+        WHERE COURSE_DIV = #{courseDiv} AND
+        ORDER BY EDU_START_DATE DESC
+    </select>
+
+    <insert id="insert" parameterType="com.wizian.admission.wizianb.domain.Recruitment">
+        INSERT INTO ENTRY_SEL_MASTER (RCRT_NO, COURSE_DIV, COURSE_NAME, TERM_DIV, EDU_START_DATE, EDU_END_DATE, COURSE_MONTH, STATUS_DIV, NOTE)
         VALUES
-        <foreach collection="recruitmentList" item="recruitment" separator=",">
-            (#{recruitment.rcrtNo}, #{recruitment.courseDiv}, #{recruitment.nthCode}, #{recruitment.courseName},
-            #{recruitment.entYear}, #{recruitment.termDiv}, #{recruitment.eduStartDate}, #{recruitment.eduEndDate},
-            #{recruitment.courseMonth}, #{recruitment.statusDiv}, #{recruitment.note})
-        </foreach>
+        (#{rcrtNo}, #{courseDiv}, #{courseName}, #{termDiv}, #{eduStartDate}, #{eduEndDate}, #{courseMonth}, #{statusDiv}, #{note})
     </insert>
+
+    <update id="update" parameterType="com.wizian.admission.wizianb.domain.Recruitment">
+        UPDATE ENTRY_SEL_MASTER
+        SET COURSE_DIV = #{courseDiv}, COURSE_NAME = #{courseName}, TERM_DIV = #{termDiv}, EDU_START_DATE = #{eduStartDate}, EDU_END_DATE = #{eduEndDate}, COURSE_MONTH = #{courseMonth}, STATUS_DIV = #{statusDiv}, NOTE = #{note}
+        WHERE RCRT_NO = #{rcrtNo}
+    </update>
+
+    <select id="findRcrtNo" parameterType="string" resultType="string">
+        SELECT RCRT_NO FROM ENTRY_SEL_MASTER WHERE RCRT_NO = #{rcrtNo}
+    </select>
 
 </mapper>

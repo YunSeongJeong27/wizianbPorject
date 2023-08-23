@@ -11,9 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,101 +34,78 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
-    public ToastUiResponseDto insertRecruitment(JsonNode recruitment) {
+    public ToastUiResponseDto searchRecruitmentList(String rcrtNo, String courseDiv) {
+        List<Recruitment> recruitmentList = recruitmentRepository.searchList(rcrtNo, courseDiv);
+
         HashMap<String, Object> resultMap = new HashMap<>();
-        JsonNode createdRows = recruitment.get("createdRows");
-        List<Recruitment> recruitmentList = new ArrayList<>();
-        try {
-            for (JsonNode row : createdRows) {
+        resultMap.put("contents", recruitmentList);
+        resultMap.put("pagination", "");
 
-                String eduStartDateStr = row.get("eduStartDate").asText();
-                String eduEndDateStr = row.get("eduEndDate").asText();
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-                Date eduStartDate = dateFormat.parse(eduStartDateStr);
-                Date eduEndDate = dateFormat.parse(eduEndDateStr);
-
-                System.out.println(eduStartDateStr);
-                System.out.println(yearFormat.parse(eduStartDateStr));
-                String dateStr = dateFormat.format(eduStartDate);
-                int month = Integer.parseInt(dateStr.substring(5, 7));
-                int entYear = (month - 1) / 3 + 1;
-
-                long diffInMilliseconds = eduEndDate.getTime() - eduStartDate.getTime();
-                long diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
-                int courseMonth = (int) Math.floor(diffInDays / 30.0);
-                Recruitment recruitVo = Recruitment.builder()
-                        .rcrtNo(generateRecruitmentNo(row.get("courseDiv").asText()))
-                        .courseDiv(row.get("courseDiv").asText())
-                        .courseName(row.get("courseName").asText())
-                        .nthCode(generateCourseSerialNumber(row.get("courseDiv").asText()))
-                        .entYear(String.valueOf(yearFormat.parse(eduStartDateStr)))
-                        .termDiv(String.valueOf(entYear))
-                        .eduStartDate(row.get("eduStartDate").asText())
-                        .eduEndDate(row.get("eduEndDate").asText())
-                        .courseMonth(courseMonth)
-                        .statusDiv(RecruitmentStatus.PREPARED)
-                        .note(row.get("note").asText())
-                        .build();
-                recruitmentList.add(recruitVo);
-            }
-        } catch (Exception e) {
-            log.debug("insertRecruitment 에러남 : {}", e.getMessage());
-        }
-        recruitmentRepository.save(recruitmentList);
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
-    private static int courseCounter = 1;
 
-    private String generateRecruitmentNo(String courseDiv) {
-        String prefix;
-        switch (courseDiv) {
-            case "Java":
-                prefix = "J";
-                break;
-            case "Python":
-                prefix = "P";
-                break;
-            case "C++":
-                prefix = "C";
-                break;
-            default:
-                prefix = "O";
+    @Override
+    public ToastUiResponseDto insertRecruitment(JsonNode inputRows) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        int result = 0;
+        for (JsonNode row : inputRows) {
+            String eduStartDateStr = row.get("eduStartDate").asText();
+            Recruitment recruitVo = Recruitment.builder()
+                    .rcrtNo(generateRecruitmentNo(row.get("courseDiv").asText(), eduStartDateStr))
+                    .courseDiv(row.get("courseDiv").asText())
+                    .courseName(row.get("courseName").asText())
+                    .termDiv(row.get("termDiv").asText())
+                    .eduStartDate(row.get("eduStartDate").asText())
+                    .eduEndDate(row.get("eduEndDate").asText())
+                    .courseMonth(row.get("courseMonth").asInt())
+                    .statusDiv(RecruitmentStatus.준비중)
+                    .note(row.get("note").asText())
+                    .build();
+            result = recruitmentRepository.insert(recruitVo);
         }
+        resultMap.put("message", "입력하신" + result + " 건의 모집전형이 저장되었습니다.");
 
-        String currentYearAndMonth = new SimpleDateFormat("yyMM").format(new Date());
-        String counterString = String.format("C%04d", courseCounter);
-
-        String serialNumber = prefix + currentYearAndMonth + counterString;
-
-        courseCounter++;
-        return serialNumber;
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
-    private static int javaCounter = 10;
-    private static int pythonCounter = 20;
-    private static int cppCounter = 30;
-    private String generateCourseSerialNumber(String courseDiv) {
-        int currentCounter = 0;
-        String prefix;
 
-        switch (courseDiv) {
-            case "Java":
-                currentCounter = javaCounter++;
-                prefix = "10";
+    @Override
+    public ToastUiResponseDto updateRecruitment(JsonNode inputRows) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        int result = 0;
+        for (JsonNode row : inputRows) {
+            Recruitment recruitVo = Recruitment.builder()
+                    .rcrtNo(row.get("rcrtNo").asText())
+                    .courseDiv(row.get("courseDiv").asText())
+                    .courseName(row.get("courseName").asText())
+                    .termDiv(row.get("termDiv").asText())
+                    .eduStartDate(row.get("eduStartDate").asText())
+                    .eduEndDate(row.get("eduEndDate").asText())
+                    .courseMonth(row.get("courseMonth").asInt())
+                    .statusDiv(RecruitmentStatus.준비중)
+                    .note(row.get("note").asText())
+                    .build();
+            result = recruitmentRepository.update(recruitVo);
+        }
+        resultMap.put("message", "입력하신" + result + " 건의 모집전형이 수정되었습니다.");
+
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    private String generateRecruitmentNo(String courseDiv, String eduStartDate) {
+        String twoDigitYear = eduStartDate.substring(2, 4);
+        String prefix = courseDiv.charAt(0) + twoDigitYear;
+
+        int sequence = 1;
+        String currentRcrtNo;
+        while (true) {
+            currentRcrtNo = String.format("%sC%03d", prefix, sequence);
+            String existingRcrtNo = recruitmentRepository.findRcrtNo(currentRcrtNo);
+            if (existingRcrtNo == null) {
                 break;
-            case "Python":
-                currentCounter = pythonCounter++;
-                prefix = "20";
-                break;
-            case "C++":
-                currentCounter = cppCounter++;
-                prefix = "30";
-                break;
-            default:
-                prefix = "";
+            }
+            sequence++;
         }
 
-        return prefix + "-" + String.format("%03d", currentCounter);
+        return currentRcrtNo;
     }
 }

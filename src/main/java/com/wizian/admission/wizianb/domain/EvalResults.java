@@ -15,7 +15,7 @@ public class EvalResults {
     private String entYear;
     private String termDiv;
     private int selCnt;
-    private String statusDiv;
+    private RecruitmentStatus statusDiv;
     private String stepDiv;
 
     //지원서기본정보 테이블
@@ -26,12 +26,9 @@ public class EvalResults {
     //전형평가대상자 테이블
     private int evPdfFileNo;
     private String note;
-
-    //문항별평가점수 테이블
     private int ev1Score;
     private int ev2Score;
     private int ev3Score;
-    private int total;
 
     //점수업데이트
     @Builder

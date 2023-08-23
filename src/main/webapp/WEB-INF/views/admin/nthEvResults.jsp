@@ -14,35 +14,38 @@
 <div class="container-table m-2">
     <div class="col-12">
         <div class="d-flex flex-row justify-content-end mb-1">
-            <button id="selectBtn1" class="btn btn-sm btn-secondary me-1">조회</button>
+            <button onclick="searchBtn()" class="btn btn-sm btn-secondary me-1">조회</button>
         </div>
 
         <div class="container-table">
             <%--TOP--%>
             <div class="col-12">
                 <div class="d-flex flex-row py-3 px-5 border border-gray-100 rounded-2 align-items-center tr">
-                    <div class="col-2 align-middle tableSearch">수강년도/분기</div>
-                    <div class="col-1 me-1"><input type="text" class="form-control"></div>
+                    <div class="col-1 align-middle tableSearch">분기</div>
                     <div class="col-1 me-2">
-                        <select class="form-select">
-                            <option selected>1분기</option>
-                            <option>2분기</option>
-                            <option>3분기</option>
-                            <option>4분기</option>
+                        <select class="form-select" name="termDiv">
+                            <option value="" selected>(전체)</option>
+                            <option value="1">1분기</option>
+                            <option value="2">2분기</option>
+                            <option value="3">3분기</option>
+                            <option value="4">4분기</option>
                         </select>
                     </div>
 
                     <div class="col-2 tableSearch">과정구분</div>
                     <div class="col-2 me-2">
-                        <select class="form-select">
-                            <option selected>Java</option>
-                            <option>Python</option>
-                            <option>C++</option>
+                        <select class="form-select" id="courseDiv" name="courseDiv">
+                            <option  value="" selected>(전체)</option>
                         </select>
                     </div>
 
                     <div class="col-2 tableSearch">과정명</div>
-                    <div class="col-2"><input type="text" class="form-control"></div>
+                    <div class="col-4">
+                        <select class="form-select" id="courseName" name="courseName">
+                            <option  value="" selected>(전체)</option>
+
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,8 +87,9 @@
                 </div>
 
                 <div class="d-flex flex-row justify-content-end col-5 gap-2">
-                    <button class="btn btn-sm btn-danger">완료취소</button>
-                    <button id="saveButton"  class="btn btn-sm btn-success">저장</button>
+                    <button id="statusPrepared" class="btn btn-sm btn-danger">완료취소</button>
+                    <button id="statusComplete" class="btn btn-sm btn-primary">완료</button>
+                    <button id="saveButton"  class="btn btn-sm btn-success">점수저장</button>
                 </div>
             </div>
 
@@ -101,7 +105,6 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
     const gridTheme = new tui.Grid.applyTheme('default', {
         cell: {
             normal: {
@@ -129,14 +132,47 @@
         }
     });
 
-        const nthEvaluationTable = new tui.Grid({
+
+
+  document.addEventListener('DOMContentLoaded', async () =>{
+      await  nthGridLoad();
+      await  searchListData();
+      await subTableLoad();
+    });
+
+    let  termDiv, courseDiv, courseName;
+    const nthEvTableData = () => {
+        termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
+        courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
+        courseName = courseName === "" ? "nullCourseName" : courseName;
+        return{
+            api: {
+                readData: { url: '/eval/result/info/'+termDiv+"/"+courseDiv+"/"+courseName,
+                    method: 'GET' }
+            }
+        };
+    };
+
+
+
+    //조회버튼 클릭시
+    async function searchBtn(){
+        termDiv = document.querySelector('select[name="termDiv"]').value;
+        courseDiv = document.querySelector('select[name="courseDiv"]').value;
+        courseName = document.querySelector('select[name="courseName"]').value;
+
+        await nthGridLoad(nthEvTableData());
+        nthEvnRegistTable.innerHTML = '';
+    }
+
+    let nthEvaluationTable;
+    const nthGridLoad = (nthData) => {
+        const oldNthEvaluationTableEl = document.getElementById('nthEvaluationTable');
+        oldNthEvaluationTableEl.innerHTML = '';
+
+        nthEvaluationTable = new tui.Grid({
             el: document.getElementById('nthEvaluationTable'),
-            data: {
-                api: {
-                    readData: { url: '/eval/result/info',
-                        method: 'GET' }
-                }
-            },
+            data: nthData ,
             pageOptions: {
                 useClient: true,	// front에서만 페이징 하는 속성
                 perPage: 5,		//한번에 보여줄 데이터 수
@@ -160,18 +196,7 @@
                     sortable: true,
                     align: 'center'
                 },
-                {
-                    header: '기수',
-                    name: 'nthCode',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '수강년도',
-                    name: 'entYear',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
+
                 {
                     header: '분기',
                     name: 'termDiv',
@@ -220,15 +245,26 @@
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthEvaluationTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationTable)});
 
+    };
 
 
+
+
+
+    const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
     let nthEvaluationRegistTable;
+    let rcrtNo;
     //nthEvaluationRegistTable테이블
     function subTableLoad(rowKey){
+        function sum({row}){
+            let num1 = parseInt(row.ev1Score);
+            let num2 = parseInt(row.ev2Score);
+            let num3 = parseInt(row.ev3Score);
+            return num1+ num2 +num3;
+        }
         const rowData = nthEvaluationTable.getRow(rowKey);
-        const rcrtNo = rowData.rcrtNo;
+        rcrtNo = rowData.rcrtNo;
 
-        const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
         // nthEvaluationRegistTable div 요소를 초기화
         nthEvnRegistTable.innerHTML = '';
 
@@ -237,8 +273,7 @@
              data: {
                  api: {
                      readData: {url: '/eval/result/subinfo/' + rcrtNo, method: 'GET'},
-                     updateData: {url: '/eval/result/update', method: 'PUT',
-                         contentType:'application/json'},
+                     updateData: { url: '/eval/result/updatescore', method: 'PUT', contentType: 'application/json' } ,
                  },
              },
              rowHeaders: ['rowNum'],
@@ -300,9 +335,9 @@
                  },
                  {
                      header: '합계(100점)',
-                     name: "total",
                      sortingType: 'asc',
-                     sortable: true, align: 'center'
+                     sortable: true, align: 'center',
+                     formatter:sum
                  },
 
                  {
@@ -327,9 +362,36 @@
     }
 
 
-    // 저장 버튼 클릭 시
-    document.getElementById("saveButton").addEventListener("click", () => {
-        nthEvaluationRegistTable.request('updateData')
+    // 점수저장 버튼 클릭 시
+    document.getElementById("saveButton").addEventListener("click", async () => {
+        nthEvaluationRegistTable.request("updateData");
+    });
+    //완료버튼
+    document.getElementById("statusComplete").addEventListener("click", async () => {
+        if(confirm("완료 하시겠습니까")) {
+            await fetch('/eval/result/statuscomplete/' + rcrtNo, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        await  nthGridLoad();
+        await searchBtn();
+    });
+
+    //완료취소버튼
+    document.getElementById("statusPrepared").addEventListener("click",async () => {
+        if(confirm("완료 취소 하시겠습니까")) {
+            await fetch('/eval/result/statusprepared/' + rcrtNo, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        await  nthGridLoad();
+        await searchBtn();
     });
 
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -337,6 +399,33 @@
         const perPage = parseInt(event.value, 10);
         table.setPerPage(perPage);
     }
+
+    //검색조회 항목들 리스트불러오기
+    async function searchListData() {
+        const response = await fetch('/eval/result/searchlist');
+        const dataList = await response.json();
+        const courseDiv= dataList["courseDivList"];
+        const courseName= dataList["courseNameList"];
+
+        const courseDivSelect = document.querySelector("#courseDiv");
+        const courseNameSelect = document.querySelector("#courseName");
+
+        courseDiv.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseDiv;
+            option.text = data.courseDiv;
+            courseDivSelect.appendChild(option);
+        });
+
+        courseName.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.courseName;
+            option.text = data.courseName;
+            courseNameSelect.appendChild(option);
+        });
+    }
+
+
 
 </script>
 

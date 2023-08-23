@@ -43,6 +43,7 @@ public class ApplicationInfo {
     private Date lastLoginDate;
 
 
+    private String rcrtNo;
 
 
 }

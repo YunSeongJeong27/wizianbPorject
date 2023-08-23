@@ -2,6 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationInfoRepository">
 
+    <select id="findAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM entry_apply_master;
+    </select>
 
+    <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        INSERT INTO entry_apply_master (aply_no, rcrt_no, course_div, name_kor, name_eng, pic_file_no, birthday, gender, email, zipcode, addr_local, addr_detail, tel_local, hp_local, mem_id)
+        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender}, #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{memId});
+    </insert>
+
+    <insert id="saveMember" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        INSERT INTO member(mem_id,pw,login_id)
+        VALUES (#{memId},#{pw},#{email});
+    </insert>
+
+    <select id="findByEmail" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM entry_apply_master WHERE email=#{email};
+    </select>
+
+    <select id="existsByEmail" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email});
+    </select>
+
+    <select id="findByMemId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM member WHERE mem_id = #{memId};
+    </select>
+
+    <select id="findByLoginId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM member WHERE login_id = #{loginId};
+    </select>
+    <update id="savePassword" parameterType="map">
+        UPDATE member SET pw=#{password},pwd_chg_date=#{date,jdbcType=TIMESTAMP} WHERE login_id=#{loginId};
+    </update>
 
 </mapper>
