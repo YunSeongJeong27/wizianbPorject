@@ -26,8 +26,38 @@
             cursor: pointer;
             font-size: 0.85rem;
             color: #9A9A9A;
+            border: none;
         }
-    </style>
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    /* 모달 */
+        .modal{
+            --bs-modal-header-border-width : 0 !important;
+            --bs-modal-footer-border-width : 0 !important;
+            animation: none !important;
+            transition: none !important;
+        }
+        .modal-backdrop{height:0%;}
+        .modal-content{
+            border-radius: 0 !important;
+            border: 2px solid black;
+            width: 800px !important;
+            height: 650px;
+            padding: 100px;
+            display: flex;
+            justify-content: center;
+         }
+        .btn-close{
+            --bs-btn-close-focus-shadow: 0 !important;
+            position: relative;
+            top: -100px;
+            left: 100px;
+        }
+</style>
 </head>
 
 <body>
@@ -52,24 +82,34 @@
             </form>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="mx-2 findDIv" data-bs-toggle="modal" data-bs-target="#findIDM">아이디 찾기</div>
-            <div class="mx-2 findDIv">비밀번호 찾기</div>
+            <div class="findDIv btn" data-bs-toggle="modal" data-bs-target="#findIDModal">아이디 찾기</div>
+            <div class="findDIv btn">비밀번호 찾기</div>
         </div>
 
     <%-- 모달 --%>
-        <div id="findIdModal" class="modal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
+        <div id="findIdModal" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="mb-3 fs-3 fw-bold">아이디 찾기</div>
+                        <form id="findIdFrm" action="/login/findId" method="post">
+                            <div class="mt-3">
+                                <span class="d-block">성명</span>
+                                <input id="nameModal" name="nameModal" class="mt-2 d-block form-control" type="text" placeholder="등록된 성명을 입력하세요.">
+                            </div>
+                            <div class="mt-3">
+                                <span class="d-block">생년월일</span>
+                                <input id="birthModal" name="birthModal" class="mt-2 d-block form-control" type="number" placeholder="생년월일을 YYYYMMDD 형식으로 입력하세요.">
+                            </div>
+                            <div class="mt-5 d-flex w-100 justify-content-around">
+                                <div id="findIdBtnModal" class="p-2 rounded-1 text-center text-white" style="background: #3B3B3B; cursor:pointer; width: 48%;">찾기</div>
+                                <div class="p-2 rounded-1 text-center text-white" style="background: #3B3B3B; cursor:pointer; width: 48%;" data-bs-dismiss="modal">취소</div>
+                            </div>
+                        </form>
+                        <div id="findIdModalText" class="text-center text-danger mt-4 fw-bold" style="height: 30px;"></div>
                     </div>
                 </div>
             </div>
@@ -101,6 +141,29 @@
         const frm = document.getElementById("frm")
         submitBtn.addEventListener("click", function(){
             frm.submit();
+        })
+
+        //모달
+        //아이디찾기
+        const findIdFrm = document.getElementById("findIdFrm");
+        const findIdBtnModal = document.getElementById("findIdBtnModal");
+        const nameModal = document.getElementById("nameModal");
+        const birthModal = document.getElementById("birthModal");
+        const findIdModalText = document.getElementById("findIdModalText");
+        findIdBtnModal.addEventListener("click", function(){
+            findIdModalText.innerText = null;
+            //공백 잡아내기
+            if(/[\s]+/.test(nameModal.value)) {
+                findIdModalText.innerText = "유효하지 않은 형식입니다."
+                nameModal.value = null;
+                nameModal.focus();
+            }else if(nameModal.value.length === 0){
+                findIdModalText.innerText = "성명은 필수 항목입니다."
+            }else if(birthModal.value.length === 0){
+                findIdModalText.innerText = "생년월일은 필수 항목입니다."
+            }else{
+                findIdFrm.submit();
+            }
         })
     </script>
 </body>

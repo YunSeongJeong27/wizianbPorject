@@ -65,6 +65,10 @@ public class ApplicationWriteController {
         }else{
             return "/application/applicationInfo";
         }
+    }
 
+    @PostMapping("/login/findId")
+    public String findId(){
+        return "/application/applicationLogin";
     }
 }
