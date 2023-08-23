@@ -80,11 +80,13 @@ public class ApplicationWriteController {
             ApplicationInfo appInfo = applicationInfoService.appInfo(email);
             ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
 
+            //객체저장
+            session.setAttribute("loginId",appInfo);
             session.setAttribute("login",member);
             model.addAttribute("appInfo", appInfo);
             model.addAttribute("member", member);
 
-            return "/application/applicationInfoAfterLogin";
+            return "/application/applicationWrite";
         } else {
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";

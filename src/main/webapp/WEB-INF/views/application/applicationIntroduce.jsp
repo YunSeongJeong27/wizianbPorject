@@ -88,7 +88,7 @@
             <br>
 
 
-            <form class="introduce_form" action="" method="">
+            <form class="introduce_form" action="/saveIntroduce" method="Post">
                 <div id="repeat">
                     <%-- 문항반복시작--%>
                     <div>
