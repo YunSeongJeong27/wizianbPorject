@@ -130,3 +130,16 @@ body{
     border: none !important;
     border-bottom: 1px solid #aaa !important;
 }
+
+
+/* 메일 안내 css */
+.passNotice{
+    color: #f66;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+}
+.passNotice:before{
+    content: "\203B";
+    padding-right: 5px;
+}
