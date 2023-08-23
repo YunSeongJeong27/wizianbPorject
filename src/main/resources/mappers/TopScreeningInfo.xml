@@ -8,13 +8,11 @@
                (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment}) as recruitEndDate,
                (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement}) as announcementStartDate,
                (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement}) as announcementEndDate,
-               b.schdl_name
+               (select schdl_name from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} ) as schdlName
         from entry_sel_master as a
-                 inner join entry_sel_schdl as b on a.rcrt_no=b.rcrt_no
     where a.term_div like #{termDiv} and a.course_div like #{courseDiv}
       and a.course_name like #{courseName} and
         (a.status_div=#{StatusPreparing} or a.status_div=#{StatusPrepared})
-      and b.status_div=#{StatusPrepared}
 
 
     </select>
