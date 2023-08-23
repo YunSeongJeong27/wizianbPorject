@@ -21,6 +21,7 @@ public interface ApplicationInfoRepository {
     void savePassword(String loginId, String password, LocalDateTime date);
 
 
+    String courseName(Object rcrtNo);
 
 
 

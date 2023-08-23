@@ -9,7 +9,6 @@
             width: 100%;
             height: auto;
             object-fit: contain;
-
         }
 
         #apply_addFile {
@@ -208,7 +207,7 @@
             <div class="mb-3">
                 <select class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
                         aria-label="select_list">
-                    <option selected>자바기반 풀스택 개발자 취업과정</option>
+                    <option selected>${courseName}</option>
                 </select>
             </div>
             <h3 class="title mt-5 mb-1">지원서확인</h3>

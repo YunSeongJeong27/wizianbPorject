@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +14,6 @@ import java.util.Map;
 
 @Controller
 public class AppController {
-
-    @GetMapping("/checked")
-    public String checked(Model model){
-        model.addAttribute("title","마이페이지");
-        return "/application/applicationChecked";
-    }
 
     @GetMapping("/pass")
     public String pass(Model model){
