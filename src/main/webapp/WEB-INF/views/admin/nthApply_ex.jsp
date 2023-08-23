@@ -215,31 +215,31 @@
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link active divBtn w-100" id="btn_tab1" data-bs-toggle="tab"
                             data-bs-target="#tab1"
-                            type="button" role="tab" aria-controls="tab1" aria-selected="true">기본정보
+                            type="button" role="tab" aria-controls="tab1" aria-selected="true" disabled>기본정보
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link divBtn w-100" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2"
                             type="button"
-                            role="tab" aria-controls="tab2" aria-selected="false">학력사항
+                            role="tab" aria-controls="tab2" aria-selected="false" disabled>학력사항
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link divBtn w-100" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3"
                             type="button"
-                            role="tab" aria-controls="tab3" aria-selected="false">활동이력
+                            role="tab" aria-controls="tab3" aria-selected="false" disabled>활동이력
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link divBtn w-100" id="btn_tab4" data-bs-toggle="tab" data-bs-target="#tab4"
                             type="button"
-                            role="tab" aria-controls="tab4" aria-selected="false">자기소개서
+                            role="tab" aria-controls="tab4" aria-selected="false" disabled>자기소개서
                     </button>
                 </li>
                 <li role="presentation" class="nav-item me-1 col-2">
                     <button class="nav-link divBtn w-100" id="btn_tab5" data-bs-toggle="tab" data-bs-target="#tab5"
                             type="button"
-                            role="tab" aria-controls="tab5" aria-selected="false">제출서류
+                            role="tab" aria-controls="tab5" aria-selected="false" disabled>제출서류
                     </button>
                 </li>
             </ul>
@@ -608,42 +608,6 @@
             }
         }
     });
-
-    const data3 = [
-        {
-            gigwan: "블라블라대학",
-            jeongong: "블라블라학과",
-            iphak: "2023 / 08",
-            joloep: "2023 / 09",
-            joloepstatus: "제적"
-        }
-    ];
-    const data4 = [
-        {
-            기관명: "블라블라기관",
-            활동내역: "블라블라활동",
-            비고: "놀았음",
-            활동시작년월: "2020 / 12",
-            활동종료년월: "2021 / 01"
-        }
-    ];
-    const data5 = [
-        {
-            제출서류: "학위증명서",
-            기관명: "2019년 09월 ~ 2023년 08월",
-            첨부파일: "",
-            파일관리: "",
-            미리보기: ""
-        },
-        {
-            제출서류: "기타",
-            기관명: "",
-            첨부파일: "",
-            파일관리: "",
-            미리보기: ""
-        }
-    ]
-
     function educationPeriodFormatter({row}) {
         const startDate = row.eduStartDate;
         const endDate = row.eduEndDate;
@@ -720,14 +684,6 @@
                 resizable: true
             },
             draggable: true,
-
-
-            // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
-            onGridMounted() {
-                nthTable.focus(0, "courseDiv", true);
-
-                //rowDataLoad(0, nthTable, "inputTable");
-            }
         });
         nthTable.on('click', function (e) {
             // 클릭한 row의 데이터 가져오기
@@ -736,6 +692,15 @@
             // 클릭한 row의 rcrtNo 값을 가져오기
             const rcrtNo = rowData.rcrtNo;
             leftGridLoad(rcrtNo);
+            const buttonList = document.querySelectorAll('#tabList > li > button');
+            buttonList.forEach((button) => {
+                button.disabled = true;
+            });
+            document.querySelectorAll('.tab1Form').forEach((form) => {
+                form.innerHTML ="";
+                form.value = "";
+            });
+            document.querySelector('#btn_tab1').click();
         });
     }
 
@@ -1025,6 +990,10 @@
     }
 
     const tabAllLoad = (aplyNo) => {
+        const buttonList = document.querySelectorAll('#tabList > li > button');
+        buttonList.forEach((e, i) => {
+            e.disabled = false;
+        })
         fetch("/admin/apply/" + aplyNo + "/peopleDetails")
             .then(response => response.json())
             .then((list) => {
@@ -1044,7 +1013,7 @@
             .catch(error => console.log(error));
 
 
-        document.querySelectorAll('#tabList > li > button').forEach((e, i) => {
+        buttonList.forEach((e, i) => {
             e.addEventListener('click', () => {
                 const elements = document.querySelectorAll('#myTabContent > div');
                 elements.forEach((a, i) => {
