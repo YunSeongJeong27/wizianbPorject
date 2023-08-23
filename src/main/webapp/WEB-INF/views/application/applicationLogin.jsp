@@ -137,10 +137,9 @@
                                             <select class="form-select form-control" aria-label="Default select example" id="freeFix">
                                                 <option selected>이메일 선택</option>
                                                 <option value="@naver.com">@naver.com</option>
-                                                <option value="@daum.net">@daum.net</option>
                                                 <option value="@gmail.com">@gmail.com</option>
-                                                <option value="@hamail.com">@hamail.com</option>
-                                                <option value="@yahoo.com">@yahoo.com</option>
+                                                <option value="@daum.net">@daum.net</option>
+                                                <option value="@nate.com">@nate.com</option>
                                             </select>
                                         </div>
                                     </div>
