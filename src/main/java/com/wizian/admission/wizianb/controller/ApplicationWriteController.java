@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -62,7 +63,7 @@ public class ApplicationWriteController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam("email")String email,@RequestParam("password")String password, Model model, HttpSession session) {
+    public String postLogin(@RequestParam("id")String email,@RequestParam("password")String password, Model model, HttpSession session) {
 
         if (email.isEmpty()) {
             model.addAttribute("text", "아이디를 입력해주세요.");
@@ -81,13 +82,14 @@ public class ApplicationWriteController {
         } else if (passwordEncoder.matches(password, passwordCheck)) {
 
             //객체 찾아서 반환
-            ApplicationInfo appInfo = applicationInfoService.appInfo(email);
-            ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
+            String memberMemId = applicationInfoService.memberMemId(email);
+            List<ApplicationInfo> memberAll = applicationInfoService.memberAll(memberMemId);
+            ApplicationInfo member = applicationInfoService.findMember(memberMemId);
 
             //객체저장
-            session.setAttribute("loginId",appInfo);
+            session.setAttribute("loginMemberAll",memberAll);
             session.setAttribute("login",member);
-            model.addAttribute("appInfo", appInfo);
+//            model.addAttribute("appInfo", appInfo);
             model.addAttribute("member", member);
 
             return "/application/applicationWrite";

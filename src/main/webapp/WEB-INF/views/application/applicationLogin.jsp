@@ -72,7 +72,7 @@
             <form id="frm" action="/login" method="post">
                 <div class="mt-3">
                     <span class="d-block">아이디(이메일)</span>
-                    <input name="email" class="mt-2 d-block form-control" type="email" placeholder="아이디">
+                    <input name="id" class="mt-2 d-block form-control" type="email" placeholder="아이디">
                 </div>
                 <div class="mt-3">
                     <span class="d-block">비밀번호</span>

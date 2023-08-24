@@ -207,7 +207,9 @@
             <div class="mb-3">
                 <select class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
                         aria-label="select_list">
-                    <option selected>${courseName}</option>
+                    <c:forEach items="${applyMaster}" var="master">
+                        <option>${master.courseDiv}</option>
+                    </c:forEach>
                 </select>
             </div>
             <h3 class="title mt-5 mb-1">지원서확인</h3>

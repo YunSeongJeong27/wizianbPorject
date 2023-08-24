@@ -46,4 +46,12 @@
     <select id="passwordCheck" resultType="java.lang.String">
         select pw from member where login_id = #{email};
     </select>
+
+    <select id="memberMemId" resultType="java.lang.String">
+        select distinct mem_id from entry_apply_master where email=#{email};
+    </select>
+
+    <select id="memberAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        select * from entry_apply_master where mem_id=#{memberMemId};
+    </select>
 </mapper>

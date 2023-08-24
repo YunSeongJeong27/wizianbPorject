@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -75,6 +76,16 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
 
     public Boolean existByEmail(String email){
         return applicationInfoRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<ApplicationInfo> memberAll(String memberMemId) {
+        return applicationInfoRepository.memberAll(memberMemId);
+    }
+
+    @Override
+    public String memberMemId(String email) {
+        return applicationInfoRepository.memberMemId(email);
     }
 
     @Override

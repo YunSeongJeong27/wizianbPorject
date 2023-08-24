@@ -26,4 +26,7 @@ public interface ApplicationInfoService {
 
    Boolean existByEmail(String email);
 
+   String memberMemId(String email);
+   List<ApplicationInfo> memberAll(String memberMemId);
+
 }
