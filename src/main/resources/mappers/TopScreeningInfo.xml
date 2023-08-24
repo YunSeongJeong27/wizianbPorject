@@ -4,13 +4,13 @@
 
     <select id="nthInfo" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
         select a.course_name, a.course_div, a.term_div,a.step_div,a.edu_start_date,a.edu_end_date,a.rcrt_no,
-               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment} limit 0,1 ) as recruitStartDate,
-               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlRecruitment} limit 0,1 ) as recruitEndDate,
-               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement} limit 0,1 ) as announcementStartDate,
-               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no and schdl_name=#{schdlAnnouncement} limit 0,1 ) as announcementEndDate,
-               (select schdl_name from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as schdlName,
-               (select status_div from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as statusDiv,
-               (select schdl_seq from entry_sel_schdl where rcrt_no=a.rcrt_no and status_div=#{StatusPrepared} limit 0,1 ) as schdlSeq
+               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as recruitStartDate,
+               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as recruitEndDate,
+               (select start_date from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as announcementStartDate,
+               (select end_date from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as announcementEndDate,
+               (select schdl_name from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as schdlName,
+               (select status_div from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as statusDiv,
+               (select schdl_seq from entry_sel_schdl where rcrt_no=a.rcrt_no order by schdl_seq desc limit 0,1 ) as schdlSeq
         from entry_sel_master as a
     where a.term_div like #{termDiv} and a.course_div like #{courseDiv}
       and a.course_name like #{courseName} and

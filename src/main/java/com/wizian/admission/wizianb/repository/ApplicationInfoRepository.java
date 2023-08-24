@@ -16,8 +16,6 @@ public interface ApplicationInfoRepository {
 
     ApplicationInfo findByEmail(String email);
 
-    ApplicationInfo findByMemId(String memId);
-
     ApplicationInfo findByLoginId(String loginId);
     void savePassword(String loginId, String password, LocalDateTime date);
 
@@ -28,4 +26,9 @@ public interface ApplicationInfoRepository {
 
     String memberMemId(String email);
     List<ApplicationInfo> memberAll(String memberMemId);
+
+    void saveLastLogin(LocalDateTime date,String loginId);
+
+    ApplicationInfo findAppInfo(String loginId,String rcrtNo);
+
 }

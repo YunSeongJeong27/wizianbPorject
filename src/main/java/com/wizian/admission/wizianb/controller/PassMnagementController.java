@@ -22,14 +22,8 @@ public class PassMnagementController {
     // 조회
     @GetMapping("/pass/courseSelect")
     @ResponseBody
-    public List<PassManagement> courseSelect(@RequestParam("termDiv") String termDiv, @RequestParam("courseDiv") String courseDiv){
-        return passManagementService.courseSelect(termDiv, courseDiv);
-    }
-
-    @GetMapping("/pass/endCourseSelect")
-    @ResponseBody
-    public List<PassManagement> endCourseSelect(@RequestParam("termDiv") String termDiv, @RequestParam("courseDiv") String courseDiv){
-        return passManagementService.endCourseSelect(termDiv, courseDiv);
+    public List<PassManagement> courseSelect(@RequestParam("termDiv") String termDiv, @RequestParam("courseDiv") String courseDiv, @RequestParam("stepDiv") String stepDiv){
+        return passManagementService.courseSelect(termDiv, courseDiv, stepDiv);
     }
 
     @GetMapping("/pass/nthList")
@@ -68,7 +62,6 @@ public class PassMnagementController {
     public ResponseEntity<ToastUiResponseDto> updateFnlPass(@RequestBody JsonNode passUpdateList) {
         return ResponseEntity.ok(passManagementService.updateFnlPass(passUpdateList));
     }
-
 
     @PostMapping(value = "/pass/sendMail", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> sendMail(@RequestBody JsonNode data){

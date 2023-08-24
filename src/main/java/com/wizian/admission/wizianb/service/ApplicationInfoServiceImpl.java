@@ -89,13 +89,25 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     }
 
     @Override
-    public ApplicationInfo appInfo(String email) {
-       return applicationInfoRepository.findByEmail(email);
+    public ApplicationInfo saveLastLogin(String loginId) {
+
+        ApplicationInfo memInfo = applicationInfoRepository.findByLoginId(loginId);
+
+        /*최근접속일자 등록*/
+        LocalDateTime currentDate = LocalDateTime.now();
+        applicationInfoRepository.saveLastLogin(currentDate,memInfo.getLoginId());
+
+        return memInfo;
     }
 
     @Override
-    public ApplicationInfo findMember(String memId) {
-        return applicationInfoRepository.findByMemId(memId);
+    public ApplicationInfo findAppInfo(String loginId, String rcrtNo) {
+        return applicationInfoRepository.findAppInfo(loginId,rcrtNo);
+    }
+
+    @Override
+    public ApplicationInfo findByLoginId(String memId) {
+        return applicationInfoRepository.findByLoginId(memId);
     }
 
     /*비밀번호변경*/

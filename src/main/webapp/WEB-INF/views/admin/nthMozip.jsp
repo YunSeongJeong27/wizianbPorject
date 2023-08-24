@@ -104,10 +104,6 @@
         <div class="nthInfoTable text-center border border-gray-100 rounded-2">
             <div id="nthTable"></div>
 
-
-            <%-- <div class="position-absolute top-50 end-0 translate-middle-y">
-                 <p class="pageLoc">현재:1/전체:14(1~5)</p>
-             </div>--%>
         </div>
     </div>
 
@@ -131,7 +127,7 @@
         <!-- 모진접형설정 Content -->
         <div id="select-pane">
             <div class="d-flex col-4 align-items-center" style="height: 40px">
-                <div class="col-4 ms-3 fw-bold d-flex">
+                <div class="col-5 ms-3 fw-bold d-flex">
                     <div>
                         <i class="bi bi-star-fill text-warning px-1"></i>
                     </div>
@@ -139,10 +135,13 @@
                 </div>
                 <div class=" d-flex flex-row justify-content-left mb-1 gap-2">
                     <select class="form-select mt-2" name="schdlName"  id="updateSchdlName"  style="width: 300px; height: 40px;">
-                        <option value="" selected>(미선택)</option>
+                        <option value="unselected" selected>(미선택)</option>
                     </select>
                     <select class="form-select mt-2" name="statusDiv" id="updateStatusDiv" style="width: 130px; height: 40px;" >
-                        <option value="" selected>(미선택)</option>
+                        <option value="unselected" selected>(미선택)</option>
+                        <option value="준비중">준비중</option>
+                        <option value="진행중">진행중</option>
+                        <option value="완료">완료</option>
                     </select>
 
                     <button id="updateSchdl" class="btn btn-sm btn-light btn-outline-dark me-1"
@@ -281,9 +280,9 @@
     document.addEventListener('DOMContentLoaded', async () =>{
         await  nthGridLoad();
         await  searchListData();
-
     });
 
+    let firstColumName = 'courseDiv';
     let  termDiv, courseDiv, courseName;
     //readData빼고는 전부 (createData,updateData,deleteData)빽엔드아직안함
     const nthTableData = () => {
@@ -389,8 +388,7 @@
                 // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
                 onGridMounted() {
                     nthTable.focus(0, firstColumName, true);
-
-                    //rowDataLoad(0, nthTable, "inputTable");
+                    rowDataLoad(0, nthTable, "inputTable");
 
                     document.querySelector("#inputTable tbody").setAttribute("id", "row0");
 
@@ -422,9 +420,9 @@
         // row 클릭 시 하단에 해당 row 데이터 load
         nthTable.on('click', function (ev) {
             if(ev.rowKey == null) return;       // 헤더 클릭 시
-
             document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
+            selectedSchdlnameList();//전형일정단계
         });
 
         // 체크박스 전체 선택/해제
@@ -471,34 +469,61 @@
                 tableInput.forEach((ti) => {
                     var tiName = ti.getAttribute("name");
                     ti.value = datas[tiName];
-                    updatercrtNo=datas['rcrtNo'];
+                    selectedRcrtNo=datas['rcrtNo'];
+                    selectSchdlSeq=datas['schdlSeq'];
                 });
             }
-
         }
-
-
     }
-    //모집전형번호
-    let updatercrtNo;
-    document.getElementById("updateSchdl").addEventListener("click", function () {
-        if(confirm("변경하시겠습니까?")) {
 
-            if (updatercrtNo == null) {
+    let selectSchdlSeq;
+    //변경버튼
+    document.getElementById("updateSchdl").addEventListener("click", function () {
+
+        if(confirm("변경하시겠습니까?")) {
+            if (selectSchdlSeq == null) {
                 alert("저장 후 변경해 주십시오.")
             }
             else{
-                alert(updatercrtNo);
+                const schdlNamevalue = document.querySelector("#updateSchdlName").value;
+                const statusDivvale = document.querySelector("#updateStatusDiv").value;
+                //전형일정단계테이블이 아예없을때insert
+                if(selectSchdlSeq==0) {
+                    $.ajax({
+                        url: "/recruitmentinfo/insertschdl",
+                        type: "PUT",
+                        data: {rcrtNo:selectedRcrtNo,
+                            schdlName: schdlNamevalue,statusDiv: statusDivvale
+                        },
+                        dataType: "json",
+                        async: false,
+
+                    });
+                }
+                //있을때 update
+                else {
+                    $.ajax({
+                        url: "/recruitmentinfo/updateschdl",
+                        type: "PUT",
+                        data: {
+                            schdlSeq: selectSchdlSeq, schdlName: schdlNamevalue,
+                            statusDiv: statusDivvale
+                        },
+                        dataType: "json",
+                        async: false,
+
+                    });
+                }
 
             }
-
         }
-
+          searchBtn();
     });
 
 
     // 신규 버튼 클릭 이벤트
     document.getElementById("nthInsertBtn").addEventListener("click", function () {
+
         const rowData = [
             {
                 courseDiv: '',
@@ -517,15 +542,16 @@
             focus: true
         });
 
-        nthData = nthTable.getData();
-
         // 하단 table 초기화
         var tableInput = document.querySelectorAll("#inputTable .tableInput");
         document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
         tableInput.forEach((ti) => {
             ti.value = "";
         });
+       //  document.getElementById("courseName2").disabled = false;
+
     });
+
 
     // 삭제 버튼 클릭 이벤트
     document.getElementById("nthDeleteBtn").addEventListener("click", function () {
@@ -541,11 +567,40 @@
                 rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
             }
         }
+
     });
+
     const nthSaveBtn = document.getElementById("nthSaveBtn");
     nthSaveBtn.addEventListener('click', () => {
         nthTable.request('createData');
     });
+
+    //모집전형번호
+    let selectedRcrtNo;
+    //선택된 전형일정 정보들
+    async function selectedSchdlnameList(){
+        const response = await fetch('/recruitmentinfo/schdlnamelist/'+selectedRcrtNo);
+        const dataList = await response.json();
+        const courseSchdlname = document.querySelector("#updateSchdlName");
+        // 기존 옵션들 모두 제거
+        while (courseSchdlname.firstChild) {
+            courseSchdlname.removeChild(courseSchdlname.firstChild);
+        }
+        // "(미선택)" 옵션 추가
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "unselected";
+        defaultOption.text = "(미선택)";
+        defaultOption.selected = true;
+        courseSchdlname.appendChild(defaultOption);
+
+        dataList.map((data) => {
+            const option = document.createElement("option");
+            option.value = data.schdlName;
+            option.text = data.schdlName;
+            courseSchdlname.appendChild(option);
+
+        });
+    }
 
     //조회리스트들정보
     async function searchListData() {
@@ -557,7 +612,6 @@
 
         const courseDivSelect = document.querySelector("#courseDiv1");
         const courseNameSelect = document.querySelector("#courseName1");
-
         //모집전형설정리스트
         const nthCourseDivSelect = document.querySelector('#courseDiv2');
         const nthCourseNameSelect = document.querySelector('#courseName2');
@@ -600,8 +654,6 @@
         });
 
         const content = document.getElementById(e.id+"-pane");
-        console.log(e.id)
-        console.log(content)
         if(e.id === "select"){
             content.setAttribute("style","display:block");
         }else if(e.id === "person"){

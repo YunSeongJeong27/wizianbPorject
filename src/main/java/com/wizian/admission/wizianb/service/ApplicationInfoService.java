@@ -13,9 +13,7 @@ public interface ApplicationInfoService {
 
    ApplicationInfo join(ApplicationInfo applicationInfo, MultipartFile file) throws IOException;
 
-   ApplicationInfo appInfo(String email);
-
-   ApplicationInfo findMember(String memId);
+   ApplicationInfo findByLoginId(String loginId);
 
    ApplicationInfo savePassword(String loginId,String password);
 
@@ -25,6 +23,9 @@ public interface ApplicationInfoService {
    String passwordCheck(String email);
 
    Boolean existByEmail(String email);
+   ApplicationInfo saveLastLogin(String loginId);
+
+   ApplicationInfo findAppInfo(String loginId,String rcrtNo);
 
    String memberMemId(String email);
    List<ApplicationInfo> memberAll(String memberMemId);
