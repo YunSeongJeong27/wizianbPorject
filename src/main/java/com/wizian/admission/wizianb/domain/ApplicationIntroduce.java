@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 public class ApplicationIntroduce {
 
+    /*자기소개서 문항*/
     private int itemNo;
     private String rcrtNo;
     private String itemName;
@@ -15,4 +16,7 @@ public class ApplicationIntroduce {
     private String itemExpl;
 
 
+    /*지원자기소개서*/
+    private String aplyNo;
+    private String answer;
 }

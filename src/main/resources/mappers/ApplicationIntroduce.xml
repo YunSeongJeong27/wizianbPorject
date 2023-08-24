@@ -6,4 +6,9 @@
         SELECT * FROM entry_sel_intro WHERE rcrt_no=#{rcrtNo};
     </select>
 
+    <insert id="saveAnswer" parameterType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
+        INSERT INTO entry_apply_intro(item_no,aply_no,rcrt_no,answer)
+        VALUES (#{itemNo},#{aplyNo},#{rcrtNo},#{answer});
+    </insert>
+
 </mapper>

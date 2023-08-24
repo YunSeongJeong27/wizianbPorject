@@ -10,5 +10,7 @@ public interface ApplicationIntroRepository {
 
     List<ApplicationIntroduce> findItem(String rcrtNo);
 
+    ApplicationIntroduce saveAnswer(ApplicationIntroduce appIntro);
+
 
 }

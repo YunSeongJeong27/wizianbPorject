@@ -1,17 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2023-08-11
-  Time: 오전 9:48
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2023-08-11
-  Time: 오전 9:15
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../user/header.jsp" %>
 <html>
@@ -88,29 +74,32 @@
             <br>
 
 
-            <form class="introduce_form" action="/saveIntroduce" method="Post">
+            <form class="introduce_form" action="/saveIntro" method="Post">
                 <div id="repeat">
                     <%-- 문항반복시작--%>
-                    <c:forEach items="${introduceList}" var="intro">
+                    <c:forEach items="${introduceList}" var="intro" varStatus="i">
+                        <input type="hidden" name="rcrtNo" value="${intro.rcrtNo}">
+                        <input type="hidden" name="aplyNo" value="${aplyNo}">
                         <div>
                             <c:choose>
-                                <c:when test="${empty intro}">
+                                <c:when test="${empty introduceList}">
                                     <div>▶(한국어)지원동기[글자제한:2000자]</div>
                                     <div class="intro_description">- 번역 및 한국문학에 관심을 가지게 된 계기 등을 위주로 기술</div>
                                 </c:when>
                                 <c:otherwise>
+                                    <input type="hidden" name="itemNo" value="${intro.itemNo}">
+                                    <input type="hidden" name="itemName" value="${intro.itemName}">
                                     <div>${intro.itemName}[글자제한:${intro.maxChar}자]</div>
                                     <div class="intro_description">- ${intro.itemExpl}</div>
                                 </c:otherwise>
                             </c:choose>
                             <div id="text_box" class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here"
-                                          style="height: 150px; resize: none;"></textarea>
+                                <textarea id="text_content${i.index}" name="answer${i.index}" class="form-control" style="height: 150px; resize: none;"></textarea>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <span id="text_count">[0/</span>
+                                <span id="text_count${i.index}">[0/</span>
                                 <c:choose>
-                                    <c:when test="${empty intro}">
+                                    <c:when test="${empty introduceList}">
                                         <c:set var="maxLength" value="2000" />
                                     </c:when>
                                     <c:otherwise>
@@ -126,7 +115,7 @@
                 <%--버튼--%>
                 <div class="d-flex justify-content-between mt-5">
                     <button type="button" class="btn btn-second">이전</button>
-                    <button type="button" id="save_btn" class="btn btn-dark">저장</button>
+                    <button type="submit" id="save_btn" class="btn btn-dark">저장</button>
                     <button type="button" class="btn btn-second">저장 후 이동</button>
                 </div>
             </form>
@@ -136,9 +125,10 @@
 </div>
 
 <script>
-    $('#text_box textarea').keyup(function () {
+<c:forEach items="${introduceList}" var="intro" varStatus="i">
+    $('#text_content${i.index}').keyup(function () {
         var content = $(this).val();
-        $('#text_count').html('[' + content.length + "/");
+        $('#text_count${i.index}').html('[' + content.length + "/");
 
         var maxLengthElement = document.getElementById('maxLength');
         var ml = parseInt(maxLengthElement.innerText, 10);
@@ -149,6 +139,7 @@
             $('#text_count').html('[' + ml + "/");
         }
     });
+</c:forEach>
 
     ////상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
