@@ -34,8 +34,19 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
     }
 
     @Override
+    public ToastUiResponseDto findNotice(String rcrtNo, String msgDiv) {
+        NoticeMessage noticeMessage = noticeMessageRepository.findNotice(rcrtNo, msgDiv);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("contents", noticeMessage);
+        resultMap.put("pagination", "");
+
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    @Override
     public ToastUiResponseDto insertNotice(JsonNode jnArr) {
-        System.out.println("created:"+jnArr);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
 
@@ -54,7 +65,6 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
 
     @Override
     public ToastUiResponseDto updateNotice(JsonNode jnArr) {
-        System.out.println("updated:"+jnArr);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
 
@@ -73,17 +83,19 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
     }
 
     @Override
-    public ToastUiResponseDto deleteNotice(JsonNode jn) {
-        System.out.println("deleted:"+jn);
+    public ToastUiResponseDto deleteNotice(String rcrtNo, String msgDiv) {
+        System.out.println("deleted:"+msgDiv);
+
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("pagination", "");
 
-        JsonNode jnArr = jn.get("deletedRows");
+        String[] msgCode = msgDiv.split(",");
 
-        for (int i=0; i<jnArr.size(); i++) {
+        for (String code : msgCode) {
+            System.out.println("deleted1:" + code);
             NoticeMessage data = NoticeMessage.builder()
-                    .msgSeq(jnArr.get(i).get("msgSeq").asInt())
-                    .rcrtNo(jnArr.get(i).get("rcrtNo").asText()).build();
+                    .rcrtNo(rcrtNo)
+                    .msgDiv(code).build();
 
             noticeMessageRepository.deleteNotice(data);
         }

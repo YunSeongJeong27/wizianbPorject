@@ -25,19 +25,14 @@ public class PassManagementServiceImpl implements PassManagementService {
     private final MailSendService mailSendService;
 
     @Override
-    public List<PassManagement> courseSelect(String termDiv, String courseDiv) {
+    public List<PassManagement> courseSelect(String termDiv, String courseDiv, String stepDiv) {
         if(termDiv.equals("0")) termDiv = "%";
         if(courseDiv.equals("0")) courseDiv = "%";
 
-        return passManagementRepository.courseSelect(termDiv, courseDiv);
-    }
+        if(stepDiv.equals("final")) return passManagementRepository.endCourseSelect(termDiv, courseDiv);
+        else return passManagementRepository.courseSelect(termDiv, courseDiv);
 
-    @Override
-    public List<PassManagement> endCourseSelect(String termDiv, String courseDiv) {
-        if(termDiv.equals("0")) termDiv = "%";
-        if(courseDiv.equals("0")) courseDiv = "%";
 
-        return passManagementRepository.endCourseSelect(termDiv, courseDiv);
     }
 
     @Override
@@ -147,7 +142,7 @@ public class PassManagementServiceImpl implements PassManagementService {
         if(stepDiv.equals("interview")) passManagementList = passManagementRepository.findFnlPass(jn.get("rcrtNo").asText());
         else if(stepDiv.equals("final")) passManagementList = passManagementRepository.findPassList(jn.get("rcrtNo").asText());
 
-        mailSendService.mailSend("message", "aaa@naver.com", "title");
+        mailSendService.mailSend(message, "aaa@naver.com", title);
         for(PassManagement data: passManagementList) {
             //mailSendService.mailSend(message, data.getEmail(), title);
         }

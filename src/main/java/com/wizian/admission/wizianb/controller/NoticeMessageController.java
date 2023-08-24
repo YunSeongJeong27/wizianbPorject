@@ -23,6 +23,11 @@ public class NoticeMessageController {
         return ResponseEntity.ok(noticeMessageService.findNoticeList(rcrtNo));
     }
 
+    @GetMapping("/notice/find/{rcrtNo}/{msgDiv}")
+    public ResponseEntity<ToastUiResponseDto> findNotice(@PathVariable String rcrtNo, @PathVariable String msgDiv){
+        return ResponseEntity.ok(noticeMessageService.findNotice(rcrtNo, msgDiv));
+    }
+
     // 안내문 저장
     @PutMapping("/notice/save")
     public ResponseEntity<?> saveNotice(@RequestBody JsonNode noticeList){
@@ -41,10 +46,9 @@ public class NoticeMessageController {
         return ResponseEntity.ok(response);
     }
 
-    // 안내문 삭제 (update)
-    @DeleteMapping("/notice/delete")
-    public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestBody JsonNode noticeList) {
-        System.out.println(noticeList);
-        return ResponseEntity.ok(noticeMessageService.deleteNotice(noticeList));
+    // 안내문 삭제
+    @DeleteMapping(value="/notice/delete")
+    public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestParam("rcrtNo") String rcrtNo, @RequestParam("msgDiv") String msgDiv) {
+        return ResponseEntity.ok(noticeMessageService.deleteNotice(rcrtNo, msgDiv));
     }
 }
