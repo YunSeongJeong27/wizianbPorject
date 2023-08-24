@@ -15,7 +15,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css"/>
+    <script src="https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js"></script>
     <link rel="stylesheet" href="css/custom.css"/>
+    <style>
+        .pdfobject-container { height: 30rem; border: 1rem solid rgba(0,0,0,.1); }
+    </style>
     <style>
         #mainTab #tabList,
         #mainTab #tab1,
@@ -174,7 +178,7 @@
                     </div>
                 </div>
                 <div>
-                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1">
+                    <button id="btn_grid2_excel_export" class="btn btn-sm btn-secondary me-1" disabled>
                         엑셀내보내기(전체)
                     </button>
                 </div>
@@ -547,7 +551,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="tab5Grid" class="tab1Form" style="width: 99%"></div>
+                                <div class="pdfobject-container" id="example1"></div>
                             </div>
                         </div>
                     </div>
@@ -561,6 +565,7 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
     document.addEventListener('DOMContentLoaded', async () => {
         await topGridLoad();
         await leftGridLoad();
@@ -922,73 +927,6 @@
         });
     }
 
-    const tab5GridLoad = (aplyNo) => {
-        const Grid = tui.Grid;
-        document.querySelector('#tab5Grid').innerHTML = "";
-        const tab5Grid = new Grid({
-            el: document.getElementById('tab5Grid'),
-            data: fileData,
-            pagination: true,
-            scrollX: true,
-            scrollY: true,
-            columns: [
-                {
-                    header: '제출서류',
-                    name: '제출서류',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center',
-                    formatter: 'listItemText',
-                    editor: {
-                        type: 'select',
-                        options: {
-                            listItems: [
-                                {text: '', value: '0'},
-                                {text: '학위증명서', value: '1'},
-                                {text: '활동이력증명', value: '2'},
-                                {text: '기타', value: '9'}
-                            ]
-                        }
-                    }
-                },
-                {
-                    header: '기관명',
-                    name: '기관명',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '첨부파일',
-                    name: '첨부파일',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '파일관리',
-                    name: '파일관리',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    header: '미리보기',
-                    name: '미리보기',
-                    sortingType: 'asc',
-                    sortable: true,
-                    align: 'center'
-                }
-            ],
-            columnOptions: {
-                resizable: true,
-            },
-
-            draggable: false,
-
-        });
-    }
-
     const tabAllLoad = (aplyNo) => {
         const buttonList = document.querySelectorAll('#tabList > li > button');
         buttonList.forEach((e, i) => {
@@ -1030,7 +968,7 @@
                 } else if (e.id === "btn_tab4") {
                     elements[3].style.display = 'block';
                 } else if (e.id === "btn_tab5") {
-                    tab5GridLoad(aplyNo)
+                    PDFObject.embed("/pdf/2023_야구규칙.pdf", "#example1");
                     elements[4].style.display = 'block';
                 }
             })
