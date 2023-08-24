@@ -20,11 +20,16 @@
 
     <!-- 안내문 저장 (update) -->
     <update id="updateNotice" parameterType="com.wizian.admission.wizianb.domain.NoticeMessage">
-        UPDATE entry_sel_msg SET MSG_DIV = #{msgDiv}, SUBJECT = #{subject}, MSG_CONT = #{msgCont} WHERE RCRT_NO = #{rcrtNo} AND MSG_SEQ = #{msgSeq}
+        UPDATE entry_sel_msg SET MSG_DIV = #{msgDiv}, SUBJECT = #{subject}, MSG_CONT = #{msgCont} WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{msgDiv}
     </update>
 
     <!-- 안내문 삭제 -->
     <delete id="deleteNotice" parameterType="com.wizian.admission.wizianb.domain.NoticeMessage">
         DELETE FROM entry_sel_msg WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{msgDiv}
     </delete>
+
+    <!-- 안내문 내용 저장 (editor)-->
+    <update id="updateContent" parameterType="com.wizian.admission.wizianb.domain.NoticeMessage">
+        UPDATE entry_sel_msg SET MSG_Cont = #{msgCont} WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{msgDiv}
+    </update>
 </mapper>

@@ -14,4 +14,6 @@ public interface NoticeMessageRepository {
     void updateNotice(NoticeMessage data);
     void deleteNotice(NoticeMessage data);
 
+    void updateContent(NoticeMessage data);
+
 }

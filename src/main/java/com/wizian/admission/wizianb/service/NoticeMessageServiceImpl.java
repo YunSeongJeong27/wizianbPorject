@@ -102,4 +102,15 @@ public class NoticeMessageServiceImpl implements NoticeMessageService {
 
         return ToastUiResponseDto.builder().data(resultMap).build();
     }
+
+    @Override
+    public void updateContent(JsonNode jn) {
+        System.out.println("얍"+jn);
+        NoticeMessage data = NoticeMessage.builder()
+                .rcrtNo(jn.get("rcrtNo").asText())
+                .msgDiv(jn.get("msgDiv").asText())
+                .msgCont(jn.get("msgCont").asText()).build();
+
+        noticeMessageRepository.updateContent(data);
+    }
 }

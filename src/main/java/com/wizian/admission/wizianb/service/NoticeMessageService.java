@@ -12,4 +12,6 @@ public interface NoticeMessageService {
    ToastUiResponseDto insertNotice(JsonNode jn);
    ToastUiResponseDto updateNotice(JsonNode jn);
    ToastUiResponseDto deleteNotice(String rcrtNo, String msgDiv);
+
+   void updateContent(JsonNode jn);
 }
