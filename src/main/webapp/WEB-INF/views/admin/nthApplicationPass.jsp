@@ -96,7 +96,7 @@
                             <select class="form-select w-auto me-1">
                                 <option selected>면접안내메일</option>
                             </select>
-                            <button id="mailSendBtn" class="btn btn-sm btn-light btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#mailModal">합격안내메일</button>
+                            <button id="mailSendBtn" type="button" class="btn btn-sm btn-light btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#mailModal">합격안내메일</button>
                         </div>
                         <div class="d-flex flex-row align-items-center">
                             <p class="subTitle fw-bold me-2">선발결과</p>
@@ -144,7 +144,7 @@
                                 <p class="passNotice">메일 발송에 다소 시간이 소요됩니다.</p>
                             </div>
                             <div class="d-flex align-items-center">
-                                <button id="sendBtn" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">메일발송</button>
+                                <button id="sendBtn" type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">메일발송</button>
                             </div>
                         </div>
                         <div class="mt-3">

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.NoticeMessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +52,13 @@ public class NoticeMessageController {
     @DeleteMapping(value="/notice/delete")
     public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestParam("rcrtNo") String rcrtNo, @RequestParam("msgDiv") String msgDiv) {
         return ResponseEntity.ok(noticeMessageService.deleteNotice(rcrtNo, msgDiv));
+    }
+
+
+    // 안내문 내용 수정
+    @PutMapping(value="/notice/updateContent", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> saveEdit(@RequestBody JsonNode data){
+        noticeMessageService.updateContent(data);
+        return ResponseEntity.status(HttpStatus.OK).body(200);
     }
 }

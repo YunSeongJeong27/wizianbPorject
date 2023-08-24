@@ -81,13 +81,13 @@ public class ApplicationWriteController {
         } else if (passwordEncoder.matches(password, passwordCheck)) {
 
             //객체 찾아서 반환
-            ApplicationInfo appInfo = applicationInfoService.appInfo(email);
-            ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
+            ApplicationInfo member = applicationInfoService.findByLoginId(emailCheck);
+
+            //최근접속시간등록
+            applicationInfoService.saveLastLogin(email);
 
             //객체저장
-            session.setAttribute("loginId",appInfo);
             session.setAttribute("login",member);
-            model.addAttribute("appInfo", appInfo);
             model.addAttribute("member", member);
 
             return "/application/applicationWrite";

@@ -27,23 +27,22 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
     private final PasswordEncoder passwordEncoder;
-    private final ApplicationWriteService applicationWriteService;
 
     //기본정보
     @GetMapping("/userInfo")
-    public String userInfo(HttpServletRequest request, Model model,HttpSession session){
+    public String userInfo(@RequestParam("rcrtNo")String rcrtNo, HttpServletRequest request, Model model,HttpSession session){
+
         model.addAttribute("title","기본정보");
        // Object rcrtNo = session.getAttribute("rcrtNo");
        // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
 
-        //일단,테스트용 rcrtNo 임의로 값 보내기
-        model.addAttribute("rcrtNo","10-001");
+        model.addAttribute("rcrtNo",rcrtNo);
 //        model.addAttribute("courseDiv",courseDiv);
 
         if(session.getAttribute("login")!=null){
-            ApplicationInfo appInfo = (ApplicationInfo) session.getAttribute("loginId");
-            //비밀번호 받아와야해서.
-            ApplicationInfo member = applicationInfoService.findMember(appInfo.getMemId());
+
+            ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
+            ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
 
             model.addAttribute("appInfo",appInfo);
             model.addAttribute("member",member);

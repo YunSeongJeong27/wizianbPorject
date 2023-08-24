@@ -11,4 +11,6 @@ public interface ApplicationIntroService {
 
         List<ApplicationIntroduce> findItem(String rcrtNo);
 
+        ApplicationIntroduce saveAnswer(ApplicationIntroduce appIntro);
+
 }

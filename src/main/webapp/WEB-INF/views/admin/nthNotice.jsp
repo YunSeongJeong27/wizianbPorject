@@ -70,8 +70,8 @@
                 <div class="w-100">
                     <div class="searchResult d-flex flex-row justify-content-between align-items-center" style="height: 32.38px">
                         <p class="subTitle fw-bold">안내문내용</p>
-                        <button id="noticeInsertContentBtn" class="btn btn-sm btn-light btn-outline-dark"
-                        data-bs-toggle="modal" data-bs-target="#noticeModal">안내문작성하기</button>
+                        <button id="noticeInsertContentBtn" type="button" class="btn btn-sm btn-light btn-outline-dark"
+                        data-bs-toggle="modal" data-bs-target="#noticeModal" disabled>안내문작성하기</button>
                     </div>
 
                     <div id="noticeInfoTable" class="text-start mb-3 mt-2">
@@ -90,9 +90,7 @@
                             </div>
                         </div>
 
-                        <div id="msgCont" class="border border-gray-100 rounded-2 bg-white h-75 p-3">
-
-                        </div>
+                        <div id="msgCont" class="border border-gray-100 rounded-2 bg-white h-75 p-3" style="overflow-y: auto;"></div>
                     </div>
                 </div>
             </div>
@@ -106,7 +104,7 @@
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <div class="modal-title fw-bold">
-                        WIZIAN 정보처리학원
+                        중앙 정보처리학원
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="bi bi-files biIcon fw-bolder fs-4 btn p-1" onclick="sizeChange()"></i>
@@ -121,8 +119,7 @@
                                 <div class="fw-bold">&nbsp;게시 내용 작성하기</div>
                             </div>
                             <div class="d-flex align-items-center">
-                                <input type="submit" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" value="저장">
-                                <input type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" data-bs-dismiss="modal" value="닫기">
+                                <button id="saveEditBtn" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">저장</button>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -143,6 +140,7 @@
         const noticeTablePage = document.querySelector('#noticeTablePage');
         const subjectInput = document.getElementById("subject");
         const msgContInput = document.getElementById("msgCont");
+        const noticeInsertContentBtn = document.getElementById("noticeInsertContentBtn");
         let noticeTable;
         let rcrtNo;
         let focusRowKey;
@@ -212,6 +210,12 @@
                 focusRowKey = ev.rowKey;
                 if(focusRowKey == null) return;       // 헤더 클릭 시
 
+                if(createRowKeys.includes(focusRowKey)){
+                    noticeInsertContentBtn.disabled = true;
+                }else{
+                    noticeInsertContentBtn.disabled = false;
+                }
+
                 rowDataLoad(focusRowKey, noticeTable, "noticeInfoTable");
             });
 
@@ -246,10 +250,11 @@
             });
 
             noticeTable.on('afterChange', function(ev){
-                let data = { 'rowKey' : ev['changes'][0]['rowKey'],
-                    'prevValue' : ev['changes'][0]['prevValue']};
+                if(!createRowKeys.includes(ev['changes'][0]['rowKey'])){
+                    let data = { 'rowKey' : ev['changes'][0]['rowKey'], 'prevValue' : ev['changes'][0]['prevValue']};
 
-                prevDataList.push(data);
+                    prevDataList.push(data);
+                }
             })
         }
 
@@ -283,6 +288,7 @@
         // 버튼 이벤트
         // 신규 버튼 클릭 이벤트
         let dataFlag;
+        let createRowKeys = [];
         const noticeInsertBtn = document.getElementById("noticeInsertBtn");
         noticeInsertBtn.addEventListener("click", function () {
             dataFlag = document.querySelector("#noticeTable .tui-grid-body-area");
@@ -306,6 +312,8 @@
 
                 // 초기화
                 focusRowKey = noticeTable.getFocusedCell()['rowKey'];
+                createRowKeys.push(focusRowKey);
+                noticeInsertContentBtn.disabled = true;
                 noticeForm("", "");
             }
         });
@@ -343,6 +351,7 @@
 
                 // 기존 값 저장하는 리스트 초기화
                 prevDataList = [];
+                createRowKeys = [];
             }
         });
 
@@ -365,8 +374,10 @@
                             noticeTable.setValue( row['rowKey'] , 'msgDiv' , row['prevValue'] , true );
                         });
                     }
-                    noticeTable.getCheckedRows().forEach(row => {
-                        msgDiv += row['msgDiv']+",";
+                    divList.forEach(row => {
+                        if(!createRowKeys.includes(row['rowKey'])) {
+                            msgDiv += row['msgDiv']+",";
+                        }
                     });
                 }
 
@@ -386,15 +397,13 @@
             el: document.querySelector('#editor'),
             height: '350px',
             initialEditType: 'wysiwyg',
-            initialValue: '저장값 불러오기',
+            initialValue: '',
             previewStyle: 'vertical',
             language:'ko'
         });
-        editor.getMarkdown();
-
 
         // 모달이 열릴 때 이벤트 핸들러 등록
-        var modal = document.getElementById("noticeModal")
+        const modal = document.getElementById("noticeModal");
         modal.addEventListener('hide.bs.modal', function () {
             var dialog = document.getElementById("dialog");
             if (dialog.classList.contains('modal-fullscreen')) {
@@ -402,6 +411,9 @@
                 dialog.classList.add("modal-lg");
                 editor.setHeight('350px');
             }
+        });
+        noticeInsertContentBtn.addEventListener('click', function (){
+            editor.setHTML(noticeTable.getRow(focusRowKey)['msgCont']);
         });
         //모달 크기 조정
         function sizeChange(){
@@ -416,6 +428,28 @@
                 editor.setHeight('90%');
             }
         }
+        // 모달 저장 버튼 이벤트
+        const saveEditBtn = document.getElementById("saveEditBtn")
+        saveEditBtn.addEventListener('click', function(){
+            fetch("/notice/updateContent", {
+                method: 'PUT',
+                body: JSON.stringify({
+                    rcrtNo: rcrtNo,
+                    msgDiv: noticeTable.getRow(focusRowKey)['msgDiv'],
+                    msgCont: editor.getHTML()
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert("dfas");
+                    console.log(data);
+                });
+        });
+
+
     </script>
 </body>
 </html>

@@ -17,9 +17,15 @@ public class ApplicationIntroServiceImpl implements ApplicationIntroService{
     private final ApplicationIntroRepository applicationIntroRepository;
 
 
-    /*자소서 문항 찾아오기*/
     @Override
     public List<ApplicationIntroduce> findItem(String rcrtNo) {
         return applicationIntroRepository.findItem(rcrtNo);
+    }
+
+    @Override
+    public ApplicationIntroduce saveAnswer(ApplicationIntroduce appIntro) {
+
+
+        return null;
     }
 }

@@ -78,6 +78,8 @@
         frm.action = "/login";
         frm.submit();
     })
+
+
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>
