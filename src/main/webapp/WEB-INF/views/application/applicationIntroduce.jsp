@@ -104,6 +104,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <c:set var="maxLength" value="${intro.maxChar}" />
+                                        <span id="max_length_${i.index}" style="display: none;">${intro.maxChar}</span>
                                     </c:otherwise>
                                 </c:choose>
                                 <span>${maxLength} 자]</span>
@@ -130,13 +131,13 @@
         var content = $(this).val();
         $('#text_count${i.index}').html('[' + content.length + "/");
 
-        var maxLengthElement = document.getElementById('maxLength');
+        var maxLengthElement = document.getElementById('max_length_${i.index}');
         var ml = parseInt(maxLengthElement.innerText, 10);
 
         if (content.length > ml) {
             alert("최대 " + ml + "자까지 입력 가능합니다.");
             $(this).val(content.substring(0, ml));
-            $('#text_count').html('[' + ml + "/");
+            $('#text_count${i.index}').html('[' + ml + "/");
         }
     });
 </c:forEach>
@@ -154,6 +155,7 @@
     breadcrumbDiv3.addEventListener("click", function () {
         window.location.href = "/userIntroduce";
     })
+
 </script>
 </body>
 </html>

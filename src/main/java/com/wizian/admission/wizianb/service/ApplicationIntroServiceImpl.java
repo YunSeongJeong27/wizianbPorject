@@ -25,7 +25,13 @@ public class ApplicationIntroServiceImpl implements ApplicationIntroService{
     @Override
     public ApplicationIntroduce saveAnswer(ApplicationIntroduce appIntro) {
 
+        ApplicationIntroduce aplyintro = new ApplicationIntroduce();
+        aplyintro.setAplyNo(appIntro.getAplyNo());
+        aplyintro.setRcrtNo(appIntro.getRcrtNo());
+        aplyintro.setItemNo(appIntro.getItemNo());
+        aplyintro.setAnswer(appIntro.getAnswer());
+        applicationIntroRepository.saveAnswer(aplyintro);
 
-        return null;
+        return aplyintro;
     }
 }

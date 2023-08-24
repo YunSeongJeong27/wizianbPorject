@@ -11,4 +11,8 @@
         VALUES (#{itemNo},#{aplyNo},#{rcrtNo},#{answer});
     </insert>
 
+    <select id="findAnswers" resultType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
+        SELECT * FROM entry_apply_intro WHERE aply_no=#{aplyNo} AND rcrt_no=#{rcrtNo} AND item_no=#{itemNo};
+    </select>
+
 </mapper>

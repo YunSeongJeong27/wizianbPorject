@@ -30,7 +30,7 @@ public class ApplicationInfoController {
 
     //기본정보
     @GetMapping("/userInfo")
-    public String userInfo(@RequestParam("rcrtNo")String rcrtNo, HttpServletRequest request, Model model,HttpSession session){
+    public String userInfo(@RequestParam("rcrtNo")String rcrtNo, Model model,HttpSession session){
 
         model.addAttribute("title","기본정보");
        // Object rcrtNo = session.getAttribute("rcrtNo");
