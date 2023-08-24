@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
+                    <div>
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <div><i class="bi bi-star-fill text-warning"></i></div>
@@ -128,7 +128,7 @@
                                 <input type="hidden" id="contents" name="noticeContent">
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -210,11 +210,7 @@
                 focusRowKey = ev.rowKey;
                 if(focusRowKey == null) return;       // 헤더 클릭 시
 
-                if(createRowKeys.includes(focusRowKey)){
-                    noticeInsertContentBtn.disabled = true;
-                }else{
-                    noticeInsertContentBtn.disabled = false;
-                }
+                noticeInsertContentBtn.disabled = createRowKeys.includes(focusRowKey);
 
                 rowDataLoad(focusRowKey, noticeTable, "noticeInfoTable");
             });
@@ -430,8 +426,8 @@
         }
         // 모달 저장 버튼 이벤트
         const saveEditBtn = document.getElementById("saveEditBtn")
-        saveEditBtn.addEventListener('click', function(){
-            fetch("/notice/updateContent", {
+        saveEditBtn.addEventListener('click', async function(){
+            await fetch("/notice/updateContent", {
                 method: 'PUT',
                 body: JSON.stringify({
                     rcrtNo: rcrtNo,
@@ -444,9 +440,21 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    alert("dfas");
+                    if(data === 200){
+                        alert("안내문을 저장하였습니다.");
+                        msgContInput.innerHTML = editor.getHTML();
+                        modal.classList.remove('show');
+                        document.querySelector('.modal-backdrop').classList.remove('show');
+
+                        noticeTable.setValue( focusRowKey , 'msgCont' , editor.getHTML(), false);
+                    } else {
+                        alert("안내문 저장에 실패하였습니다.");
+                    }
                     console.log(data);
-                });
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         });
 
 
