@@ -26,14 +26,6 @@
 <!--        select email from entry_apply_master as master where master.email = #{email} and master.birthday = #{password};-->
 <!--    </select>-->
 
-    <select id="emailCheck" resultType="java.lang.String">
-        select login_id from member where login_id = #{email};
-    </select>
-
-    <select id="passwordCheck" resultType="java.lang.String">
-        select pw from member where login_id = #{email} and pw = #{password};
-    </select>
-
     <select id="findId" resultType="java.lang.String">
         select login_id from entry_apply_master as master inner join member on master.mem_id = member.MEM_ID where name_kor = #{name} and birthday = #{birth};
     </select>

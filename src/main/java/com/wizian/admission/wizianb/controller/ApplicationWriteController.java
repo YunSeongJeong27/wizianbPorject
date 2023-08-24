@@ -62,9 +62,8 @@ public class ApplicationWriteController {
     }
 
     @PostMapping("/login")
-    public String postLogin(HttpServletRequest request, Model model, HttpSession session) {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+    public String postLogin(@RequestParam("email")String email,@RequestParam("password")String password, Model model, HttpSession session) {
+
         if (email.isEmpty()) {
             model.addAttribute("text", "아이디를 입력해주세요.");
             return "/application/applicationLogin";
@@ -73,12 +72,10 @@ public class ApplicationWriteController {
             return "/application/applicationLogin";
         }
 
-        String emailCheck = applicationWriteService.emailCheck(email);
-        String passwordCheck = applicationWriteService.passwordCheck(email, password);
-
+        String emailCheck = applicationInfoService.emailCheck(email);
+        String passwordCheck = applicationInfoService.passwordCheck(email);
 
         if (emailCheck == null || passwordCheck == null) {
-            System.out.println("여기");
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
             return "/application/applicationLogin";
         } else if (passwordEncoder.matches(password, passwordCheck)) {

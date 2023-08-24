@@ -20,9 +20,10 @@ public interface ApplicationInfoRepository {
     ApplicationInfo findByLoginId(String loginId);
     void savePassword(String loginId, String password, LocalDateTime date);
 
-
     String courseName(Object rcrtNo);
 
+    String emailCheck(String email);
+    String passwordCheck(String email);
 
 
 }

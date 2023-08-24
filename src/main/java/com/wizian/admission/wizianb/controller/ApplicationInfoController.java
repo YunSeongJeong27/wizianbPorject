@@ -70,9 +70,16 @@ public class ApplicationInfoController {
     public ResponseEntity<String> mailCheck(@RequestBody HashMap<String,Object> member){
 
         String username = (String) member.get("username");
-        String authNum = mailSendService.joinEmail(username);
+        if(applicationInfoService.existByEmail(username)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+        }else{
+            String authNum = mailSendService.joinEmail(username);
 
-        return ResponseEntity.status(HttpStatus.OK).body(authNum);
+            return ResponseEntity.status(HttpStatus.OK).body(authNum);
+        }
+
+
+
     }
 
 

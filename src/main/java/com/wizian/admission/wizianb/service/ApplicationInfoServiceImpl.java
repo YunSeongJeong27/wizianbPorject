@@ -37,7 +37,8 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         boolean isDuplicateEmail = applicationInfoRepository.existsByEmail(applicationInfo.getEmail());
 
         if (isDuplicateEmail) {
-            return applicationInfoRepository.findByEmail(applicationInfo.getEmail());
+            ApplicationInfo appInfo = applicationInfoRepository.findByEmail(applicationInfo.getEmail());
+            return appInfo;
         }
 
         ApplicationInfo appInfo = new ApplicationInfo();
@@ -72,6 +73,10 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         return appInfo;
     }
 
+    public Boolean existByEmail(String email){
+        return applicationInfoRepository.existsByEmail(email);
+    }
+
     @Override
     public ApplicationInfo appInfo(String email) {
        return applicationInfoRepository.findByEmail(email);
@@ -98,6 +103,16 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     @Override
     public String courseName(Object rcrtNo) {
         return applicationInfoRepository.courseName(rcrtNo);
+    }
+
+    @Override
+    public String emailCheck(String email) {
+        return applicationInfoRepository.emailCheck(email);
+    }
+
+    @Override
+    public String passwordCheck(String email) {
+        return applicationInfoRepository.passwordCheck(email);
     }
 
 

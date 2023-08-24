@@ -38,4 +38,12 @@
     <select id="courseName" resultType="java.lang.String">
         select course_name from entry_sel_master where rcrt_no = #{rcrtNo};
     </select>
+
+    <select id="emailCheck" resultType="java.lang.String">
+        select login_id from member where login_id = #{email};
+    </select>
+
+    <select id="passwordCheck" resultType="java.lang.String">
+        select pw from member where login_id = #{email};
+    </select>
 </mapper>

@@ -20,4 +20,10 @@ public interface ApplicationInfoService {
    ApplicationInfo savePassword(String loginId,String password);
 
    String courseName(Object rcrtNo);
+
+   String emailCheck(String email);
+   String passwordCheck(String email);
+
+   Boolean existByEmail(String email);
+
 }

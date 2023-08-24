@@ -393,6 +393,7 @@
         const emailId = document.querySelector("#emailId").value;
         const emailAddr = document.querySelector("#emailAddr").value;
         const email = emailId+"@"+emailAddr
+        const mailCheckWarn = document.getElementById("mail-check-warn");
 
         const member = {
             username: email
@@ -406,17 +407,26 @@
                 "Content-Type": "application/json"
             }
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.ok) {
+                    return response.json(); // 성공인 경우에는 JSON 응답을 파싱하여 사용
+                } else {
+                    throw new Error("Request failed"); // 실패인 경우에는 에러 발생
+                }
+            })
             .then((json) => {
                 if(json != null){
                     alert("인증메일 전송 성공");
                     authNum = json;
                     console.log(json);
                     document.querySelector('.mail-check-input').removeAttribute('disabled');
-                }else{
-                    alert("인증메일 전송 실패");
                 }
-            });
+            })
+            .catch((error) => {
+                alert("인증메일 전송 실패");
+                mailCheckWarn.textContent = "이미 등록된 이메일입니다.";
+                mailCheckWarn.style.color = 'red';
+            })
     })
 
 
