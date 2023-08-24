@@ -18,6 +18,7 @@ public class EvManagementController {
 
     private final EvManagementService evManagementService;
 
+    //조회리스트들정보
     @GetMapping("/eval/result/searchlist")
     public ResponseEntity<Map<String, List<EvalResults>>>  searchList(){
         return ResponseEntity.ok(evManagementService.searchList());

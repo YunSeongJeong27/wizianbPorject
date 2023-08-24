@@ -148,7 +148,8 @@
         return{
             api: {
                 readData: { url: '/eval/result/info/'+termDiv+"/"+courseDiv+"/"+courseName,
-                    method: 'GET' }
+                    method: 'GET' },
+                updateData: { url: '/eval/result/updatescore', method: 'PUT', contentType: 'application/json' }
             }
         };
     };

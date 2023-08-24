@@ -10,8 +10,7 @@ import java.util.List;
 @Service
 public interface PassManagementService {
 
-   List<PassManagement> courseSelect(String termDiv, String courseDiv);
-   List<PassManagement> endCourseSelect(String termDiv, String courseDiv);
+   List<PassManagement> courseSelect(String termDiv, String courseDiv, String stepDiv);
    ToastUiResponseDto findNthList(String termDiv, String courseDiv, String rcrtNo);
    ToastUiResponseDto findPassList(String rcrtNo);
    ToastUiResponseDto findDocPass(String rcrtNo);

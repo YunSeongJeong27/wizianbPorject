@@ -59,7 +59,6 @@
                                 <button id="noticeInsertBtn" class="btn btn-sm btn-light btn-outline-dark">신규</button>
                                 <button id="noticeSaveBtn" class="btn btn-sm btn-success">저장</button>
                                 <button id="noticeDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
-                                <button id="testBtn" class="btn btn-sm btn-danger">test</button>
                             </div>
                         </div>
                     </div>
@@ -71,8 +70,8 @@
                 <div class="w-100">
                     <div class="searchResult d-flex flex-row justify-content-between align-items-center" style="height: 32.38px">
                         <p class="subTitle fw-bold">안내문내용</p>
-                        <button id="noticeInsertContentBtn" class="btn btn-sm btn-light btn-outline-dark"
-                        data-bs-toggle="modal" data-bs-target="#noticeModal">안내문작성하기</button>
+                        <button id="noticeInsertContentBtn" type="button" class="btn btn-sm btn-light btn-outline-dark"
+                        data-bs-toggle="modal" data-bs-target="#noticeModal" disabled>안내문작성하기</button>
                     </div>
 
                     <div id="noticeInfoTable" class="text-start mb-3 mt-2">
@@ -91,9 +90,7 @@
                             </div>
                         </div>
 
-                        <div id="msgCont" class="border border-gray-100 rounded-2 bg-white h-75 p-3">
-
-                        </div>
+                        <div id="msgCont" class="border border-gray-100 rounded-2 bg-white h-75 p-3" style="overflow-y: auto;"></div>
                     </div>
                 </div>
             </div>
@@ -107,7 +104,7 @@
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <div class="modal-title fw-bold">
-                        WIZIAN 정보처리학원
+                        중앙 정보처리학원
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="bi bi-files biIcon fw-bolder fs-4 btn p-1" onclick="sizeChange()"></i>
@@ -122,8 +119,7 @@
                                 <div class="fw-bold">&nbsp;게시 내용 작성하기</div>
                             </div>
                             <div class="d-flex align-items-center">
-                                <input type="submit" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" value="저장">
-                                <input type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold" data-bs-dismiss="modal" value="닫기">
+                                <button id="saveEditBtn" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">저장</button>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -144,9 +140,11 @@
         const noticeTablePage = document.querySelector('#noticeTablePage');
         const subjectInput = document.getElementById("subject");
         const msgContInput = document.getElementById("msgCont");
+        const noticeInsertContentBtn = document.getElementById("noticeInsertContentBtn");
         let noticeTable;
         let rcrtNo;
         let focusRowKey;
+        let prevDataList = [];
 
         // notice테이블 grid
         function subTableLoad(rowKey){
@@ -160,7 +158,6 @@
                 data: {
                     api: {
                         readData: { url: '/notice/list', method: 'GET', initParams: {rcrtNo : rcrtNo} },
-                        /*createData: { url: '/notice/save', method: 'POST', contentType: 'application/json' },*/
                         modifyData: { url: '/notice/save', method: 'PUT', contentType: 'application/json' },
                         deleteData: { url: '/notice/delete', method: 'DELETE', contentType: 'application/json' }
                     }
@@ -197,7 +194,11 @@
                 columnOptions: {
                     resizable: true
                 },
-                draggable: true
+                draggable: true,
+
+                onGridMounted(){
+                    noticeForm("", "");
+                }
             });
 
 
@@ -208,6 +209,12 @@
             noticeTable.on('click', function (ev) {
                 focusRowKey = ev.rowKey;
                 if(focusRowKey == null) return;       // 헤더 클릭 시
+
+                if(createRowKeys.includes(focusRowKey)){
+                    noticeInsertContentBtn.disabled = true;
+                }else{
+                    noticeInsertContentBtn.disabled = false;
+                }
 
                 rowDataLoad(focusRowKey, noticeTable, "noticeInfoTable");
             });
@@ -241,6 +248,14 @@
             noticeTable.on('drop', function (ev) {
                 firstColumName = noticeTable.getColumns()[0]['name'];
             });
+
+            noticeTable.on('afterChange', function(ev){
+                if(!createRowKeys.includes(ev['changes'][0]['rowKey'])){
+                    let data = { 'rowKey' : ev['changes'][0]['rowKey'], 'prevValue' : ev['changes'][0]['prevValue']};
+
+                    prevDataList.push(data);
+                }
+            })
         }
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -267,52 +282,114 @@
         }
 
         subjectInput.addEventListener('change', function(){
-            console.log(focusRowKey);
             noticeTable.setValue( focusRowKey , 'subject' , subjectInput.value, false);
         });
 
         // 버튼 이벤트
         // 신규 버튼 클릭 이벤트
+        let dataFlag;
+        let createRowKeys = [];
         const noticeInsertBtn = document.getElementById("noticeInsertBtn");
         noticeInsertBtn.addEventListener("click", function () {
-            const rowData = [
-                {
-                    rcrtNo: rcrtNo,
-                    msgDiv: '',
-                    subject: '',
-                    msgCont: ''
-                }
-            ];
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area");
 
-            noticeTable.appendRow(rowData[0], {
-                at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
-                extendPrevRowSpan: true,
-                focus: true
-            });
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else{
+                const rowData = [
+                    {
+                        rcrtNo: rcrtNo,
+                        msgDiv: '',
+                        subject: '',
+                        msgCont: ''
+                    }
+                ];
 
-            // 옆 notice 데이터 초기화
-            noticeForm("", "");
+                noticeTable.appendRow(rowData[0], {
+                    at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
+                    extendPrevRowSpan: true,
+                    focus: true
+                });
+
+                // 초기화
+                focusRowKey = noticeTable.getFocusedCell()['rowKey'];
+                createRowKeys.push(focusRowKey);
+                noticeInsertContentBtn.disabled = true;
+                noticeForm("", "");
+            }
         });
 
         // 저장 버튼 클릭 이벤트
         const noticeSaveBtn = document.getElementById("noticeSaveBtn");
         noticeSaveBtn.addEventListener("click", function () {
-            //noticeTable.request("createData", {showConfirm: true});
-            noticeTable.request("modifyData", {showConfirm: true});
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area tr");
+
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("저장하시겠습니까?")){
+                let data = noticeTable.getData();
+                let msgDivList = noticeTable.getColumnValues('msgDiv');
+
+                msgDivFlag = data.every(row => {
+                    var notice = noticeTable.getRow(row['rowKey']);
+                    var msgDivCnt = msgDivList.reduce((cnt, msgDiv) => msgDiv === notice['msgDiv'] ? cnt + 1 : cnt, 0);
+
+                    if(notice['msgDiv'] === ""){
+                        alert("안내문종류는 필수항목입니다.");
+                        return false;
+                    }
+                    else if(msgDivCnt > 1){
+                        alert("안내문이 존재합니다.");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                });
+
+                if(!msgDivFlag) return;
+
+                noticeTable.request("modifyData", {showConfirm: false});
+                noticeTable.resetData(data);
+
+                // 기존 값 저장하는 리스트 초기화
+                prevDataList = [];
+                createRowKeys = [];
+            }
         });
 
         // 삭제 버튼 클릭 이벤트
         const noticeDeleteBtn = document.getElementById("noticeDeleteBtn");
         noticeDeleteBtn.addEventListener("click", function () {
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area tr");
 
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("삭제하시겠습니까?")){
+                let msgDiv = "";
+                let divList = noticeTable.getCheckedRows();
 
-            noticeTable.request("deleteData", {showConfirm: true});
+                if(divList.length === 0) {
+                    alert('체크된 항목이 없습니다.');
+                    return;
+                }else{
+                    if(prevDataList.length !== 0) {
+                        prevDataList.forEach(row => {
+                            noticeTable.setValue( row['rowKey'] , 'msgDiv' , row['prevValue'] , true );
+                        });
+                    }
+                    divList.forEach(row => {
+                        if(!createRowKeys.includes(row['rowKey'])) {
+                            msgDiv += row['msgDiv']+",";
+                        }
+                    });
+                }
+
+                noticeTable.removeCheckedRows(false);
+
+                noticeTable.setRequestParams({rcrtNo: rcrtNo, msgDiv: msgDiv});
+                noticeTable.request("deleteData", {showConfirm: false});
+
+                noticeTable.resetData(noticeTable.getData());
+            }
         });
 
-        document.getElementById("testBtn").addEventListener("click", function (){
-            console.log(noticeTable.getCheckedRows());
-            noticeTable.removeCheckedRows(true);
-        })
 
         // Toast Editor
         const Editor = toastui.Editor;
@@ -320,15 +397,13 @@
             el: document.querySelector('#editor'),
             height: '350px',
             initialEditType: 'wysiwyg',
-            initialValue: '저장값 불러오기',
+            initialValue: '',
             previewStyle: 'vertical',
             language:'ko'
         });
-        editor.getMarkdown();
-
 
         // 모달이 열릴 때 이벤트 핸들러 등록
-        var modal = document.getElementById("noticeModal")
+        const modal = document.getElementById("noticeModal");
         modal.addEventListener('hide.bs.modal', function () {
             var dialog = document.getElementById("dialog");
             if (dialog.classList.contains('modal-fullscreen')) {
@@ -336,6 +411,9 @@
                 dialog.classList.add("modal-lg");
                 editor.setHeight('350px');
             }
+        });
+        noticeInsertContentBtn.addEventListener('click', function (){
+            editor.setHTML(noticeTable.getRow(focusRowKey)['msgCont']);
         });
         //모달 크기 조정
         function sizeChange(){
@@ -350,6 +428,28 @@
                 editor.setHeight('90%');
             }
         }
+        // 모달 저장 버튼 이벤트
+        const saveEditBtn = document.getElementById("saveEditBtn")
+        saveEditBtn.addEventListener('click', function(){
+            fetch("/notice/updateContent", {
+                method: 'PUT',
+                body: JSON.stringify({
+                    rcrtNo: rcrtNo,
+                    msgDiv: noticeTable.getRow(focusRowKey)['msgDiv'],
+                    msgCont: editor.getHTML()
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert("dfas");
+                    console.log(data);
+                });
+        });
+
+
     </script>
 </body>
 </html>

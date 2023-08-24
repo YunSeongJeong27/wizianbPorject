@@ -96,7 +96,7 @@
                             <select class="form-select w-auto me-1">
                                 <option selected>면접안내메일</option>
                             </select>
-                            <button id="mailSendBtn" class="btn btn-sm btn-light btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#mailModal">합격안내메일</button>
+                            <button id="mailSendBtn" type="button" class="btn btn-sm btn-light btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#mailModal">합격안내메일</button>
                         </div>
                         <div class="d-flex flex-row align-items-center">
                             <p class="subTitle fw-bold me-2">선발결과</p>
@@ -144,7 +144,7 @@
                                 <p class="passNotice">메일 발송에 다소 시간이 소요됩니다.</p>
                             </div>
                             <div class="d-flex align-items-center">
-                                <button id="sendBtn" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">메일발송</button>
+                                <button id="sendBtn" type="button" class="btn btn-outline-secondary p-1 px-2 mx-1 fw-bold">메일발송</button>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="msgCont" class="border border-gray-100 rounded-2 bg-white p-3" style="height: 300px">
+                                <div id="msgCont" class="border border-gray-100 rounded-2 bg-white p-3" style="overflow-y:auto; height: 300px">
 
                                 </div>
                             </div>
@@ -468,7 +468,7 @@
             $.ajax({
                 url: "/pass/courseSelect", 			//통신할 url
                 type: "GET",						//통신할 메소드 타입
-                data: {termDiv : termDivSelected, courseDiv: courseDivSelected},	//전송할 데이터
+                data: {termDiv : termDivSelected, courseDiv: courseDivSelected, stepDiv: 'application'},	//전송할 데이터
                 dataType: "json",
                 async: false,						// 실행 결과 기다리지 않고 다음 코드 읽을 것인지
                 success : function(result) { 		// 매개변수에 통신성공시 데이터 저장
@@ -490,6 +490,7 @@
 
         // 모달 관련
         const modal = document.getElementById("mailModal");
+        const subject = document.getElementById("subject");
         const msgCont = document.getElementById("msgCont");
         const mailSendBtn = document.getElementById("mailSendBtn");
         const sendBtn = document.getElementById("sendBtn");
@@ -528,16 +529,14 @@
         }
 
         // 메일보내기 버튼 클릭 이벤트
-        mailSendBtn.addEventListener('click', function () {
-            //const response = await fetch('/pass/findMail');
-            //const dataList = await response.json();
-            //const title = dataList['SUBJECT'];
-            //const content = dataList['MSG_CONT'];
+        mailSendBtn.addEventListener('click', async function () {
+            const response = await fetch('/notice/find/'+nthRcrtNo+'/20');
+            const dataList = await response.json();
+            const title = dataList['data']['contents']['subject'];
+            const content = dataList['data']['contents']['msgCont'].toString();
 
-            const subject = document.getElementById("subject");
-
-            subject.value = "title";
-            msgCont.innerHTML = "content";
+            subject.value = title;
+            msgCont.innerHTML = content;
         });
 
         // 메일 보내기
@@ -550,8 +549,8 @@
                 body: JSON.stringify({
                     rcrtNo: nthRcrtNo,
                     stepDiv: 'interview',
-                    subject: "title",
-                    msgCont: "content"
+                    subject: subject.value,
+                    msgCont: msgCont.innerHTML,
                 }),
                 headers: {
                     "Content-Type": "application/json"
@@ -559,7 +558,7 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    if(data['status'] !== 500){
+                    if(data === 200){
                         alert("메일을 발송하였습니다.");
                     }else{
                         alert("메일을 발송하지 못했습니다.");

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.NoticeMessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,11 @@ public class NoticeMessageController {
     @GetMapping("/notice/list")
     public ResponseEntity<ToastUiResponseDto> findNoticeList(@RequestParam("rcrtNo") String rcrtNo){
         return ResponseEntity.ok(noticeMessageService.findNoticeList(rcrtNo));
+    }
+
+    @GetMapping("/notice/find/{rcrtNo}/{msgDiv}")
+    public ResponseEntity<ToastUiResponseDto> findNotice(@PathVariable String rcrtNo, @PathVariable String msgDiv){
+        return ResponseEntity.ok(noticeMessageService.findNotice(rcrtNo, msgDiv));
     }
 
     // 안내문 저장
@@ -41,10 +48,17 @@ public class NoticeMessageController {
         return ResponseEntity.ok(response);
     }
 
-    // 안내문 삭제 (update)
-    @DeleteMapping("/notice/delete")
-    public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestBody JsonNode noticeList) {
-        System.out.println(noticeList);
-        return ResponseEntity.ok(noticeMessageService.deleteNotice(noticeList));
+    // 안내문 삭제
+    @DeleteMapping(value="/notice/delete")
+    public ResponseEntity<ToastUiResponseDto> deleteNotice(@RequestParam("rcrtNo") String rcrtNo, @RequestParam("msgDiv") String msgDiv) {
+        return ResponseEntity.ok(noticeMessageService.deleteNotice(rcrtNo, msgDiv));
+    }
+
+
+    // 안내문 내용 수정
+    @PutMapping(value="/notice/updateContent", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> saveEdit(@RequestBody JsonNode data){
+        noticeMessageService.updateContent(data);
+        return ResponseEntity.status(HttpStatus.OK).body(200);
     }
 }

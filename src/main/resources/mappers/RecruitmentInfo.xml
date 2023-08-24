@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.RecruitmentInfoRepository">
+
+    <select id="selectedSchdlnameList" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+        select distinct schdl_name from entry_sel_schdl where rcrt_no=#{rcrtNo};
+    </select>
+    <update id="updateSchdl">
+        update entry_sel_schdl set schdl_name=#{schdlName},status_div=#{statusDiv}
+        where schdl_seq=#{schdlSeq}
+    </update>
+    <insert id="insertschdl">
+        insert into entry_sel_schdl( schdl_seq,rcrt_no,schdl_name,status_div)
+        values(
+               (SELECT schdl_seq FROM (SELECT IFNULL(MAX(schdl_seq), 0) + 1 AS schdl_seq FROM entry_sel_schdl) AS SchdlSeq),
+               #{rcrtNo},#{schdlName},#{statusDiv}
+              )
+    </insert>
+</mapper>
