@@ -59,7 +59,6 @@
                                 <button id="noticeInsertBtn" class="btn btn-sm btn-light btn-outline-dark">신규</button>
                                 <button id="noticeSaveBtn" class="btn btn-sm btn-success">저장</button>
                                 <button id="noticeDeleteBtn" class="btn btn-sm btn-danger">삭제</button>
-                                <button id="testBtn" class="btn btn-sm btn-danger">test</button>
                             </div>
                         </div>
                     </div>
@@ -147,6 +146,7 @@
         let noticeTable;
         let rcrtNo;
         let focusRowKey;
+        let prevDataList = [];
 
         // notice테이블 grid
         function subTableLoad(rowKey){
@@ -160,7 +160,6 @@
                 data: {
                     api: {
                         readData: { url: '/notice/list', method: 'GET', initParams: {rcrtNo : rcrtNo} },
-                        /*createData: { url: '/notice/save', method: 'POST', contentType: 'application/json' },*/
                         modifyData: { url: '/notice/save', method: 'PUT', contentType: 'application/json' },
                         deleteData: { url: '/notice/delete', method: 'DELETE', contentType: 'application/json' }
                     }
@@ -197,7 +196,11 @@
                 columnOptions: {
                     resizable: true
                 },
-                draggable: true
+                draggable: true,
+
+                onGridMounted(){
+                    noticeForm("", "");
+                }
             });
 
 
@@ -241,6 +244,13 @@
             noticeTable.on('drop', function (ev) {
                 firstColumName = noticeTable.getColumns()[0]['name'];
             });
+
+            noticeTable.on('afterChange', function(ev){
+                let data = { 'rowKey' : ev['changes'][0]['rowKey'],
+                    'prevValue' : ev['changes'][0]['prevValue']};
+
+                prevDataList.push(data);
+            })
         }
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -267,52 +277,108 @@
         }
 
         subjectInput.addEventListener('change', function(){
-            console.log(focusRowKey);
             noticeTable.setValue( focusRowKey , 'subject' , subjectInput.value, false);
         });
 
         // 버튼 이벤트
         // 신규 버튼 클릭 이벤트
+        let dataFlag;
         const noticeInsertBtn = document.getElementById("noticeInsertBtn");
         noticeInsertBtn.addEventListener("click", function () {
-            const rowData = [
-                {
-                    rcrtNo: rcrtNo,
-                    msgDiv: '',
-                    subject: '',
-                    msgCont: ''
-                }
-            ];
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area");
 
-            noticeTable.appendRow(rowData[0], {
-                at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
-                extendPrevRowSpan: true,
-                focus: true
-            });
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else{
+                const rowData = [
+                    {
+                        rcrtNo: rcrtNo,
+                        msgDiv: '',
+                        subject: '',
+                        msgCont: ''
+                    }
+                ];
 
-            // 옆 notice 데이터 초기화
-            noticeForm("", "");
+                noticeTable.appendRow(rowData[0], {
+                    at: noticeTable.getIndexOfRow(noticeTable.getFocusedCell()['rowKey'])+1,
+                    extendPrevRowSpan: true,
+                    focus: true
+                });
+
+                // 초기화
+                focusRowKey = noticeTable.getFocusedCell()['rowKey'];
+                noticeForm("", "");
+            }
         });
 
         // 저장 버튼 클릭 이벤트
         const noticeSaveBtn = document.getElementById("noticeSaveBtn");
         noticeSaveBtn.addEventListener("click", function () {
-            //noticeTable.request("createData", {showConfirm: true});
-            noticeTable.request("modifyData", {showConfirm: true});
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area tr");
+
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("저장하시겠습니까?")){
+                let data = noticeTable.getData();
+                let msgDivList = noticeTable.getColumnValues('msgDiv');
+
+                msgDivFlag = data.every(row => {
+                    var notice = noticeTable.getRow(row['rowKey']);
+                    var msgDivCnt = msgDivList.reduce((cnt, msgDiv) => msgDiv === notice['msgDiv'] ? cnt + 1 : cnt, 0);
+
+                    if(notice['msgDiv'] === ""){
+                        alert("안내문종류는 필수항목입니다.");
+                        return false;
+                    }
+                    else if(msgDivCnt > 1){
+                        alert("안내문이 존재합니다.");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                });
+
+                if(!msgDivFlag) return;
+
+                noticeTable.request("modifyData", {showConfirm: false});
+                noticeTable.resetData(data);
+
+                // 기존 값 저장하는 리스트 초기화
+                prevDataList = [];
+            }
         });
 
         // 삭제 버튼 클릭 이벤트
         const noticeDeleteBtn = document.getElementById("noticeDeleteBtn");
         noticeDeleteBtn.addEventListener("click", function () {
+            dataFlag = document.querySelector("#noticeTable .tui-grid-body-area tr");
 
+            if(dataFlag == null) alert("데이터가 없습니다.");
+            else if(confirm("삭제하시겠습니까?")){
+                let msgDiv = "";
+                let divList = noticeTable.getCheckedRows();
 
-            noticeTable.request("deleteData", {showConfirm: true});
+                if(divList.length === 0) {
+                    alert('체크된 항목이 없습니다.');
+                    return;
+                }else{
+                    if(prevDataList.length !== 0) {
+                        prevDataList.forEach(row => {
+                            noticeTable.setValue( row['rowKey'] , 'msgDiv' , row['prevValue'] , true );
+                        });
+                    }
+                    noticeTable.getCheckedRows().forEach(row => {
+                        msgDiv += row['msgDiv']+",";
+                    });
+                }
+
+                noticeTable.removeCheckedRows(false);
+
+                noticeTable.setRequestParams({rcrtNo: rcrtNo, msgDiv: msgDiv});
+                noticeTable.request("deleteData", {showConfirm: false});
+
+                noticeTable.resetData(noticeTable.getData());
+            }
         });
 
-        document.getElementById("testBtn").addEventListener("click", function (){
-            console.log(noticeTable.getCheckedRows());
-            noticeTable.removeCheckedRows(true);
-        })
 
         // Toast Editor
         const Editor = toastui.Editor;

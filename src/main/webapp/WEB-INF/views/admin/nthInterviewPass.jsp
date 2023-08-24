@@ -417,7 +417,7 @@
             $.ajax({
                 url: "/pass/courseSelect", 			//통신할 url
                 type: "GET",						//통신할 메소드 타입
-                data: {termDiv : termDivSelected, courseDiv: courseDivSelected},	//전송할 데이터
+                data: {termDiv : termDivSelected, courseDiv: courseDivSelected, stepDiv: 'interview'},	//전송할 데이터
                 dataType: "json",
                 async: false,						// 실행 결과 기다리지 않고 다음 코드 읽을 것인지
                 success : function(result) { 		// 매개변수에 통신성공시 데이터 저장
