@@ -474,8 +474,6 @@
                 });
             }
         }
-
-
     }
 
     let selectSchdlSeq;
@@ -520,12 +518,12 @@
             }
         }
           searchBtn();
-
     });
 
 
     // 신규 버튼 클릭 이벤트
     document.getElementById("nthInsertBtn").addEventListener("click", function () {
+
         const rowData = [
             {
                 courseDiv: '',
@@ -544,15 +542,16 @@
             focus: true
         });
 
-        nthData = nthTable.getData();
-
         // 하단 table 초기화
         var tableInput = document.querySelectorAll("#inputTable .tableInput");
         document.querySelector("#inputTable tbody").setAttribute("id", "row"+nthTable.getFocusedCell()['rowKey']);
         tableInput.forEach((ti) => {
             ti.value = "";
         });
+       //  document.getElementById("courseName2").disabled = false;
+
     });
+
 
     // 삭제 버튼 클릭 이벤트
     document.getElementById("nthDeleteBtn").addEventListener("click", function () {
@@ -568,7 +567,9 @@
                 rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
             }
         }
+
     });
+
     const nthSaveBtn = document.getElementById("nthSaveBtn");
     nthSaveBtn.addEventListener('click', () => {
         nthTable.request('createData');
