@@ -57,62 +57,69 @@
             let rcrtNo = rowData.rcrtNo;
             const Grid = tui.Grid;
             document.getElementById('monhangTable').innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
-            const monhangTable = new Grid({
-                el: document.getElementById('monhangTable'),
-                data: {
-                    initialRequest: true,
-                    api: {
-                        hideLoadingBar: false,
-                        readData: {url: '/admin/'+ rcrtNo + '/introduce', method: 'GET'},
-                        modifyData: {url: 'recruitment/save', method: 'PUT', contentType: 'application/json'},
-                        deleteData: {url: 'recruitment/delete', method: 'DELETE'}
-                    },
-                },
-                rowHeaders: ['checkbox'],
-                pageOptions: {
-                    useClient: true,	// front에서만 페이징 하는 속성
-                    perPage: 5,		//한번에 보여줄 데이터 수
-                    visiblePages: 10
-                },
-                scrollX: true,
-                scrollY: true,
-                bodyHeight: 217,
-                columns: [
-                    {
-                        header: '문항명',
-                        name: 'itemName',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center',
-                        editor: 'text'
-                    },
-                    {
-                        header: '최대허용글자수',
-                        name: 'maxChar',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center',
-                        editor: 'text'
-                    },
-                    {
-                        header: '문항설명',
-                        name: 'itemExpl',
-                        sortingType: 'asc',
-                        sortable: true,
-                        align: 'center',
-                        editor: 'text'
-                    }
-                ],
-                columnOptions: {
-                    resizable: true
-                },
-                draggable: true,
 
-                // 처음 grid 렌더링 시 첫번째 row에 focus
-                onGridMounted() {
-                    monhangTable.focus(0, firstColumName, true);
-                }
-            });
+            if (!monhangTable) {
+                const monhangTable = new Grid({
+                    el: document.getElementById('monhangTable'),
+                    data: {
+                        initialRequest: true,
+                        api: {
+                            hideLoadingBar: false,
+                            readData: {url: '/admin/' + rcrtNo + '/introduce', method: 'GET'},
+                            modifyData: {
+                                url: '/admin/' + rcrtNo + '/introduce',
+                                method: 'PUT',
+                                contentType: 'application/json'
+                            },
+                            deleteData: {url: '/admin/' + rcrtNo + '/introduce', method: 'DELETE'}
+                        },
+                    },
+                    rowHeaders: ['checkbox'],
+                    pageOptions: {
+                        useClient: true,	// front에서만 페이징 하는 속성
+                        perPage: 5,		//한번에 보여줄 데이터 수
+                        visiblePages: 10
+                    },
+                    scrollX: true,
+                    scrollY: true,
+                    bodyHeight: 217,
+                    columns: [
+                        {
+                            header: '문항명',
+                            name: 'itemName',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center',
+                            editor: 'text'
+                        },
+                        {
+                            header: '최대허용글자수',
+                            name: 'maxChar',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center',
+                            editor: 'text'
+                        },
+                        {
+                            header: '문항설명',
+                            name: 'itemExpl',
+                            sortingType: 'asc',
+                            sortable: true,
+                            align: 'center',
+                            editor: 'text'
+                        }
+                    ],
+                    columnOptions: {
+                        resizable: true
+                    },
+                    draggable: true,
+
+                    // 처음 grid 렌더링 시 첫번째 row에 focus
+                    onGridMounted() {
+                        monhangTable.focus(0, firstColumName, true);
+                    }
+                });
+            }
 
 
             const monhangTablePage = document.querySelector('#monhangTablePage');
@@ -166,7 +173,9 @@
                 });
 
                 monhangData = monhangTable.getData();
-                console.log(monhangData);
+            });
+            document.querySelector('#monhangSaveBtn').addEventListener('click', function () {
+                monhangTable.request('modifyData');
             });
         }
 

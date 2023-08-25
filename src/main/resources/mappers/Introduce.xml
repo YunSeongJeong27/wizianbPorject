@@ -6,4 +6,8 @@
         SELECT *
         FROM ENTRY_SEL_INTRO WHERE RCRT_NO = #{rcrtNo}
     </select>
+    <insert id="insertIntroduceItem" parameterType="com.wizian.admission.wizianb.domain.Introduce">
+        INSERT INTO ENTRY_SEL_INTRO(RCRT_NO, ITEM_NAME, MAX_CHAR, ITEM_EXPL)
+        VALUES(#{rcrtNo}, #{itemName}, #{maxChar}, #{itemExpl})
+    </insert>
 </mapper>
