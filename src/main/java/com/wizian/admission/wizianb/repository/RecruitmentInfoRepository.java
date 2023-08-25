@@ -10,6 +10,8 @@ public interface RecruitmentInfoRepository {
     void insertschdl(String rcrtNo,String schdlName,String statusDiv);
     //변경버튼
     void updateSchdl(String schdlSeq,String schdlName,String statusDiv);
+    TopScreeningInfo newCourseNameInfo(String courseName);
+    void nthInfoSave(String rcrtNo,String schdlName,String statusDiv);
 
 
 }

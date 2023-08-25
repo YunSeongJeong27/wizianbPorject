@@ -308,21 +308,21 @@
                      sortable: true, align: 'center'
                  },
                  {
-                     header: '문항1(30)',
+                     header: '지원동기(30)',
                      name: 'ev1Score',
                      sortingType: 'asc',
                      sortable: true, align: 'center',
                      editor: 'text'
                  },
                  {
-                     header: '문항2(30)',
+                     header: '포부(30)',
                      name: 'ev2Score',
                      sortingType: 'asc',
                      sortable: true, align: 'center',
                      editor: 'text'
                  },
                  {
-                     header: '문항3(40)',
+                     header: '지식(40)',
                      name: 'ev3Score',
                      sortingType: 'asc',
                      sortable: true, align: 'center',
