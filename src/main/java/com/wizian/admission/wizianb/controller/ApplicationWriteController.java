@@ -83,16 +83,14 @@ public class ApplicationWriteController {
 
             //객체 찾아서 반환
             String memberMemId = applicationInfoService.memberMemId(email);
-            List<ApplicationInfo> memberAll = applicationInfoService.memberAll(memberMemId);
             ApplicationInfo member = applicationInfoService.findByLoginId(emailCheck);
 
             //최근접속시간등록
             applicationInfoService.saveLastLogin(email);
 
             //객체저장
-            session.setAttribute("loginMemberAll",memberAll);
+            session.setAttribute("memberId",memberMemId);
             session.setAttribute("login",member);
-//            model.addAttribute("appInfo", appInfo);
             model.addAttribute("member", member);
 
             return "/application/applicationWrite";

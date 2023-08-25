@@ -2,6 +2,7 @@ package com.wizian.admission.wizianb.service;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,6 @@ public interface RecruitmentService {
     ToastUiResponseDto insertRecruitment(JsonNode insertRows);
 
     ToastUiResponseDto updateRecruitment(JsonNode updateRows);
+
+    Recruitment findRcrtInfo(String rcrtNo);
 }

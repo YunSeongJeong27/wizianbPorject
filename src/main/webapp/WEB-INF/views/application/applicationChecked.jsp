@@ -201,14 +201,14 @@
             </div>
         </div>
         <%--우측탭1--%>
-        <div class="tab-pane fade active show col-lg-9"
+        <table class="tab-pane fade active show col-lg-9"
              id="first-tap" role="tabpanel"
              aria-labelledby="first-tap-list">
             <div class="mb-3">
                 <select class="form-select border-bottom border-dark rounded-0 border-2 fw-bold application_div"
-                        aria-label="select_list">
-                    <c:forEach items="${applyMaster}" var="master">
-                        <option>${master.courseDiv}</option>
+                        aria-label="select_list" id="rcrtNoSelect">
+                    <c:forEach items="${courseNameList}" var="list">
+                        <option id="${list.rcrtNo}">${list.courseName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -216,71 +216,38 @@
             <div class="border-top border-dark border-2">
                 <table class="table table-hover align-middle">
                     <thead>
-                    <tr class="table-light text-center">
-                        <th>지원서항목</th>
-                        <th>상태</th>
-                        <th>내용보기</th>
-                        <th>최종확인</th>
-                    </tr>
+                        <tr class="table-light text-center">
+                            <th>지원서항목</th>
+                            <th>상태</th>
+                            <th>내용보기</th>
+                            <th>최종확인</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td class="text-center">기본정보</td>
-                        <td class="text-center">확인완료</td>
-                        <td class="text-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#basicInfo">보기
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-light btn-outline-dark">확인
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">학력사항</td>
-                        <td class="text-center">확인완료</td>
-                        <td class="text-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#educationBackground">보기
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">경력사항</td>
-                        <td class="text-center">확인완료</td>
-                        <td class="text-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#experienceBackground">보기
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">자기소개서</td>
-                        <td class="text-center">확인완료</td>
-                        <td class="text-center">
-                            <button type="button"
-                                    class="btn btn-sm btn-light btn-outline-dark" data-bs-toggle="modal"
-                                    data-bs-target="#selfIntroduction">보기
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-light btn-outline-dark">확인</button>
-                        </td>
-                    </tr>
-                    </tbody>
+                    <c:forEach items="${mapList}" var="map">
+                        <tbody id="${map.key}">
+                            <c:forEach items="${map.value}" var="value">
+                                <tr class="infoBlock" style="display:none;" data-rcrtNo="${value.rcrtNo}">
+                                    <td class="text-center areaDiv">${value.areaDiv}</td>
+                                    <td class="text-center statusDiv">${value.statusDiv}</td>
+                                    <td class="text-center">
+                                        <button type="button"
+                                                class="btn btn-sm btn-light btn-outline-dark" onclick="seeMore(this)">보기
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button"
+                                                class="btn btn-sm btn-light btn-outline-dark" onclick="updateStatusDiv()">확인
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </c:forEach>
                 </table>
+            </div>
 
+        <div>
+            <div>
                 <div id="application_member" class="d-flex justify-content-center">
                     <p>지원자 님의 수험번호는 <span class="member_id">W123456</span> 입니다.</p>
                 </div>
@@ -616,7 +583,6 @@
         </div>
     </div>
 </div>
-
 <%--학력사항 Modal--%>
 <div class="modal fade modals" id="educationBackground" tabindex="-1"
      role="dialog" aria-hidden="true">
@@ -771,6 +737,59 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+        function displaySelectedInfo(selectedRcrtNo) {
+            $('.infoBlock').hide();
+            $('[data-rcrtNo="' + selectedRcrtNo + '"]').show();
+        }
+
+        // 페이지가 로드될 때 실행되는 기본 코드
+        const initialSelectedRcrtNo = $('#rcrtNoSelect').find('option:selected').attr('id');
+        displaySelectedInfo(initialSelectedRcrtNo);
+
+        // 옵션 변경 이벤트
+        $('#rcrtNoSelect').on('change', function() {
+            const selectedRcrtNo = $(this).find('option:selected').attr('id');
+            displaySelectedInfo(selectedRcrtNo);
+        });
+    });
+
+    // 내용보기 버튼
+    function seeMore(btn){
+        var areaDiv = btn.parentElement.parentElement.firstElementChild.innerHTML;
+        var rcrtNo = btn.parentElement.parentElement.dataset.rcrtno;
+        var applyNo = btn.parentElement.parentElement.parentElement.getAttribute("id");
+        console.log("applicationChecked.jsp")
+        console.log("1 : "+areaDiv);
+        console.log("2 : "+rcrtNo);
+        console.log("3 : "+applyNo);
+        var url;
+        var data;
+        switch (areaDiv){
+            case "기본정보" :
+                url="/checked/info";
+                data= {applyNo:applyNo, rcrtNo:rcrtNo};
+                break;
+            case "학력사항" : break;
+            case "경력사항" : break;
+            case "자기소개서" : break;
+        }
+
+        $.ajax({
+            url: url,
+            type: "POST", // 전송 방식
+            contentType: "application/json", // 요청의 컨텐츠 타입
+            data: JSON.stringify(data),
+            success: function(result){
+                alert(result)
+            },
+            error: function(request,status,error) {
+                // AJAX 호출에 실패한 경우 수행할 콜백 함수
+                console.log("code: " + request.status + "\n" + "error: " + error);
+            }
+        });
+    }
+
     /*추가제출서류 파일추가*/
     function addFile() {
 

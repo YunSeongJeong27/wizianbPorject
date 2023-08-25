@@ -12,5 +12,7 @@ public interface ApplicationIntroRepository {
 
     void saveAnswer(ApplicationIntroduce appIntro);
 
+    List<ApplicationIntroduce> findAnswerInfo(String aplyNo);
+
 
 }

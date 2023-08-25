@@ -37,13 +37,51 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         // 이메일 중복 여부 체크
         boolean isDuplicateEmail = applicationInfoRepository.existsByEmail(applicationInfo.getEmail());
 
+        // aplyNo 자동등록
+        String maxAplyNo = applicationInfoRepository.findMax();
+        int nextNumber = 1;
+
+        if (maxAplyNo != null) {
+            String lastNumberPart = maxAplyNo.substring(4); // Skip the 'aply' prefix
+            nextNumber = Integer.parseInt(lastNumberPart) + 1;
+        }
+        String newAplyNo = "APLY" + String.format("%04d", nextNumber); // ex: aply0001
+
+        // mem_id가져와서 저장해야됨.
+        String memId = applicationInfoRepository.memberMemId(applicationInfo.getEmail());
+
+        //기존회원이라면, 새로운 지원서만 등록.
         if (isDuplicateEmail) {
-            ApplicationInfo appInfo = applicationInfoRepository.findByEmail(applicationInfo.getEmail());
+            ApplicationInfo appInfo = new ApplicationInfo();
+
+            appInfo.setAplyNo(newAplyNo);
+            appInfo.setRcrtNo(applicationInfo.getRcrtNo());
+            appInfo.setCourseDiv(applicationInfo.getCourseDiv());
+            appInfo.setNameKor(applicationInfo.getNameKor());
+            appInfo.setNameEng(applicationInfo.getNameEng());
+            appInfo.setBirthday(applicationInfo.getBirthday());
+            appInfo.setGender(applicationInfo.getGender());
+            appInfo.setEmail(applicationInfo.getEmail());
+            appInfo.setZipcode(applicationInfo.getZipcode());
+            appInfo.setAddrLocal(applicationInfo.getAddrLocal());
+            appInfo.setAddrDetail(applicationInfo.getAddrDetail());
+            appInfo.setTelLocal(applicationInfo.getTelLocal());
+            appInfo.setHpLocal(applicationInfo.getHpLocal());
+            appInfo.setMemId(memId);
+
+
+            // 파일 업로드와 저장
+            int newFileName = imageService.saveImage(file);
+            appInfo.setPicFileNo(newFileName);
+
+            applicationInfoRepository.save(appInfo);
+
             return appInfo;
         }
 
+        //신규회원이라면, 회원가입과 동시진행.
         ApplicationInfo appInfo = new ApplicationInfo();
-        appInfo.setAplyNo(applicationInfo.getAplyNo());
+        appInfo.setAplyNo(newAplyNo);
         appInfo.setRcrtNo(applicationInfo.getRcrtNo());
         appInfo.setCourseDiv(applicationInfo.getCourseDiv());
         appInfo.setNameKor(applicationInfo.getNameKor());

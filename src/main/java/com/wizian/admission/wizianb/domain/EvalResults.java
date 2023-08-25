@@ -33,12 +33,13 @@ public class EvalResults {
     //점수업데이트
     @Builder
     EvalResults(String rcrtNo,String aplyNo,
-            int ev1Score,int ev2Score,int ev3Score){
+            int ev1Score,int ev2Score,int ev3Score, String note){
         this.rcrtNo=rcrtNo;
         this.aplyNo=aplyNo;
         this.ev1Score=ev1Score;
         this.ev2Score=ev2Score;
         this.ev3Score=ev3Score;
+        this.note=note;
 
     }
 

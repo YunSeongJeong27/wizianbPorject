@@ -2,25 +2,21 @@ package com.wizian.admission.wizianb.domain;
 
 import lombok.*;
 
-import java.util.List;
-
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class ApplicationIntroduce {
+public class Introduce {
 
-    /*자기소개서 문항*/
-    private int itemNo;
-    private String rcrtNo;
+    //항목
+    private String itemNo;
     private String itemName;
     private int maxChar;
     private String itemExpl;
 
-    private List<ApplicationIntroduce> introduceList;
-
-    /*지원자기소개서*/
+    //문항
     private String aplyNo;
     private String answer;
+
 }

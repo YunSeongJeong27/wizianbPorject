@@ -4,20 +4,23 @@
 <head>
     <title>자기소개서</title>
     <style>
-        #save_btn{
+        #save_btn {
             background: #003A78;
         }
-        #introduce_title h3, #introduce_title .title{
+
+        #introduce_title h3, #introduce_title .title {
             font-weight: bolder;
         }
 
-        .btn-second{
+        .btn-second {
             background: #e1e1e1;
         }
-        #introduce_title p{
+
+        #introduce_title p {
             color: red;
         }
-        .intro_description{
+
+        .intro_description {
             color: #646464;
         }
 
@@ -43,7 +46,8 @@
         </div>
     </div>
 </div>
-<div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
+<div class="w-100"
+     style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
 
 <div class="my-5 container">
     <div class="row">
@@ -73,7 +77,6 @@
             <p>자기소개서는 한글로만 입력바랍니다.</p>
             <br>
 
-
             <form class="introduce_form" action="/saveIntro" method="Post">
                 <div id="repeat">
                     <%-- 문항반복시작--%>
@@ -81,32 +84,24 @@
                         <input type="hidden" name="rcrtNo" value="${intro.rcrtNo}">
                         <input type="hidden" name="aplyNo" value="${aplyNo}">
                         <div>
-                            <c:choose>
-                                <c:when test="${empty introduceList}">
-                                    <div>▶(한국어)지원동기[글자제한:2000자]</div>
-                                    <div class="intro_description">- 번역 및 한국문학에 관심을 가지게 된 계기 등을 위주로 기술</div>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="hidden" name="itemNo" value="${intro.itemNo}">
-                                    <input type="hidden" name="itemName" value="${intro.itemName}">
-                                    <div>${intro.itemName}[글자제한:${intro.maxChar}자]</div>
-                                    <div class="intro_description">- ${intro.itemExpl}</div>
-                                </c:otherwise>
-                            </c:choose>
+                            <input type="hidden" name="itemNo" value="${intro.itemNo}">
+                            <input type="hidden" name="itemName" value="${intro.itemName}">
+                            <div>${intro.itemName}[글자제한:${intro.maxChar}자]</div>
+                            <div class="intro_description">- ${intro.itemExpl}</div>
                             <div id="text_box" class="form-floating">
-                                <textarea id="text_content${i.index}" name="answer${i.index}" class="form-control" style="height: 150px; resize: none;"></textarea>
+                                <c:choose>
+                                    <c:when test="${empty intro.answer}">
+                                        <textarea id="text_content${i.index}" name="answer" class="form-control" style="height: 150px; resize: none;"></textarea>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <textarea id="text_content${i.index}" name="answer" class="form-control" style="height: 150px; resize: none;">${intro.answer}</textarea>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <span id="text_count${i.index}">[0/</span>
-                                <c:choose>
-                                    <c:when test="${empty introduceList}">
-                                        <c:set var="maxLength" value="2000" />
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="maxLength" value="${intro.maxChar}" />
-                                        <span id="max_length_${i.index}" style="display: none;">${intro.maxChar}</span>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:set var="maxLength" value="${intro.maxChar}"/>
+                                <span id="max_length_${i.index}" style="display: none;">${intro.maxChar}</span>
                                 <span>${maxLength} 자]</span>
                             </div>
                         </div>
@@ -117,7 +112,7 @@
                 <div class="d-flex justify-content-between mt-5">
                     <button type="button" class="btn btn-second">이전</button>
                     <button type="submit" id="save_btn" class="btn btn-dark">저장</button>
-                    <button type="button" class="btn btn-second">저장 후 이동</button>
+                    <button type="button" class="btn btn-second">작성완료</button>
                 </div>
             </form>
 
@@ -126,7 +121,7 @@
 </div>
 
 <script>
-<c:forEach items="${introduceList}" var="intro" varStatus="i">
+    <c:forEach items="${introduceList}" var="intro" varStatus="i">
     $('#text_content${i.index}').keyup(function () {
         var content = $(this).val();
         $('#text_count${i.index}').html('[' + content.length + "/");
@@ -140,7 +135,7 @@
             $('#text_count${i.index}').html('[' + ml + "/");
         }
     });
-</c:forEach>
+    </c:forEach>
 
     ////상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");

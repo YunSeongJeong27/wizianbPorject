@@ -13,4 +13,6 @@ public interface ApplicationIntroService {
 
         ApplicationIntroduce saveAnswer(ApplicationIntroduce appIntro);
 
+        List<ApplicationIntroduce> findAnswerInfo(String aplyNo);
+
 }

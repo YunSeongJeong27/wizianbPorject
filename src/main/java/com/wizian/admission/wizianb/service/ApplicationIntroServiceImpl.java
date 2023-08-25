@@ -34,4 +34,9 @@ public class ApplicationIntroServiceImpl implements ApplicationIntroService{
 
         return aplyintro;
     }
+
+    @Override
+    public List<ApplicationIntroduce> findAnswerInfo(String aplyNo) {
+        return applicationIntroRepository.findAnswerInfo(aplyNo);
+    }
 }

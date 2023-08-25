@@ -18,14 +18,6 @@
         select msg_div, msg_cont from entry_sel_msg as msg where msg.RCRT_NO = #{entryRcrtNo} and msg.MSG_DIV = #{msgDiv};
     </select>
 
-<!--    <select id="emailCheck" resultType="java.lang.String">-->
-<!--        select email from entry_apply_master as master where master.email = #{email};-->
-<!--    </select>-->
-
-<!--    <select id="passwordCheck" resultType="java.lang.String">-->
-<!--        select email from entry_apply_master as master where master.email = #{email} and master.birthday = #{password};-->
-<!--    </select>-->
-
     <select id="findId" resultType="java.lang.String">
         select login_id from entry_apply_master as master inner join member on master.mem_id = member.MEM_ID where name_kor = #{name} and birthday = #{birth};
     </select>

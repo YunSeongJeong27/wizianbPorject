@@ -79,21 +79,20 @@
                         <a href="/userExp">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="/userIntroduce/${rcrtNo}">자기소개서</a>
+                        <a href="/userIntroduce/${rcrtNo}/${aplyNo}">자기소개서</a>
                     </li>
                 </ul>
             </div>
         </div>
 
         <div id="info_title" class="col-lg-9">
-            <h3 class="mb-3">${courseName}</h3>
+            <h3 class="mb-3">${rcrtInfo.courseName}</h3>
             <div id="info_subTitle" class="title mt-5 mb-1">
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
-                    <div><input type="hidden" name="rcrtNo" value="J23C002"></div>
-                    <div><input type="hidden" name="aplyNo" value="APLY0001"></div>
+                    <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>
 
 <%--사진업로드--%>
                     <div class="row mt-3">
@@ -116,9 +115,9 @@
                             모집과정명
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-select" name="courseDiv" disabled>
-<%--                                <option selected>${courseDiv}</option>--%>
-                                <option selected>JAVA</option>
+                            <select class="form-select" name="courseDiv">
+                                <option selected>${rcrtInfo.courseDiv}</option>
+                                <option>JAVA</option>
                                 <option>Python</option>
                                 <option>C++</option>
                                 <option>빅데이터</option>
@@ -134,7 +133,7 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" id="modalMessage" class="form-control" name="email">
+                                    <input type="text" id="modalMessage" class="form-control" name="email" readonly>
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#emailModal">이메일인증</button>

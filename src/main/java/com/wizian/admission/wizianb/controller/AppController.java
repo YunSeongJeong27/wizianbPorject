@@ -1,25 +1,12 @@
 package com.wizian.admission.wizianb.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Controller
 public class AppController {
 
-    @GetMapping("/pass")
-    public String pass(Model model){
-        model.addAttribute("title", "합격자발표");
-        return "/application/applicationPass";
-    }
     @GetMapping("/pledge")
     public String pledge(Model model){
         model.addAttribute("title","등록서약/포기");
