@@ -120,6 +120,12 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     public List<ApplicationInfo> memberAll(String memberMemId) {
         return applicationInfoRepository.memberAll(memberMemId);
     }
+//지원서 수정하기
+    @Override
+    public ApplicationInfo updateAppInfo(ApplicationInfo applicationInfo, MultipartFile file){
+
+        return applicationInfo;
+    }
 
     @Override
     public String memberMemId(String email) {

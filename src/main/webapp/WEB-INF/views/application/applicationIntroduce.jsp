@@ -90,7 +90,7 @@
                             <div class="intro_description">- ${intro.itemExpl}</div>
                             <div id="text_box" class="form-floating">
                                 <c:choose>
-                                    <c:when test="${empty intro.answer}">
+                                    <c:when test="${empty intro.answer or intro.answer eq ''}   ">
                                         <textarea id="text_content${i.index}" name="answer" class="form-control" style="height: 150px; resize: none;"></textarea>
                                     </c:when>
                                     <c:otherwise>

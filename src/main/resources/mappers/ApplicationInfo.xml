@@ -3,21 +3,25 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationInfoRepository">
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT * FROM entry_apply_master;
+        SELECT *
+        FROM entry_apply_master;
     </select>
 
     <select id="findMax" resultType="java.lang.String">
-        SELECT MAX(a.aply_no) FROM entry_apply_master a;
+        SELECT MAX(a.aply_no)
+        FROM entry_apply_master a;
     </select>
 
     <insert id="save" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        INSERT INTO entry_apply_master (aply_no, rcrt_no, course_div, name_kor, name_eng, pic_file_no, birthday, gender, email, zipcode, addr_local, addr_detail, tel_local, hp_local, mem_id)
-        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender}, #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{memId});
+        INSERT INTO entry_apply_master (aply_no, rcrt_no, course_div, name_kor, name_eng, pic_file_no, birthday, gender,
+                                        email, zipcode, addr_local, addr_detail, tel_local, hp_local, mem_id)
+        VALUES (#{aplyNo}, #{rcrtNo}, #{courseDiv}, #{nameKor}, #{nameEng}, #{picFileNo}, #{birthday}, #{gender},
+                #{email}, #{zipcode}, #{addrLocal}, #{addrDetail}, #{telLocal}, #{hpLocal}, #{memId});
     </insert>
 
     <insert id="saveMember" parameterType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        INSERT INTO member(mem_id,pw,login_id)
-        VALUES (#{memId},#{pw},#{email});
+        INSERT INTO member(mem_id, pw, login_id)
+        VALUES (#{memId}, #{pw}, #{email});
     </insert>
 
     <select id="existsByEmail" parameterType="java.lang.String" resultType="java.lang.Boolean">
@@ -25,38 +29,73 @@
     </select>
 
     <select id="findByLoginId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT * FROM member WHERE login_id = #{loginId};
+        SELECT *
+        FROM member
+        WHERE login_id = #{loginId};
     </select>
+
     <update id="savePassword" parameterType="map">
-        UPDATE member SET pw=#{password},pwd_chg_date=#{date,jdbcType=TIMESTAMP} WHERE login_id=#{loginId};
+        UPDATE member
+        SET pw=#{password},
+            pwd_chg_date=#{date,jdbcType=TIMESTAMP}
+        WHERE login_id = #{loginId};
     </update>
 
     <select id="courseName" resultType="java.lang.String">
-        select course_name from entry_sel_master where rcrt_no = #{rcrtNo};
+        select course_name
+        from entry_sel_master
+        where rcrt_no = #{rcrtNo};
     </select>
 
     <select id="emailCheck" resultType="java.lang.String">
-        select login_id from member where login_id = #{email};
+        select login_id
+        from member
+        where login_id = #{email};
     </select>
 
     <select id="passwordCheck" resultType="java.lang.String">
-        select pw from member where login_id = #{email};
+        select pw
+        from member
+        where login_id = #{email};
     </select>
 
     <update id="saveLastLogin" parameterType="map">
-        UPDATE member SET last_login_date=#{date,jdbcType=TIMESTAMP} WHERE login_id=#{loginId};
+        UPDATE member
+        SET last_login_date=#{date,jdbcType=TIMESTAMP}
+        WHERE login_id = #{loginId};
     </update>
 
     <select id="findAppInfo" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT * FROM entry_apply_master WHERE email=#{loginId} AND rcrt_no=#{rcrtNo};
+        SELECT *
+        FROM entry_apply_master
+        WHERE email = #{loginId}
+          AND rcrt_no = #{rcrtNo};
     </select>
 
-
     <select id="memberMemId" resultType="java.lang.String">
-        select distinct mem_id from entry_apply_master where email=#{email};
+        select distinct mem_id
+        from entry_apply_master
+        where email = #{email};
     </select>
 
     <select id="memberAll" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        select * from entry_apply_master where mem_id=#{memberMemId};
+        select *
+        from entry_apply_master
+        where mem_id = #{memberMemId};
     </select>
+
+    <update id="updateAppInfo" parameterType="map">
+        UPDATE entry_apply_master
+        SET name_kor=#{nameKor},
+            name_eng=#{nameEng},
+            pic_file_no=#{picFileNo},
+            birthday=#{birthday},
+            gender=#{gender},
+            zipcode=#{zipcode},
+            addr_local=#{addrLocal},
+            addr_detail=#{addrDetail},
+            tel_local=#{telLocal},
+            hp_local=#{hpLocal}
+        WHERE aply_no = #{aplyNo};
+    </update>
 </mapper>

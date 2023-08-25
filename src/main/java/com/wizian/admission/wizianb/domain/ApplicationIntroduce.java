@@ -18,8 +18,6 @@ public class ApplicationIntroduce {
     private int maxChar;
     private String itemExpl;
 
-    private List<ApplicationIntroduce> introduceList;
-
     /*지원자기소개서*/
     private String aplyNo;
     private String answer;

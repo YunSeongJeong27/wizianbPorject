@@ -14,10 +14,10 @@
     </insert>
 
     <select id="findAnswerInfo" resultType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
-        SELECT ESI.RCRT_NO,ESI.ITEM_NAME,ESI.ITEM_EXPL,ESI.MAX_CHAR,EAI.ANSWER
+        SELECT ESI.RCRT_NO, ESI.ITEM_NAME, ESI.ITEM_EXPL, ESI.MAX_CHAR, EAI.ANSWER
         FROM entry_sel_intro AS ESI
                  LEFT OUTER JOIN entry_apply_intro AS EAI
-                            ON ESI.rcrt_no = EAI.rcrt_no
+                                 ON ESI.rcrt_no = EAI.rcrt_no AND ESI.ITEM_NO = EAI.ITEM_NO
         WHERE aply_no = #{aplyNo}
     </select>
 
