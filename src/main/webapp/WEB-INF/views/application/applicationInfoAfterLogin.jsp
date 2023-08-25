@@ -78,21 +78,21 @@
                         <a href="/userExp">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="/userIntroduce/${rcrtNo}">자기소개서</a>
+                        <a href="/userIntroduce/${rcrtNo}/${appInfo.aplyNo}">자기소개서</a>
                     </li>
                 </ul>
             </div>
         </div>
 
         <div id="info_title" class="col-lg-9">
-            <h3 class="mb-3">자바기반 풀스택 개발자 취업과정</h3>
+            <h3 class="mb-3">${rcrtInfo.courseName}</h3>
             <div id="info_subTitle" class="title mt-5 mb-1">
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
                 <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
-
-                    <div><input type="hidden" name="rcrtNo" value="${appInfo.rcrtNo}"></div>
+                    <div><input type="hidden" id="login" value="${member.loginId}"></div>
+                    <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>
                     <div><input type="hidden" name="aplyNo" value="${appInfo.aplyNo}"></div>
 
 <%--사진업로드--%>
@@ -116,9 +116,9 @@
                             모집과정명
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-select" name="courseDiv" disabled>
-<%--                                <option selected>${courseDiv}</option>--%>
-                                <option selected>JAVA</option>
+                            <select class="form-select" name="courseDiv">
+                                <option selected>${rcrtInfo.courseDiv}</option>
+                                <option>JAVA</option>
                                 <option>Python</option>
                                 <option>C++</option>
                                 <option>빅데이터</option>
@@ -134,7 +134,7 @@
                         <div class="col-lg-4">
                             <div class="d-flex justify-content">
                                 <div class="me-2">
-                                    <input type="text" class="form-control" name="email" value="${appInfo.email}" disabled>
+                                    <input type="text" class="form-control" name="email" value="${member.loginId}" readonly>
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-sm btn-dark" disabled>이메일인증</button>
@@ -334,7 +334,6 @@
         uploadImg.style.visibility="hidden";
     }
 
-
     ////상단에 홈>마이페이지> (이벤트리스너)
     const breadcrumbDiv1 = document.getElementById("breadcrumbDiv1");
     const breadcrumbDiv2 = document.getElementById("breadcrumbDiv2");
@@ -373,7 +372,6 @@
         }
     });
 
-
 /*비밀번호변경 모달창 띄우기*/
     const emailModal = document.getElementById('passwordModal')
     if (emailModal) {
@@ -390,7 +388,6 @@
             document.querySelector('#modalMessage').setAttribute('disabled');
         });
     }
-
 
     /*비밀번호 체크 form*/
         function updatePw() {
@@ -448,26 +445,30 @@
 
 /*비밀번호 유효성검사*/
     function passwordCheckFn(){
-        const firstPw = document.querySelector('#pw');
-        const secondPw = document.querySelector('#pwCheck');
+        const loginCheck = document.getElementById('login');
         const joinForm = document.getElementById('joinForm');
 
-        var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+        if(!loginCheck){
+            const firstPw = document.querySelector('#pw');
+            const secondPw = document.querySelector('#pwCheck');
 
-        var pw = firstPw.value;
+            const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
-        if(firstPw.value===secondPw.value){
-            if(reg.test(pw)){
-                joinForm.submit();
+            const pw = firstPw.value;
+            if(firstPw.value===secondPw.value){
+                if(reg.test(pw)){
+                    joinForm.submit();
+                }else{
+                    alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+                }
             }else{
-                alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+                alert("비밀번호가 일치하지 않습니다.");
             }
+
         }else{
-            alert("비밀번호가 일치하지 않습니다.");
+            joinForm.submit();
         }
     }
-
-
 </script>
 </body>
 </html>

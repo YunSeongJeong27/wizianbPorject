@@ -2,6 +2,8 @@ package com.wizian.admission.wizianb.domain;
 
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,7 @@ public class ApplicationIntroduce {
     private int maxChar;
     private String itemExpl;
 
+    private List<ApplicationIntroduce> introduceList;
 
     /*지원자기소개서*/
     private String aplyNo;

@@ -108,4 +108,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
         return currentRcrtNo;
     }
+
+    @Override
+    public Recruitment findRcrtInfo(String rcrtNo) {
+        return recruitmentRepository.findRcrtInfo(rcrtNo);
+    }
 }

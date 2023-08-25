@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -18,45 +16,46 @@ public class ApplicationIntroController {
 
     private final ApplicationIntroService applicationIntroService;
 
-    @GetMapping("/userIntroduce/{rcrtNo}")
-    public String introduce(@PathVariable("rcrtNo")String rcrtNo, Model model){
+    @GetMapping("/userIntroduce/{rcrtNo}/{aplyNo}")
+    public String introduce(@PathVariable("rcrtNo")String rcrtNo,@PathVariable("aplyNo")String aplyNo, Model model){
 
+        List<ApplicationIntroduce> appIntro = applicationIntroService.findAnswerInfo(aplyNo);
         List<ApplicationIntroduce> introduceList = applicationIntroService.findItem(rcrtNo);
-        model.addAttribute("introduceList",introduceList);
 
-        return "/application/applicationIntroduce";
+        if(appIntro.get(0).getAnswer()!=null){
+
+            List<ApplicationIntroduce> answer = applicationIntroService.findAnswerInfo(aplyNo);
+            model.addAttribute("introduceList",answer);
+            model.addAttribute("aplyNo",aplyNo);
+            return "/application/applicationIntroduce";
+
+        }else{
+            model.addAttribute("introduceList",introduceList);
+            model.addAttribute("aplyNo",aplyNo);
+            return "/application/applicationIntroduce";
+        }
     }
 
-
     @PostMapping("/saveIntro")
-    public String saveAnswer(HttpServletRequest request, Model model) {
-        List<ApplicationIntroduce> appIntroList = new ArrayList<>();
+    public String saveAnswer(Model model,
+                             @RequestParam("aplyNo")String[] aplyNos,
+                             @RequestParam("rcrtNo")String[] rcrtNos,
+                             @RequestParam("itemNo")int[] itemNos,
+                             @RequestParam("answer")String[] answers) {
 
-        Enumeration<String> parameterNames = request.getParameterNames();
-        ApplicationIntroduce appIntro = new ApplicationIntroduce();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = parameterNames.nextElement();
-            if (paramName.startsWith("answer")) {
-                String indexStr = paramName.substring("answer".length());
-                int index = Integer.parseInt(indexStr);
+        List<ApplicationIntroduce> answerListAll = new ArrayList<>();
 
-                String answer = request.getParameter(paramName);
-                appIntro.setAnswer(answer);
-
-                appIntroList.add(appIntro);
-            }else if(paramName.equals("rcrtNo")){
-                String rcrtNo = request.getParameter(paramName);
-                appIntro.setRcrtNo(rcrtNo);
-            }else if(paramName.equals("aplyNo")){
-                String aplyNo = request.getParameter(paramName);
-                appIntro.setAplyNo(aplyNo);
-            } else if (paramName.equals("itemNo")) {
-                int itemNo = Integer.parseInt(request.getParameter(paramName));
-                appIntro.setItemNo(itemNo);
-                applicationIntroService.saveAnswer(appIntro);
-            }
+        for (int i=0;i<aplyNos.length;i++) {
+            ApplicationIntroduce answerList = new ApplicationIntroduce();
+            answerList.setAplyNo(aplyNos[i]);
+            answerList.setRcrtNo(rcrtNos[i]);
+            answerList.setItemNo(itemNos[i]);
+            answerList.setAnswer(answers[i]);
+            applicationIntroService.saveAnswer(answerList);
+            answerListAll.add(applicationIntroService.saveAnswer(answerList));
         }
 
+        model.addAttribute("introduceList",answerListAll);
         return "/application/applicationIntroduce";
     }
 }

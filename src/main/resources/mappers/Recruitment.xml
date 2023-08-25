@@ -30,4 +30,10 @@
         SELECT RCRT_NO FROM ENTRY_SEL_MASTER WHERE RCRT_NO = #{rcrtNo}
     </select>
 
+    <select id="findRcrtInfo" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT *
+        FROM ENTRY_SEL_MASTER
+        WHERE RCRT_NO = #{rcrtNo}
+    </select>
+
 </mapper>

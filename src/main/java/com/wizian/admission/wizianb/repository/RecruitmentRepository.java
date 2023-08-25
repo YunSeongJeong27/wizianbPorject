@@ -16,4 +16,6 @@ public interface RecruitmentRepository {
     int update(Recruitment updateRows);
 
     String findRcrtNo(String rcrtNo);
+
+    Recruitment findRcrtInfo(String rcrtNo);
 }
