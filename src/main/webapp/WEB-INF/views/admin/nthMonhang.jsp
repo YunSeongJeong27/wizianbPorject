@@ -48,59 +48,26 @@
     </div>
 
     <script>
-
-        // monhang테이블 grid
-        // nthTable row 누를 때마다 monhangTable 데이터 바뀌게 - db 연동하면 어떻게 해야하나..? 별로
-        function subTableLoad(rowKey){
-            var monhangData = [];
-            var firstColumName = 'ITEM_NAME';
-            if(rowKey == null) return;       // 헤더 클릭 시
-            else if(rowKey === 0) {          // 일단 nthTable rowKey로 관련 데이터 넣어서 보내는걸로..
-                monhangData = [
-                    {
-                        ITEM_NAME: '지원동기',
-                        MAX_CHAR: '2000',
-                        ITEM_EXPL: 'WIZIAN 정보처리학원에 지원한 동기에 대해서 기술'
+        document.addEventListener('DOMContentLoaded', async () => {
+            await subTableLoad();
+        });
+        const subTableLoad = (rowKey) => {
+            let firstColumName = 'itemName';
+            const rowData = nthTable.getRow(rowKey);
+            let rcrtNo = rowData.rcrtNo;
+            const Grid = tui.Grid;
+            document.getElementById('monhangTable').innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
+            const monhangTable = new Grid({
+                el: document.getElementById('monhangTable'),
+                data: {
+                    initialRequest: true,
+                    api: {
+                        hideLoadingBar: false,
+                        readData: {url: '/admin/'+ rcrtNo + '/introduce', method: 'GET'},
+                        modifyData: {url: 'recruitment/save', method: 'PUT', contentType: 'application/json'},
+                        deleteData: {url: 'recruitment/delete', method: 'DELETE'}
                     },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    },
-                    {
-                        ITEM_NAME: '프로그래밍 경험',
-                        MAX_CHAR: '1000',
-                        ITEM_EXPL: '사용해본 프로그래밍 경험에 대해 기술'
-                    }
-                ];
-            }
-
-            var monhangEl = document.getElementById('monhangTable');
-            monhangEl.innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
-
-            const monhangTable = new tui.Grid({
-                el: monhangEl,
-                data: monhangData,
+                },
                 rowHeaders: ['checkbox'],
                 pageOptions: {
                     useClient: true,	// front에서만 페이징 하는 속성
@@ -113,7 +80,7 @@
                 columns: [
                     {
                         header: '문항명',
-                        name: 'ITEM_NAME',
+                        name: 'itemName',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -121,7 +88,7 @@
                     },
                     {
                         header: '최대허용글자수',
-                        name: 'MAX_CHAR',
+                        name: 'maxChar',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -129,7 +96,7 @@
                     },
                     {
                         header: '문항설명',
-                        name: 'ITEM_EXPL',
+                        name: 'itemExpl',
                         sortingType: 'asc',
                         sortable: true,
                         align: 'center',
@@ -146,6 +113,7 @@
                     monhangTable.focus(0, firstColumName, true);
                 }
             });
+
 
             const monhangTablePage = document.querySelector('#monhangTablePage');
 
@@ -185,9 +153,9 @@
             document.getElementById("monhangInsertBtn").addEventListener("click", function () {
                 const rowData = [
                     {
-                        ITEM_NAME: '',
-                        MAX_CHAR: '',
-                        ITEM_EXPL: ''
+                        itemName: '',
+                        maxChar: '',
+                        itemExpl: ''
                     }
                 ];
 
@@ -198,6 +166,7 @@
                 });
 
                 monhangData = monhangTable.getData();
+                console.log(monhangData);
             });
         }
 
@@ -206,7 +175,6 @@
             const perPage = parseInt(event.value, 10);
             table.setPerPage(perPage);
         }
-
     </script>
 </body>
 </html>

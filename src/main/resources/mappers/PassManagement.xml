@@ -42,7 +42,9 @@
 
     <!-- 서류 평가 결과 수정 -->
     <update id="updateDocPass" parameterType="com.wizian.admission.wizianb.domain.PassManagement">
-        UPDATE entry_apply_master SET DOC_PASS_YN = #{docPassYn} WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+        UPDATE entry_apply_master
+        SET DOC_PASS_YN = #{docPassYn}, FNL_PASS_YN = NULL, DOC_N_REASON = #{docNReason}
+        WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </update>
 
     <!-- 면접 평가 결과 수정 -->

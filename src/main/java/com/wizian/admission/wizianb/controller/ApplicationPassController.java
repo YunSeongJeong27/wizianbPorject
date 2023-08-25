@@ -1,0 +1,56 @@
+package com.wizian.admission.wizianb.controller;
+
+import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.NoticeMessage;
+import com.wizian.admission.wizianb.domain.Recruitment;
+import com.wizian.admission.wizianb.service.ApplicationPassService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
+public class ApplicationPassController {
+
+    private final ApplicationPassService applicationPassService;
+
+
+    @GetMapping("/pass")
+    public String pass(Model model,HttpSession session){
+        ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
+        List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
+
+        if(courseList != null) {
+            ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), courseList.get(0).getRcrtNo());
+            model.addAttribute("application", application);
+            model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), courseList.get(0).getRcrtNo()));
+        }
+
+        model.addAttribute("title", "합격자발표");
+        model.addAttribute("courseList", courseList);
+
+        return "/application/applicationPass";
+    }
+
+    @GetMapping("/pass/findApplication/{rcrtNo}")
+    public ResponseEntity<Model> findApplication(@PathVariable String rcrtNo, Model model, HttpSession session){
+
+        ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
+
+        ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), rcrtNo);
+
+        NoticeMessage message = applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), rcrtNo);
+
+        System.out.println(message);
+        model.addAttribute("application", application);
+        model.addAttribute("message", message);
+
+        return ResponseEntity.status(HttpStatus.OK).body(model);
+    }
+}

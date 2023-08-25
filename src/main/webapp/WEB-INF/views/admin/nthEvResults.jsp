@@ -345,7 +345,8 @@
                      header: '비고',
                      name: 'note',
                      sortingType: 'asc',
-                     sortable: true, align: 'center'
+                     sortable: true, align: 'center',
+                     editor: 'text'
                  }
 
              ],

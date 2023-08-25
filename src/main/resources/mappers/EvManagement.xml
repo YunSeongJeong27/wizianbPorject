@@ -28,7 +28,7 @@
 
     <update id="updateScore" parameterType="com.wizian.admission.wizianb.domain.EvalResults">
         update entry_ev_target set ev1_score=#{ev1Score},
-                    ev2_score=#{ev2Score},ev3_score=#{ev3Score}
+                    ev2_score=#{ev2Score},ev3_score=#{ev3Score},note=#{note}
         where  rcrt_no=#{rcrtNo} and aply_no=#{aplyNo}
     </update>
 

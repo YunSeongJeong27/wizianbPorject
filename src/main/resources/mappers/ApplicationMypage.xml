@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.ApplicationMypageRepository">
+    <select id="getCourseNameList" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select * from entry_apply_master as apply inner join entry_sel_master as sel on apply.RCRT_NO = sel.RCRT_NO where apply.MEM_ID = #{memberId};
+    </select>
+
+    <select id="getApplyNo" resultType="java.lang.String">
+        select aply_no from entry_apply_master where mem_id=#{memId};
+    </select>
+
+    <select id="getApplyMkList" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select*from entry_apply_mk where aply_no=#{applyNo};
+    </select>
+
+    <select id="getApplyMasterList" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select sel.COURSE_NAME, apply.* from entry_apply_master as apply inner join entry_sel_master as sel on apply.rcrt_no = sel.rcrt_no where apply.rcrt_no =#{rcrtNo} and apply.aply_no=#{applyNo};
+    </select>
+</mapper>
