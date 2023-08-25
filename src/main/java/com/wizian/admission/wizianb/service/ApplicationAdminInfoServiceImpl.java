@@ -106,14 +106,8 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto getIntroduce(String aplyNo) {
-        List<Introduce> introduceList = applicationAdminInfoRepository.getIntroduceList(aplyNo);
-
-        HashMap<String, Object> resultMap = new HashMap<>();
-        resultMap.put("contents", introduceList);
-        resultMap.put("pagination", "");
-
-        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    public List<Introduce> getIntroduce(String aplyNo) {
+        return applicationAdminInfoRepository.getIntroduceList(aplyNo);
     }
 
 
