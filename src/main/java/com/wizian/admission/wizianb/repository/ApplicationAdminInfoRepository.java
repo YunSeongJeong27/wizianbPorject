@@ -3,6 +3,7 @@ package com.wizian.admission.wizianb.repository;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.Careers;
 import com.wizian.admission.wizianb.domain.Education;
+import com.wizian.admission.wizianb.domain.Introduce;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface ApplicationAdminInfoRepository {
     List<Careers> getCareersInfo(String aplyNo);
 
     void updateCareersInfo(Careers careers);
+
+    List<Introduce> getIntroduceList(String aplyNo);
 }
