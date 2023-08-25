@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.ApplicationPassRepository">
+
+    <select id="courseList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT esm.RCRT_NO, esm.COURSE_NAME
+        FROM entry_apply_master eam, entry_sel_master esm
+        WHERE eam.EMAIL = #{email} AND eam.RCRT_NO = esm.RCRT_NO
+        ORDER BY esm.EDU_START_DATE DESC;
+    </select>
+
+    <select id="findApplication" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
+        SELECT * FROM entry_apply_master WHERE EMAIL = #{email} AND RCRT_NO = #{rcrtNo};
+    </select>
+
+    <select id="findNoticeMessage" resultType="com.wizian.admission.wizianb.domain.NoticeMessage">
+        SELECT * FROM entry_sel_msg WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{code};
+    </select>
+</mapper>

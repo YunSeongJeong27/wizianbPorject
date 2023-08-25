@@ -85,12 +85,14 @@ public class EvManagementServiceImpl implements EvManagementService {
             int ev1Score = Integer.parseInt(jnArr.get(i).get("ev1Score").asText());
             int ev2Score = Integer.parseInt(jnArr.get(i).get("ev2Score").asText());
             int ev3Score = Integer.parseInt(jnArr.get(i).get("ev3Score").asText());
+            String note = jnArr.get(i).get("note") == null ? "" : jnArr.get(i).get("note").asText();
             EvalResults evalResultDto= EvalResults.builder()
                     .aplyNo(aplyNo)
                     .rcrtNo(rcrtNo)
                     .ev1Score(ev1Score)
                     .ev2Score(ev2Score)
                     .ev3Score(ev3Score)
+                    .note(note)
                     .build();
             evManagementRepository.updateScore(evalResultDto);
         }

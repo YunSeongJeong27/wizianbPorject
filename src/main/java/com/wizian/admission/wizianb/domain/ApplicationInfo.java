@@ -29,6 +29,7 @@ public class ApplicationInfo {
     private String aplyStsDiv;
     private String aplyDate;
     private String docPassYn;
+    private String docNReason;
     private String FnlPassYn;
     private int aplyPdfFileNo;
 

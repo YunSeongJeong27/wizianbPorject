@@ -47,4 +47,18 @@
             NOTE = #{note}
         WHERE aply_no = #{aplyNo}
     </update>
+
+    <select id="getIntroduceList" resultType="com.wizian.admission.wizianb.domain.Introduce">
+        SELECT
+            ESI.ITEM_NO,
+            ESI.ITEM_NAME,
+            EAI.ANSWER,
+            ESI.MAX_CHAR
+        FROM
+            entry_sel_intro AS ESI
+                INNER JOIN
+            entry_apply_intro AS EAI ON ESI.ITEM_NO = EAI.ITEM_NO AND ESI.RCRT_NO = EAI.RCRT_NO
+        WHERE
+            EAI.APLY_NO = #{aplyNo};
+    </select>
 </mapper>
