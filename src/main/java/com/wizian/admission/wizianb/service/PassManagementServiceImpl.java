@@ -96,7 +96,9 @@ public class PassManagementServiceImpl implements PassManagementService {
             PassManagement data = PassManagement.builder()
                     .aplyNo(jnArr.get(i).get("aplyNo").asText())
                     .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
-                    .docPassYn(docPassYn).build();
+                    .docPassYn(docPassYn)
+                    .docNReason(jnArr.get(i).get("docNReason") == null ? "" : jnArr.get(i).get("docNReason").asText())
+                    .build();
 
             EvTarget target = EvTarget.builder()
                     .aplyNo(jnArr.get(i).get("aplyNo").asText())
@@ -124,7 +126,7 @@ public class PassManagementServiceImpl implements PassManagementService {
             PassManagement data = PassManagement.builder()
                     .aplyNo(jnArr.get(i).get("aplyNo").asText())
                     .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
-                    .FnlPassYn(jnArr.get(i).get("fnlPassYn").asText()).build();
+                    .fnlPassYn(jnArr.get(i).get("fnlPassYn").asText()).build();
 
             passManagementRepository.updateFnlPass(data);
         }
@@ -142,9 +144,8 @@ public class PassManagementServiceImpl implements PassManagementService {
         if(stepDiv.equals("interview")) passManagementList = passManagementRepository.findFnlPass(jn.get("rcrtNo").asText());
         else if(stepDiv.equals("final")) passManagementList = passManagementRepository.findPassList(jn.get("rcrtNo").asText());
 
-        mailSendService.mailSend(message, "aaa@naver.com", title);
         for(PassManagement data: passManagementList) {
-            //mailSendService.mailSend(message, data.getEmail(), title);
+            mailSendService.mailSend(message, data.getEmail(), title);
         }
     }
 }

@@ -370,6 +370,14 @@
                                 ]
                             }
                         }
+                    },
+                    {
+                        header: '부적격사유',
+                        name: 'docNReason',
+                        sortingType: 'asc',
+                        sortable: true,
+                        align: 'center',
+                        editor: 'text'
                     }
                 ],
                 columnOptions: {
@@ -415,6 +423,18 @@
 
             applicationTable.on('drop', function (ev) {
                 firstColumName = applicationTable.getColumns()[0]['name'];
+            });
+
+            applicationTable.on('afterChange', function (ev) {
+                let data = ev['changes'][0];
+                console.log(ev);
+                console.log(data);
+                console.log(data['columnName']);
+                console.log(data['value']);
+
+                if(data['columnName'] === 'docPassYn'){
+                    applicationTable.setValue(data['rowKey'], 'docNReason', '');
+                }
             });
         }
 

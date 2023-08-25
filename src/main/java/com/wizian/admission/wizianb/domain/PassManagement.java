@@ -18,7 +18,8 @@ public class PassManagement {
     private String gender;
     private String email;
     private String docPassYn;
-    private String FnlPassYn;
+    private String docNReason;
+    private String fnlPassYn;
 
     private float evAvgScore;
     private int prelOrd;
