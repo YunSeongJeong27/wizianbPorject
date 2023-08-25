@@ -42,4 +42,9 @@ public class ApplicationAdminInfoController {
     public ResponseEntity<ToastUiResponseDto> updateCareers(@PathVariable String aplyNo, @RequestBody JsonNode inputRows){
         return ResponseEntity.ok(applicationAdminInfoService.updateCareers(aplyNo, inputRows));
     }
+
+    @GetMapping("/admin/apply/{aplyNo}/introduce")
+    public ResponseEntity<ToastUiResponseDto> getIntroduce(@PathVariable String aplyNo){
+        return ResponseEntity.ok(applicationAdminInfoService.getIntroduce(aplyNo));
+    }
 }

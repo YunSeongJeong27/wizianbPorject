@@ -949,6 +949,11 @@
                 document.querySelector('#txt_inp1_tel_natv').value = detail.hpLocal;
             })
             .catch(error => console.log(error));
+        fetch("/admin/apply/"+ aplyNo + "/introduce")
+            .then(response => response.json())
+            .then((list) => {
+
+            })
 
 
         buttonList.forEach((e, i) => {

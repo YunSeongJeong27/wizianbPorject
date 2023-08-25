@@ -20,4 +20,7 @@ public interface ApplicationAdminInfoService {
     ToastUiResponseDto getCareers(String aplyNo);
 
     ToastUiResponseDto updateCareers(String aplyNo, JsonNode inputRows);
+
+    ToastUiResponseDto getIntroduce(String aplyNo);
+
 }

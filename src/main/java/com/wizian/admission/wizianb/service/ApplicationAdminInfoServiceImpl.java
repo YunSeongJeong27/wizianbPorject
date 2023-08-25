@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.Careers;
 import com.wizian.admission.wizianb.domain.Education;
+import com.wizian.admission.wizianb.domain.Introduce;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.ApplicationAdminInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -101,6 +102,17 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
             applicationAdminInfoRepository.updateCareersInfo(infoCareers);
         }
         resultMap.put("message", "저장되었습니다.");
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
+    @Override
+    public ToastUiResponseDto getIntroduce(String aplyNo) {
+        List<Introduce> introduceList = applicationAdminInfoRepository.getIntroduceList(aplyNo);
+
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("contents", introduceList);
+        resultMap.put("pagination", "");
+
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
