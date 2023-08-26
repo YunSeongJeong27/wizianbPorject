@@ -5,6 +5,7 @@
 <head>
     <title>Title</title>
     <style>
+        .pdfobject-container { height: 30rem; border: 1rem solid rgba(0,0,0,.1); }
         #img1 {
             width: 100%;
             height: auto;
@@ -159,7 +160,9 @@
             }
         }
     </style>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.6.0/dist/jspdf.plugin.autotable.js"></script>
+    <script src="https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js"></script>
 </head>
 <body>
 <div class="my-3 d-flex justify-content-center">
@@ -253,10 +256,24 @@
                     <button type="button" id="submissionCancelBtn" class="btn text-dark mx-1 py-2 px-3" disabled style="background-color: #E1E1E1" onclick="submissionCancel()">지원취소</button>
                 </div>
                 <div class="mx-1 d-none" id="printBtn">
-                    <button type="button" class="btn text-white mx-1 py-2 px-3" style="background-color: #3B3B3B">입학원서출력</button>
+                    <button id="apply_pdf" type="button" class="btn text-white mx-1 py-2 px-3" data-bs-toggle="modal"
+                            data-bs-target="#pdf_display"
+                            style="background-color: #3B3B3B">입학원서출력</button>
                 </div>
             </div>
         </div>
+            <div id="pdf_display" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="pdfobject-container" id="example1" style="height: 800px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -892,7 +909,9 @@
         $("#printBtn").addClass("d-none");
     }
 
-
+    document.querySelector('#apply_pdf').addEventListener('click', () => {
+        PDFObject.embed("/pdf/2023_야구규칙.pdf", "#example1");
+    });
     /*추가제출서류 파일추가*/
     function addFile() {
 
