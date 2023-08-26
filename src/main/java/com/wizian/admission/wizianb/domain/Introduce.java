@@ -19,8 +19,4 @@ public class Introduce {
     //문항
     private String aplyNo;
     private String answer;
-
-    //지원서
-    private String rcrtNo;
-
 }
