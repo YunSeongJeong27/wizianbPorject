@@ -37,12 +37,14 @@ public class IntroduceServiceImpl implements IntroduceService {
         int result = 0;
         for (JsonNode row : introduceItems) {
             Introduce introduceItem = Introduce.builder()
+                    .rcrtNo(rcrtNo)
                     .itemName(row.get("itemName").asText())
                     .maxChar(row.get("maxChar").asInt())
                     .itemExpl(row.get("itemExpl").asText())
                     .build();
-            result = introduceRepository.insertIntroduceItem(introduceItem, rcrtNo);
+            result = introduceRepository.insertIntroduceItem(introduceItem);
         }
+        resultMap.put("result", result);
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
@@ -52,13 +54,59 @@ public class IntroduceServiceImpl implements IntroduceService {
         int result = 0;
         for (JsonNode row : introduceItems) {
             Introduce introduceItem = Introduce.builder()
+                    .rcrtNo(rcrtNo)
                     .itemNo(row.get("itemNo").asInt())
                     .itemName(row.get("itemName").asText())
                     .maxChar(row.get("maxChar").asInt())
                     .itemExpl(row.get("itemExpl").asText())
                     .build();
-            result = introduceRepository.updateIntroduceItem(introduceItem, rcrtNo);
+            result = introduceRepository.updateIntroduceItem(introduceItem);
         }
+        resultMap.put("result", result);
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
+
+    @Override
+    public List<Introduce> findItem(String rcrtNo) {
+        return introduceRepository.findItem(rcrtNo);
+    }
+
+    @Override
+    public Introduce saveAnswer(Introduce appIntro) {
+
+        Introduce aplyintro = new Introduce();
+        aplyintro.setAplyNo(appIntro.getAplyNo());
+        aplyintro.setRcrtNo(appIntro.getRcrtNo());
+        aplyintro.setItemNo(appIntro.getItemNo());
+        aplyintro.setAnswer(appIntro.getAnswer());
+
+        introduceRepository.saveAnswer(aplyintro.getItemNo(), aplyintro.getAplyNo(), aplyintro.getRcrtNo(), aplyintro.getAnswer());
+
+        return aplyintro;
+    }
+
+    @Override
+    public List<Introduce> findAnswerInfo(String aplyNo) {
+        return introduceRepository.findAnswerInfo(aplyNo);
+    }
+
+
+    @Override
+    public Introduce updateAnswer(Introduce appIntro) {
+
+        Introduce aplyIntro = new Introduce();
+        aplyIntro.setAnswer(appIntro.getAnswer());
+        aplyIntro.setAplyNo(appIntro.getAplyNo());
+        aplyIntro.setRcrtNo(appIntro.getRcrtNo());
+        aplyIntro.setItemNo(appIntro.getItemNo());
+
+        introduceRepository.updateAnswer(appIntro.getAnswer(),appIntro.getAplyNo(),appIntro.getRcrtNo(),appIntro.getItemNo());
+        return aplyIntro;
+    }
+
+    @Override
+    public Boolean existsByAplyNo(String aplyNo, String rcrtNo) {
+        return introduceRepository.existsByAplyNo(aplyNo,rcrtNo);
+    }
+
 }

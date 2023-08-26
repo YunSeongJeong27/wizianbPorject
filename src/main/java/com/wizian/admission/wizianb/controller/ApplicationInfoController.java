@@ -32,8 +32,8 @@ public class ApplicationInfoController {
     private final RecruitmentService recruitmentService;
 
     //기본정보
-    @GetMapping("/userInfo")
-    public String userInfo(@RequestParam("rcrtNo")String rcrtNo, Model model,HttpSession session){
+    @GetMapping("/userInfo/{rcrtNo}")
+    public String userInfo(@PathVariable("rcrtNo")String rcrtNo, Model model,HttpSession session){
 
         model.addAttribute("title","기본정보");
        // Object rcrtNo = session.getAttribute("rcrtNo");

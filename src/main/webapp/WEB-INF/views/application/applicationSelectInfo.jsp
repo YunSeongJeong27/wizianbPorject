@@ -71,7 +71,7 @@
     const newUserBtn = document.getElementById("newUserBtn");
     const existingUserBtn = document.getElementById("existingUserBtn");
     newUserBtn.addEventListener("click", function(){
-        frm.action = "/userInfo";
+        frm.action = "/userInfo/${rcrtNo}";
         frm.submit();
     })
     existingUserBtn.addEventListener("click", function (){

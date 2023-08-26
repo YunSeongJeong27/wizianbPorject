@@ -23,4 +23,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .headers().frameOptions().disable();
     }
+
 }

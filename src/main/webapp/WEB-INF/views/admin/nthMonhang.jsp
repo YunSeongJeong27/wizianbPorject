@@ -58,7 +58,6 @@
             const Grid = tui.Grid;
             document.getElementById('monhangTable').innerHTML="";                  // 다시 부를 때 안에 내용 지우기 위함
 
-            if (!monhangTable) {
                 const monhangTable = new Grid({
                     el: document.getElementById('monhangTable'),
                     data: {
@@ -119,7 +118,6 @@
                         monhangTable.focus(0, firstColumName, true);
                     }
                 });
-            }
 
 
             const monhangTablePage = document.querySelector('#monhangTablePage');
@@ -176,6 +174,7 @@
             });
             document.querySelector('#monhangSaveBtn').addEventListener('click', function () {
                 monhangTable.request('modifyData');
+                monhangTable.resetData(monhangTable.getData());
             });
         }
 

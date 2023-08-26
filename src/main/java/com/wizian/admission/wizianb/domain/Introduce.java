@@ -14,9 +14,13 @@ public class Introduce {
     private String itemName;
     private int maxChar;
     private String itemExpl;
+    private String rcrtNo;
 
     //문항
     private String aplyNo;
     private String answer;
+
+    //지원서
+    private String rcrtNo;
 
 }
