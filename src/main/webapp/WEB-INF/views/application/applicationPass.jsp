@@ -140,7 +140,7 @@
 
             <h3 class="title mt-5 mb-1">일정안내</h3>
             <div class="border-top border-dark border-2">
-                <div id="message" class="border mt-3" style="width: 100%; height:150px;"></div>
+                <div id="message" class="border mt-3" style="width: 100%; min-height: 150px; height: max-content; padding: 15px;"></div>
             </div>
 
             <div class="d-flex justify-content-center mt-5">
