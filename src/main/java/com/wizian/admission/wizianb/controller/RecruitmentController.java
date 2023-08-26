@@ -2,8 +2,6 @@ package com.wizian.admission.wizianb.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.wizian.admission.wizianb.annotation.CurrentUser;
-import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.service.RecruitmentService;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;

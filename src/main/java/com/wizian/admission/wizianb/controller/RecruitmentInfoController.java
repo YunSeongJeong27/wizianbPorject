@@ -56,5 +56,13 @@ public class RecruitmentInfoController {
 
         return ResponseEntity.ok(recruitmentInfoService.deleteNthInfo(jn));
     }
+    
+    //전형일정설정정보
+    @GetMapping("/recruitmentinfo/subinfo/{rcrtNo}")
+    public ResponseEntity<ToastUiResponseDto>  subInfo(@PathVariable String rcrtNo){
+        return  ResponseEntity.ok(recruitmentInfoService.subInfo(rcrtNo));
+    }
+
+
 
 }
