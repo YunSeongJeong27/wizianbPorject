@@ -93,7 +93,7 @@
                         </div>
                         <div class="ms-4 d-none animate__animated">
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('mozip', this)">
-                                모집전형정보
+                                모집전형전형정보
                             </div>
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('notice', this)">
                                 모집전형안내문관리
@@ -111,7 +111,7 @@
                         </div>
                         <div class="ms-4 d-none animate__animated">
                             <div class="px-2 py-1 mt-1 w-100 btn-lf text-start btn" onclick="index('apply_ex', this)">
-                                원서접수관리
+                                지원서관리
                             </div>
                         </div>
                     </div>
