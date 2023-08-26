@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AppController {
 
-    @GetMapping("userEdu")
+    @GetMapping("/userEdu")
     public String userEdu(Model model){
         model.addAttribute("title","학력사항");
         return "/application/applicationEdu";
     }
-    @GetMapping("userExp")
+    @GetMapping("/userExp")
     public String userExp(Model model){
         model.addAttribute("title","경력사항");
         return "/application/applicationExp";
     }
-    @GetMapping("userIntroduce")
+    @GetMapping("/userIntroduce")
     public String userIntroduce(Model model){
         model.addAttribute("title","자기소개서");
         return "/application/applicationIntroduce";

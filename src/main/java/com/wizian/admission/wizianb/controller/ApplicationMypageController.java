@@ -50,11 +50,71 @@ public class ApplicationMypageController {
         String rcrtNo = applicationMypage.getRcrtNo();
         String applyNo = applicationMypage.getAplyNo();
 
-        List<ApplicationMypage> masterList =  applicationMypageService.getApplyMasterList(rcrtNo, applyNo);
-        System.out.println("masterList = " + masterList);
+        ApplicationMypage masterList =  applicationMypageService.getApplyMasterList(rcrtNo, applyNo);
 
         // Ajax 호출 결과를 리턴
+        return masterList;
+    }
+    @PostMapping("/checked/edu")
+    @ResponseBody
+    public ApplicationMypage checkedEdu(@RequestBody ApplicationMypage applicationMypage){
+        String rcrtNo = applicationMypage.getRcrtNo();
+        String applyNo = applicationMypage.getAplyNo();
+
+        ApplicationMypage applyAcdm =  applicationMypageService.getApplyAcdm(rcrtNo, applyNo);
+
+        // Ajax 호출 결과를 리턴
+        return applyAcdm;
+    }
+    @PostMapping("/checked/exp")
+    @ResponseBody
+    public ApplicationMypage checkedExp(@RequestBody ApplicationMypage applicationMypage){
+        String rcrtNo = applicationMypage.getRcrtNo();
+        String applyNo = applicationMypage.getAplyNo();
+
+        ApplicationMypage applyCareer =  applicationMypageService.getApplyCareer(rcrtNo, applyNo);
+
+        // Ajax 호출 결과를 리턴
+        return applyCareer;
+    }
+    @PostMapping("/checked/introduce")
+    @ResponseBody
+    public List<ApplicationMypage> checkedIntroduce(@RequestBody ApplicationMypage applicationMypage){
+        String rcrtNo = applicationMypage.getRcrtNo();
+        String applyNo = applicationMypage.getAplyNo();
+
+        List<ApplicationMypage> applyCareerList =  applicationMypageService.getApplyIntroList(rcrtNo, applyNo);
+
+        // Ajax 호출 결과를 리턴
+        return applyCareerList;
+    }
+
+    @PostMapping("/checked/updateStatus")
+    @ResponseBody
+    public ApplicationMypage updateStatus(@RequestBody ApplicationMypage applicationMypage){
+        String areaDiv = applicationMypage.getAreaDiv();
+        String rcrtNo = applicationMypage.getRcrtNo();
+        String applyNo = applicationMypage.getAplyNo();
+        String statusDiv = applicationMypage.getStatusDiv();
+
+        applicationMypageService.updateStatus(areaDiv, rcrtNo, applyNo, statusDiv);
+
         return applicationMypage;
     }
 
+    @PostMapping("/checked/finalSubmission")
+    @ResponseBody
+    public Boolean finalSubmission(@RequestBody ApplicationMypage applicationMypage){
+        String rcrtNo = applicationMypage.getRcrtNo();
+        String applyNo = applicationMypage.getAplyNo();
+        boolean finalSubmissionResult = true;
+
+        List<String> statusDivList = applicationMypageService.statusDivList(rcrtNo, applyNo);
+        for (String status : statusDivList) {
+            if (!status.equals("확인완료")) {
+                finalSubmissionResult = false;
+            }
+        }
+        return finalSubmissionResult;
+    }
 }

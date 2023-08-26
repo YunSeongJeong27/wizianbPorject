@@ -30,7 +30,32 @@ public class ApplicationMypageServiceImpl implements ApplicationMypageService{
     }
 
     @Override
-    public List<ApplicationMypage> getApplyMasterList(String rcrtNo, String applyNo) {
+    public ApplicationMypage getApplyMasterList(String rcrtNo, String applyNo) {
         return applicationMypageRepository.getApplyMasterList(rcrtNo, applyNo);
+    }
+
+    @Override
+    public ApplicationMypage getApplyAcdm(String rcrtNo, String applyNo) {
+        return applicationMypageRepository.getApplyAcdm(rcrtNo, applyNo);
+    }
+
+    @Override
+    public ApplicationMypage getApplyCareer(String rcrtNo, String applyNo) {
+        return applicationMypageRepository.getApplyCareer(rcrtNo, applyNo);
+    }
+
+    @Override
+    public List<ApplicationMypage> getApplyIntroList(String rcrtNo, String applyNo) {
+        return applicationMypageRepository.getApplyIntroList(rcrtNo, applyNo);
+    }
+
+    @Override
+    public boolean updateStatus(String areaDiv, String rcrtNo, String applyNo, String statusDiv) {
+        return applicationMypageRepository.updateStatus(areaDiv, rcrtNo, applyNo, statusDiv);
+    }
+
+    @Override
+    public List<String> statusDivList(String rcrtNo, String applyNo) {
+        return applicationMypageRepository.statusDivList(rcrtNo, applyNo);
     }
 }

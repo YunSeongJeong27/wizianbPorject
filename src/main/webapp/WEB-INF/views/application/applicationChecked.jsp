@@ -201,7 +201,7 @@
             </div>
         </div>
         <%--우측탭1--%>
-        <table class="tab-pane fade active show col-lg-9"
+        <div class="tab-pane fade active show col-lg-9"
              id="first-tap" role="tabpanel"
              aria-labelledby="first-tap-list">
             <div class="mb-3">
@@ -236,7 +236,7 @@
                                     </td>
                                     <td class="text-center">
                                         <button type="button"
-                                                class="btn btn-sm btn-light btn-outline-dark" onclick="updateStatusDiv()">확인
+                                                class="btn btn-sm btn-light btn-outline-dark" onclick="updateStatusDiv(this)">확인
                                         </button>
                                     </td>
                                 </tr>
@@ -246,24 +246,19 @@
                 </table>
             </div>
 
-        <div>
-            <div>
-                <div id="application_member" class="d-flex justify-content-center">
-                    <p>지원자 님의 수험번호는 <span class="member_id">W123456</span> 입니다.</p>
+            <div id="textWrap" class="d-flex justify-content-center mt-5"></div>
+            <div class="d-flex justify-content-center mt-3">
+                <div>
+                    <button type="button" id="finalSubmissionBtn" class="btn text-white mx-1 py-2 px-3" style="background-color: #003A78" onclick="finalSubmission()">지원서최종제출</button>
+                    <button type="button" id="submissionCancelBtn" class="btn text-dark mx-1 py-2 px-3" disabled style="background-color: #E1E1E1" onclick="submissionCancel()">지원취소</button>
                 </div>
-
-                <%-- Buttons --%>
-                <div id="application_btn0" class="d-flex justify-content-center mt-4 application_btn">
-                    <button type="button" class="btn btn-primary" disabled>지원서최종제출</button>
-                    <button type="button" class="btn btn-secondary fbt1" disabled>지원취소</button>
-                    <button type="button" class="btn btn-dark fbt2">입학원서출력</button>
-                    <button type="button" class="btn btn-dark">수험표출력</button>
-                </div>
-                <div id="apply_complete" class="d-flex justify-content-end mt-5">
-                    <button type="button" class="btn btn-secondary">제출서류확인</button>
+                <div class="mx-1 d-none" id="printBtn">
+                    <button type="button" class="btn text-white mx-1 py-2 px-3" style="background-color: #3B3B3B">입학원서출력</button>
                 </div>
             </div>
         </div>
+
+
 
 
         <%--우측탭2--%>
@@ -441,7 +436,6 @@
                                 </div>
                             </div>
                         </td>
-
                     </tr>
 
                     <tr>
@@ -475,7 +469,6 @@
                                 </div>
                             </div>
                         </td>
-
                     </tr>
 
                     </tbody>
@@ -486,7 +479,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -502,11 +494,11 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row ">
+                        <div class="resultContent"></div>
                         <div class="col-12 col-md-3 mb-2">
                             <label for="photo" class="stn">사진</label>
                             <div id="photo" class="justify-content-center align-items-center"
                                  style="width: 160px; height: 180px; border: 1px solid #dee2e6;">
-                                사진넣는공간
                             </div>
                         </div>
                     </div>
@@ -514,24 +506,19 @@
                     <div class="row">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="programName" class="me-1 col-4 stn">모집과정명</label>
-                            <div id="programName" class="p-2 col">모집과정명</div>
-                        </div>
-                        <div class="col-12 col-md-6 d-flex align-items-center">
-                            <label for="detailCourse" class="me-1 col-4 stn">상세과정</label>
-                            <div id="detailCourse" class="p-2 col">상세과정</div>
+                            <div id="programName" class="p-2 col courseName"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
 
-
                     <div class="row">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="name" class="me-1 col-4 stn">성명</label>
-                            <div id="name" class="p-2 col">성명</div>
+                            <div id="name" class="p-2 col nameKor"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="gender" class="me-1 col-4 stn">성별</label>
-                            <div id="gender" class="p-2 col">성별</div>
+                            <div id="gender" class="p-2 col gender"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
@@ -539,11 +526,11 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="nameEnglish" class="me-1 col-4 stn">성명(영어)</label>
-                            <div id="nameEnglish" class="p-2 col">성명(영어)</div>
+                            <div id="nameEnglish" class="p-2 col nameEng"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="email" class="me-1 col-4 stn">이메일</label>
-                            <div id="email" class=" p-2 col">이메일</div>
+                            <div id="email" class=" p-2 col email"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
@@ -551,34 +538,34 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="dob" class="me-1 col-4 stn">생년월일</label>
-                            <div id="dob" class="p-2 col">생년월일</div>
+                            <div id="dob" class="p-2 col birthday"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="phoneNumber" class="me-1 col-4 stn">전화번호</label>
-                            <div id="phoneNumber" class="p-2 col">전화번호</div>
+                            <div id="phoneNumber" class="p-2 col hpLocal"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
 
                     <div class="row ">
-                        <div class="col-12 col-md-12 d-flex align-items-center">
-                            <label for="address" class="me-1 col-1 stn">주소</label>
-                            <div id="address" class="p-2 col">dddddddd주소dddddddd주소dddddd주소dddddddd주소</div>
+                        <div class="col-12 col-md-6 d-flex align-items-center">
+                            <label for="PostalCode" class="me-1 col-4 stn">우편번호</label>
+                            <div id="PostalCode" class="p-2 col zipCode"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
 
                     <div class="row ">
-                        <div class="col-12 col-md-12 d-flex align-items-center">
-                            <label for="PostalCode" class="me-1 col-1 stn">우편번호</label>
-                            <div id="PostalCode" class="p-2 col">우편번호써</div>
+                        <div class="col-12 d-flex align-items-center">
+                            <label for="address" class="me-1 col-2 stn">주소</label>
+                            <div id="address" class="p-2 col-10 addrLocal text-start"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer d-flex justify-content-center">
-                <div class="btn btn-primary">수정하기</div>
+                <div class="btn btn-primary" onclick="window.location.href='/userInfo'">수정하기</div>
             </div>
         </div>
     </div>
@@ -598,11 +585,11 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="grade1" class="me-1 col-4 stn">학위구분</label>
-                            <div id="grade1" class="p-2 col">석사</div>
+                            <div id="grade1" class="p-2 col gradeDiv"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="admissionDate" class="me-1 col-4 stn">입학년월일</label>
-                            <div id="admissionDate" class="p-2 col">2017-02-21</div>
+                            <div id="admissionDate" class="p-2 col startDate"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
@@ -610,11 +597,11 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="school" class="me-1 col-4 stn">학위기관명</label>
-                            <div id="school" class="p-2 col">하버드대학교</div>
+                            <div id="school" class="p-2 col orgName"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="graduationDate" class="me-1 col-4 stn">졸업년월일</label>
-                            <div id="graduationDate" class=" p-2 col">2023-08-09</div>
+                            <div id="graduationDate" class=" p-2 col endDate"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
@@ -622,18 +609,13 @@
                     <div class="row mb-2">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="major" class="me-1 col-4 stn">학과/전공명</label>
-                            <div id="major" class="p-2 col">화학공학과</div>
-                        </div>
-                        <div class="col-12 col-md-6 d-flex align-items-center">
-                            <label for="certificationFile" class="me-1 col-6 stn">학위증명파일</label>
-                            <div id="certificationFile" class="btn btn-sm btn-light btn-outline-dark p-2 ">다운로드</div>
+                            <div id="major" class="p-2 col deptName"></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <div class="btn btn-primary">수정하기</div>
+                    <div class="btn btn-primary" onclick="window.location.href='/userEdu'">수정하기</div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -654,11 +636,11 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="Corporation" class="me-1 col-4 stn">기관명</label>
-                            <div id="Corporation" class="p-2 col">삼성-엔지니어</div>
+                            <div id="Corporation" class="p-2 col plcName"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="startDate" class="me-1 col-4 stn">활동시작년월</label>
-                            <div id="startDate" class="p-2 col">2017-02-21</div>
+                            <div id="startDate" class="p-2 col startDate"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
@@ -666,30 +648,25 @@
                     <div class="row ">
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="activityDetails" class="me-1 col-4 stn">활동내역</label>
-                            <div id="activityDetails" class="p-2 col">엔지니어활동</div>
+                            <div id="activityDetails" class="p-2 col plcJob"></div>
                         </div>
                         <div class="col-12 col-md-6 d-flex align-items-center">
                             <label for="endDate" class="me-1 col-4 stn">활동종료년월</label>
-                            <div id="endDate" class=" p-2 col">2023-08-09</div>
+                            <div id="endDate" class=" p-2 col endDate"></div>
                         </div>
                     </div>
                     <div class="thin-line"></div>
 
                     <div class="row mb-2">
-                        <div class="col-12 col-md-6 d-flex align-items-center">
-                            <label for="note" class="me-1 col-4 stn">비고</label>
-                            <div id="note" class="p-2 col">아아아아아아악!!!!</div>
-                        </div>
-                        <div class="col-12 col-md-6 d-flex align-items-center">
-                            <label for="activeCertificationFile" class="me-1 col-6 stn">활동증명파일</label>
-                            <div id="activeCertificationFile" class="btn btn-sm btn-light btn-outline-dark p-2 ">다운로드
-                            </div>
+                        <div class="col-12 d-flex align-items-center">
+                            <label for="note" class="me-1 col-2 stn">비고</label>
+                            <div id="note" class="p-2 col-10 note"></div>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <div class="btn btn-primary">수정하기</div>
+                    <div class="btn btn-primary" onclick="window.location.href='/userExp'">수정하기</div>
                 </div>
 
             </div>
@@ -711,26 +688,25 @@
                 <div class="container-fluid">
                     <div class="row ">
                         <div class="col-12 col-md-12 align-items-center">
-                            <label for="applicationReason" class="me-1 col-6 stn">지원동기(공백포함-700자)</label>
-                            <div id="applicationReason" class="p-2 border rounded col"
-                                 style="height: 300px;">dddd
+                            <label for="applicationReason" class="me-1 col-6 stn itemName0"></label>
+                            <div id="applicationReason" class="p-2 border rounded col answer0"
+                                 style="height: 300px;">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-12 col-md-12 align-items-center">
-                            <label for="futurePlan" class="me-1 col-6 stn">앞으로의 계획</label>
-                            <div id="futurePlan" class="p-2 border rounded col"
-                                 style="height: 300px;">네카라쿠베
+                            <label for="futurePlan" class="me-1 col-6 stn itemName1"></label>
+                            <div id="futurePlan" class="p-2 border rounded col answer1"
+                                 style="height: 300px;">
                             </div>
 
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <div class="btn btn-primary">수정하기</div>
+                    <div class="btn btn-primary" onclick="window.location.href='/userIntroduce'">수정하기</div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -751,37 +727,61 @@
         $('#rcrtNoSelect').on('change', function() {
             const selectedRcrtNo = $(this).find('option:selected').attr('id');
             displaySelectedInfo(selectedRcrtNo);
+            $('#textWrap').text("");
+            $("#finalSubmissionBtn").prop("disabled", false);
+            $("#submissionCancelBtn").prop("disabled", true);
+            $("#printBtn").addClass("d-none");
         });
     });
 
     // 내용보기 버튼
     function seeMore(btn){
+        const basicInfo = document.getElementById("basicInfo");
+        const educationBackground = document.getElementById("educationBackground");
+        const experienceBackground = document.getElementById("experienceBackground");
+        const selfIntroduction = document.getElementById("selfIntroduction");
         var areaDiv = btn.parentElement.parentElement.firstElementChild.innerHTML;
         var rcrtNo = btn.parentElement.parentElement.dataset.rcrtno;
         var applyNo = btn.parentElement.parentElement.parentElement.getAttribute("id");
-        console.log("applicationChecked.jsp")
-        console.log("1 : "+areaDiv);
-        console.log("2 : "+rcrtNo);
-        console.log("3 : "+applyNo);
         var url;
         var data;
+        var modal;
         switch (areaDiv){
             case "기본정보" :
                 url="/checked/info";
-                data= {applyNo:applyNo, rcrtNo:rcrtNo};
+                data= {aplyNo:applyNo, rcrtNo:rcrtNo};
+                modal = "#basicInfo";
+                ajax(url, data, modal);
                 break;
-            case "학력사항" : break;
-            case "경력사항" : break;
-            case "자기소개서" : break;
+            case "학력사항" :
+                url="/checked/edu";
+                data= {aplyNo:applyNo, rcrtNo:rcrtNo};
+                modal = "#educationBackground";
+                ajax(url, data, modal);
+                break;
+            case "경력사항" :
+                url="/checked/exp";
+                data= {aplyNo:applyNo, rcrtNo:rcrtNo};
+                modal = "#experienceBackground";
+                ajax(url, data, modal);
+                break;
+            case "자기소개서" :
+                url="/checked/introduce";
+                data= {aplyNo:applyNo, rcrtNo:rcrtNo};
+                modal = "#selfIntroduction";
+                ajax(url, data, modal);
+                break;
         }
-
+    }
+    function ajax(url, data, modal){
         $.ajax({
             url: url,
             type: "POST", // 전송 방식
             contentType: "application/json", // 요청의 컨텐츠 타입
             data: JSON.stringify(data),
             success: function(result){
-                alert(result)
+                content(result);
+                $(modal).modal("show");
             },
             error: function(request,status,error) {
                 // AJAX 호출에 실패한 경우 수행할 콜백 함수
@@ -789,6 +789,109 @@
             }
         });
     }
+    function content(result){
+        //기본정보
+        $(".courseName").text(result.courseName);
+        $(".nameKor").text(result.nameKor);
+        $(".nameEng").text(result.nameEng);
+        $(".gender").text(result.gender);
+        $(".birthday").text(result.birthday);
+        $(".email").text(result.email);
+        $(".hpLocal").text(result.hpLocal);
+        $(".zipCode").text(result.zipcode);
+        $(".addrLocal").text(result.addrLocal);
+
+        //학력사항
+        $(".gradeDiv").text(result.gradeDiv);
+        $(".orgName").text(result.orgName);
+        $(".deptName").text(result.deptName);
+        $(".startDate").text(result.startDate);
+        $(".endDate").text(result.endDate);
+
+        //경력사항
+        $(".plcName").text(result.plcName);
+        $(".plcJob").text(result.plcJob);
+        $(".note").text(result.note);
+
+        //자기소개서
+        for(var i=0 ; i<result.length ; i++){
+            $(".itemName"+i).text(result[i].itemName+"(최대 "+result[i].maxChar+"자)");
+            $(".answer"+i).text(result[i].answer);
+        }
+    }
+
+    //최종확인 버튼 클릭 시 이벤트
+    function updateStatusDiv(btn){
+        var areaDiv = btn.parentElement.parentElement.firstElementChild.innerHTML;
+        var rcrtNo = btn.parentElement.parentElement.dataset.rcrtno;
+        var applyNo = btn.parentElement.parentElement.parentElement.getAttribute("id");
+        var statusElement = btn.parentElement.parentElement.children[1]; // 변경: statusElement는 DOM 요소를 참조
+        var statusDiv = statusElement.innerText; // 변경: .innerText 속성은 statusElement에 적용
+
+        if(statusDiv === "작성중"){
+            statusDiv = "확인완료"
+        }else{
+            statusDiv = "작성중"
+        }
+
+        $.ajax({
+            url: "/checked/updateStatus",
+            type: "POST", // 전송 방식
+            contentType: "application/json", // 요청의 컨텐츠 타입
+            data: JSON.stringify({
+                areaDiv : areaDiv,
+                rcrtNo : rcrtNo,
+                aplyNo : applyNo,
+                statusDiv : statusDiv
+            }),
+            success: function(result){
+                statusElement.innerText=result.statusDiv
+            },
+            error: function(request,status,error) {
+                // AJAX 호출에 실패한 경우 수행할 콜백 함수
+                console.log("code: " + request.status + "\n" + "error: " + error);
+            }
+        })
+    }
+    const textWrap = document.getElementById("textWrap");
+    //최종제출버튼
+    function finalSubmission(){
+        var applyNo = $('.infoBlock:visible').closest('tbody').attr('id');
+        var rcrtNo = $('.infoBlock:visible').closest('tr').attr('data-rcrtNo');
+        $.ajax({
+            url: "/checked/finalSubmission",
+            type: "POST", // 전송 방식
+            contentType: "application/json", // 요청의 컨텐츠 타입
+            data: JSON.stringify({
+                rcrtNo : rcrtNo,
+                aplyNo : applyNo
+            }),
+            success: function(result){
+               if(result){
+                   textWrap.innerHTML = "";
+                   textWrap.innerHTML = "<div>지원자님의 수험번호는 <span class='text-danger fw-bold'>"+applyNo+"</span> 입니다.</div>";
+                   $("#finalSubmissionBtn").prop("disabled", true);
+                   $("#submissionCancelBtn").prop("disabled", false);
+                   $("#printBtn").removeClass("d-none");
+               }else{
+                   textWrap.innerHTML = "";
+                   textWrap.innerHTML = "<div class='text-danger'>지원서확인이 완료된 경우에만 지원서제출이 가능합니다.</div>";
+               }
+            },
+            error: function(request,status,error) {
+                // AJAX 호출에 실패한 경우 수행할 콜백 함수
+                console.log("code: " + request.status + "\n" + "error: " + error);
+            }
+        })
+    }
+    //지원취소버튼
+    function submissionCancel(){
+        textWrap.innerHTML = "<div class='text-danger'>지원을 취소하였습니다.</div>";
+        $("#finalSubmissionBtn").prop("disabled", false);
+        $("#submissionCancelBtn").prop("disabled", true);
+        $("#printBtn").addClass("d-none");
+    }
+
 
     /*추가제출서류 파일추가*/
     function addFile() {
