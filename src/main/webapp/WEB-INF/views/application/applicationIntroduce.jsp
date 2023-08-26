@@ -55,7 +55,7 @@
             <div class="menu h-auto px-3 border rounded-3">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userInfo" class="active">기본정보</a>
+                        <a href="/userInfo/${rcrtNo}" class="active">기본정보</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
                         <a href="/userEdu">학력사항</a>

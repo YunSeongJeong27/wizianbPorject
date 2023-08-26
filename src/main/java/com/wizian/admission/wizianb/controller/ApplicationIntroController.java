@@ -29,16 +29,19 @@ public class ApplicationIntroController {
                 List<ApplicationIntroduce> answer = applicationIntroService.findAnswerInfo(aplyNo);
                 model.addAttribute("introduceList",answer);
                 model.addAttribute("aplyNo",aplyNo);
+                model.addAttribute("rcrtNo",rcrtNo);
                 return "/application/applicationIntroduce";
             }else{
                 model.addAttribute("introduceList",introduceList);
                 model.addAttribute("aplyNo",aplyNo);
+                model.addAttribute("rcrtNo",rcrtNo);
                 return "/application/applicationIntroduce";
             }
         }
         //일단, 출력될 자기소개서 문항이 없다면
         model.addAttribute("introduceList",introduceList);
         model.addAttribute("aplyNo",aplyNo);
+        model.addAttribute("rcrtNo",rcrtNo);
         return "/application/applicationIntroduce";
     }
 
