@@ -14,4 +14,9 @@ public interface RecruitmentInfoService {
     void nthInfoSave(String rcrtNo,String schdlName,String statusDiv );
 
     ToastUiResponseDto deleteNthInfo(JsonNode jn);
+    ToastUiResponseDto subInfo(String rcrtNo);
+    ToastUiResponseDto subInfoInsert (JsonNode jn,String rcrtNo);
+    ToastUiResponseDto subInfoUpdate (JsonNode jn,String rcrtNo);
+
+
 }

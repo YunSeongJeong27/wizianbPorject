@@ -7,12 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AppController {
 
-    @GetMapping("/pledge")
-    public String pledge(Model model){
-        model.addAttribute("title","등록서약/포기");
-        return "/application/applicationPledge";
-    }
-
     @GetMapping("/userEdu")
     public String userEdu(Model model){
         model.addAttribute("title","학력사항");

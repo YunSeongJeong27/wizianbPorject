@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -93,7 +92,7 @@ public class ApplicationWriteController {
             session.setAttribute("login",member);
             model.addAttribute("member", member);
 
-            return "/application/applicationWrite";
+            return "redirect:/app";
         } else {
 
             model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");

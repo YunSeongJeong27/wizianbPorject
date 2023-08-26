@@ -115,7 +115,6 @@
                     <button type="button" class="btn btn-second">작성완료</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

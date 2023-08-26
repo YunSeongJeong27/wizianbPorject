@@ -57,15 +57,31 @@
         .breadcrumb {
             --bs-breadcrumb-item-padding-x: 15px !important;
         }
+        #login{
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background-color: #EEF5FF;
+            padding: 4px 15px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        #login a{
+            color: #000;
+        }
+
+        .nav-item .nav-link {
+            font-size: 20px;
+        }
     </style>
 </head>
 
 <body>
 <c:set var="login" value="${sessionScope.login}" />
 <div class="border-bottom border-3">
-    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
-        <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer;"></div>
-        <div>
+    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px; position:relative;">
+        <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; width: 170px; height: 105px;"></div>
+        <div id="login" class="rounded-5">
             <c:choose>
                 <c:when test="${empty login}">
                     <a href="/login">로그인</a>
@@ -75,7 +91,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center">
+        <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center align-items-center" style="margin-top: 15px;">
             <div class="nav-item" style="width: 31%;">
                 <a href="/app" class="nav-link headerBtn">원서작성</a>
             </div>

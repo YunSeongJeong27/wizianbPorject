@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -56,5 +57,33 @@ public class RecruitmentInfoController {
 
         return ResponseEntity.ok(recruitmentInfoService.deleteNthInfo(jn));
     }
+    
+    //전형일정설정정보
+    @GetMapping("/recruitmentinfo/subinfo/{rcrtNo}")
+    public ResponseEntity<ToastUiResponseDto>  subInfo(@PathVariable String rcrtNo){
+        return  ResponseEntity.ok(recruitmentInfoService.subInfo(rcrtNo));
+    }
+
+    //전형일정설정 입력,업데이트
+    @PutMapping("/recruitmentinfo/subinfosave/{rcrtNo}")
+    public ResponseEntity<?> subInfoSave(@RequestBody JsonNode jn ,@PathVariable String rcrtNo) {
+        List<ToastUiResponseDto> response = new ArrayList<>();
+
+        //신규 입력
+        if(jn.get("createdRows") != null){
+            JsonNode insertRows = jn.get("createdRows");
+            ToastUiResponseDto insert = recruitmentInfoService.subInfoInsert(insertRows,rcrtNo);
+            response.add(insert);
+        }
+        // 기존정보 업데이트
+        if (jn.get("updatedRows") != null){
+            JsonNode updateRows = jn.get("updatedRows");
+            ToastUiResponseDto update = recruitmentInfoService.subInfoUpdate(updateRows,rcrtNo);
+            response.add(update);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+
 
 }

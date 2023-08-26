@@ -36,8 +36,8 @@
         <div id="logo" class="h-75" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; width: 170px; height: 105px;"></div>
         <div class="h-50 d-flex justify-content-end me-3 align-items-center" style="width: 350px">
             <div class="dropdown">
-                <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false">
-                    세션 이름
+                <div class="btn dropdown-toggle w-100 text-end" data-bs-toggle="dropdown" aria-expanded="false"> <%--세션 이름--%>
+                    관리자
                 </div>
                 <div class="dropdown-menu w-100 text-center">
                     <div><a class="dropdown-item" href="#">로그아웃</a></div>

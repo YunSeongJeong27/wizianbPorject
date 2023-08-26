@@ -49,19 +49,39 @@ public class ApplicationIntroController {
                              @RequestParam("itemNo") int[] itemNos,
                              @RequestParam("answer") String[] answers){
 
+        Boolean existByAply = applicationIntroService.existsByAplyNo(aplyNos[0],rcrtNos[0]);
         List<ApplicationIntroduce> answerListAll = new ArrayList<>();
+        //저장
+        if(!existByAply){
 
-        for (int i = 0; i < itemNos.length; i++) {
-            ApplicationIntroduce answerList = new ApplicationIntroduce();
-            answerList.setAplyNo(aplyNos[i]);
-            answerList.setRcrtNo(rcrtNos[i]);
-            answerList.setItemNo(itemNos[i]);
-            answerList.setAnswer(answers[i]);
-            applicationIntroService.saveAnswer(answerList);
-            answerListAll.add(answerList);
+            for (int i = 0; i < itemNos.length; i++) {
+                ApplicationIntroduce answerList = new ApplicationIntroduce();
+                answerList.setAplyNo(aplyNos[i]);
+                answerList.setRcrtNo(rcrtNos[i]);
+                answerList.setItemNo(itemNos[i]);
+                answerList.setAnswer(answers[i]);
+                applicationIntroService.saveAnswer(answerList);
+                answerListAll.add(answerList);
+            }
+            model.addAttribute("introduceList", answerListAll);
+
+            return "redirect:/userIntroduce/"+rcrtNos[0]+"/"+aplyNos[0];
+        }else{
+            //수정
+            List<ApplicationIntroduce> introInfo = applicationIntroService.findAnswerInfo(aplyNos[0]);
+
+            for(int i=0;i< introInfo.size();i++){
+                ApplicationIntroduce answerList = new ApplicationIntroduce();
+                answerList.setAplyNo(aplyNos[i]);
+                answerList.setRcrtNo(rcrtNos[i]);
+                answerList.setItemNo(itemNos[i]);
+                answerList.setAnswer(answers[i]);
+                applicationIntroService.updateAnswer(answerList);
+                answerListAll.add(answerList);
+            }
+            model.addAttribute("introduceList", answerListAll);
+            return "redirect:/userIntroduce/"+rcrtNos[0]+"/"+aplyNos[0];
+
         }
-        model.addAttribute("introduceList", answerListAll);
-
-        return "redirect:/userIntroduce/"+rcrtNos[0]+"/"+aplyNos[0];
     }
 }
