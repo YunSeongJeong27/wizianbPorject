@@ -221,7 +221,7 @@
                     let fnlPass = application['fnlPassYn'];
                     if(fnlPass === 'Y') {
                         fnlPassYn.innerText = "합격";
-                        if(aplyStsDiv)pledgeBtn.disabled = false;
+                        if(aplyStsDiv === null)pledgeBtn.disabled = false;
                         else if(aplyStsDiv === '30') pledgeBtn.innerText = '등록 완료'
                         else if(aplyStsDiv === '40') pledgeBtn.innerText = '등록 포기'
                     }

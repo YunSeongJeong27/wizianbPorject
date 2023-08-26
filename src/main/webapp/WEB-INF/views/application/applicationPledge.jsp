@@ -112,7 +112,6 @@
     // 제출 확인
     function check() {
         if (!confirm("제출하시겠습니까?\n(제출 후 변경이 불가능합니다.)")) {
-            //var check = document.querySelector('input[type="radio"]:checked').value;
             return false;
         }
     }

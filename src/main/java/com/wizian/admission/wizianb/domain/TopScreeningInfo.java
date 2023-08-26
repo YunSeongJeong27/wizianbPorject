@@ -16,6 +16,8 @@ public class TopScreeningInfo {
 
     // 전형평가단계(EntrySelSchdl)
     private int schdlSeq;       // 일정일련번호(pk)
+    private String startDate;
+    private String endDate;
     private String recruitStartDate;   // 모집 시작일시
     private String recruitEndDate;     //모집 종료일시
     private String recruitPeriod;       //모집기간

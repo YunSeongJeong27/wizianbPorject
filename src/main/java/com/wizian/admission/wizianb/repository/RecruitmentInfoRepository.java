@@ -12,6 +12,7 @@ public interface RecruitmentInfoRepository {
     void updateSchdl(String schdlSeq,String schdlName,String statusDiv);
     TopScreeningInfo newCourseNameInfo(String courseName);
     void nthInfoSave(String rcrtNo,String schdlName,String statusDiv);
+    List<TopScreeningInfo>  subInfoList(String rcrtNo);
 
 
 }

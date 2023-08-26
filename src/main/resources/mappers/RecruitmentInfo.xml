@@ -27,4 +27,10 @@
                   #{rcrtNo},#{schdlName},#{statusDiv}
               )
     </insert>
+
+    <select id="subInfoList" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+        select schdl_seq, schdl_name, start_date, end_date, status_div from entry_sel_schdl where rcrt_no=#{rcrtNo}
+    </select>
+
+
 </mapper>

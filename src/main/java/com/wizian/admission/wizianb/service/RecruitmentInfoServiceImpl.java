@@ -1,12 +1,14 @@
 package com.wizian.admission.wizianb.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.wizian.admission.wizianb.domain.EvalResults;
 import com.wizian.admission.wizianb.domain.TopScreeningInfo;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.RecruitmentInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -59,6 +61,14 @@ public class RecruitmentInfoServiceImpl implements RecruitmentInfoService{
     @Override
     public ToastUiResponseDto deleteNthInfo(JsonNode jn){
         return null;
+    }
+    @Override
+    public ToastUiResponseDto subInfo(String rcrtNo){
+        List<TopScreeningInfo> subInfoList=recruitmentInfoRepository.subInfoList(rcrtNo);
+        HashMap<String, Object> resultMap= new HashMap<>();
+        resultMap.put("contents",subInfoList);
+        resultMap.put("pagination", "");
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
 }
