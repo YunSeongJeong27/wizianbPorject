@@ -13,6 +13,16 @@ public interface ApplicationMypageService {
 
     public List<ApplicationMypage> getApplyMkList(String applyNo);
 
-    public List<ApplicationMypage> getApplyMasterList(String rcrtNo, String applyNo);
+    public ApplicationMypage getApplyMasterList(String rcrtNo, String applyNo);
+
+    public ApplicationMypage getApplyAcdm(String rcrtNo, String applyNo);
+
+    public ApplicationMypage getApplyCareer(String rcrtNo, String applyNo);
+
+    public List<ApplicationMypage> getApplyIntroList(String rcrtNo, String applyNo);
+
+    public boolean updateStatus(String areaDiv, String rcrtNo, String applyNo, String statusDiv);
+
+    public List<String> statusDivList(String rcrtNo, String applyNo);
 }
 

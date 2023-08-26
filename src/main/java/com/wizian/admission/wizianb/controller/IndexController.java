@@ -40,5 +40,7 @@ public class IndexController {
     @GetMapping("/nthEvResults")
     public String evaluationResults() { return "/admin/nthEvResults";}
 
+    @GetMapping("/test11")
+    public String test(){return "/sign_up";}
 
 }

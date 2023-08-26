@@ -16,4 +16,24 @@
     <select id="getApplyMasterList" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
         select sel.COURSE_NAME, apply.* from entry_apply_master as apply inner join entry_sel_master as sel on apply.rcrt_no = sel.rcrt_no where apply.rcrt_no =#{rcrtNo} and apply.aply_no=#{applyNo};
     </select>
+
+    <select id="getApplyAcdm" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select*from entry_apply_acdm where APLY_NO = #{applyNo} and RCRT_NO = #{rcrtNo};
+    </select>
+
+    <select id="getApplyCareer" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select*from entry_apply_career where APLY_NO = #{applyNo} and RCRT_NO = #{rcrtNo};
+    </select>
+
+    <select id="getApplyIntroList" resultType="com.wizian.admission.wizianb.domain.ApplicationMypage">
+        select*from entry_sel_intro as sel inner join entry_apply_intro as apply on sel.ITEM_NO = apply.ITEM_NO and sel.RCRT_NO = apply.RCRT_NO where apply.RCRT_NO = #{rcrtNo} and apply.APLY_NO = #{applyNo};
+    </select>
+
+    <update id="updateStatus">
+        update entry_apply_mk set status_div=#{statusDiv} where aply_no = #{applyNo} and rcrt_no = #{rcrtNo} and area_div = #{areaDiv};
+    </update>
+
+    <select id="statusDivList" resultType="java.lang.String">
+        select STATUS_DIV from entry_apply_mk where APLY_NO=#{applyNo} and RCRT_NO=#{rcrtNo};
+    </select>
 </mapper>

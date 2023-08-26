@@ -2,6 +2,8 @@ package com.wizian.admission.wizianb.domain;
 
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,4 +48,26 @@ public class ApplicationMypage {
 
     //entry_apply_mk
     private String areaDiv;
+
+    //entry_apply_acdm
+    private String startDate;
+    private String endDate;
+    private String gradeDiv;
+    private String gradeStatusDiv;
+    private String orgName;
+    private String deptName;
+
+    //entry_apply_career
+    private String plcName;
+    private String plcJob;
+
+    //entry_apply_intro
+    private String answer;
+
+    //entry_sel_intro
+    private int itemNo;
+    private String itemName;
+    private int maxChar;
+    private String itemExpl;
+
 }

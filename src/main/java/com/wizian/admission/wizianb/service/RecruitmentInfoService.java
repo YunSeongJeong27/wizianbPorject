@@ -15,5 +15,8 @@ public interface RecruitmentInfoService {
 
     ToastUiResponseDto deleteNthInfo(JsonNode jn);
     ToastUiResponseDto subInfo(String rcrtNo);
+    ToastUiResponseDto subInfoInsert (JsonNode jn,String rcrtNo);
+    ToastUiResponseDto subInfoUpdate (JsonNode jn,String rcrtNo);
+
 
 }

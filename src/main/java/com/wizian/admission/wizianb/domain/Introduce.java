@@ -20,4 +20,7 @@ public class Introduce {
     private String aplyNo;
     private String answer;
 
+    //지원서
+    private String rcrtNo;
+
 }

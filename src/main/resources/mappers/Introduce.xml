@@ -11,6 +11,11 @@
         INSERT INTO ENTRY_SEL_INTRO(RCRT_NO, ITEM_NAME, MAX_CHAR, ITEM_EXPL)
         VALUES(#{rcrtNo}, #{itemName}, #{maxChar}, #{itemExpl})
     </insert>
+    <update id="updateIntroduceItem" parameterType="com.wizian.admission.wizianb.domain.Introduce">
+        UPDATE ENTRY_SEL_INTRO
+        SET ITEM_NAME = #{itemName}, MAX_CHAR = #{maxChar}, ITEM_EXPL = #{itemExpl}
+        WHERE RCRT_NO = #{rcrtNo} AND ITEM_NAME = #{itemName}
+    </update>
 
     <select id="findItem" resultType="com.wizian.admission.wizianb.domain.Introduce">
         SELECT *

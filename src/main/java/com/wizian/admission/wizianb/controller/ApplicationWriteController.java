@@ -61,6 +61,8 @@ public class ApplicationWriteController {
         return "/application/applicationLogin";
     }
 
+
+
     @PostMapping("/login")
     public String postLogin(@RequestParam("id")String email,@RequestParam("password")String password, Model model, HttpSession session) {
 

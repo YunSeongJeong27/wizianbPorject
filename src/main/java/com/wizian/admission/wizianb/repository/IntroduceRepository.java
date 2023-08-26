@@ -10,7 +10,7 @@ public interface IntroduceRepository {
 
     List<Introduce> findAll(String rcrtNo);
 
-    int insertIntroduceItem(Introduce introduceItem, String rcrtNo);
+    int insertIntroduceItem(Introduce introduceItem);
 
     int updateIntroduceItem(Introduce introduceItem, String rcrtNo);
 
@@ -24,4 +24,5 @@ public interface IntroduceRepository {
 
     Boolean existsByAplyNo(String aplyNo,String rcrtNo);
 
+    int updateIntroduceItem(Introduce introduceItem);
 }

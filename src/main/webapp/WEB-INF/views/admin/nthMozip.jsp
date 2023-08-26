@@ -657,6 +657,8 @@
             const rowData = nthTable.getRow(rowKey);
             rcrtNo = rowData.rcrtNo;
         }
+
+
         document.getElementById('scheduleGridDiv').innerHTML='';
 
         scheduleGrid = new tui.Grid({
@@ -664,7 +666,7 @@
             data: {
                 api: {
                     readData: {url: '/recruitmentinfo/subinfo/' + rcrtNo, method: 'GET'},
-                    updateData: { url: '/eval/result/updatescore', method: 'PUT', contentType: 'application/json' } ,
+                    modifyData: {url: '/recruitmentinfo/subinfosave/'+rcrtNo, method: 'PUT', contentType: 'application/json'}
                 },
             },
             rowHeaders: ['checkbox'],
@@ -722,6 +724,14 @@
                         }
                     }
                 },
+                {
+                    header: '일정일련번호',
+                    name: 'schdlSeq',
+                    visible: false,
+                    sortingType: 'asc',
+                    sortable: true,
+                    align: 'center',
+                }
             ],
             columnOptions: {
                 resizable: true,
@@ -796,6 +806,21 @@
             content.setAttribute("style","display:block");
         }
     }
+
+    const nthSaveBtn = document.getElementById("scheduleSaveBtn");
+    nthSaveBtn.addEventListener('click', () => {
+        if(confirm("저장하실 겁니까?")) {
+            scheduleGrid.request('modifyData');
+            searchBtn();
+        }
+    });
+
+    // 삭제 버튼 클릭 이벤트
+    document.getElementById("scheduleDeleteBtn").addEventListener("click", function () {
+        if(confirm("삭제하시겠습니까?")) {
+            scheduleGrid.removeCheckedRows(false);
+        }
+    });
 </script>
 </body>
 </html>
