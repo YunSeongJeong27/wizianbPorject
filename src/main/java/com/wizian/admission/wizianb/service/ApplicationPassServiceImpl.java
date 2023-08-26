@@ -3,6 +3,7 @@ package com.wizian.admission.wizianb.service;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.NoticeMessage;
 import com.wizian.admission.wizianb.domain.Recruitment;
+import com.wizian.admission.wizianb.domain.Schedule;
 import com.wizian.admission.wizianb.repository.ApplicationPassRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,11 @@ public class ApplicationPassServiceImpl implements ApplicationPassService {
             else if(fnlPass.equals("Y")) code = "30";           // 최종합격자 안내
         }
         return applicationPassRepository.findNoticeMessage(code, rcrtNo);
+    }
+
+    @Override
+    public Schedule findSchedule(String rcrtNo, String schdlName) {
+        return applicationPassRepository.findSchedule(rcrtNo, schdlName);
     }
 
 

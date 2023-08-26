@@ -3,6 +3,7 @@ package com.wizian.admission.wizianb.controller;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.NoticeMessage;
 import com.wizian.admission.wizianb.domain.Recruitment;
+import com.wizian.admission.wizianb.domain.Schedule;
 import com.wizian.admission.wizianb.service.ApplicationPassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,13 @@ public class ApplicationPassController {
             List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
 
             if (!courseList.isEmpty()) {
-                ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), courseList.get(0).getRcrtNo());
+                String rcrtNo = courseList.get(0).getRcrtNo();
+
+                ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), rcrtNo);
                 model.addAttribute("application", application);
-                model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), courseList.get(0).getRcrtNo()));
+                model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), rcrtNo));
+                model.addAttribute("scheduleDoc", applicationPassService.findSchedule(rcrtNo, "서류합격자발표"));
+                model.addAttribute("scheduleFnl", applicationPassService.findSchedule(rcrtNo, "최종합격자발표"));
             }
 
             model.addAttribute("title", "합격자발표");
@@ -49,11 +54,14 @@ public class ApplicationPassController {
         ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
 
         ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), rcrtNo);
-
         NoticeMessage message = applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), rcrtNo);
+        Schedule scheduleDoc = applicationPassService.findSchedule(rcrtNo, "서류합격자발표");
+        Schedule scheduleFnl = applicationPassService.findSchedule(rcrtNo, "최종합격자발표");
 
         model.addAttribute("application", application);
         model.addAttribute("message", message);
+        model.addAttribute("scheduleDoc", scheduleDoc);
+        model.addAttribute("scheduleFnl", scheduleFnl);
 
         return ResponseEntity.status(HttpStatus.OK).body(model);
     }
