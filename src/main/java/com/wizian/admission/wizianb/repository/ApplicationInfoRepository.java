@@ -13,6 +13,7 @@ public interface ApplicationInfoRepository {
     void saveMember(ApplicationInfo applicationInfo);
     String findMax();
     Boolean existsByEmail(String email);
+    Boolean existsByApp(String email,String rcrtNo);
     ApplicationInfo findByLoginId(String loginId);
     void savePassword(String loginId, String password, LocalDateTime date);
     String courseName(Object rcrtNo);

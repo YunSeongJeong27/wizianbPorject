@@ -14,12 +14,19 @@
     </insert>
 
     <select id="findAnswerInfo" resultType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
-        SELECT ESI.RCRT_NO, ESI.ITEM_NAME, ESI.ITEM_EXPL, ESI.MAX_CHAR, EAI.ANSWER
+        SELECT ESI.RCRT_NO, ESI.ITEM_NAME, ESI.ITEM_EXPL,ESI.ITEM_NO, ESI.MAX_CHAR, EAI.ANSWER
         FROM entry_sel_intro AS ESI
                  LEFT OUTER JOIN entry_apply_intro AS EAI
                                  ON ESI.rcrt_no = EAI.rcrt_no AND ESI.ITEM_NO = EAI.ITEM_NO
         WHERE aply_no = #{aplyNo}
     </select>
 
+    <update id="updateAnswer" parameterType="com.wizian.admission.wizianb.domain.ApplicationIntroduce">
+        UPDATE entry_apply_intro SET answer = #{answer} WHERE aply_no=#{aplyNo} AND rcrt_no=#{rcrtNo} AND item_no=#{itemNo}
+    </update>
+
+    <select id="existsByAplyNo" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_apply_intro WHERE aply_no = #{aplyNo} AND rcrt_no = #{rcrtNo});
+    </select>
 
 </mapper>
