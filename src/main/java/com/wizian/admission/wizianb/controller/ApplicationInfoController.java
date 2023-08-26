@@ -62,11 +62,10 @@ public class ApplicationInfoController {
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
     public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model,HttpSession session) throws IOException {
+
         applicationInfoService.join(applicationInfo,file);
         return "/application/applicationLogin";
     }
-
-    /*지원서 수정*/
 
 
     /*메일인증*/

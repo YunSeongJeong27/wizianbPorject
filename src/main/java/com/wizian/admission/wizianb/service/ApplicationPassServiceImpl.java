@@ -45,5 +45,10 @@ public class ApplicationPassServiceImpl implements ApplicationPassService {
     public Recruitment findCourse(String rcrtNo) {
         return applicationPassRepository.findCourse(rcrtNo);
     }
+
+    @Override
+    public void pledgeSave(String rcrtNo, String aplyNo, String aplyStsDiv) {
+        applicationPassRepository.pledgeSave(rcrtNo, aplyNo, aplyStsDiv);
+    }
 }
 

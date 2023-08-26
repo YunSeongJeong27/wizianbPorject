@@ -30,12 +30,13 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     private final ImageService imageService;
 
 
-    /*지원서처음작성*/
+    /*지원서작성*/
     @Override
     @Transactional
     public ApplicationInfo join(ApplicationInfo applicationInfo, MultipartFile file) throws IOException {
         // 이메일 중복 여부 체크
         boolean isDuplicateEmail = applicationInfoRepository.existsByEmail(applicationInfo.getEmail());
+        boolean isDuplicateApp = applicationInfoRepository.existsByApp(applicationInfo.getEmail(),applicationInfo.getRcrtNo());
 
         // aplyNo 자동등록
         String maxAplyNo = applicationInfoRepository.findMax();
@@ -50,36 +51,57 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
         // mem_id가져와서 저장해야됨.
         String memId = applicationInfoRepository.memberMemId(applicationInfo.getEmail());
 
-        //기존회원이라면, 새로운 지원서만 등록.
+        //1.기존회원이고,등록된 지원서가 없다면 새로운 지원서 등록해라.
         if (isDuplicateEmail) {
-            ApplicationInfo appInfo = new ApplicationInfo();
+            if(!isDuplicateApp){
+                ApplicationInfo appInfo = new ApplicationInfo();
 
-            appInfo.setAplyNo(newAplyNo);
-            appInfo.setRcrtNo(applicationInfo.getRcrtNo());
-            appInfo.setCourseDiv(applicationInfo.getCourseDiv());
-            appInfo.setNameKor(applicationInfo.getNameKor());
-            appInfo.setNameEng(applicationInfo.getNameEng());
-            appInfo.setBirthday(applicationInfo.getBirthday());
-            appInfo.setGender(applicationInfo.getGender());
-            appInfo.setEmail(applicationInfo.getEmail());
-            appInfo.setZipcode(applicationInfo.getZipcode());
-            appInfo.setAddrLocal(applicationInfo.getAddrLocal());
-            appInfo.setAddrDetail(applicationInfo.getAddrDetail());
-            appInfo.setTelLocal(applicationInfo.getTelLocal());
-            appInfo.setHpLocal(applicationInfo.getHpLocal());
-            appInfo.setMemId(memId);
+                appInfo.setAplyNo(newAplyNo);
+                appInfo.setRcrtNo(applicationInfo.getRcrtNo());
+                appInfo.setCourseDiv(applicationInfo.getCourseDiv());
+                appInfo.setNameKor(applicationInfo.getNameKor());
+                appInfo.setNameEng(applicationInfo.getNameEng());
+                appInfo.setBirthday(applicationInfo.getBirthday());
+                appInfo.setGender(applicationInfo.getGender());
+                appInfo.setEmail(applicationInfo.getEmail());
+                appInfo.setZipcode(applicationInfo.getZipcode());
+                appInfo.setAddrLocal(applicationInfo.getAddrLocal());
+                appInfo.setAddrDetail(applicationInfo.getAddrDetail());
+                appInfo.setTelLocal(applicationInfo.getTelLocal());
+                appInfo.setHpLocal(applicationInfo.getHpLocal());
+                appInfo.setMemId(memId);
 
+                // 파일 업로드와 저장
+                int newFileName = imageService.saveImage(file);
+                appInfo.setPicFileNo(newFileName);
 
-            // 파일 업로드와 저장
-            int newFileName = imageService.saveImage(file);
-            appInfo.setPicFileNo(newFileName);
+                applicationInfoRepository.save(appInfo);
 
-            applicationInfoRepository.save(appInfo);
+                return appInfo;
+            }else{
+                //2.기존회원이고,등록된 지원서가 있다면 업데이트만 해라.
+                ApplicationInfo appInfo = applicationInfoRepository.findAppInfo(applicationInfo.getEmail(), applicationInfo.getRcrtNo());
 
-            return appInfo;
+                appInfo.setNameKor(applicationInfo.getNameKor());
+                appInfo.setNameEng(applicationInfo.getNameEng());
+                appInfo.setBirthday(applicationInfo.getBirthday());
+                appInfo.setGender(applicationInfo.getGender());
+                appInfo.setZipcode(applicationInfo.getZipcode());
+                appInfo.setAddrLocal(applicationInfo.getAddrLocal());
+                appInfo.setAddrDetail(applicationInfo.getAddrDetail());
+                appInfo.setTelLocal(applicationInfo.getTelLocal());
+                appInfo.setHpLocal(applicationInfo.getHpLocal());
+
+                // 파일 업로드와 저장
+                int newFileName = imageService.saveImage(file);
+                appInfo.setPicFileNo(newFileName);
+
+                applicationInfoRepository.updateAppInfo(appInfo);
+
+                return appInfo;
+            }
         }
-
-        //신규회원이라면, 회원가입과 동시진행.
+        //3.신규회원이라면, 회원가입과 동시진행.
         ApplicationInfo appInfo = new ApplicationInfo();
         appInfo.setAplyNo(newAplyNo);
         appInfo.setRcrtNo(applicationInfo.getRcrtNo());
@@ -119,12 +141,6 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     @Override
     public List<ApplicationInfo> memberAll(String memberMemId) {
         return applicationInfoRepository.memberAll(memberMemId);
-    }
-//지원서 수정하기
-    @Override
-    public ApplicationInfo updateAppInfo(ApplicationInfo applicationInfo, MultipartFile file){
-
-        return applicationInfo;
     }
 
     @Override

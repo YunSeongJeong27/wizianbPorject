@@ -28,6 +28,10 @@
         SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email});
     </select>
 
+    <select id="existsByApp" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_apply_master WHERE email = #{email} AND rcrt_no = #{rcrtNo});
+    </select>
+
     <select id="findByLoginId" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
         SELECT *
         FROM member

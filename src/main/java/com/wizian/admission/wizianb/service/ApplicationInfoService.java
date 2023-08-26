@@ -22,6 +22,5 @@ public interface ApplicationInfoService {
    ApplicationInfo findAppInfo(String loginId,String rcrtNo);
    String memberMemId(String email);
    List<ApplicationInfo> memberAll(String memberMemId);
-   ApplicationInfo updateAppInfo(ApplicationInfo applicationInfo,MultipartFile file);
 
 }

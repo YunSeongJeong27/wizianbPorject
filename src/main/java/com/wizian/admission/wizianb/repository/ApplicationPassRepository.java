@@ -13,5 +13,6 @@ public interface ApplicationPassRepository {
     NoticeMessage findNoticeMessage(String code, String rcrtNo);
 
     Recruitment findCourse(String rcrtNo);
+    void pledgeSave(String rcrtNo, String aplyNo, String aplyStsDiv);
 
 }
