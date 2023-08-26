@@ -32,5 +32,20 @@
         select schdl_seq, schdl_name, start_date, end_date, status_div from entry_sel_schdl where rcrt_no=#{rcrtNo}
     </select>
 
+    <insert id="subInfoInsert" parameterType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+        insert into  entry_sel_schdl( schdl_seq,rcrt_no,schdl_name,start_date,end_date,status_div)
+        values(
+                  (SELECT schdl_seq FROM (SELECT IFNULL(MAX(schdl_seq), 0) + 1 AS schdl_seq FROM entry_sel_schdl) AS SchdlSeq),
+                  #{rcrtNo},#{schdlName},#{startDate},#{endDate} ,#{statusDiv}
+              )
+
+    </insert>
+
+    <update id="subInfoUpdate" parameterType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+        update entry_sel_schdl set rcrt_no=#{rcrtNo},schdl_name=#{schdlName},
+                                   start_date=#{startDate},end_date=#{endDate},status_div=#{statusDiv}
+        where schdl_seq=#{schdlSeq}
+    </update>
+
 
 </mapper>
