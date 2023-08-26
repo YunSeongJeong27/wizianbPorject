@@ -57,15 +57,27 @@
         .breadcrumb {
             --bs-breadcrumb-item-padding-x: 15px !important;
         }
+        #login{
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background-color: #EEF5FF;
+            padding: 4px 15px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        #login a{
+            color: #000;
+        }
     </style>
 </head>
 
 <body>
 <c:set var="login" value="${sessionScope.login}" />
 <div class="border-bottom border-3">
-    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px;">
+    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px; position:relative;">
         <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; cursor: pointer;"></div>
-        <div>
+        <div id="login" class="rounded-5">
             <c:choose>
                 <c:when test="${empty login}">
                     <a href="/login">로그인</a>
@@ -87,7 +99,15 @@
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
-                <a href="/pass" class="nav-link headerBtn">합격자발표</a>
+                <c:choose>
+                    <c:when test="${empty login}">
+                        <a href="/login" class="nav-link headerBtn">합격자발표</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/pass" class="nav-link headerBtn">합격자발표</a>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
         </div>
     </div>

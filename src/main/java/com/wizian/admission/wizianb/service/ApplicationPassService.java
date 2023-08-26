@@ -14,4 +14,7 @@ public interface ApplicationPassService {
         ApplicationInfo findApplication(String email, String rcrtNo);
         NoticeMessage findNoticeMessage(String docPass, String fnlPass, String rcrtNo);
 
+        Recruitment findCourse(String rcrtNo);
+        void pledgeSave(String rcrtNo, String aplyNo, String aplyStsDiv);
+
 }
