@@ -14,5 +14,7 @@ public interface ApplicationIntroRepository {
 
     List<ApplicationIntroduce> findAnswerInfo(String aplyNo);
 
+    void updateAnswer(String answer,String aplyNo,String rcrtNo,int itemNo);
 
+    Boolean existsByAplyNo(String aplyNo,String rcrtNo);
 }

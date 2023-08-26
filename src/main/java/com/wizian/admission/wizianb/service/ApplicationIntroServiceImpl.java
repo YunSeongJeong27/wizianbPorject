@@ -40,4 +40,23 @@ public class ApplicationIntroServiceImpl implements ApplicationIntroService{
     public List<ApplicationIntroduce> findAnswerInfo(String aplyNo) {
         return applicationIntroRepository.findAnswerInfo(aplyNo);
     }
+
+
+    @Override
+    public ApplicationIntroduce updateAnswer(ApplicationIntroduce appIntro) {
+
+        ApplicationIntroduce aplyIntro = new ApplicationIntroduce();
+        aplyIntro.setAnswer(appIntro.getAnswer());
+        aplyIntro.setAplyNo(appIntro.getAplyNo());
+        aplyIntro.setRcrtNo(appIntro.getRcrtNo());
+        aplyIntro.setItemNo(appIntro.getItemNo());
+
+        applicationIntroRepository.updateAnswer(appIntro.getAnswer(),appIntro.getAplyNo(),appIntro.getRcrtNo(),appIntro.getItemNo());
+        return aplyIntro;
+    }
+
+    @Override
+    public Boolean existsByAplyNo(String aplyNo, String rcrtNo) {
+        return applicationIntroRepository.existsByAplyNo(aplyNo,rcrtNo);
+    }
 }

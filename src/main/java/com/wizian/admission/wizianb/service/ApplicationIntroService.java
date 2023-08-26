@@ -15,4 +15,8 @@ public interface ApplicationIntroService {
 
         List<ApplicationIntroduce> findAnswerInfo(String aplyNo);
 
+        ApplicationIntroduce updateAnswer(ApplicationIntroduce applicationIntroduce);
+
+        Boolean existsByAplyNo(String aplyNo,String rcrtNo);
+
 }
