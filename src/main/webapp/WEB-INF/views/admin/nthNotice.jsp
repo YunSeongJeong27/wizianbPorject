@@ -45,7 +45,7 @@
                         <div class="d-flex flex-row justify-content-between mb-2">
                             <div class="d-flex flex-row align-items-center">
                                 <p class="subTitle fw-bold me-2">모집전형안내문</p>
-                                <p class="subResult text-secondary me-2">검색결과:0건</p>
+                                <p class="subResult text-secondary me-2">검색결과</p>
                                 <select class="form-select w-auto" id="noticeTablePage">
                                     <option selected>5</option>
                                     <option>30</option>

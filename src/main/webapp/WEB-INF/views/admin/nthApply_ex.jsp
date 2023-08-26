@@ -148,7 +148,7 @@
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
             <div class="col-4 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">모집기수정보</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
+                <p class="subResult text-secondary me-2">검색결과</p>
             </div>
         </div>
 
@@ -165,7 +165,7 @@
                         <span class="fw-bold me-2">지원자목록</span>
                     </div>
                     <div>
-                        <span class="text-secondary me-2">검색결과 : 0건</span>
+                        <span class="text-secondary me-2">검색결과</span>
                     </div>
                     <div>
                         <select id="gridTablePage" class="form-select-sm" onchange="fn_grid2_pageRowCount()">

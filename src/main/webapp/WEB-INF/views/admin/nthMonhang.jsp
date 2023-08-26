@@ -23,7 +23,7 @@
                 <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <p class="subTitle fw-bold me-2">자기소개서문항</p>
-                        <p class="subResult text-secondary me-2">검색결과:0건</p>
+                        <p class="subResult text-secondary me-2">검색결과</p>
                         <select id="monhangTablePage" class="form-select w-auto">
                             <option selected>5</option>
                             <option>7</option>

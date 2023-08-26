@@ -58,7 +58,7 @@
         <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4 mb-2">
             <div class="col-3 d-flex flex-row align-items-center">
                 <p class="subTitle fw-bold me-2">최종합격자명부</p>
-                <p class="subResult text-secondary me-2">검색결과:00건</p>
+                <p class="subResult text-secondary me-2">검색결과</p>
                 <div>
                     <select class="form-select" id="finalTablePage">
                         <option>5</option>

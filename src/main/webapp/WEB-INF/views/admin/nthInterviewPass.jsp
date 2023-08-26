@@ -61,7 +61,7 @@
             <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
                 <div class="col-4 d-flex flex-row align-items-center">
                     <p class="subTitle fw-bold me-2">모집전형정보</p>
-                    <p class="subResult text-secondary me-2">검색결과:00건</p>
+                    <p class="subResult text-secondary me-2">검색결과</p>
                     <div>
                         <select class="form-select" id="nthTablePage">
                             <option selected>5</option>
@@ -86,7 +86,7 @@
                 <div class="col-12 d-flex flex-row justify-content-between searchResult mt-4">
                     <div class="d-flex flex-row align-items-center">
                         <p class="subTitle fw-bold me-2">전형단계 사정결과 등록</p>
-                        <p class="subResult text-secondary me-2">검색결과:0건</p>
+                        <p class="subResult text-secondary me-2">검색결과</p>
                         <select class="form-select w-auto" id="interviewTablePage">
                             <option selected>5</option>
                             <option>7</option>
