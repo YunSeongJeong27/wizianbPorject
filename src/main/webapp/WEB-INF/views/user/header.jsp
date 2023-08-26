@@ -99,15 +99,7 @@
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
-                <c:choose>
-                    <c:when test="${empty login}">
-                        <a href="/login" class="nav-link headerBtn">합격자발표</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/pass" class="nav-link headerBtn">합격자발표</a>
-                    </c:otherwise>
-                </c:choose>
-
+                <a href="/pass" class="nav-link headerBtn">합격자발표</a>
             </div>
         </div>
     </div>

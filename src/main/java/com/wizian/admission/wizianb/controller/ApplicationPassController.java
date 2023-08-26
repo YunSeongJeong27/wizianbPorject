@@ -24,18 +24,23 @@ public class ApplicationPassController {
     @GetMapping("/pass")
     public String pass(Model model,HttpSession session){
         ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
-        List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
 
-        if(!courseList.isEmpty()) {
-            ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), courseList.get(0).getRcrtNo());
-            model.addAttribute("application", application);
-            model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), courseList.get(0).getRcrtNo()));
+        if(member != null) {
+            List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
+
+            if (!courseList.isEmpty()) {
+                ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), courseList.get(0).getRcrtNo());
+                model.addAttribute("application", application);
+                model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), courseList.get(0).getRcrtNo()));
+            }
+
+            model.addAttribute("title", "합격자발표");
+            model.addAttribute("courseList", courseList);
+
+            return "/application/applicationPass";
+        } else {
+            return "/application/applicationLogin";
         }
-
-        model.addAttribute("title", "합격자발표");
-        model.addAttribute("courseList", courseList);
-
-        return "/application/applicationPass";
     }
 
     @GetMapping("/pass/findApplication/{rcrtNo}")
