@@ -61,4 +61,48 @@ public class IntroduceServiceImpl implements IntroduceService {
         }
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
+
+    @Override
+    public List<Introduce> findItem(String rcrtNo) {
+        return introduceRepository.findItem(rcrtNo);
+    }
+
+    @Override
+    public Introduce saveAnswer(Introduce appIntro) {
+
+        Introduce aplyintro = new Introduce();
+        aplyintro.setAplyNo(appIntro.getAplyNo());
+        aplyintro.setRcrtNo(appIntro.getRcrtNo());
+        aplyintro.setItemNo(appIntro.getItemNo());
+        aplyintro.setAnswer(appIntro.getAnswer());
+
+        introduceRepository.saveAnswer(aplyintro.getItemNo(), aplyintro.getAplyNo(), aplyintro.getRcrtNo(), aplyintro.getAnswer());
+
+        return aplyintro;
+    }
+
+    @Override
+    public List<Introduce> findAnswerInfo(String aplyNo) {
+        return introduceRepository.findAnswerInfo(aplyNo);
+    }
+
+
+    @Override
+    public Introduce updateAnswer(Introduce appIntro) {
+
+        Introduce aplyIntro = new Introduce();
+        aplyIntro.setAnswer(appIntro.getAnswer());
+        aplyIntro.setAplyNo(appIntro.getAplyNo());
+        aplyIntro.setRcrtNo(appIntro.getRcrtNo());
+        aplyIntro.setItemNo(appIntro.getItemNo());
+
+        introduceRepository.updateAnswer(appIntro.getAnswer(),appIntro.getAplyNo(),appIntro.getRcrtNo(),appIntro.getItemNo());
+        return aplyIntro;
+    }
+
+    @Override
+    public Boolean existsByAplyNo(String aplyNo, String rcrtNo) {
+        return introduceRepository.existsByAplyNo(aplyNo,rcrtNo);
+    }
+
 }

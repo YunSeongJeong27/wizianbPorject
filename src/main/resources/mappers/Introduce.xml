@@ -6,8 +6,37 @@
         SELECT *
         FROM ENTRY_SEL_INTRO WHERE RCRT_NO = #{rcrtNo}
     </select>
+
     <insert id="insertIntroduceItem" parameterType="com.wizian.admission.wizianb.domain.Introduce">
         INSERT INTO ENTRY_SEL_INTRO(RCRT_NO, ITEM_NAME, MAX_CHAR, ITEM_EXPL)
         VALUES(#{rcrtNo}, #{itemName}, #{maxChar}, #{itemExpl})
     </insert>
+
+    <select id="findItem" resultType="com.wizian.admission.wizianb.domain.Introduce">
+        SELECT *
+        FROM entry_sel_intro
+        WHERE rcrt_no = #{rcrtNo}
+    </select>
+
+    <insert id="saveAnswer" parameterType="com.wizian.admission.wizianb.domain.Introduce">
+        INSERT INTO entry_apply_intro(item_no, aply_no, rcrt_no, answer)
+        VALUES (#{itemNo}, #{aplyNo}, #{rcrtNo}, #{answer})
+    </insert>
+
+    <select id="findAnswerInfo" resultType="com.wizian.admission.wizianb.domain.Introduce">
+        SELECT ESI.RCRT_NO, ESI.ITEM_NAME, ESI.ITEM_EXPL,ESI.ITEM_NO, ESI.MAX_CHAR, EAI.ANSWER
+        FROM entry_sel_intro AS ESI
+                 LEFT OUTER JOIN entry_apply_intro AS EAI
+                                 ON ESI.rcrt_no = EAI.rcrt_no AND ESI.ITEM_NO = EAI.ITEM_NO
+        WHERE aply_no = #{aplyNo}
+    </select>
+
+    <update id="updateAnswer" parameterType="com.wizian.admission.wizianb.domain.Introduce">
+        UPDATE entry_apply_intro SET answer = #{answer} WHERE aply_no=#{aplyNo} AND rcrt_no=#{rcrtNo} AND item_no=#{itemNo}
+    </update>
+
+    <select id="existsByAplyNo" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM entry_apply_intro WHERE aply_no = #{aplyNo} AND rcrt_no = #{rcrtNo});
+    </select>
+
 </mapper>
