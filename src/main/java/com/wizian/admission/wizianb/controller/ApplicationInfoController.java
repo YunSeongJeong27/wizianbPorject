@@ -1,9 +1,11 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.ApplicationWriteService;
 import com.wizian.admission.wizianb.service.MailSendService;
+import com.wizian.admission.wizianb.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,7 @@ public class ApplicationInfoController {
     private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
     private final PasswordEncoder passwordEncoder;
+    private final RecruitmentService recruitmentService;
 
     //기본정보
     @GetMapping("/userInfo")
@@ -37,18 +40,20 @@ public class ApplicationInfoController {
        // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
 
         model.addAttribute("rcrtNo",rcrtNo);
-//        model.addAttribute("courseDiv",courseDiv);
 
         if(session.getAttribute("login")!=null){
 
             ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
             ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
+            Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
 
             model.addAttribute("appInfo",appInfo);
             model.addAttribute("member",member);
+            model.addAttribute("rcrtInfo",rcrtInfo);
             return "/application/applicationInfoAfterLogin";
         }else{
-
+            Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
+            model.addAttribute("rcrtInfo",rcrtInfo);
             return "/application/applicationInfo";
         }
     }
@@ -56,12 +61,12 @@ public class ApplicationInfoController {
 
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
-    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model) throws IOException {
-
+    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model,HttpSession session) throws IOException {
         applicationInfoService.join(applicationInfo,file);
-
-        return "/application/applicationInfoAfterLogin";
+        return "/application/applicationLogin";
     }
+
+    /*지원서 수정*/
 
 
     /*메일인증*/
@@ -76,9 +81,6 @@ public class ApplicationInfoController {
 
             return ResponseEntity.status(HttpStatus.OK).body(authNum);
         }
-
-
-
     }
 
 
@@ -92,18 +94,12 @@ public class ApplicationInfoController {
         }else {
             return 0;
         }
-
     }
 
     /*비밀번호 변경*/
     @PostMapping("/updatePassword")
     public String setPassword(@RequestParam("loginId")String loginId,@RequestParam("newPw")String newPw){
-
         applicationInfoService.savePassword(loginId, newPw);
-
         return "/application/applicationInfoAfterLogin";
     }
-
-
-
 }

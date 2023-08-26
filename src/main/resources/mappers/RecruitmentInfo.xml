@@ -16,4 +16,15 @@
                #{rcrtNo},#{schdlName},#{statusDiv}
               )
     </insert>
+    <select id="newCourseNameInfo" resultType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+        select rcrt_no,course_name,course_div,edu_start_date,edu_end_date from entry_sel_master
+            where course_name=#{courseName}  order by rcrt_no desc limit 0,1 ;
+    </select>
+    <insert id="nthInfoSave" >
+        insert into  entry_sel_schdl( schdl_seq,rcrt_no,schdl_name,status_div)
+        values(
+                  (SELECT schdl_seq FROM (SELECT IFNULL(MAX(schdl_seq), 0) + 1 AS schdl_seq FROM entry_sel_schdl) AS SchdlSeq),
+                  #{rcrtNo},#{schdlName},#{statusDiv}
+              )
+    </insert>
 </mapper>

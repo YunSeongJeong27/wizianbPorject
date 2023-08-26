@@ -165,13 +165,13 @@
                             </select>
                         </td>
                         <td class="tableColor">모집전형번호</td>
-                        <td class=""><input class="form-control tableInput" name="rcrtNo" type="text" disabled></td>
+                        <td class=""><input class="form-control tableInput" id="rcrtNo1" name="rcrtNo" type="text" disabled></td>
                     </tr>
                     <tr>
                         <td class="tableColor">교육시작일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" name="eduStartDate" type="date" disabled></td>
+                        <td class=""><input class="form-control tableInput" id="eduStartDate1" name="eduStartDate" type="date" disabled></td>
                         <td class=" tableColor">교육종료일<span class="text-danger">*</span></td>
-                        <td class=""><input class="form-control tableInput" name="eduEndDate" type="date" disabled></td>
+                        <td class=""><input class="form-control tableInput" id="eduEndDate1" name="eduEndDate" type="date" disabled></td>
                     </tr>
                     <tr>
                         <td class="tableColor">현재전형일정</td>
@@ -291,11 +291,9 @@
         courseName = courseName === "" ? "nullCourseName" : courseName;
         return{
             api: {
-                readData: { url: 'topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
+                readData: { url: '/topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
                     method: 'GET' },
-                createData: { url: 'recruitment/save', method: 'POST',contentType: 'application/json' },
-                updateData: { url: 'recruitment/save', method: 'PUT' },
-                deleteData: { url: 'recruitment/delete', method: 'DELETE' }
+                deleteData: { url: '/recruitmentinfo/deletenthinfo', method: 'DELETE' }
             }
         };
     };
@@ -405,8 +403,6 @@
                 }
 
             });
-
-
         const nthTablePage = document.querySelector('#nthTablePage');
 
         // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -419,6 +415,15 @@
 
         // row 클릭 시 하단에 해당 row 데이터 load
         nthTable.on('click', function (ev) {
+            selectedRowKey=ev.rowKey;
+            for(let i=0;i<newRowList.length;i++){//신규꺼냐 아니냐 판별해서 잠그는과정
+                if (newRowList[i] == ev.rowKey) {
+                    document.getElementById("courseName2").disabled = false;
+                    break;
+                } else {
+                    document.getElementById("courseName2").disabled = true; //과정명 다시 disabled로잠금
+                }
+            }
             if(ev.rowKey == null) return;       // 헤더 클릭 시
             document.querySelector("#inputTable tbody").setAttribute("id", "row"+ev.rowKey);
             rowDataLoad(ev.rowKey, nthTable, "inputTable");
@@ -456,7 +461,6 @@
         });
 
 
-
         // 하단 table 데이터 넣기
         function rowDataLoad(rowKey, table, id){
             var datas = table.getRow(rowKey);
@@ -473,7 +477,13 @@
                     selectSchdlSeq=datas['schdlSeq'];
                 });
             }
+            for (let i = 0; i < newRowList.length; i++) {//신규꺼냐 아니냐 판별
+                if (newRowList[i] == selectedRowKey) {
+                    document.getElementById('courseName2').selectedIndex = 0;//다시 신규로 클릭했을때 미완료로되게끔
+                }
+            }
         }
+
     }
 
     let selectSchdlSeq;
@@ -521,9 +531,9 @@
     });
 
 
+    let newRowList=[];
     // 신규 버튼 클릭 이벤트
     document.getElementById("nthInsertBtn").addEventListener("click", function () {
-
         const rowData = [
             {
                 courseDiv: '',
@@ -548,32 +558,74 @@
         tableInput.forEach((ti) => {
             ti.value = "";
         });
-       //  document.getElementById("courseName2").disabled = false;
+       document.getElementById("courseName2").disabled = false;
+        newRow = nthTable.getRowCount() - 1; //마지막행정보(신규로만들어진행 자체정보는 마지막행에 배치돼있음)
+        newRowList.push(newRow);
+
+
+        //전형일정단계 기존 옵션들 제거과정
+        const courseSchdlname = document.querySelector("#updateSchdlName");
+        while (courseSchdlname.firstChild) {
+            courseSchdlname.removeChild(courseSchdlname.firstChild);
+        }
+        // "(미선택)" 옵션 추가
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "unselected";
+        defaultOption.text = "(미선택)";
+        defaultOption.selected = true;
+        courseSchdlname.appendChild(defaultOption);
 
     });
 
+    //신규추가후 과정명선택시 정보불러오는이벤트
+    document.getElementById('courseName2').addEventListener('change', async function() {
+        const newCourseName=this.value
+        const response = await fetch('/recruitmentinfo/newcoursenameinfo/'+newCourseName);
+        const datas = await response.json();
+
+        //정보뿌리기
+        const id="inputTable";
+        var tableInput = document.querySelectorAll("#"+id+" .tableInput");
+
+            tableInput.forEach((ti) => {
+                var tiName = ti.getAttribute("name");
+                ti.value = datas[tiName];
+                selectedRcrtNo=datas['rcrtNo'];
+            });
+
+        //전형일정단계정보불러오기
+        await selectedSchdlnameList();
+    });
+
+    let selectedRowKey;
+    //저장
+    document.getElementById("nthSaveBtn").addEventListener('click', () => {
+        const schdlNameVal = document.getElementById("updateSchdlName").value;
+        const statusDivVal = document.getElementById("updateStatusDiv").value;
+        const rcrtNo1Val = document.getElementById("rcrtNo1").value;
+        if (confirm("저장하시겠습니까?")){
+                    $.ajax({
+                        url: "/recruitmentinfo/nthinfosave",
+                        type: "PUT",
+                        data: {
+                            schdlName:schdlNameVal, statusDiv:statusDivVal,
+                            rcrtNo: rcrtNo1Val
+                        },
+                        dataType: "json",
+                        async: false,
+
+                    });
+    }
+        searchBtn();
+    });
 
     // 삭제 버튼 클릭 이벤트
     document.getElementById("nthDeleteBtn").addEventListener("click", function () {
-        if(confirm("삭제하시겠습니까?")){
+        if(confirm("삭제하시겠습니까?")) {
             nthTable.removeCheckedRows(false);
-
-            if(nthTable.getData().length !== 0){
-                var rowKey = nthTable.getRowAt(0)['rowKey'];
-
-                nthTable.focus(rowKey, firstColumName, true);
-                rowDataLoad(rowKey, nthTable, "inputTable");
-            }else{                                              // 데이터 x
-                rowDataLoad(0, nthTable, "inputTable");         // 공백으로 초기화
-            }
         }
-
     });
 
-    const nthSaveBtn = document.getElementById("nthSaveBtn");
-    nthSaveBtn.addEventListener('click', () => {
-        nthTable.request('createData');
-    });
 
     //모집전형번호
     let selectedRcrtNo;

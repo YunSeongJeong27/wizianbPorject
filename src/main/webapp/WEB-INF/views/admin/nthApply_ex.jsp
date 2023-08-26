@@ -257,8 +257,7 @@
                                     <div>기본정보</div>
                                     <div>
                                         <button id="btn_tab1_modify" class="btn btn-sm btn-secondary me-1"
-                                                title="Modify"
-                                                onclick="fn_btn_tab1_modify_onclick()" disabled="">수정
+                                                title="Modify" disabled="">수정
                                         </button>
                                         <button id="btn_tab1_save" class="btn btn-sm btn-secondary me-1"
                                                 title="Save"
@@ -470,61 +469,7 @@
                                     <div class="grid_title grid_title_arrange">자기소개서</div>
                                 </div>
                                 <div id="wrap_div">
-                                    <div id="div_tab4_inp1">
-                                        <div id="item_no_0" class="form-basic div_top_gap_20" item_no="1" item_expl="">
-                                            <div>
-                                                <td>▶ 지원동기 [글자 제한 : 2000자]</td>
-                                            </div>
-                                            <div>
-                                                <textarea name="ans"
-                                                          style="height:175px; overflow-y:scroll;"
-                                                          class="form-control tab1Form"
-                                                          onkeyup="fn_answer_keyup(this)"
-                                                          onkeydown="fn_answer_keydown(this)"
-                                                          disabled
-                                                ></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
-                                                (2107 /
-                                                2000 자)</p></div>
-                                        </div>
-
-                                        <div id="item_no_2" class="form-basic div_top_gap_20" item_no="3" item_expl="">
-                                            <div class="div_top_gap_10">
-                                                <td class="align_left bdr_bottom_unset">▶ 과정 중 수학 계획 [글자 제한 :
-                                                    2000자]
-                                                </td>
-                                            </div>
-                                            <div class="div_top_gap_10">
-                                                <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
-                                            </div>
-                                            <div class="div_top_gap_10"><textarea name="ans"
-                                                                                  style="height:175px; overflow-y:scroll;"
-                                                                                  class="form-control tab1Form"
-                                                                                  onkeyup="fn_answer_keyup(this)"
-                                                                                  onkeydown="fn_answer_keydown(this)"
-                                                                                  disabled="disabled"></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
-                                                (44 /
-                                                2000 자)</p></div>
-                                        </div>
-                                        <div id="item_no_3" class="form-basic div_top_gap_20" item_no="4" item_expl="">
-                                            <div class="div_top_gap_10">
-                                                <td class="align_left bdr_bottom_unset">▶ 수료 후 계획 [글자 제한 : 2000자]
-                                                </td>
-                                            </div>
-                                            <div class="div_top_gap_10">
-                                                <td class="align_left div_pd_all_gap_unset bdr_bottom_unset subtxt"></td>
-                                            </div>
-                                            <div class="div_top_gap_10"><textarea name="ans"
-                                                                                  style="height:175px; overflow-y:scroll;"
-                                                                                  class="form-control tab1Form"
-                                                                                  onkeyup="fn_answer_keyup(this)"
-                                                                                  onkeydown="fn_answer_keydown(this)"
-                                                                                  disabled="disabled"></textarea></div>
-                                            <div class="div_top_gap_10"><p class="inp_limit align_right div_top_gap_04">
-                                                (19 /
-                                                2000 자)</p></div>
-                                        </div>
+                                    <div id="div_tab4">
                                     </div>
                                 </div>
                             </div>
@@ -700,6 +645,7 @@
             const buttonList = document.querySelectorAll('#tabList > li > button');
             buttonList.forEach((button) => {
                 button.disabled = true;
+
             });
             document.querySelectorAll('.tab1Form').forEach((form) => {
                 form.innerHTML ="";
@@ -831,9 +777,10 @@
             tabAllLoad(aplyNo);
             tab2GridLoad(aplyNo);
             tab3GridLoad(aplyNo);
-            tab5GridLoad(aplyNo);
         })
     }
+
+    //학력사항 탭
     const tab2GridLoad = (aplyNo) => {
         const Grid = tui.Grid;
         document.querySelector('#tab2Grid').innerHTML = "";
@@ -880,6 +827,7 @@
         });
     }
 
+    //활동이력 탭
     const tab3GridLoad = (aplyNo) => {
         const Grid = tui.Grid;
         document.querySelector('#tab3Grid').innerHTML = "";
@@ -927,14 +875,21 @@
         });
     }
 
+    //오른쪽 탭 로드(지원자 정보 클릭시 활성화)
     const tabAllLoad = (aplyNo) => {
+
+        //탭 버튼 활성화
         const buttonList = document.querySelectorAll('#tabList > li > button');
         buttonList.forEach((e, i) => {
             e.disabled = false;
         })
+
+        //기본 정보 로드
         fetch("/admin/apply/" + aplyNo + "/peopleDetails")
             .then(response => response.json())
             .then((list) => {
+                document.querySelector('#btn_tab1_modify').disabled = false;
+
                 const detail = list.data.contents;
                 document.querySelector('#slt_cors_div').value = detail.courseDiv;
                 document.querySelector('#slt_gen_div').value = detail.gender;
@@ -949,11 +904,42 @@
                 document.querySelector('#txt_inp1_tel_natv').value = detail.hpLocal;
             })
             .catch(error => console.log(error));
-        fetch("/admin/apply/"+ aplyNo + "/introduce")
-            .then(response => response.json())
-            .then((list) => {
 
+        //자기소개서 로드
+        fetch("/admin/apply/" + aplyNo + "/introduce")
+            .then(function(response) {
+                return response.json();
             })
+            .then(function(list) {
+                const container = document.querySelector('#div_tab4');
+                container.innerHTML = "";
+                list.map(function(e, i) {
+                    const newDiv = document.createElement('div');
+                    newDiv.id = 'item_no_' + i;
+                    newDiv.className = "form-basic";
+                    newDiv.setAttribute("item_no", e.itemNo);
+
+                    newDiv.innerHTML =
+                        '<div>' +
+                        '<div>▶ ' + e.itemName + ' [글자 제한 : ' + e.maxChar +'자]</div>' +
+                        '</div>' +
+                        '<div>' +
+                        '<textarea name="answer"' +
+                        ' style="height:175px; overflow-y:scroll;"' +
+                        ' class="form-control tab1Form"' +
+                        ' disabled>' + e.answer+'</textarea>'+
+                        '</div>' +
+                        '<div>' +
+                        '<p>('
+                        + e.answer.length +' / '+ e.maxChar +' 자)</p>'+
+                        '</div>';
+
+                    container.appendChild(newDiv);
+                });
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
 
 
         buttonList.forEach((e, i) => {

@@ -44,7 +44,7 @@ public class ApplicationAdminInfoController {
     }
 
     @GetMapping("/admin/apply/{aplyNo}/introduce")
-    public ResponseEntity<ToastUiResponseDto> getIntroduce(@PathVariable String aplyNo){
+    public ResponseEntity<?> getIntroduce(@PathVariable String aplyNo){
         return ResponseEntity.ok(applicationAdminInfoService.getIntroduce(aplyNo));
     }
 }

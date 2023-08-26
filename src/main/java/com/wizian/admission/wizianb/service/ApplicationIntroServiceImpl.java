@@ -30,8 +30,14 @@ public class ApplicationIntroServiceImpl implements ApplicationIntroService{
         aplyintro.setRcrtNo(appIntro.getRcrtNo());
         aplyintro.setItemNo(appIntro.getItemNo());
         aplyintro.setAnswer(appIntro.getAnswer());
-        applicationIntroRepository.saveAnswer(aplyintro);
+
+        applicationIntroRepository.saveAnswer(aplyintro.getItemNo(), aplyintro.getAplyNo(), aplyintro.getRcrtNo(), aplyintro.getAnswer());
 
         return aplyintro;
+    }
+
+    @Override
+    public List<ApplicationIntroduce> findAnswerInfo(String aplyNo) {
+        return applicationIntroRepository.findAnswerInfo(aplyNo);
     }
 }

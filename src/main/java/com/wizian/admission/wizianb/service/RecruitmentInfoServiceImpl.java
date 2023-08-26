@@ -1,6 +1,8 @@
 package com.wizian.admission.wizianb.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.TopScreeningInfo;
+import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.RecruitmentInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,24 @@ public class RecruitmentInfoServiceImpl implements RecruitmentInfoService{
         recruitmentInfoRepository.updateSchdl(schdlSeq,schdlName,statusDiv);
     }
 
+    @Override
+    public  TopScreeningInfo newCourseNameInfo(String courseName){
+        return recruitmentInfoRepository.newCourseNameInfo(courseName);
+    }
+    @Override
+    public void nthInfoSave(String rcrtNo,String schdlName,String statusDiv ){
+        if(schdlName.equals("unselected")){
+            schdlName="";
+        }
+        if(statusDiv.equals("unselected")){
+            statusDiv="";
+        }
+        System.out.println("getRcrtNo: "+rcrtNo);
+        recruitmentInfoRepository.nthInfoSave(rcrtNo, schdlName, statusDiv);
+    }
+    @Override
+    public ToastUiResponseDto deleteNthInfo(JsonNode jn){
+        return null;
+    }
 
 }

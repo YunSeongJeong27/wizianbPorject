@@ -10,7 +10,7 @@ import lombok.*;
 public class Introduce {
 
     //항목
-    private String itemNo;
+    private int itemNo;
     private String itemName;
     private int maxChar;
     private String itemExpl;

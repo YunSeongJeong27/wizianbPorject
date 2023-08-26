@@ -9,4 +9,8 @@ import java.util.List;
 public interface IntroduceRepository {
 
     List<Introduce> findAll(String rcrtNo);
+
+    int insertIntroduceItem(Introduce introduceItem, String rcrtNo);
+
+    int updateIntroduceItem(Introduce introduceItem, String rcrtNo);
 }
