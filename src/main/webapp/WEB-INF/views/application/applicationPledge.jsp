@@ -1,16 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2023-08-11
-  Time: 오후 12:39
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../user/header.jsp" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>등록서약/포기</title>
-    <script src="jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <style>
         #radioBox{
             display: inline-block;
@@ -19,7 +13,7 @@
             text-align: center;
             padding: 20px;
         }
-        #save_btn{
+        #saveBtn{
             background: #003A78;
         }
         #giveupReason{
@@ -53,7 +47,8 @@
 
 <div class="container-lg mt-5">
     <div>
-        <form>
+        <form action="/pledge/${course.rcrtNo}/${aplyNo}" method="POST" name="frm" onsubmit="return check();">
+            <%--<input type="hidden" name="_method" value="PUT">--%>
             <div id="noticeBox" class="row border border-1 m-1">
                 <div class="pledgeNotice">
                     '${course.courseName}'을 수강하겠습니다.
@@ -65,8 +60,8 @@
 
             <%--라디오버튼--%>
             <div id="radioBox" class="d-flex justify-content-center">
-                <label><input type="radio" id="radio_yes" name="pledge" value="Y" checked>예(YES)</label>
-                <label><input type="radio" id="radio_no" class="ms-5" name="pledge" value="N">아니오(NO)</label>
+                <label><input type="radio" id="radio_yes" name="aplyStsDiv" value="30" checked>예(YES)</label>
+                <label><input type="radio" id="radio_no" class="ms-5" name="aplyStsDiv" value="40">아니오(NO)</label>
             </div>
 
             <%--등록포기 선택시, 보여지는 div--%>
@@ -81,7 +76,7 @@
 
             <%--버튼--%>
             <div class="d-flex justify-content-center m-5">
-                <button type="button" id="saveBtn" class="btn btn-dark">제출</button>
+                <button type="submit" id="saveBtn" class="btn btn-dark">제출</button>
             </div>
         </form>
     </div>
@@ -114,17 +109,13 @@
         window.location.href = "/pledge";
     })
 
-    // 제출 버튼
-    const saveBtn = document.getElementById("saveBtn");
-    saveBtn.addEventListener('click', function(){
-        if(confirm("제출하시겠습니까?\n(제출 후 철회가 불가능합니다.)")){
-            var check = document.querySelector('input[type="radio"]:checked').value;
-
-            if(check === 'N'){
-
-            }
+    // 제출 확인
+    function check() {
+        if (!confirm("제출하시겠습니까?\n(제출 후 변경이 불가능합니다.)")) {
+            //var check = document.querySelector('input[type="radio"]:checked').value;
+            return false;
         }
-    })
+    }
 
 </script>
 <%@include file="../user/footer.jsp" %>

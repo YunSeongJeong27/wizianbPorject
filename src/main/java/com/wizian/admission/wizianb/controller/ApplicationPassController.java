@@ -53,12 +53,20 @@ public class ApplicationPassController {
         return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 
-    @GetMapping("/pledge/{rcrtNo}")
-    public String pledge(@PathVariable String rcrtNo, Model model){
+    @GetMapping("/pledge/{rcrtNo}/{aplyNo}")
+    public String pledge(@PathVariable String rcrtNo, @PathVariable String aplyNo, Model model){
         model.addAttribute("title","등록서약/포기");
 
         model.addAttribute("course", applicationPassService.findCourse(rcrtNo));
+        model.addAttribute("aplyNo", aplyNo);
 
         return "/application/applicationPledge";
+    }
+
+    @PostMapping("/pledge/{rcrtNo}/{aplyNo}")
+    public String pledgeSave(@PathVariable String rcrtNo, @PathVariable String aplyNo, @RequestParam("aplyStsDiv")String aplyStsDiv){
+        applicationPassService.pledgeSave(rcrtNo, aplyNo, aplyStsDiv);
+
+        return "redirect:/pass";
     }
 }

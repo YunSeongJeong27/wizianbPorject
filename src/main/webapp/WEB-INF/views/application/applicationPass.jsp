@@ -90,20 +90,20 @@
                     <div class="container-fluid">
                         <div class="row" style="min-height: 40px">
                             <div class="col-12 col-md-6 d-flex align-items-center">
-                                <label for="recruitmentProgress" class="me-1 col-4 stn">모집과정명</label>
-                                <div id="recruitmentProgress" class="p-2 col"></div>
+                                <label for="courseName" class="me-1 col-4 stn">모집과정명</label>
+                                <div id="courseName" class="p-2 col"></div>
                             </div>
                             <div class="col-12 col-md-6 d-flex align-items-center">
-                                <label for="detailProgress" class="me-1 col-4 stn">과정구분</label>
-                                <div id="detailProgress" class="p-2 col">${application.courseDiv}</div>
+                                <label for="courseDiv" class="me-1 col-4 stn">과정구분</label>
+                                <div id="courseDiv" class="p-2 col">${application.courseDiv}</div>
                             </div>
                         </div>
                         <div class="thin-line"></div>
 
                         <div class="row" style="min-height: 40px">
                             <div class="col-12 col-md-6 d-flex align-items-center">
-                                <label for="note" class="me-1 col-4 stn">지원서번호</label>
-                                <div id="note" class="p-2 col">${application.aplyNo}</div>
+                                <label for="aplyNo" class="me-1 col-4 stn">지원서번호</label>
+                                <div id="aplyNo" class="p-2 col">${application.aplyNo}</div>
                             </div>
                             <div class="col-12 col-md-6 d-flex align-items-center">
                                 <label for="applicantsName" class="me-1 col-4 stn">성명</label>
@@ -121,24 +121,24 @@
                     <div class="container-fluid">
                         <div class="row" style="min-height: 40px">
                             <div class="col-12 col-md-12 d-flex align-items-center">
-                                <label for="documentResult" class="me-1 col-2 stn">서류전형결과</label>
-                                <div id="documentResult" class="p-2 col-10">${application.docPassYn}</div>
+                                <label for="docPassYn" class="me-1 col-2 stn">서류전형결과</label>
+                                <div id="docPassYn" class="p-2 col-10">${application.docPassYn}</div>
                             </div>
                         </div>
                         <div class="thin-line"></div>
 
                         <div class="row" style="min-height: 40px">
                             <div class="col-12 col-md-12 d-flex align-items-center">
-                                <label for="unqualified" class="me-1 col-2 stn">부적격사유</label>
-                                <div id="unqualified" class="p-2 col-10">${application.docNReason}</div>
+                                <label for="docNReason" class="me-1 col-2 stn">부적격사유</label>
+                                <div id="docNReason" class="p-2 col-10">${application.docNReason}</div>
                             </div>
                         </div>
                         <div class="thin-line"></div>
 
                         <div class="row mb-2" style="min-height: 40px">
                             <div class="col-12 col-md-12 d-flex align-items-center">
-                                <label for="finalResult" class="me-1 col-2 stn">최종합격결과</label>
-                                <div id="finalResult" class="p-2 col-10">${application.fnlPassYn}</div>
+                                <label for="fnlPassYn" class="me-1 col-2 stn">최종합격결과</label>
+                                <div id="fnlPassYn" class="p-2 col-10">${application.fnlPassYn}</div>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
 <script>
     const pledgeBtn = document.getElementById("pledgeBtn");
     pledgeBtn.addEventListener("click", function(){
-        window.location.href = "/pledge/"+courseSelect.options[courseSelect.selectedIndex].value;
+        window.location.href = "/pledge/"+courseSelect.options[courseSelect.selectedIndex].value+"/"+aplyNo.innerText;
     })
 
     ////상단에 홈>마이페이지> (이벤트리스너)
@@ -178,33 +178,37 @@
     })
 
     // select에서 선택한 과정명 가져오기
-    const courseName = document.getElementById("recruitmentProgress");
-    const courseDiv = document.getElementById("detailProgress");
-    const aplyNo = document.getElementById("note");
-    const docPassYn = document.getElementById("documentResult");
-    const docNReason = document.getElementById("unqualified");
-    const fnlPassYn = document.getElementById("finalResult");
+    const courseName = document.getElementById("courseName");
+    const courseDiv = document.getElementById("courseDiv");
+    const aplyNo = document.getElementById("aplyNo");
+    const docPassYn = document.getElementById("docPassYn");
+    const docNReason = document.getElementById("docNReason");
+    const fnlPassYn = document.getElementById("fnlPassYn");
     const schdlMessage = document.getElementById("message");
 
     const courseSelect = document.querySelector("select");
     courseName.innerText = courseSelect.options[courseSelect.selectedIndex].text;
 
     courseSelect.addEventListener('change', async function(){
+        docPassYn.innerText = "";
+        docNReason.innerText = "";
+        fnlPassYn.innerText = "";
+        schdlMessage.innerText = "";
+        pledgeBtn.disabled = true;
+        pledgeBtn.innerText = '등록서약/포기'
+
         await fetch("/pass/findApplication/" + courseSelect.options[courseSelect.selectedIndex].value)
             .then((response) => response.json())
             .then((data) => {
                 let application = data['application'];
                 let message = data['message'];
+                let aplyStsDiv = application['aplyStsDiv'];
+
+                console.log("aplyStsDiv"+aplyStsDiv)
 
                 courseName.innerText = courseSelect.options[courseSelect.selectedIndex].text;
                 courseDiv.innerText = application['courseDiv'];
                 aplyNo.innerText = application['aplyNo'];
-
-                docPassYn.innerText = "";
-                docNReason.innerText = "";
-                fnlPassYn.innerText = "";
-                schdlMessage.innerText = "";
-                pledgeBtn.disabled = true;
 
                 let docPass = application['docPassYn'];
                 if(docPass === 'N') {
@@ -217,7 +221,9 @@
                     let fnlPass = application['fnlPassYn'];
                     if(fnlPass === 'Y') {
                         fnlPassYn.innerText = "합격";
-                        pledgeBtn.disabled = false;
+                        if(aplyStsDiv)pledgeBtn.disabled = false;
+                        else if(aplyStsDiv === '30') pledgeBtn.innerText = '등록 완료'
+                        else if(aplyStsDiv === '40') pledgeBtn.innerText = '등록 포기'
                     }
                     else if(fnlPass === 'N') fnlPassYn.innerText = "불합격";
                 }

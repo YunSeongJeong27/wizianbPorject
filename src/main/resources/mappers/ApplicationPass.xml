@@ -20,8 +20,12 @@
 
     <!-- 등록 및 서약 페이지 -->
     <select id="findCourse" resultType="com.wizian.admission.wizianb.domain.Recruitment">
-        SELECT COURSE_NAME, EDU_START_DATE, EDU_END_DATE
+        SELECT RCRT_NO, COURSE_NAME, EDU_START_DATE, EDU_END_DATE
         FROM entry_sel_master
-        WHERE RCRT_NO = #{rcrtNo};
+        WHERE RCRT_NO = #{rcrtNo}
     </select>
+
+    <update id="pledgeSave" parameterType="java.lang.String">
+        UPDATE entry_apply_master SET APLY_STS_DIV = #{aplyStsDiv} WHERE RCRT_NO = #{rcrtNo} AND APLY_NO = #{aplyNo}
+    </update>
 </mapper>
