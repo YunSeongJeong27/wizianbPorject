@@ -14,8 +14,14 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
     <link rel="stylesheet" href="css/custom.css" />
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 
     <style>
         .table .tableColor{
@@ -697,7 +703,13 @@
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center',
-                    editor: 'text'
+                    editor: {
+                        type: 'datePicker',
+                        options: {
+                            format: 'yyyy-MM-dd HH:mm',
+                            timepicker: true
+                        }
+                    }
                 },
                 {
                     header: '종료일시',
@@ -705,7 +717,13 @@
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center',
-                    editor: 'text'
+                    editor: {
+                        type: 'datePicker',
+                        options: {
+                            format: 'yyyy-MM-dd HH:mm',
+                            timepicker: true
+                        }
+                    }
                 },
                 {
                     header: '진행상태',
@@ -727,7 +745,7 @@
                 {
                     header: '일정일련번호',
                     name: 'schdlSeq',
-                    visible: false,
+                    hidden:true,
                     sortingType: 'asc',
                     sortable: true,
                     align: 'center',
@@ -809,9 +827,24 @@
 
     const nthSaveBtn = document.getElementById("scheduleSaveBtn");
     nthSaveBtn.addEventListener('click', () => {
-        if(confirm("저장하실 겁니까?")) {
-            scheduleGrid.request('modifyData');
-            searchBtn();
+        const modifiedData =  scheduleGrid.getModifiedRows();
+        console.log(modifiedData); // 여기서 먼저 modifiedData 출력
+
+        const gridData = modifiedData.updatedRows;
+        if (Array.isArray(gridData)) {
+            let ii;
+            for (const row of gridData){
+                if(row.startDate === null || row.startDate === undefined ||
+                    row.endDate === null || row.endDate === undefined){
+                    alert("날짜를 입력하십시오");
+                    ii=1;
+                    break;
+                }
+            }
+            if(ii!==1) {
+                scheduleGrid.request('modifyData');
+                searchBtn();
+            }
         }
     });
 

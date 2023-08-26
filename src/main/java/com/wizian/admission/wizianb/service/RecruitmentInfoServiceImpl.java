@@ -78,11 +78,20 @@ public class RecruitmentInfoServiceImpl implements RecruitmentInfoService{
         HashMap<String, Object> resultMap = new HashMap<>();
         int result = 0;
         for (JsonNode row : jn) {
+            String startDate=row.get("startDate").asText();
+            String endDate=row.get("endDate").asText();
+            if(row.get("startDate").asText().isEmpty()){
+                startDate=null;
+                System.out.println("startDate: "+startDate);
+            }
+            if(row.get("endDate").asText().isEmpty()){
+                endDate= null;
+            }
             TopScreeningInfo recruitVo = TopScreeningInfo.builder()
                     .rcrtNo(rcrtNo)
                     .schdlName(row.get("schdlName").asText())
-                    .startDate(row.get("startDate").asText())
-                    .endDate(row.get("endDate").asText())
+                    .startDate(startDate)
+                    .endDate(endDate)
                     .statusDiv(row.get("statusDiv").asText())
                     .build();
             result = recruitmentInfoRepository.subInfoInsert(recruitVo);
