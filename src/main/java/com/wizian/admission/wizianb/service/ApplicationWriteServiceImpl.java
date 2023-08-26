@@ -4,6 +4,9 @@ import com.wizian.admission.wizianb.domain.ApplicationWrite;
 import com.wizian.admission.wizianb.repository.ApplicationWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import java.util.List;
 @Service
 @Component
 @RequiredArgsConstructor
-public class ApplicationWriteServiceImpl implements ApplicationWriteService{
+public class ApplicationWriteServiceImpl implements ApplicationWriteService {
 
     private final ApplicationWriteRepository applicationWriteRepository;
 

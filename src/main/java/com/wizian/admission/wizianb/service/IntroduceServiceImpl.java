@@ -37,12 +37,14 @@ public class IntroduceServiceImpl implements IntroduceService {
         int result = 0;
         for (JsonNode row : introduceItems) {
             Introduce introduceItem = Introduce.builder()
+                    .rcrtNo(rcrtNo)
                     .itemName(row.get("itemName").asText())
                     .maxChar(row.get("maxChar").asInt())
                     .itemExpl(row.get("itemExpl").asText())
                     .build();
-            result = introduceRepository.insertIntroduceItem(introduceItem, rcrtNo);
+            result = introduceRepository.insertIntroduceItem(introduceItem);
         }
+        resultMap.put("result", result);
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
@@ -52,13 +54,15 @@ public class IntroduceServiceImpl implements IntroduceService {
         int result = 0;
         for (JsonNode row : introduceItems) {
             Introduce introduceItem = Introduce.builder()
+                    .rcrtNo(rcrtNo)
                     .itemNo(row.get("itemNo").asInt())
                     .itemName(row.get("itemName").asText())
                     .maxChar(row.get("maxChar").asInt())
                     .itemExpl(row.get("itemExpl").asText())
                     .build();
-            result = introduceRepository.updateIntroduceItem(introduceItem, rcrtNo);
+            result = introduceRepository.updateIntroduceItem(introduceItem);
         }
+        resultMap.put("result", result);
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 }
