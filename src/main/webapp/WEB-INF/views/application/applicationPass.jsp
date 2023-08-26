@@ -5,13 +5,6 @@
 <head>
     <title>Title</title>
     <style>
-        #img1{
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-
-        }
-
         .title {
             font-size: 16px;
             font-weight: 600;
@@ -106,8 +99,8 @@
                                 <div id="aplyNo" class="p-2 col">${application.aplyNo}</div>
                             </div>
                             <div class="col-12 col-md-6 d-flex align-items-center">
-                                <label for="applicantsName" class="me-1 col-4 stn">성명</label>
-                                <div id="applicantsName" class=" p-2 col">${application.nameKor}</div>
+                                <label for="nameKor" class="me-1 col-4 stn">성명</label>
+                                <div id="nameKor" class=" p-2 col">${application.nameKor}</div>
                             </div>
                         </div>
                     </div>
@@ -181,10 +174,11 @@
     const courseName = document.getElementById("courseName");
     const courseDiv = document.getElementById("courseDiv");
     const aplyNo = document.getElementById("aplyNo");
+    const nameKor = document.getElementById("nameKor")
     const docPassYn = document.getElementById("docPassYn");
     const docNReason = document.getElementById("docNReason");
     const fnlPassYn = document.getElementById("fnlPassYn");
-    const schdlMessage = document.getElementById("message");
+    const schdlMessage = document.getElementById("message")
 
     const courseSelect = document.querySelector("select");
     courseName.innerText = courseSelect.options[courseSelect.selectedIndex].text;
@@ -204,13 +198,19 @@
                 let message = data['message'];
                 let aplyStsDiv = application['aplyStsDiv'];
 
-                console.log("aplyStsDiv"+aplyStsDiv)
-
                 courseName.innerText = courseSelect.options[courseSelect.selectedIndex].text;
                 courseDiv.innerText = application['courseDiv'];
                 aplyNo.innerText = application['aplyNo'];
+                nameKor.innerText = application['nameKor'];
 
+                let schdl = data['scheduleDoc'];
                 let docPass = application['docPassYn'];
+
+                if(!schedule(schdl['startDate'])) {
+                    alert("서류합격자 발표기간이 아닙니다.");
+                    return;
+                }
+
                 if(docPass === 'N') {
                     docPassYn.innerText = "불합격";
                     docNReason.innerText = application['docNReason'];
@@ -218,7 +218,14 @@
                 else if(docPass === 'Y') {
                     docPassYn.innerText = "합격";
 
+                    schdl = data['scheduleFnl'];
                     let fnlPass = application['fnlPassYn'];
+
+                    if(!schedule(schdl['startDate'])) {
+                        alert("최종합격자 발표기간이 아닙니다.");
+                        return;
+                    }
+
                     if(fnlPass === 'Y') {
                         fnlPassYn.innerText = "합격";
                         if(aplyStsDiv === null)pledgeBtn.disabled = false;
@@ -233,6 +240,13 @@
                 }
             });
     });
+
+
+    function schedule(startDate){
+        var now = new Date();
+
+        return (new Date(startDate) <= now);
+    }
 
 </script>
 <%@include file="../user/footer.jsp" %>

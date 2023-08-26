@@ -14,6 +14,10 @@
         SELECT * FROM entry_apply_master WHERE EMAIL = #{email} AND RCRT_NO = #{rcrtNo};
     </select>
 
+    <select id="findSchedule" resultType="com.wizian.admission.wizianb.domain.Schedule">
+        SELECT START_DATE FROM entry_sel_schdl WHERE RCRT_NO = #{rcrtNo} AND SCHDL_NAME=#{schdlName};
+    </select>
+
     <select id="findNoticeMessage" resultType="com.wizian.admission.wizianb.domain.NoticeMessage">
         SELECT * FROM entry_sel_msg WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{code};
     </select>
