@@ -56,18 +56,16 @@
         <form>
             <div id="noticeBox" class="row border border-1 m-1">
                 <div class="pledgeNotice">
-                    '자바기반 풀스택 개발자 과정'을 수강하겠습니다.
-                    <%--모집전형명 불러오기--%>
+                    '${course.courseName}'을 수강하겠습니다.
                 </div>
                 <div class="pledgeNotice">
-                    [교육기간 : 2023.09.01~2024.02.01(예정)]
-                    <%--모집전형정보테이블에서 교육기간 불러오기--%>
+                    [교육기간 : ${course.eduStartDate}~${course.eduEndDate}(예정)]
                 </div>
             </div>
 
             <%--라디오버튼--%>
             <div id="radioBox" class="d-flex justify-content-center">
-                <label><input type="radio" id="radio_yes" name="pledge" value="Y">예(YES)</label>
+                <label><input type="radio" id="radio_yes" name="pledge" value="Y" checked>예(YES)</label>
                 <label><input type="radio" id="radio_no" class="ms-5" name="pledge" value="N">아니오(NO)</label>
             </div>
 
@@ -83,7 +81,7 @@
 
             <%--버튼--%>
             <div class="d-flex justify-content-center m-5">
-                <button type="submit" id="save_btn" class="btn btn-dark">제출</button>
+                <button type="button" id="saveBtn" class="btn btn-dark">제출</button>
             </div>
         </form>
     </div>
@@ -115,6 +113,19 @@
     breadcrumbDiv3.addEventListener("click",function(){
         window.location.href = "/pledge";
     })
+
+    // 제출 버튼
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.addEventListener('click', function(){
+        if(confirm("제출하시겠습니까?\n(제출 후 철회가 불가능합니다.)")){
+            var check = document.querySelector('input[type="radio"]:checked').value;
+
+            if(check === 'N'){
+
+            }
+        }
+    })
+
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>

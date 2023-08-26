@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wizian.admission.wizianb.repository.ApplicationPassRepository">
 
+    <!-- 합격자 발표 페이지 -->
     <select id="courseList" resultType="com.wizian.admission.wizianb.domain.Recruitment">
         SELECT esm.RCRT_NO, esm.COURSE_NAME
         FROM entry_apply_master eam, entry_sel_master esm
@@ -15,5 +16,12 @@
 
     <select id="findNoticeMessage" resultType="com.wizian.admission.wizianb.domain.NoticeMessage">
         SELECT * FROM entry_sel_msg WHERE RCRT_NO = #{rcrtNo} AND MSG_DIV = #{code};
+    </select>
+
+    <!-- 등록 및 서약 페이지 -->
+    <select id="findCourse" resultType="com.wizian.admission.wizianb.domain.Recruitment">
+        SELECT COURSE_NAME, EDU_START_DATE, EDU_END_DATE
+        FROM entry_sel_master
+        WHERE RCRT_NO = #{rcrtNo};
     </select>
 </mapper>

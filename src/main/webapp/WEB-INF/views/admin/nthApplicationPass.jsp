@@ -427,10 +427,6 @@
 
             applicationTable.on('afterChange', function (ev) {
                 let data = ev['changes'][0];
-                console.log(ev);
-                console.log(data);
-                console.log(data['columnName']);
-                console.log(data['value']);
 
                 if(data['columnName'] === 'docPassYn'){
                     applicationTable.setValue(data['rowKey'], 'docNReason', '');
@@ -463,6 +459,7 @@
                 var rowKeys = applicationTable.getCheckedRowKeys();
                 rowKeys.forEach(rowKey => {
                     applicationTable.setValue(rowKey, 'docPassYn', passDiv.options[passDiv.selectedIndex].value, false);
+                    applicationTable.setValue(rowKey, 'docNReason', '', false);
                 });
             }
         });

@@ -39,5 +39,11 @@ public class ApplicationPassServiceImpl implements ApplicationPassService {
         }
         return applicationPassRepository.findNoticeMessage(code, rcrtNo);
     }
+
+
+    @Override
+    public Recruitment findCourse(String rcrtNo) {
+        return applicationPassRepository.findCourse(rcrtNo);
+    }
 }
 

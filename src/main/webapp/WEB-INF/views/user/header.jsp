@@ -87,7 +87,15 @@
                 </ul>
             </div>
             <div class="nav-item" style="width: 31%;">
-                <a href="/pass" class="nav-link headerBtn">합격자발표</a>
+                <c:choose>
+                    <c:when test="${empty login}">
+                        <a href="/login" class="nav-link headerBtn">합격자발표</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/pass" class="nav-link headerBtn">합격자발표</a>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
         </div>
     </div>

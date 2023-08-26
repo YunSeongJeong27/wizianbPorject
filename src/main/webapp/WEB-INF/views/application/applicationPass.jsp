@@ -151,7 +151,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-5">
-                <div class="btn bg-primary bg-opacity-25" id="pledgeBtn">등록서약/포기</div>
+                <button class="btn bg-primary bg-opacity-25" id="pledgeBtn" disabled>등록서약/포기</button>
             </div>
     </div>
 </div>
@@ -160,7 +160,7 @@
 <script>
     const pledgeBtn = document.getElementById("pledgeBtn");
     pledgeBtn.addEventListener("click", function(){
-        window.location.href = "/pledge"
+        window.location.href = "/pledge/"+courseSelect.options[courseSelect.selectedIndex].value;
     })
 
     ////상단에 홈>마이페이지> (이벤트리스너)
@@ -204,6 +204,7 @@
                 docNReason.innerText = "";
                 fnlPassYn.innerText = "";
                 schdlMessage.innerText = "";
+                pledgeBtn.disabled = true;
 
                 let docPass = application['docPassYn'];
                 if(docPass === 'N') {
@@ -214,7 +215,10 @@
                     docPassYn.innerText = "합격";
 
                     let fnlPass = application['fnlPassYn'];
-                    if(fnlPass === 'Y') fnlPassYn.innerText = "합격";
+                    if(fnlPass === 'Y') {
+                        fnlPassYn.innerText = "합격";
+                        pledgeBtn.disabled = false;
+                    }
                     else if(fnlPass === 'N') fnlPassYn.innerText = "불합격";
                 }
 

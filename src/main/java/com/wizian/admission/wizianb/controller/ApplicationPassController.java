@@ -26,7 +26,7 @@ public class ApplicationPassController {
         ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
         List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
 
-        if(courseList != null) {
+        if(!courseList.isEmpty()) {
             ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), courseList.get(0).getRcrtNo());
             model.addAttribute("application", application);
             model.addAttribute("message", applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), courseList.get(0).getRcrtNo()));
@@ -47,10 +47,18 @@ public class ApplicationPassController {
 
         NoticeMessage message = applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), rcrtNo);
 
-        System.out.println(message);
         model.addAttribute("application", application);
         model.addAttribute("message", message);
 
         return ResponseEntity.status(HttpStatus.OK).body(model);
+    }
+
+    @GetMapping("/pledge/{rcrtNo}")
+    public String pledge(@PathVariable String rcrtNo, Model model){
+        model.addAttribute("title","등록서약/포기");
+
+        model.addAttribute("course", applicationPassService.findCourse(rcrtNo));
+
+        return "/application/applicationPledge";
     }
 }
