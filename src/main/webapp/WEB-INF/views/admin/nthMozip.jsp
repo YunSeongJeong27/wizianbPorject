@@ -826,7 +826,7 @@
     }
 
     const nthSaveBtn = document.getElementById("scheduleSaveBtn");
-    nthSaveBtn.addEventListener('click', () => {
+    nthSaveBtn.addEventListener('click',async () => {
         const modifiedData =  scheduleGrid.getModifiedRows();
         console.log(modifiedData); // 여기서 먼저 modifiedData 출력
 
@@ -843,7 +843,8 @@
             }
             if(ii!==1) {
                 scheduleGrid.request('modifyData');
-                searchBtn();
+                await searchBtn();
+                setTimeout(searchBtn, 1); //버퍼링떄문에 바로데이터가로드안돼서 일단추가
             }
         }
     });
