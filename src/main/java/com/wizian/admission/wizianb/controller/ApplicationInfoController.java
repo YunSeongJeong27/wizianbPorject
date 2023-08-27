@@ -61,11 +61,16 @@ public class ApplicationInfoController {
 
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
-    public String setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo, @RequestParam("pictureUrl") MultipartFile file,Model model,HttpSession session) throws IOException {
-
-        applicationInfoService.join(applicationInfo,file);
-        return "/application/applicationLogin";
+    public ResponseEntity<String> setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo,
+                                              @RequestParam("pictureUrl") MultipartFile file) {
+        try {
+            applicationInfoService.join(applicationInfo, file);
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
     }
+
 
 
     /*메일인증*/

@@ -90,7 +90,7 @@
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
-                <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
+                <form id="joinForm" method="post" enctype="multipart/form-data">
                     <div><input type="hidden" id="login" value="${member.loginId}"></div>
                     <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>
                     <div><input type="hidden" name="aplyNo" value="${appInfo.aplyNo}"></div>
@@ -150,7 +150,7 @@
                             <div>
                                 <div class="d-flex justify-content">
                                     <div class="me-1">
-                                        <input type="password" class="form-control" id="modalMessage" name="pw" value="${member.pw}">
+                                        <input type="password" class="form-control" id="modalMessage" name="pw" value="" disabled>
                                     </div>
                                     <div>
                                         <button type="button" id="info_pwChange" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#passwordModal">
@@ -171,7 +171,7 @@
                             <span class="text-danger">*</span>
                         </div>
                         <div class="col-lg-4">
-                            <input type="password" class="form-control" name="passwordCheck" id="pwCheck" value="${member.pw}">
+                            <input type="password" class="form-control" name="passwordCheck" id="pwCheck" value="" disabled>
                         </div>
                         <div class="col-lg-2">
                             성별구분
@@ -457,7 +457,7 @@
             const pw = firstPw.value;
             if(firstPw.value===secondPw.value){
                 if(reg.test(pw)){
-                    joinForm.submit();
+                    sendFormData();
                 }else{
                     alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
                 }
@@ -466,9 +466,27 @@
             }
 
         }else{
-            joinForm.submit();
+            sendFormData();
         }
     }
+
+function sendFormData() {
+    const formData = new FormData(document.getElementById('joinForm'));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/application/join', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 && xhr.responseText === "success") {
+                window.location.href = '/userInfo/${rcrtNo}?rcrtNo=${rcrtNo}&courseDiv=${rcrtInfo.courseDiv}';
+            } else {
+                console.error('Request failed:', xhr.status, xhr.statusText);
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
 </script>
 </body>
 </html>

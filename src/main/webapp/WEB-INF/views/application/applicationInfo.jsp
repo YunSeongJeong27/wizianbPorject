@@ -91,7 +91,7 @@
                 기본정보
             </div>
             <div class="border-top border-dark border-2">
-                <form action="/application/join" id="joinForm" method="post" enctype="multipart/form-data">
+                <form id="joinForm" enctype="multipart/form-data">
                     <div><input type="hidden" name="rcrtNo" value="${rcrtNo}"></div>
 
 <%--사진업로드--%>
@@ -477,7 +477,7 @@
 
         if(firstPw.value===secondPw.value){
             if(reg.test(pw)){
-                joinForm.submit();
+                sendFormData();
             }else{
                 alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
             }
@@ -485,6 +485,26 @@
             alert("비밀번호가 일치하지 않습니다.");
         }
     }
+
+function sendFormData() {
+    const formData = new FormData(document.getElementById('joinForm'));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/application/join', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 && xhr.responseText === "success") {
+                window.location.href = '/userInfo/${rcrtNo}?rcrtNo=${rcrtNo}&courseDiv=${rcrtInfo.courseDiv}';
+            } else {
+                console.error('Request failed:', xhr.status, xhr.statusText);
+            }
+        }
+    };
+    xhr.send(formData);
+
+}
+
+
 
 
 </script>
