@@ -1,6 +1,8 @@
 package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.Careers;
+import com.wizian.admission.wizianb.domain.Education;
 import com.wizian.admission.wizianb.repository.ApplicationInfoRepository;
 import com.wizian.admission.wizianb.utill.ImageService;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -141,6 +140,76 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     @Override
     public List<ApplicationInfo> memberAll(String memberMemId) {
         return applicationInfoRepository.memberAll(memberMemId);
+    }
+
+    /*학력사항 리스트*/
+    @Override
+    public List<Education> educationList(String aplyNo, String rcrtNo) {
+        return applicationInfoRepository.educationList(aplyNo, rcrtNo);
+    }
+
+    /* 학력사항 저장 */
+    @Override
+    public void saveEducation(Education edu) {
+        String[] acdmSeq = edu.getAcdmSeq().split(",");
+        String[] startDate = edu.getStartDate().split(",");
+        String[] endDate = edu.getEndDate().split(",");
+        String[] gradeDiv = edu.getGradeDiv().split(",");
+        String[] gradeStatusDiv = edu.getGradeStatusDiv().split(",");
+        String[] orgName = edu.getOrgName().split(",");
+        String[] deptName = edu.getDeptName().split(",");
+
+        for(int i=0; i<startDate.length; i++){
+            Education data = new Education();
+
+            data.setRcrtNo(edu.getRcrtNo());
+            data.setAplyNo(edu.getAplyNo());
+            data.setStartDate(startDate[i]);
+            data.setEndDate(endDate[i]);
+            data.setGradeDiv(gradeDiv[i]);
+            data.setGradeStatusDiv(gradeStatusDiv[i]);
+            data.setOrgName(orgName[i]);
+            data.setDeptName(deptName[i]);
+            
+            if(i < acdmSeq.length) {
+                data.setAcdmSeq(acdmSeq[i]);
+                applicationInfoRepository.updateEducation(data);       // 수정
+            }
+            else applicationInfoRepository.saveEducation(data);        // 신규
+        }
+    }
+
+    @Override
+    public List<Careers> careerList(String aplyNo, String rcrtNo) {
+        return applicationInfoRepository.careerList(aplyNo, rcrtNo);
+    }
+
+    @Override
+    public void saveCareer(Careers career) {
+        String[] careerSeq = career.getCareerSeq().split(",");
+        String[] startDate = career.getStartDate().split(",");
+        String[] endDate = career.getEndDate().split(",");
+        String[] plcName = career.getPlcName().split(",");
+        String[] plcJob = career.getPlcJob().split(",");
+        String[] note = career.getNote().split(",");
+
+        for(int i=0; i<startDate.length; i++){
+            Careers data = new Careers();
+
+            data.setRcrtNo(career.getRcrtNo());
+            data.setAplyNo(career.getAplyNo());
+            data.setStartDate(startDate[i]);
+            data.setEndDate(endDate[i]);
+            data.setPlcName(plcName[i]);
+            data.setPlcJob(plcJob[i]);
+            data.setNote(note[i]);
+
+            if(i < careerSeq.length) {
+                data.setCareerSeq(careerSeq[i]);
+                applicationInfoRepository.updateCareer(data);       // 수정
+            }
+            else applicationInfoRepository.saveCareer(data);         // 신규
+        }
     }
 
     @Override
