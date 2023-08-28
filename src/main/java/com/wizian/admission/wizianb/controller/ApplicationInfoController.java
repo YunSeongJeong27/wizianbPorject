@@ -62,14 +62,28 @@ public class ApplicationInfoController {
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
     public ResponseEntity<String> setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo,
-                                              @RequestParam("pictureUrl") MultipartFile file) {
+                                              @RequestParam("pictureUrl") MultipartFile file,HttpSession session,Model model) {
         try {
             applicationInfoService.join(applicationInfo, file);
+
+            String memberMemId = applicationInfoService.memberMemId(applicationInfo.getEmail());
+            ApplicationInfo member = applicationInfoService.findByLoginId(applicationInfoService.emailCheck(applicationInfo.getEmail()));
+
+            //최근접속시간등록
+            applicationInfoService.saveLastLogin(applicationInfo.getEmail());
+
+            //객체저장
+            session.setAttribute("memberId", memberMemId);
+            session.setAttribute("login", member);
+            model.addAttribute("member", member);
+
             return ResponseEntity.ok("success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
     }
+
+
 
 
 

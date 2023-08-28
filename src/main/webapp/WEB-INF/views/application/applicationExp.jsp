@@ -60,16 +60,16 @@
             <div class="menu h-auto px-3 border rounded-3">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userInfo" class="active">기본정보</a>
+                        <a href="/userInfo/${rcrtNo}">기본정보</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userEdu">학력사항</a>
+                        <a href="/userEdu/${rcrtNo}/${aplyNo}">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userExp">경력사항</a>
+                        <a href="/userExp/${rcrtNo}/${aplyNo}" class="active">경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="/userIntroduce">자기소개서</a>
+                        <a href="/userIntroduce/${rcrtNo}/${aplyNo}">자기소개서</a>
                     </li>
                 </ul>
             </div>

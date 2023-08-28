@@ -70,16 +70,16 @@
             <div class="menu h-auto px-3 border rounded-3">
                 <ul>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userInfo" class="active">기본정보</a>
+                        <a href="/userInfo/${rcrtNo}" class="active">기본정보</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userEdu">학력사항</a>
+                        <a>학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userExp">경력사항</a>
+                        <a>경력사항</a>
                     </li>
                     <li class="py-2">
-                        <a href="/userIntroduce/${rcrtNo}/${aplyNo}">자기소개서</a>
+                        <a>자기소개서</a>
                     </li>
                 </ul>
             </div>
@@ -494,7 +494,7 @@ function sendFormData() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 && xhr.responseText === "success") {
-                window.location.href = '/userInfo/${rcrtNo}?rcrtNo=${rcrtNo}&courseDiv=${rcrtInfo.courseDiv}';
+                window.location.href = '/userInfo/${rcrtNo}';
             } else {
                 console.error('Request failed:', xhr.status, xhr.statusText);
             }
@@ -503,8 +503,6 @@ function sendFormData() {
     xhr.send(formData);
 
 }
-
-
 
 
 </script>
