@@ -151,8 +151,8 @@
             </div>
             <div class="topmenutab-btns">
 
-                <button onclick="fn_closeAllTab_onclick(event)" title="모두 지우기" class="btn_deleteMenu topmenutabBtn"><img
-                        src="/images/icon-deleteMenu.png" alt="메뉴 전체 닫기"></button>
+                <%--<button onclick="fn_closeAllTab_onclick(event)" title="모두 지우기" class="btn_deleteMenu topmenutabBtn"><img
+                        src="/images/icon-deleteMenu.png" alt="메뉴 전체 닫기"></button>--%>
             </div>
         </div>
         <div id="block2">

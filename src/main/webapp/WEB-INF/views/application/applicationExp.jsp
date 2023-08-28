@@ -80,36 +80,38 @@
                 경력사항
             </div>
 
-            <form class="exp_form" action="" method="">
+            <form class="exp_form" action="/userExp/${rcrtNo}/${aplyNo}" method="POST">
                 <div id="again">
                     <%--추가할때 반복, 여기부터~--%>
-                    <div id="repeat_form">
+                    <c:forEach var="exp" items="${expList}">
+                        <div id="repeat_form">
                         <div class="d-flex justify-content-end mt-5">
                             <button type="button" class="btn btn-dark btn-sm mb-2" id="delete_form">삭제</button>
                         </div>
                         <div class="border-top border-dark border-2">
+                            <input type="hidden" value="${exp.careerSeq}" name="careerSeq">
                             <div class="row mt-3">
                                 <div class="col-lg-2">근무처명</div>
                                 <div class="col-lg-4">
-                                    <input type="date" name="PLC_NM" value="" class="form-control">
+                                    <input type="text" name="plcName" value="${exp.plcName}" class="form-control">
                                 </div>
                                 <div class="col-lg-2">근무시작년월/종료년월</div>
                                 <div class="col-lg-2">
-                                    <input type="date" name="ST_DT" value="" class="form-control">
+                                    <input type="date" name="startDate" value="${exp.startDate}" class="form-control">
                                 </div>
                                 <div class="col-lg-2">
-                                    <input type="date" name="END_DT" value="" class="form-control">
+                                    <input type="date" name="endDate" value="${exp.endDate}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="row mt-3">
                                 <div class="col-lg-2">근무처직무</div>
                                 <div class="col-lg-4">
-                                    <input name="PLC_JOB" type="text" class="form-control">
+                                    <input name="plcJob" type="text" class="form-control" value="${exp.plcJob}">
                                 </div>
                                 <div class="col-lg-2">특기사항</div>
                                 <div class="col-lg-4">
-                                    <input name="NOTE" type="text" class="form-control">
+                                    <input name="note" type="text" class="form-control" value="${exp.note}">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -129,6 +131,7 @@
                             </div>
                         </div>
                     </div>
+                    </c:forEach>
                 </div>
                 <%--추가반복 여기까지--%>
                 <%--추가할 폼위치--%>
@@ -140,7 +143,7 @@
                 <%--버튼--%>
                 <div class="d-flex justify-content-between mt-5 ">
                     <button type="button" class="btn btn-second">이전</button>
-                    <button type="button" id="save_btn" class="btn btn-dark">저장</button>
+                    <button type="submit" id="save_btn" class="btn btn-dark">저장</button>
                     <button type="button" class="btn btn-second">저장 후 이동</button>
                 </div>
             </form>
@@ -156,11 +159,12 @@
             var addform = $(this).closest("form");
             var addDiv = addform.find("#repeat_form:first").clone(true);
 
-            addDiv.find('[name="PLC_NM"]').val("");
-            addDiv.find('[name="ST_DT"]').val("");
-            addDiv.find('[name="END_DT"]').val("");
-            addDiv.find('[name="PLC_JOB"]').val("");
-            addDiv.find('[name="NOTE"]').val("");
+            addDiv.find('[name="careerSeq"]').val("");
+            addDiv.find('[name="plcName"]').val("");
+            addDiv.find('[name="startDate"]').val("");
+            addDiv.find('[name="endDate"]').val("");
+            addDiv.find('[name="plcJob"]').val("");
+            addDiv.find('[name="note"]').val("");
             addform.find("#again:first").append(addDiv);
             addDiv.addClass('dynamic_section');
         });
@@ -174,11 +178,12 @@
         if (section.hasClass('dynamic_section')) {
             section.remove();
         } else {
-            section.find('[name="PLC_NM"]').val("");
-            section.find('[name="ST_DT"]').val("");
-            section.find('[name="END_DT"]').val("");
-            section.find('[name="PLC_JOB"]').val("");
-            section.find('[name="NOTE"]').val("");
+            section.find('[name="careerSeq"]').val("");
+            section.find('[name="plcName"]').val("");
+            section.find('[name="startDate"]').val("");
+            section.find('[name="endDate"]').val("");
+            section.find('[name="plcJob"]').val("");
+            section.find('[name="note"]').val("");
         }
     });
 

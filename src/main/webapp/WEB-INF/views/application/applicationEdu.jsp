@@ -81,72 +81,74 @@
                 학력사항
             </div>
 
-
-            <form class="edu_form" action="" method="">
+            <form class="edu_form" action="/userEdu/${rcrtNo}/${aplyNo}" method="POST">
                 <div id="again">
-                    <%--추가할때 반복, 여기부터~--%>
-                    <div id="repeat_form">
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-dark btn-sm mb-2" id="delete_form">삭제</button>
-                        </div>
-                        <div class="border-top border-dark border-2">
-                            <div class="row mt-3">
-                                <div class="col-lg-2">학위구분</div>
-                                <div class="col-lg-2">
-                                    <select class="form-select" name="GRAD_DIV">
-                                        <option selected></option>
-                                        <option>학사학위</option>
-                                        <option>석사학위</option>
-                                        <option>박사학위</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">
-                                    <select class="form-select" name="GRAD_STS_DIV">
-                                        <option selected></option>
-                                        <option>졸업</option>
-                                        <option>졸업예정</option>
-                                        <option>재학</option>
-                                        <option>수료</option>
-                                        <option>중퇴</option>
-                                        <option>편입</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">입학년월/졸업년월</div>
-                                <div class="col-lg-2">
-                                    <input type="date" name="ST_DT" value="enterYear" class="form-control">
-                                </div>
-                                <div class="col-lg-2">
-                                    <input type="date" name="END_DT" value="graduateYear" class="form-control">
-                                </div>
+                    <c:forEach var="edu" items="${eduList}">
+                        <%--추가할때 반복, 여기부터~--%>
+                        <div id="repeat_form">
+                            <div class="d-flex justify-content-end mt-5">
+                                <button type="button" class="btn btn-dark btn-sm mb-2" id="delete_form">삭제</button>
                             </div>
-
-                            <div class="row mt-3">
-                                <div class="col-lg-2">학위기관명</div>
-                                <div class="col-lg-4">
-                                    <input name="ORG_NM" type="text" class="form-control">
-                                </div>
-                                <div class="col-lg-2">학과/전공명</div>
-                                <div class="col-lg-4">
-                                    <input name="CORS_NM" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-lg-2">학위증명서파일등록</div>
-                                <div class="col-lg-10">
-                                    <div class="d-flex justify-content">
-                                        <input name="gradFile" id="gradFile" type="text" class="form-control me-1" disabled>
-                                        <label for="addFile" class="btn btn-sm btn-outline-dark me-1">업로드</label>
-                                        <input type="file" id="addFile" onchange="uploadFile()" style="display: none">
-                                        <button type="button" class="btn btn-sm btn-outline-dark me-1">다운로드</button>
-                                        <button type="button" class="btn btn-sm btn-outline-dark">삭제</button>
+                            <div class="border-top border-dark border-2">
+                                <input type="hidden" value="${edu.acdmSeq}" name="acdmSeq">
+                                <div class="row mt-3">
+                                    <div class="col-lg-2">학위구분</div>
+                                    <div class="col-lg-2">
+                                        <select class="form-select" name="gradeDiv">
+                                            <option <c:if test="${edu.gradeDiv == ''}">selected</c:if>></option>
+                                            <option <c:if test="${edu.gradeDiv == '학사학위'}">selected</c:if>>학사학위</option>
+                                            <option <c:if test="${edu.gradeDiv == '석사학위'}">selected</c:if>>석사학위</option>
+                                            <option <c:if test="${edu.gradeDiv == '박사학위'}">selected</c:if>>박사학위</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <select class="form-select" name="gradeStatusDiv">
+                                            <option <c:if test="${edu.gradeStatusDiv == ''}">selected</c:if>></option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '졸업'}">selected</c:if>>졸업</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '졸업예정'}">selected</c:if>>졸업예정</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '재학'}">selected</c:if>>재학</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '수료'}">selected</c:if>>수료</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '중퇴'}">selected</c:if>>중퇴</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '편입</'}">selected</c:if>>편입</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">입학년월/졸업년월</div>
+                                    <div class="col-lg-2">
+                                        <input type="date" name="startDate" value="${edu.startDate}" class="form-control">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="date" name="endDate" value="${edu.endDate}" class="form-control">
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <p id="edu_p">※파일명규칙:기수명-성명-파일명.pdf</p>
+
+                                <div class="row mt-3">
+                                    <div class="col-lg-2">학위기관명</div>
+                                    <div class="col-lg-4">
+                                        <input name="orgName" type="text" class="form-control" value="${edu.orgName}">
+                                    </div>
+                                    <div class="col-lg-2">학과/전공명</div>
+                                    <div class="col-lg-4">
+                                        <input name="deptName" type="text" class="form-control" value="${edu.deptName}">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-lg-2">학위증명서파일등록</div>
+                                    <div class="col-lg-10">
+                                        <div class="d-flex justify-content">
+                                            <input name="gradFile" id="gradFile" type="text" class="form-control me-1" disabled>
+                                            <label for="addFile" class="btn btn-sm btn-outline-dark me-1">업로드</label>
+                                            <input type="file" id="addFile" onchange="uploadFile()" style="display: none">
+                                            <button type="button" class="btn btn-sm btn-outline-dark me-1">다운로드</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark">삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p id="edu_p">※파일명규칙:기수명-성명-파일명.pdf</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
                 <%--추가반복 여기까지--%>
                 <%--추가할 폼위치--%>
@@ -158,7 +160,7 @@
                 <%--버튼--%>
                 <div class="d-flex justify-content-between mt-5 ">
                     <button type="button" class="btn btn-second">이전</button>
-                    <button type="button" id="save_btn" class="btn btn-dark">저장</button>
+                    <button type="submit" id="save_btn" class="btn btn-dark">저장</button>
                     <button type="button" class="btn btn-second">저장 후 이동</button>
                 </div>
         </div>
@@ -175,12 +177,13 @@
             var addform = $(this).closest("form");
             var addDiv = addform.find("#repeat_form:first").clone(true);
 
-            addDiv.find('[name="GRAD_DIV"]').val("");
-            addDiv.find('[name="GRAD_STS_DIV"]').val("");
-            addDiv.find('[name="ST_DT"]').val("");
-            addDiv.find('[name="END_DT"]').val("");
-            addDiv.find('[name="ORG_NM"]').val("");
-            addDiv.find('[name="CORS_NM"]').val("");
+            addDiv.find('[name="acdmSeq"]').val("");
+            addDiv.find('[name="gradeDiv"]').val("");
+            addDiv.find('[name="gradeStatusDiv"]').val("");
+            addDiv.find('[name="startDate"]').val("");
+            addDiv.find('[name="endDate"]').val("");
+            addDiv.find('[name="orgName"]').val("");
+            addDiv.find('[name="deptName"]').val("");
             addform.find("#again:first").append(addDiv);
             addDiv.addClass('dynamic_section');
         });
@@ -194,12 +197,13 @@
         if (section.hasClass('dynamic_section')) {
             section.remove();
         } else {
-            section.find('[name="GRAD_DIV"]').val("");
-            section.find('[name="GRAD_STS_DIV"]').val("");
-            section.find('[name="ST_DT"]').val("");
-            section.find('[name="END_DT"]').val("");
-            section.find('[name="ORG_NM"]').val("");
-            section.find('[name="CORS_NM"]').val("");
+            section.find('[name="acdmSeq"]').val("");
+            section.find('[name="gradeDiv"]').val("");
+            section.find('[name="gradeStatusDiv"]').val("");
+            section.find('[name="startDate"]').val("");
+            section.find('[name="endDate"]').val("");
+            section.find('[name="orgName"]').val("");
+            section.find('[name="deptName"]').val("");
         }
     });
 
@@ -216,7 +220,6 @@
     breadcrumbDiv3.addEventListener("click",function(){
         window.location.href = "/userEdu";
     })
-
 
     function uploadFile() {
         var gradFileInput = document.getElementById('gradFile');
@@ -241,6 +244,7 @@
         });
 
     }
+
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>

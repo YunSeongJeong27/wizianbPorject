@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wizian.admission.wizianb.repository.AppWriteRepository">
+
+    <insert id="fileUpload" parameterType="com.wizian.admission.wizianb.domain.AppWriteInfo">
+        insert into entry_apply_doc (doc_seq,aply_no,rcrt_no,doc_div,file_no)
+        values(
+                  (SELECT doc_seq FROM (SELECT IFNULL(MAX(doc_seq), 0) + 1 AS doc_seq FROM entry_apply_doc) AS docSeq),
+                #{aplyNo},#{rcrtNo},#{docDiv},#{fileNo}
+              )
+    </insert>
+
+    <select id="memInfo" resultType="com.wizian.admission.wizianb.domain.AppWriteInfo">
+        select aply_no,rcrt_no from ENTRY_APPLY_MASTER
+                              where mem_id=#{memberId}
+    </select>
+
+    <select id="fileInfo" resultType="com.wizian.admission.wizianb.domain.AppWriteInfo">
+        SELECT Max(a.DOC_SEQ) as DOC_SEQ, a.APLY_NO, a.RCRT_NO, DOC_DIV, (select FILE_NO from ENTRY_APPLY_DOC where DOC_SEQ=Max(a.DOC_SEQ)) as FILE_NO
+        FROM ENTRY_APPLY_DOC as a
+        WHERE APLY_NO =#{aplyNo} AND RCRT_NO = #{rcrtNo}
+        GROUP BY DOC_DIV;
+    </select>
+
+
+</mapper>
+

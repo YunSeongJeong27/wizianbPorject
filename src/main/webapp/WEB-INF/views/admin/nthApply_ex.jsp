@@ -885,6 +885,7 @@
         })
 
         //기본 정보 로드
+        let filePath = ""
         fetch("/admin/apply/" + aplyNo + "/peopleDetails")
             .then(response => response.json())
             .then((list) => {
@@ -902,6 +903,7 @@
                 document.querySelector('#txt_inp1_addr_natv').value = detail.addrDetail;
                 document.querySelector('#txt_inp1_tel_local').value = detail.telLocal;
                 document.querySelector('#txt_inp1_tel_natv').value = detail.hpLocal;
+                filePath = detail.fileNo;
             })
             .catch(error => console.log(error));
 
@@ -959,7 +961,7 @@
                 } else if (e.id === "btn_tab4") {
                     elements[3].style.display = 'block';
                 } else if (e.id === "btn_tab5") {
-                    PDFObject.embed("/pdf/2023_야구규칙.pdf", "#example1");
+                    PDFObject.embed("/pdf/"+filePath, "#example1");
                     elements[4].style.display = 'block';
                 }
             })

@@ -44,6 +44,7 @@ public class ApplicationInfo {
     private Date pwdErrDate;
     private Date lastLoginDate;
 
+    private String fileNo;
 
     private String rcrtNo;
 
