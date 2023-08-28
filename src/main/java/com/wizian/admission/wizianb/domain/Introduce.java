@@ -16,6 +16,7 @@ public class Introduce {
     private String itemExpl;
     private String rcrtNo;
 
+    
     //문항
     private String aplyNo;
     private String answer;
