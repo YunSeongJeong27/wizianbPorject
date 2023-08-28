@@ -9,7 +9,7 @@
     </select>
 
     <select id="peopleDetails" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT APLY_NO,
+        SELECT entry_apply_master.APLY_NO,
                COURSE_DIV,
                NAME_KOR,
                NAME_ENG,
@@ -23,9 +23,12 @@
                TEL_LOCAL,
                HP_LOCAL,
                APLY_STS_DIV,
-               APLY_DATE
-        FROM entry_apply_master
-        WHERE aply_no = #{aplyNo}
+               APLY_DATE,
+               ENTRY_APPLY_DOC.FILE_NO
+        FROM entry_apply_master inner join ENTRY_APPLY_DOC
+        ON entry_apply_master.APLY_NO = ENTRY_APPLY_DOC.APLY_NO
+        AND entry_apply_master.RCRT_NO = ENTRY_APPLY_DOC.RCRT_NO
+        WHERE entry_apply_master.aply_no = #{aplyNo} AND entry_apply_master.RCRT_NO = "J23C002"
     </select>
     <select id="getEducationInfo" resultType="com.wizian.admission.wizianb.domain.Education">
         SELECT *
