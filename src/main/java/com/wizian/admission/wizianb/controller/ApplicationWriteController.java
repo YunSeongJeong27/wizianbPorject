@@ -28,11 +28,7 @@ public class ApplicationWriteController {
 
     //모집 전형
     @GetMapping("/app")
-    public String entryWrite(@CurrentUser ApplicationInfo member, Model model) {
-        if(member != null) {
-            System.out.println(member.getLoginId());
-            model.addAttribute(member);
-        }
+    public String entryWrite(Model model) {
         model.addAttribute("title", "모집전형선택");
         model.addAttribute("entrySelMaster", applicationWriteService.entrySelMaster());
         model.addAttribute("entrySelSchdl", applicationWriteService.entrySelSchdl());
@@ -41,10 +37,10 @@ public class ApplicationWriteController {
 
     //전형 정보
     @PostMapping("/selectInfo")
-    public String SelectInfo(HttpServletRequest request, HttpSession session, Model model) {
+    public String SelectInfo(@CurrentUser ApplicationInfo member, HttpServletRequest request, Model model, HttpSession session) {
         model.addAttribute("title", "전형 정보");
         String entryRcrtNo = request.getParameter("entryRcrtNo");
-        session.setAttribute("rcrtNo", entryRcrtNo);
+        session.setAttribute("rcrtNo", member.getRcrtNo());
         model.addAttribute("rcrtNo", entryRcrtNo);
         model.addAttribute("courseName", applicationWriteService.selectInfoHead(entryRcrtNo));
 
