@@ -199,7 +199,7 @@
                 <div id="secondTap-li">
                     <a class="fw-bold list-group-item list-group-item-action"
                        id="second-tap-list" data-bs-toggle="list" href="#second-tap"
-                       role="tab" aria-controls="second-tap">추가제출서류</a>
+                       role="tab" aria-controls="second-tap">서류제출</a>
                 </div>
             </div>
         </div>
@@ -287,10 +287,12 @@
                     <option selected>자바기반 풀스택 개발자 취업과정</option>
                 </select>
             </div>
-            <h3 class="title mt-5 mb-1">추가제출서류</h3>
+            <h3 class="title mt-5 mb-1">서류제출</h3>
             <%-- Buttons --%>
-            <div id="application_btn" class="d-flex justify-content-end mb-3">
+            <div id="application_btn" class="d-flex justify-content-end mb-3 gap-2">
                 <button type="button" id="apply_addFile" class="btn btn-primary btn-sm" onclick="addFile()">서류추가
+                </button>
+                <button type="button" id="saveFile" class="btn btn-primary btn-sm" onclick="saveFile()">저장
                 </button>
             </div>
             <div class="border-top border-dark border-2">
@@ -308,78 +310,56 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <form action="/checked/fileinsert" id="saveFileForm" enctype="multipart/form-data" method="post" >
+                        <tr>
+                            <input type="hidden" name="docDiv" value="aptitude">
+                            <td>
+                                <div>적성검사</div>
+                            </td>
+                            <td>중앙정보처리학원</td>
 
-                    <tr>
-                        <td>
-                            <div>지원서(필기용)</div>
-                        </td>
-                        <td>삼성sds</td>
-                        <td class="row">
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어 파일파일파일
-                            </div>
-                            <div class="col-12 col-md-5 d-flex fileCol">
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                            <td class="row">
+                                <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text ">
+                                    <a href="/checked/filedownload/${aptitude}">${aptitude}</a>
                                 </div>
-                                <div class="col-5 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
-                                        다운로드
-                                    </button>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
-                                        삭제
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td>
-                            <div>지원서</div>
-                        </td>
-                        <td>삼성sds</td>
 
-                        <td class="row">
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어
-                            </div>
-                            <div class="col-12 col-md-5 d-flex fileCol">
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                <div class="col-12 col-md-5 d-flex fileCol">
+                                    <div class="col-4 d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                        <input class="mt-2 w-100" type="file" id="file1" style="font-size: 0.6em; display: none;" name="fileUpload">
+                                    </div>
+                                    <div class="col-5 d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2" onclick="downloadFile()">
+                                            다운로드
+                                        </button>
+                                    </div>
+                                    <div class="col-4 d-flex justify-content-center">
+                                        <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
+                                            삭제
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-5 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
-                                        다운로드
-                                    </button>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
-                                        삭제
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </form>
 
                     <tr>
                         <td>
                             <div>학위증명서</div>
                         </td>
-                        <td>삼성sds</td>
+                        <td>중앙정보처리학원</td>
 
                         <td class="row">
 
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">
                             </div>
 
 
                             <div class="col-12 col-md-5 d-flex fileCol">
                                 <div class="col-4 d-flex justify-content-center">
                                     <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                    <input class="mt-2 w-100" type="file" id="file2" style="font-size: 0.6em; display: none;" name="fileNo">
                                 </div>
                                 <div class="col-5 d-flex justify-content-center">
                                     <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
@@ -399,80 +379,16 @@
                         <td>
                             <div>활동이력증명</div>
                         </td>
-                        <td>삼성sds</td>
+                        <td>중앙정보처리학원</td>
 
                         <td class="row">
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어
+                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">
                             </div>
 
                             <div class="col-12 col-md-5 d-flex fileCol">
                                 <div class="col-4 d-flex justify-content-center">
                                     <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                </div>
-                                <div class="col-5 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
-                                        다운로드
-                                    </button>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
-                                        삭제
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div>필기고사답안지</div>
-                        </td>
-                        <td>삼성sds</td>
-
-                        <td class="row">
-
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어
-                            </div>
-
-
-                            <div class="col-12 col-md-5 d-flex fileCol">
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
-                                </div>
-                                <div class="col-5 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
-                                        다운로드
-                                    </button>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns3">
-                                        삭제
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div>지원서(보관용)</div>
-                        </td>
-                        <td>
-                            <div>삼성sds</div>
-                        </td>
-
-                        <td class="row">
-
-                            <div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어
-                                넣어파일이름 여기넣어
-                            </div>
-
-
-                            <div class="col-12 col-md-5 d-flex fileCol">
-                                <div class="col-4 d-flex justify-content-center">
-                                    <button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button>
+                                    <input class="mt-2 w-100" type="file" id="file3" style="font-size: 0.6em; display: none;" name="fileNo">
                                 </div>
                                 <div class="col-5 d-flex justify-content-center">
                                     <button type="button" class="btn btn-sm btn-light btn-outline-dark documentBtns2">
@@ -490,6 +406,8 @@
 
                     </tbody>
                 </table>
+
+
 
                 <div class="d-flex justify-content-start mt-4 application_btn1">
                     <button type="button" id="apply_prev" class="btn btn-secondary">이전</button>
@@ -930,7 +848,7 @@
             '</select></div>';
         newCell2.innerHTML = "<div></div>";
         newCell3.className = "row";
-        newCell3.innerHTML = '<div class="col-12 col-md-7 border d-flex justify-content-start truncate-text">파일이름 여기넣어넣어파일이름 여기넣어</div>' +
+        newCell3.innerHTML = '<div class="col-12 col-md-7 border d-flex justify-content-start truncate-text"></div>' +
             '<div class="col-12 col-md-5 d-flex fileCol">' +
             '<div class="col-4 d-flex justify-content-center">' +
             '<button type="button" class="btn btn-sm btn-dark documentBtns1">업로드</button></div>' +
@@ -988,6 +906,31 @@
             });
         });
     });
+
+
+    // 버튼을 찾아서 변수에 저장
+    var button = document.querySelector(".documentBtns1");
+
+    // 버튼에 클릭 이벤트 리스너 추가
+    button.addEventListener("click", function() {
+        // 파일 입력 필드를 찾아서 'click' 이벤트 발생시킴
+        document.getElementById("file1").click();
+    });
+
+
+
+    var button = document.getElementById("saveFile");
+    // 파일 저장
+    button.addEventListener("click", function() {
+        // 폼을 찾아서 'submit' 메소드 호출
+        document.getElementById("saveFileForm").submit();
+    });
+
+    //파일다운로드
+    function downloadFile() {
+        var aptitude = '${aptitude}';  // aptitude 값을 적절히 설정하세요.
+        window.location.href = '/checked/filedownload/' + aptitude;
+    }
 
 </script>
 <%@include file="../user/footer.jsp" %>

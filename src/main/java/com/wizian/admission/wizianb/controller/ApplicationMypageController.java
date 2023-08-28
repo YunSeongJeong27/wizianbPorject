@@ -1,27 +1,31 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.domain.AppWriteInfo;
 import com.wizian.admission.wizianb.domain.ApplicationMypage;
 import com.wizian.admission.wizianb.domain.ApplicationWrite;
+import com.wizian.admission.wizianb.service.AppWriteService;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.ApplicationMypageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class ApplicationMypageController {
 
     private final ApplicationMypageService applicationMypageService;
+    private final AppWriteService appWriteService;
 
     @GetMapping("/checked")
     public String check(HttpSession session, Model model){
@@ -38,6 +42,16 @@ public class ApplicationMypageController {
                 map.put(applyNo.get(i), applicationMypageService.getApplyMkList(applyNo.get(i)));
             }
             model.addAttribute("mapList",map);
+
+            //파일정보가져오기
+            AppWriteInfo member=appWriteService.memInfo(memberId);
+            HashMap<String,String> fileInfo=appWriteService.fileInfo(member);
+            Set<String> keys = fileInfo.keySet();
+            for (String key : keys) {
+                String value = fileInfo.get(key);
+                model.addAttribute(key,value); //docDiv가 key이고 fileNo가 vale이다
+                System.out.println("Key: " + key + ", Value: " + value); //지우기
+            }
             return "/application/applicationChecked";
         }else{
             return "/application/applicationLogin";
@@ -117,4 +131,21 @@ public class ApplicationMypageController {
         }
         return finalSubmissionResult;
     }
+
+    @PostMapping("/checked/fileinsert")
+    public String fileInsert(@RequestParam("fileUpload") MultipartFile fileUpload,
+                             AppWriteInfo appInfo, HttpSession session) throws Exception {
+        String memberId=(String)session.getAttribute("memberId");
+        AppWriteInfo member=appWriteService.memInfo(memberId);
+
+        appWriteService.fileUpload(fileUpload,member,appInfo);
+        return "redirect:/checked";
+    }
+    @GetMapping("/checked/filedownload/{fileNo}")
+    public ResponseEntity<Object> fileDownload(@PathVariable String fileNo) throws IOException {
+        return appWriteService.fileDownload(fileNo);
+    }
+
+
+
 }
