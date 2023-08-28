@@ -102,4 +102,31 @@
             hp_local=#{hpLocal}
         WHERE aply_no = #{aplyNo};
     </update>
+
+
+    <!--학력사항-->
+    <select id="educationList" resultType="com.wizian.admission.wizianb.domain.Education">
+        SELECT * FROM entry_apply_acdm WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </select>
+    <insert id="saveEducation" parameterType="com.wizian.admission.wizianb.domain.Education">
+        INSERT INTO entry_apply_acdm VALUE ((SELECT ACDM_SEQ FROM (SELECT IFNULL(MAX(ACDM_SEQ)+1, 0) AS ACDM_SEQ FROM entry_apply_acdm) SEQ), #{aplyNo}, #{rcrtNo}, #{startDate}, #{endDate}, #{gradeDiv}, #{gradeStatusDiv}, #{orgName}, #{deptName})
+    </insert>
+    <update id="updateEducation" parameterType="com.wizian.admission.wizianb.domain.Education">
+        UPDATE entry_apply_acdm
+        SET START_DATE = #{startDate}, END_DATE = #{endDate}, GRADE_DIV = #{gradeDiv}, GRADE_STATUS_DIV = #{gradeStatusDiv}, ORG_NAME = #{orgName}, DEPT_NAME = #{deptName}
+        WHERE ACDM_SEQ = #{acdmSeq}
+    </update>
+
+    <!--경력사항-->
+    <select id="careerList" resultType="com.wizian.admission.wizianb.domain.Careers">
+        SELECT * FROM entry_apply_career WHERE APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
+    </select>
+    <insert id="saveCareer" parameterType="com.wizian.admission.wizianb.domain.Careers">
+        INSERT INTO entry_apply_career VALUE ((SELECT CAREER_SEQ FROM (SELECT IFNULL(MAX(CAREER_SEQ)+1, 0) AS CAREER_SEQ FROM entry_apply_career) SEQ), #{aplyNo}, #{rcrtNo}, #{startDate}, #{endDate}, #{plcName}, #{plcJob}, #{note})
+    </insert>
+    <update id="updateCareer" parameterType="com.wizian.admission.wizianb.domain.Careers">
+        UPDATE entry_apply_career
+        SET START_DATE = #{startDate}, END_DATE = #{endDate}, PLC_NAME = #{plcName}, PLC_JOB = #{plcJob}, NOTE = #{note}
+        WHERE CAREER_SEQ = #{careerSeq}
+    </update>
 </mapper>

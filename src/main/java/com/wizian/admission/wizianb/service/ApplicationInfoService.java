@@ -1,10 +1,11 @@
 package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.Careers;
+import com.wizian.admission.wizianb.domain.Education;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,5 +23,11 @@ public interface ApplicationInfoService {
    ApplicationInfo findAppInfo(String loginId,String rcrtNo);
    String memberMemId(String email);
    List<ApplicationInfo> memberAll(String memberMemId);
+
+   List<Education> educationList(String aplyNo, String rcrtNo);
+   void saveEducation(Education edu);
+
+   List<Careers> careerList(String aplyNo, String rcrtNo);
+   void saveCareer(Careers career);
 
 }

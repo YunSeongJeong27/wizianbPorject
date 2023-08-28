@@ -1,9 +1,10 @@
 package com.wizian.admission.wizianb.controller;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.domain.Careers;
+import com.wizian.admission.wizianb.domain.Education;
 import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
-import com.wizian.admission.wizianb.service.ApplicationWriteService;
 import com.wizian.admission.wizianb.service.MailSendService;
 import com.wizian.admission.wizianb.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,14 +61,28 @@ public class ApplicationInfoController {
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")
     public ResponseEntity<String> setAplyInfo(@ModelAttribute ApplicationInfo applicationInfo,
-                                              @RequestParam("pictureUrl") MultipartFile file) {
+                                              @RequestParam("pictureUrl") MultipartFile file,HttpSession session,Model model) {
         try {
             applicationInfoService.join(applicationInfo, file);
+
+            String memberMemId = applicationInfoService.memberMemId(applicationInfo.getEmail());
+            ApplicationInfo member = applicationInfoService.findByLoginId(applicationInfoService.emailCheck(applicationInfo.getEmail()));
+
+            //최근접속시간등록
+            applicationInfoService.saveLastLogin(applicationInfo.getEmail());
+
+            //객체저장
+            session.setAttribute("memberId", memberMemId);
+            session.setAttribute("login", member);
+            model.addAttribute("member", member);
+
             return ResponseEntity.ok("success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
     }
+
+
 
 
 
@@ -105,5 +118,48 @@ public class ApplicationInfoController {
     public String setPassword(@RequestParam("loginId")String loginId,@RequestParam("newPw")String newPw){
         applicationInfoService.savePassword(loginId, newPw);
         return "/application/applicationInfoAfterLogin";
+    }
+
+    /*학력사항*/
+    @GetMapping("/userEdu/{rcrtNo}/{aplyNo}")
+    public String userEdu(@PathVariable("rcrtNo")String rcrtNo,@PathVariable("aplyNo")String aplyNo, Model model){
+
+        List<Education> eduList = applicationInfoService.educationList(aplyNo, rcrtNo);
+        if(eduList.isEmpty()) eduList.add(new Education());
+
+        model.addAttribute("rcrtNo",rcrtNo);
+        model.addAttribute("aplyNo",aplyNo);
+        model.addAttribute("eduList", eduList);
+        model.addAttribute("title","학력사항");
+        return "/application/applicationEdu";
+    }
+
+    /*학력사항 저장*/
+    @PostMapping("/userEdu/{rcrtNo}/{aplyNo}")
+    public String saveEducation(Education edu){
+        applicationInfoService.saveEducation(edu);
+        return "redirect:/userExp/"+edu.getRcrtNo()+"/"+edu.getAplyNo();
+    }
+
+
+    /*경력사항*/
+    @GetMapping("/userExp/{rcrtNo}/{aplyNo}")
+    public String userExp(@PathVariable("rcrtNo")String rcrtNo,@PathVariable("aplyNo")String aplyNo,  Model model){
+
+        List<Careers> expList = applicationInfoService.careerList(aplyNo, rcrtNo);
+        if(expList.isEmpty()) expList.add(new Careers());
+
+        model.addAttribute("rcrtNo",rcrtNo);
+        model.addAttribute("aplyNo",aplyNo);
+        model.addAttribute("expList", expList);
+        model.addAttribute("title","학력사항");
+        return "/application/applicationExp";
+    }
+
+    /*경력사항 저장*/
+    @PostMapping("/userExp/{rcrtNo}/{aplyNo}")
+    public String saveCareer(Careers career){
+        applicationInfoService.saveCareer(career);
+        return "redirect:/userIntroduce/"+career.getRcrtNo()+"/"+career.getAplyNo();
     }
 }
