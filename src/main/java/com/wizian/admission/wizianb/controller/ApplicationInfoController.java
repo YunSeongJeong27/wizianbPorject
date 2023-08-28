@@ -1,5 +1,6 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.annotation.CurrentUser;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
@@ -33,7 +34,7 @@ public class ApplicationInfoController {
 
     //기본정보
     @GetMapping("/userInfo/{rcrtNo}")
-    public String userInfo(@PathVariable("rcrtNo")String rcrtNo, Model model,HttpSession session){
+    public String userInfo(@CurrentUser ApplicationInfo member, @PathVariable("rcrtNo")String rcrtNo, Model model){
 
         model.addAttribute("title","기본정보");
        // Object rcrtNo = session.getAttribute("rcrtNo");
@@ -41,9 +42,7 @@ public class ApplicationInfoController {
 
         model.addAttribute("rcrtNo",rcrtNo);
 
-        if(session.getAttribute("login")!=null){
-
-            ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
+        if(member != null){
             ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
             Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
 

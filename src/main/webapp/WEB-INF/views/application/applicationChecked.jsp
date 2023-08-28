@@ -910,7 +910,28 @@
     }
 
     document.querySelector('#apply_pdf').addEventListener('click', () => {
-        PDFObject.embed("/pdf/2023_야구규칙.pdf", "#example1");
+        var doc = new jsPDF();
+
+        var head = [['Name', 'Email', 'Country']];
+        var body = [
+            ['David', 'david@example.com', 'England'],
+            ['John', 'john@example.com', 'USA'],
+            ['Clark', 'clark@example.com', 'Australia'],
+        ];
+
+        doc.autoTable({
+            head: head,
+            body: body,
+            startY: 20,
+            styles: { cellWidth: 'wrap' },
+            columnStyles: { text: { cellWidth: 'auto' } }
+        });
+        var pdfData = doc.output('blob');
+
+        var url = URL.createObjectURL(pdfData);
+
+        doc.save('table.pdf');
+        PDFObject.embed(url, "#example1");
     });
     /*추가제출서류 파일추가*/
     function addFile() {

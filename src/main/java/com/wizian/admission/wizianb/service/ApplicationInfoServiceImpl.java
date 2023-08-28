@@ -1,10 +1,17 @@
 package com.wizian.admission.wizianb.service;
 
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
+import com.wizian.admission.wizianb.dto.UserAccountDto;
 import com.wizian.admission.wizianb.repository.ApplicationInfoRepository;
 import com.wizian.admission.wizianb.utill.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -23,7 +30,7 @@ import java.util.UUID;
 @Service
 @Component
 @RequiredArgsConstructor
-public class ApplicationInfoServiceImpl implements ApplicationInfoService {
+public class ApplicationInfoServiceImpl implements ApplicationInfoService, UserDetailsService {
 
     private final ApplicationInfoRepository applicationInfoRepository;
     private final PasswordEncoder passwordEncoder;
@@ -199,5 +206,21 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService {
     }
 
 
+    @Override
+    public void login(ApplicationInfo member) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                new UserAccountDto(member),
+                member.getPw(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationInfo member = applicationInfoRepository.findByLoginId(username);
+        if (member == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new UserAccountDto(member);
+    }
 }
 

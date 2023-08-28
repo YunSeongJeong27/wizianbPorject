@@ -1,5 +1,6 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.annotation.CurrentUser;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.NoticeMessage;
 import com.wizian.admission.wizianb.domain.Recruitment;
@@ -23,9 +24,7 @@ public class ApplicationPassController {
 
 
     @GetMapping("/pass")
-    public String pass(Model model,HttpSession session){
-        ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
-
+    public String pass(@CurrentUser ApplicationInfo member, Model model){
         if(member != null) {
             List<Recruitment> courseList = applicationPassService.courseList(member.getLoginId());
 
@@ -49,9 +48,7 @@ public class ApplicationPassController {
     }
 
     @GetMapping("/pass/findApplication/{rcrtNo}")
-    public ResponseEntity<Model> findApplication(@PathVariable String rcrtNo, Model model, HttpSession session){
-
-        ApplicationInfo member = (ApplicationInfo) session.getAttribute("login");
+    public ResponseEntity<Model> findApplication(@CurrentUser ApplicationInfo member, @PathVariable String rcrtNo, Model model){
 
         ApplicationInfo application = applicationPassService.findApplication(member.getLoginId(), rcrtNo);
         NoticeMessage message = applicationPassService.findNoticeMessage(application.getDocPassYn(), application.getFnlPassYn(), rcrtNo);

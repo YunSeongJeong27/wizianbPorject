@@ -1,5 +1,7 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.annotation.CurrentUser;
+import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(@CurrentUser ApplicationInfo member, Model model){
         model.addAttribute("hello","하이헬로우 안녕");
         return "/index";
     }

@@ -1,5 +1,7 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.annotation.CurrentUser;
+import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.ApplicationMypage;
 import com.wizian.admission.wizianb.domain.ApplicationWrite;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
@@ -24,16 +26,15 @@ public class ApplicationMypageController {
     private final ApplicationMypageService applicationMypageService;
 
     @GetMapping("/checked")
-    public String check(HttpSession session, Model model){
+    public String check(@CurrentUser ApplicationInfo member, Model model){
         HashMap<String, List<ApplicationMypage>> map = new HashMap<>();
-        String memberId = (String)session.getAttribute("memberId");
-        if(memberId != null){
+        if(member != null){
             model.addAttribute("title","마이페이지");
 
-            List<ApplicationMypage> courseNameList =  applicationMypageService.getCourseNameList(memberId);
+            List<ApplicationMypage> courseNameList =  applicationMypageService.getCourseNameList(member.getMemId());
             model.addAttribute("courseNameList",courseNameList);
 
-            List<String> applyNo = applicationMypageService.getApplyNo(memberId);
+            List<String> applyNo = applicationMypageService.getApplyNo(member.getMemId());
             for(int i=0; i<applyNo.toArray().length ; i++){
                 map.put(applyNo.get(i), applicationMypageService.getApplyMkList(applyNo.get(i)));
             }

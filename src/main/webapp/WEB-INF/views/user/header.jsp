@@ -5,8 +5,9 @@
   Time: 오전 11:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="../tag.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../tag.jsp"%>
+<%@ include file="../Auth.jsp"%>
 <html>
 <head>
     <title>Title</title>
@@ -77,19 +78,18 @@
 </head>
 
 <body>
-<c:set var="login" value="${sessionScope.login}" />
 <div class="border-bottom border-3">
     <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 1440px; height: 105px; position:relative;">
+
         <div id="logo" class="h-75 col-3" style="background-image: url(https://www.choongang.co.kr/img/new/logo_new.png); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer; width: 170px; height: 105px;"></div>
         <div id="login" class="rounded-5">
-            <c:choose>
-                <c:when test="${empty login}">
-                    <a href="/login">로그인</a>
-                </c:when>
-                <c:otherwise>
+            <sec:authorize access="isAnonymous()">
+                <a href="/login">로그인</a>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <sec:csrfInput />
                     <a href="/logout">로그아웃</a>
-                </c:otherwise>
-            </c:choose>
+            </sec:authorize>>
         </div>
         <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center align-items-center" style="margin-top: 15px;">
             <div class="nav-item" style="width: 31%;">

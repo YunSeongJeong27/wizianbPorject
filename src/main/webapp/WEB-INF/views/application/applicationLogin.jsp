@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -8,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <sec:csrfMetaTags/>
     <title>Title</title>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -70,9 +72,10 @@
                 <div class="col-8 ms-2 p-1 text-danger align-self-end" style="font-size: 0.65em">${text}</div>
             </div>
             <form id="frm" action="/login" method="post">
+                <sec:csrfInput/>
                 <div class="mt-3">
                     <span class="d-block">아이디(이메일)</span>
-                    <input name="id" class="mt-2 d-block form-control" type="email" placeholder="아이디">
+                    <input name="username" class="mt-2 d-block form-control" type="email" placeholder="아이디">
                 </div>
                 <div class="mt-3">
                     <span class="d-block">비밀번호</span>

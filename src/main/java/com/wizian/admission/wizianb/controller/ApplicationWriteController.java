@@ -1,5 +1,6 @@
 package com.wizian.admission.wizianb.controller;
 
+import com.wizian.admission.wizianb.annotation.CurrentUser;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.ApplicationWrite;
 import com.wizian.admission.wizianb.service.ApplicationInfoService;
@@ -23,13 +24,15 @@ import java.util.HashMap;
 public class ApplicationWriteController {
 
     private final ApplicationWriteService applicationWriteService;
-    private final PasswordEncoder passwordEncoder;
-    private final ApplicationInfoService applicationInfoService;
     private final MailSendService mailSendService;
 
     //모집 전형
     @GetMapping("/app")
-    public String entryWrite(Model model) {
+    public String entryWrite(@CurrentUser ApplicationInfo member, Model model) {
+        if(member != null) {
+            System.out.println(member.getLoginId());
+            model.addAttribute(member);
+        }
         model.addAttribute("title", "모집전형선택");
         model.addAttribute("entrySelMaster", applicationWriteService.entrySelMaster());
         model.addAttribute("entrySelSchdl", applicationWriteService.entrySelSchdl());
@@ -57,50 +60,11 @@ public class ApplicationWriteController {
 
     //로그인
     @GetMapping("/login")
-    public String getLogin(HttpServletRequest request) {
+    public String getLogin() {
         return "/application/applicationLogin";
     }
 
 
-
-    @PostMapping("/login")
-    public String postLogin(@RequestParam("id")String email,@RequestParam("password")String password, Model model, HttpSession session) {
-
-        if (email.isEmpty()) {
-            model.addAttribute("text", "아이디를 입력해주세요.");
-            return "/application/applicationLogin";
-        } else if (password.isEmpty()) {
-            model.addAttribute("text", "비밀번호를 입력해주세요.");
-            return "/application/applicationLogin";
-        }
-
-        String emailCheck = applicationInfoService.emailCheck(email);
-        String passwordCheck = applicationInfoService.passwordCheck(email);
-
-        if (emailCheck == null || passwordCheck == null) {
-            model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
-            return "/application/applicationLogin";
-        } else if (passwordEncoder.matches(password, passwordCheck)) {
-
-            //객체 찾아서 반환
-            String memberMemId = applicationInfoService.memberMemId(email);
-            ApplicationInfo member = applicationInfoService.findByLoginId(emailCheck);
-
-            //최근접속시간등록
-            applicationInfoService.saveLastLogin(email);
-
-            //객체저장
-            session.setAttribute("memberId",memberMemId);
-            session.setAttribute("login",member);
-            model.addAttribute("member", member);
-
-            return "redirect:/app";
-        } else {
-
-            model.addAttribute("text", "아이디 또는 비밀번호가 틀렸습니다.");
-            return "/application/applicationLogin";
-        }
-    }
 
     @PostMapping("/login/findId")
     @ResponseBody

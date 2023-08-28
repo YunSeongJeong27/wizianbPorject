@@ -21,6 +21,8 @@ public interface ApplicationInfoService {
    ApplicationInfo saveLastLogin(String loginId);
    ApplicationInfo findAppInfo(String loginId,String rcrtNo);
    String memberMemId(String email);
+
+   void login(ApplicationInfo member);
    List<ApplicationInfo> memberAll(String memberMemId);
 
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "memId")
 @Getter
 @Setter
 public class ApplicationInfo {
