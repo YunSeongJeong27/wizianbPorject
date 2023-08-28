@@ -4,9 +4,7 @@ import com.wizian.admission.wizianb.annotation.CurrentUser;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.AppWriteInfo;
 import com.wizian.admission.wizianb.domain.ApplicationMypage;
-import com.wizian.admission.wizianb.domain.ApplicationWrite;
 import com.wizian.admission.wizianb.service.AppWriteService;
-import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.ApplicationMypageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -66,10 +62,8 @@ public class ApplicationMypageController {
         String rcrtNo = applicationMypage.getRcrtNo();
         String applyNo = applicationMypage.getAplyNo();
 
-        ApplicationMypage masterList =  applicationMypageService.getApplyMasterList(rcrtNo, applyNo);
-
         // Ajax 호출 결과를 리턴
-        return masterList;
+        return applicationMypageService.getApplyMasterList(rcrtNo, applyNo);
     }
     @PostMapping("/checked/edu")
     @ResponseBody
@@ -77,10 +71,8 @@ public class ApplicationMypageController {
         String rcrtNo = applicationMypage.getRcrtNo();
         String applyNo = applicationMypage.getAplyNo();
 
-        ApplicationMypage applyAcdm =  applicationMypageService.getApplyAcdm(rcrtNo, applyNo);
-
         // Ajax 호출 결과를 리턴
-        return applyAcdm;
+        return applicationMypageService.getApplyAcdm(rcrtNo, applyNo);
     }
     @PostMapping("/checked/exp")
     @ResponseBody
@@ -88,10 +80,8 @@ public class ApplicationMypageController {
         String rcrtNo = applicationMypage.getRcrtNo();
         String applyNo = applicationMypage.getAplyNo();
 
-        ApplicationMypage applyCareer =  applicationMypageService.getApplyCareer(rcrtNo, applyNo);
-
         // Ajax 호출 결과를 리턴
-        return applyCareer;
+        return applicationMypageService.getApplyCareer(rcrtNo, applyNo);
     }
     @PostMapping("/checked/introduce")
     @ResponseBody
@@ -99,10 +89,8 @@ public class ApplicationMypageController {
         String rcrtNo = applicationMypage.getRcrtNo();
         String applyNo = applicationMypage.getAplyNo();
 
-        List<ApplicationMypage> applyCareerList =  applicationMypageService.getApplyIntroList(rcrtNo, applyNo);
-
         // Ajax 호출 결과를 리턴
-        return applyCareerList;
+        return applicationMypageService.getApplyIntroList(rcrtNo, applyNo);
     }
 
     @PostMapping("/checked/updateStatus")
