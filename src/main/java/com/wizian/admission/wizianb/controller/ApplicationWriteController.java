@@ -3,14 +3,12 @@ package com.wizian.admission.wizianb.controller;
 import com.wizian.admission.wizianb.annotation.CurrentUser;
 import com.wizian.admission.wizianb.domain.ApplicationInfo;
 import com.wizian.admission.wizianb.domain.ApplicationWrite;
-import com.wizian.admission.wizianb.service.ApplicationInfoService;
 import com.wizian.admission.wizianb.service.ApplicationWriteService;
 import com.wizian.admission.wizianb.service.MailSendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +34,10 @@ public class ApplicationWriteController {
     }
 
     //전형 정보
-    @PostMapping("/selectInfo")
+    @GetMapping("/selectInfo")
     public String SelectInfo(@CurrentUser ApplicationInfo member, HttpServletRequest request, Model model, HttpSession session) {
         model.addAttribute("title", "전형 정보");
         String entryRcrtNo = request.getParameter("entryRcrtNo");
-        session.setAttribute("rcrtNo", member.getRcrtNo());
         model.addAttribute("rcrtNo", entryRcrtNo);
         model.addAttribute("courseName", applicationWriteService.selectInfoHead(entryRcrtNo));
 

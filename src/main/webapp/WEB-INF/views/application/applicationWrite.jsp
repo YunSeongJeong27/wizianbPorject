@@ -34,7 +34,7 @@
 
 <div class="d-flex flex-wrap justify-content-between mx-auto m-5" style="width: 1400px;">
     <c:forEach items="${entrySelMaster}" var="master">
-        <form action="/selectInfo" method="post" class="m-2" style="width: 32%; height: 480px;">
+        <form action="/selectInfo" method="get" class="m-2" style="width: 32%; height: 480px;">
             <input type="hidden" name="entryRcrtNo" value="${master.rcrtNo}">
             <button class="p-4 border shadow-sm btn text-start w-100 h-100 entryWrap">
                 <div class="h-75">

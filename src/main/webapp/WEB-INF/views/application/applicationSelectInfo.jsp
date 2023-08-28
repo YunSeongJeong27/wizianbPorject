@@ -49,12 +49,14 @@
             </c:forEach>
         </div>
 
-        <form id="frm" method="get" class="d-flex justify-content-center m-5">
-            <input type="hidden" name="rcrtNo" value="${rcrtNo}">
-            <input type="hidden" name="courseDiv" value="${courseDiv}">
+
+            <sec:authorize access="isAnonymous()">
             <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
             <div id="existingUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">기존회원작성</div>
-        </form>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div id="userBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서 작성</div>
+            </sec:authorize>
     </div>
 </div>
 
@@ -67,16 +69,17 @@
     })
 
     //userInfo 페이지 이동버튼
-    const frm = document.getElementById("frm")
     const newUserBtn = document.getElementById("newUserBtn");
     const existingUserBtn = document.getElementById("existingUserBtn");
+    const userBtn = document.getElementById("userBtn");
     newUserBtn.addEventListener("click", function(){
-        frm.action = "/userInfo/${rcrtNo}";
-        frm.submit();
+        window.location.href = "/userInfo/${rcrtNo}";
     })
     existingUserBtn.addEventListener("click", function (){
-        frm.action = "/login";
-        frm.submit();
+        window.location.href = "/login";
+    })
+    userBtn.addEventListener("click", function (){
+        window.location.href = "/userInfo/${rcrtNo}";
     })
 
 
