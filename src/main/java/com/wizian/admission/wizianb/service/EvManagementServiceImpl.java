@@ -79,13 +79,15 @@ public class EvManagementServiceImpl implements EvManagementService {
 
         JsonNode jnArr=  jn.get("updatedRows");
         for (int i=0; i<jnArr.size(); i++ ) {
+            System.out.println(jnArr.get(i).get("nameKor").asText());
+            System.out.println(jnArr.get(i).get("note").isNull());
 
             String aplyNo =  jnArr.get(i).get("aplyNo").asText();
             String rcrtNo = jnArr.get(i).get("rcrtNo").asText();
             int ev1Score = Integer.parseInt(jnArr.get(i).get("ev1Score").asText());
             int ev2Score = Integer.parseInt(jnArr.get(i).get("ev2Score").asText());
             int ev3Score = Integer.parseInt(jnArr.get(i).get("ev3Score").asText());
-            String note = jnArr.get(i).get("note") == null ? "" : jnArr.get(i).get("note").asText();
+            String note = (jnArr.get(i).get("note").isNull() ? "" : jnArr.get(i).get("note").asText());
             EvalResults evalResultDto= EvalResults.builder()
                     .aplyNo(aplyNo)
                     .rcrtNo(rcrtNo)

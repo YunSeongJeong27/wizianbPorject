@@ -691,6 +691,7 @@
                         options: {
                             listItems: [
                                 { text: '모집', value: '모집' },
+                                { text: '서류합격자발표', value: '서류합격자발표' },
                                 { text: '최종합격자발표', value: '최종합격자발표' },
                                 { text: '안내문발표', value: '안내문발표' }
                             ]

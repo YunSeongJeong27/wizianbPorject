@@ -97,7 +97,7 @@ public class PassManagementServiceImpl implements PassManagementService {
                     .aplyNo(jnArr.get(i).get("aplyNo").asText())
                     .rcrtNo(jnArr.get(i).get("rcrtNo").asText())
                     .docPassYn(docPassYn)
-                    .docNReason(jnArr.get(i).get("docNReason") == null ? "" : jnArr.get(i).get("docNReason").asText())
+                    .docNReason(jnArr.get(i).get("docNReason").isNull() ? "" : jnArr.get(i).get("docNReason").asText())
                     .build();
 
             EvTarget target = EvTarget.builder()

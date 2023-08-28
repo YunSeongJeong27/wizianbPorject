@@ -233,7 +233,6 @@
 
             // 처음 grid 렌더링 시 첫번째 row에 focus 및 하단 테이블에 데이터 load
             onGridMounted() {
-                nthEvaluationTable.focus(0, 'CORS_DIV', true);
                 subTableLoad(0);
             }
         });
