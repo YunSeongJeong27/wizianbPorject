@@ -10,11 +10,6 @@
               )
     </insert>
 
-    <select id="memInfo" resultType="com.wizian.admission.wizianb.domain.AppWriteInfo">
-        select aply_no,rcrt_no from ENTRY_APPLY_MASTER
-                              where mem_id=#{memberId}
-    </select>
-
     <select id="fileInfo" resultType="com.wizian.admission.wizianb.domain.AppWriteInfo">
         SELECT Max(a.DOC_SEQ) as DOC_SEQ, a.APLY_NO, a.RCRT_NO, DOC_DIV, (select FILE_NO from ENTRY_APPLY_DOC where DOC_SEQ=Max(a.DOC_SEQ)) as FILE_NO
         FROM ENTRY_APPLY_DOC as a

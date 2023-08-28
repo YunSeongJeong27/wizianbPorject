@@ -11,9 +11,8 @@ import java.util.HashMap;
 
 public interface AppWriteService {
 
-    void fileUpload(MultipartFile fileUpload, AppWriteInfo member, AppWriteInfo appInfo) throws IOException;
-    AppWriteInfo memInfo(String memberId);
-    HashMap<String,String> fileInfo(AppWriteInfo member);
+    void fileUpload(MultipartFile fileUpload, ApplicationInfo member, AppWriteInfo appInfo) throws IOException;
+    HashMap<String,String> fileInfo(ApplicationInfo member);
 
     ResponseEntity<Object> fileDownload(String fileNo) throws IOException;
 

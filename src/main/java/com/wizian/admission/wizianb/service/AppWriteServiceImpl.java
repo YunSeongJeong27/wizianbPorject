@@ -33,13 +33,10 @@ public class AppWriteServiceImpl implements AppWriteService {
     private final ServletContext servletContext;
 
     @Override
-    public void fileUpload(MultipartFile fileUpload, AppWriteInfo member, AppWriteInfo appInfo) throws IOException {
-        System.out.println("@1");
+    public void fileUpload(MultipartFile fileUpload, ApplicationInfo member, AppWriteInfo appInfo) throws IOException {
         String rcrtNo=  member.getRcrtNo();
         String aplyNo=member.getAplyNo();
-        System.out.println("@00_000");
         String contextPath = servletContext.getRealPath("/pdf/");
-        System.out.println("@00000");
 
         if(!fileUpload.isEmpty()) {
             //getRealPath() 메소드는 웹 애플리케이션의 루트 경로를 반환합니다
@@ -64,20 +61,14 @@ public class AppWriteServiceImpl implements AppWriteService {
         }
         appInfo.setRcrtNo(rcrtNo);
         appInfo.setAplyNo(aplyNo);
-        System.out.println("@11111");
         appWriteRepository.fileUpload(appInfo);
-        System.out.println("@22222");
 
     }
-@Override
-    public  AppWriteInfo memInfo(String memberId){
 
-        return appWriteRepository.memInfo(memberId);
-}
 
 
 @Override
-   public HashMap<String,String> fileInfo(AppWriteInfo member){
+   public HashMap<String,String> fileInfo(ApplicationInfo member){
     List<AppWriteInfo> fileList=appWriteRepository.fileInfo(member);
     HashMap<String,String> fileDoc= new HashMap<>();
     for(AppWriteInfo data: fileList){

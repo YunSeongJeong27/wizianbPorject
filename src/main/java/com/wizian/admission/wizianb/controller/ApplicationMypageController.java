@@ -31,6 +31,7 @@ public class ApplicationMypageController {
 
     @GetMapping("/checked")
     public String check(@CurrentUser ApplicationInfo member, Model model){
+
         HashMap<String, List<ApplicationMypage>> map = new HashMap<>();
         if(member != null){
             model.addAttribute("title","마이페이지");
@@ -45,7 +46,7 @@ public class ApplicationMypageController {
             model.addAttribute("mapList",map);
 
             //파일정보가져오기
-            AppWriteInfo member=appWriteService.memInfo(memberId);
+
             HashMap<String,String> fileInfo=appWriteService.fileInfo(member);
             Set<String> keys = fileInfo.keySet();
             for (String key : keys) {
@@ -134,10 +135,9 @@ public class ApplicationMypageController {
     }
 
     @PostMapping("/checked/fileinsert")
-    public String fileInsert(@RequestParam("fileUpload") MultipartFile fileUpload,
-                             AppWriteInfo appInfo, HttpSession session) throws Exception {
-        String memberId=(String)session.getAttribute("memberId");
-        AppWriteInfo member=appWriteService.memInfo(memberId);
+    public String fileInsert(@RequestParam("fileUpload") MultipartFile fileUpload,@CurrentUser ApplicationInfo member,
+                             AppWriteInfo appInfo) throws Exception {
+
 
         appWriteService.fileUpload(fileUpload,member,appInfo);
         return "redirect:/checked";
