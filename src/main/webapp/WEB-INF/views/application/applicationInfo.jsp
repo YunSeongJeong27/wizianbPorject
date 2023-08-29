@@ -487,20 +487,24 @@
 
 function sendFormData() {
     const formData = new FormData(document.getElementById('joinForm'));
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/application/join', true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200 && xhr.responseText === "success") {
-                window.location.href = '/userInfo/${rcrtNo}';
-            } else {
-                console.error('Request failed:', xhr.status, xhr.statusText);
+    fetch('/application/join', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status + response.statusText);
             }
-        }
-    };
-    xhr.send(formData);
-
+            return response.text();
+        })
+        .then(text => {
+            if (text === "success") {
+                window.location.href = '/signin/userInfo/${rcrtNo}';
+            }
+        })
+        .catch(error => {
+            console.error('Request failed:', error);
+        });
 }
 
 
