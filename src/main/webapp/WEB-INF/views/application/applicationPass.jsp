@@ -151,6 +151,10 @@
 </div>
 
 <script>
+    window.onload = function(){
+        pass();
+    }
+
     const pledgeBtn = document.getElementById("pledgeBtn");
     pledgeBtn.addEventListener("click", function(){
         window.location.href = "/pledge/"+courseSelect.options[courseSelect.selectedIndex].value+"/"+aplyNo.innerText;
@@ -183,7 +187,9 @@
     const courseSelect = document.querySelector("select");
     courseName.innerText = courseSelect.options[courseSelect.selectedIndex].text;
 
-    courseSelect.addEventListener('change', async function(){
+    courseSelect.addEventListener('change', pass);
+
+    async function pass(){
         docPassYn.innerText = "";
         docNReason.innerText = "";
         fnlPassYn.innerText = "";
@@ -205,11 +211,12 @@
 
                 let schdl = data['scheduleDoc'];
                 let docPass = application['docPassYn'];
+                console.log(docPass);
 
-                if(!schedule(schdl['startDate'])) {
+                /*if(!schedule(schdl['startDate'])) {
                     alert("서류합격자 발표기간이 아닙니다.");
                     return;
-                }
+                }*/
 
                 if(docPass === 'N') {
                     docPassYn.innerText = "불합격";
@@ -221,10 +228,10 @@
                     schdl = data['scheduleFnl'];
                     let fnlPass = application['fnlPassYn'];
 
-                    if(!schedule(schdl['startDate'])) {
+                    /*if(!schedule(schdl['startDate'])) {
                         alert("최종합격자 발표기간이 아닙니다.");
                         return;
-                    }
+                    }*/
 
                     if(fnlPass === 'Y') {
                         fnlPassYn.innerText = "합격";
@@ -239,8 +246,7 @@
                     schdlMessage.innerHTML = message['msgCont'];
                 }
             });
-    });
-
+    }
 
     function schedule(startDate){
         var now = new Date();
