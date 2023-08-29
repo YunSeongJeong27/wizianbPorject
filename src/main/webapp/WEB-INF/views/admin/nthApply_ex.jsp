@@ -18,7 +18,10 @@
     <script src="https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js"></script>
     <link rel="stylesheet" href="css/custom.css"/>
     <style>
-        .pdfobject-container { height: 30rem; border: 1rem solid rgba(0,0,0,.1); }
+        .pdfobject-container {
+            height: 30rem;
+            border: 1rem solid rgba(0, 0, 0, .1);
+        }
     </style>
     <style>
         #mainTab #tabList,
@@ -169,7 +172,7 @@
                         <span class="text-secondary me-2">검색결과</span>
                     </div>
                     <div>
-                        <select id="gridTablePage" class="form-select-sm" onchange="fn_grid2_pageRowCount()">
+                        <select id="gridTablePage" class="form-select-sm">
                             <option value="5">5</option>
                             <option value="30" selected="">30</option>
                             <option value="50">50</option>
@@ -559,6 +562,7 @@
             }
         }
     });
+
     function educationPeriodFormatter({row}) {
         const startDate = row.eduStartDate;
         const endDate = row.eduEndDate;
@@ -642,8 +646,10 @@
                 button.disabled = true;
 
             });
+            const excelBtn = document.querySelector('#btn_grid2_excel_export');
+            excelBtn.disabled = false;
             document.querySelectorAll('.tab1Form').forEach((form) => {
-                form.innerHTML ="";
+                form.innerHTML = "";
                 form.value = "";
             });
 
@@ -786,8 +792,8 @@
                 initialRequest: true,
                 api: {
                     hideLoadingBar: false,
-                    readData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/education", method: 'GET'},
-                    updateData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/education", method: 'PUT'}
+                    readData: {url: "/admin/apply/" + rcrtNo + "/" + aplyNo + "/education", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + rcrtNo + "/" + aplyNo + "/education", method: 'PUT'}
                 },
             },
             scrollX: false,
@@ -833,8 +839,8 @@
                 initialRequest: true,
                 api: {
                     hideLoadingBar: false,
-                    readData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/careers", method: 'GET'},
-                    updateData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/careers", method: 'PUT'}
+                    readData: {url: "/admin/apply/" + rcrtNo + "/" + aplyNo + "/careers", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + rcrtNo + "/" + aplyNo + "/careers", method: 'PUT'}
                 },
             },
             pagination: true,
@@ -872,7 +878,7 @@
     }
 
     //오른쪽 탭 로드(지원자 정보 클릭시 활성화)
-    const tabAllLoad = (rcrtNo ,aplyNo) => {
+    const tabAllLoad = (rcrtNo, aplyNo) => {
 
         //탭 버튼 활성화
         const buttonList = document.querySelectorAll('#tabList > li > button');
@@ -882,7 +888,7 @@
 
         //기본 정보 로드
         let filePath = ""
-        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/peopleDetails")
+        fetch("/admin/apply/" + rcrtNo + "/" + aplyNo + "/peopleDetails")
             .then(response => response.json())
             .then((list) => {
                 document.querySelector('#btn_tab1_modify').disabled = false;
@@ -903,14 +909,14 @@
             .catch(error => console.log(error));
 
         //자기소개서 로드
-        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/introduce")
-            .then(function(response) {
+        fetch("/admin/apply/" + rcrtNo + "/" + aplyNo + "/introduce")
+            .then(function (response) {
                 return response.json();
             })
-            .then(function(list) {
+            .then(function (list) {
                 const container = document.querySelector('#div_tab4');
                 container.innerHTML = "";
-                list.map(function(e, i) {
+                list.map(function (e, i) {
                     const newDiv = document.createElement('div');
                     newDiv.id = 'item_no_' + i;
                     newDiv.className = "form-basic";
@@ -918,40 +924,36 @@
 
                     newDiv.innerHTML =
                         '<div>' +
-                        '<div>▶ ' + e.itemName + ' [글자 제한 : ' + e.maxChar +'자]</div>' +
+                        '<div>▶ ' + e.itemName + ' [글자 제한 : ' + e.maxChar + '자]</div>' +
                         '</div>' +
                         '<div>' +
                         '<textarea name="answer"' +
                         ' style="height:175px; overflow-y:scroll;"' +
                         ' class="form-control tab1Form"' +
-                        ' disabled>' + e.answer+'</textarea>'+
+                        ' disabled>' + e.answer + '</textarea>' +
                         '</div>' +
                         '<div>' +
                         '<p>('
-                        + e.answer.length +' / '+ e.maxChar +' 자)</p>'+
+                        + e.answer.length + ' / ' + e.maxChar + ' 자)</p>' +
                         '</div>';
 
                     container.appendChild(newDiv);
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
-        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/submissionDoc")
+        fetch("/admin/apply/" + rcrtNo + "/" + aplyNo + "/submissionDoc")
             .then(response => response.json())
             .then((list) => {
                 const pdfBox = document.querySelector('#example1');
                 pdfBox.innerHTML = "";
                 filePath = list[0].fileNo;
-                if(filePath === ""){
-                    document.querySelector('#example1').innerHTML = "제출한 서류가 존재하지 않습니다.";
-                }else {
-                    PDFObject.embed("/pdf/" + filePath, "#example1");
-                }
+                PDFObject.embed("/pdf/" + filePath, "#example1");
             })
             .catch((error) => {
                 console.log(error)
-                filePath = "";
+                document.querySelector('#example1').innerHTML = "제출한 서류가 존재하지 않습니다.";
             });
 
 
@@ -964,10 +966,10 @@
                 if (e.id === "btn_tab1") {
                     elements[0].style.display = 'block';
                 } else if (e.id === "btn_tab2") {
-                    tab2GridLoad(rcrtNo ,aplyNo);
+                    tab2GridLoad(rcrtNo, aplyNo);
                     elements[1].style.display = 'block';
                 } else if (e.id === "btn_tab3") {
-                    tab3GridLoad(rcrtNo,aplyNo)
+                    tab3GridLoad(rcrtNo, aplyNo)
                     elements[2].style.display = 'block';
                 } else if (e.id === "btn_tab4") {
                     elements[3].style.display = 'block';

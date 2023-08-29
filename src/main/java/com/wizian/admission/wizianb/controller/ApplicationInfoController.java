@@ -33,7 +33,7 @@ public class ApplicationInfoController {
 
     //기본정보
     @GetMapping("/userInfo/{rcrtNo}")
-    public String userInfo(@CurrentUser ApplicationInfo member, @PathVariable("rcrtNo")String rcrtNo, Model model){
+    public String userInfo(@PathVariable("rcrtNo")String rcrtNo, Model model){
 
         model.addAttribute("title","기본정보");
        // Object rcrtNo = session.getAttribute("rcrtNo");
@@ -41,21 +41,29 @@ public class ApplicationInfoController {
 
         model.addAttribute("rcrtNo",rcrtNo);
 
-        if(member != null){
-            ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
-            Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
-
-            model.addAttribute("appInfo",appInfo);
-            model.addAttribute("member",member);
-            model.addAttribute("rcrtInfo",rcrtInfo);
-            return "/application/applicationInfoAfterLogin";
-        }else{
             Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
             model.addAttribute("rcrtInfo",rcrtInfo);
             return "/application/applicationInfo";
-        }
-    }
 
+    }
+    @GetMapping("/signin/userInfo/{rcrtNo}")
+    public String userInfoSignIn(@CurrentUser ApplicationInfo member, @PathVariable("rcrtNo")String rcrtNo, Model model){
+
+        model.addAttribute("title","기본정보");
+        // Object rcrtNo = session.getAttribute("rcrtNo");
+        // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
+
+        model.addAttribute("rcrtNo",rcrtNo);
+
+        ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
+        Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
+
+        model.addAttribute("appInfo",appInfo);
+        model.addAttribute("member",member);
+        model.addAttribute("rcrtInfo",rcrtInfo);
+        return "/application/applicationInfoAfterLogin";
+
+    }
 
     /*지원서작성,회원가입*/
     @PostMapping("/application/join")

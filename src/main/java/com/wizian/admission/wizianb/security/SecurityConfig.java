@@ -7,15 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 @Configuration
@@ -26,24 +25,33 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                .antMatchers("/login", "/logout", "/app", "/selectInfo", "/userInfo/*").permitAll()
+                .anyRequest().authenticated()
         );
-        http
-                .formLogin()
+        http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
                 .permitAll()
-        .and()
+                .defaultSuccessUrl("/app", true)
+                .successHandler(
+                        (request, response, authentication) -> {
+                            RequestCache requestCache = new HttpSessionRequestCache();
+                            SavedRequest savedRequest = requestCache.getRequest(request, response);
+                            String uri = "/";
+                            if(savedRequest != null){
+                                uri = savedRequest.getRedirectUrl();
+                                requestCache.removeRequest(request, response);
+                            }
+
+                            response.sendRedirect(uri);
+                        });
+        http
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and().headers().frameOptions().sameOrigin();
-        http.csrf((csrf) -> csrf
-                .ignoringRequestMatchers(new AntPathRequestMatcher("/**")));
-
+        http.csrf().disable();
         return http.build();
     }
     @Bean
@@ -62,4 +70,6 @@ public class SecurityConfig {
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
+
 }
