@@ -50,13 +50,9 @@
         </div>
 
 
-            <sec:authorize access="isAnonymous()">
+
             <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
             <div id="existingUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">기존회원작성</div>
-            </sec:authorize>
-            <sec:authorize access="isAuthenticated()">
-                <div id="userBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서 작성</div>
-            </sec:authorize>
     </div>
 </div>
 
@@ -78,9 +74,7 @@
     existingUserBtn.addEventListener("click", function (){
         window.location.href = "/login";
     })
-    userBtn.addEventListener("click", function (){
-        window.location.href = "/userInfo/${rcrtNo}";
-    })
+
 
 
 </script>
