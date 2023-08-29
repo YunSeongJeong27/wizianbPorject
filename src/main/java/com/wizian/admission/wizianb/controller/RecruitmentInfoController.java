@@ -84,6 +84,14 @@ public class RecruitmentInfoController {
         return ResponseEntity.ok(response);
     }
 
+    //모집상태변경
+    @PutMapping("/recruitmentinfo/recruitment/statusupdate")
+    ResponseEntity<ToastUiResponseDto> updateStatus (@RequestBody JsonNode jn){
+        JsonNode updateRows = jn.get("updatedRows");
+        return ResponseEntity.ok( recruitmentInfoService.updateStatus(updateRows));
+    }
+
+
 
 
 }

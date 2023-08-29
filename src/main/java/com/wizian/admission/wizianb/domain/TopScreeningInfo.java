@@ -15,6 +15,8 @@ public class TopScreeningInfo {
     private String stepDiv;     // 전형평가단계
     private String eduStartDate;  //교육시작일
     private String eduEndDate; //교욱종료일
+    private String recruitStatusDiv; //모집전형의 statusDiv
+
 
     // 전형평가단계(EntrySelSchdl)
     private int schdlSeq;       // 일정일련번호(pk)

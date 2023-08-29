@@ -104,6 +104,9 @@
                     </select>
                 </div>
             </div>
+            <div class="col-8 d-flex flex-row justify-content-end">
+                <button id="updateRecruitStatus" class="btn btn-sm btn-light btn-outline-dark">상태변경</button>
+            </div>
         </div>
 
         <%--BODY--%>
@@ -256,6 +259,7 @@
             api: {
                 readData: { url: '/topscreen/info/'+termDiv+"/"+courseDiv+"/"+courseName,
                     method: 'GET' },
+                updateData: { url: '/recruitmentinfo/recruitment/statusupdate', method: 'PUT', contentType: 'application/json' },
                 deleteData: { url: '/recruitmentinfo/deletenthinfo', method: 'DELETE' }
             }
         };
@@ -333,10 +337,20 @@
                         sortable: true, align: 'center'
                     },
                     {
-                        header: '전형평가단계',
-                        name: 'stepDiv',
+                        header: '모집진행상태',
+                        name: 'recruitStatusDiv',
                         sortingType: 'asc',
-                        sortable: false, align: 'center'
+                        sortable: false, align: 'center',
+                        editor: {
+                            type: 'select',
+                            options: {
+                                listItems: [
+                                    { text: '준비중', value: '준비중' },
+                                    { text: '진행중', value: '진행중' },
+                                    { text: '완료', value: '완료' }
+                                ]
+                            }
+                        }
                     }
                 ],
                 columnOptions: {
@@ -449,6 +463,12 @@
         }
 
     }
+
+    //상태변경 버튼
+    var updateRecruitStatusButton = document.getElementById("updateRecruitStatus");
+    updateRecruitStatusButton.addEventListener("click", function() {
+        nthTable.request("updateData");
+    });
 
     let selectSchdlSeq;
     //변경버튼

@@ -122,4 +122,20 @@ public class RecruitmentInfoServiceImpl implements RecruitmentInfoService{
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 
+    @Override
+    public  ToastUiResponseDto updateStatus (JsonNode jn){
+        HashMap<String, Object> resultMap = new HashMap<>();
+        int result = 0;
+        System.out.println("jn: "+jn.toString());
+        for (JsonNode row : jn) {
+            TopScreeningInfo recruitVo = TopScreeningInfo.builder()
+                    .rcrtNo(row.get("rcrtNo").asText())
+                    .recruitStatusDiv(row.get("recruitStatusDiv").asText())
+                    .build();
+            result=recruitmentInfoRepository.updateStatus(recruitVo);
+        }
+        resultMap.put("message", "입력하신" + result + " 건의 모집전형이 저장되었습니다.");
+        return ToastUiResponseDto.builder().result(true).data(resultMap).build();
+    }
+
 }
