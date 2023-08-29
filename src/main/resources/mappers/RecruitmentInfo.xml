@@ -47,5 +47,10 @@
         where schdl_seq=#{schdlSeq}
     </update>
 
+    <update id="updateStatus" parameterType="com.wizian.admission.wizianb.domain.TopScreeningInfo">
+            update ENTRY_SEL_MASTER set STATUS_DIV=#{recruitStatusDiv}
+                                    where RCRT_NO=#{rcrtNo}
+    </update>
+
 
 </mapper>

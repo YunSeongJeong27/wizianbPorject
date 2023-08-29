@@ -19,6 +19,7 @@ public interface RecruitmentInfoRepository {
 
     int subInfoInsert (TopScreeningInfo recruitVo);
     int subInfoUpdate (TopScreeningInfo recruitVo);
+    int updateStatus (TopScreeningInfo recruitVo);
 
 
 }

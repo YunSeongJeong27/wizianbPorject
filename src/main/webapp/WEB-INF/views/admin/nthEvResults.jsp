@@ -301,12 +301,6 @@
                      align: 'center'
                  },
                  {
-                     header: '지원서조회',
-                     name: 'evPdfFileNo',
-                     sortingType: 'asc',
-                     sortable: true, align: 'center'
-                 },
-                 {
                      header: '지원동기(30)',
                      name: 'ev1Score',
                      sortingType: 'asc',

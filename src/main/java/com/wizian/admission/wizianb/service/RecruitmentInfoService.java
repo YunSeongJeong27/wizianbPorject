@@ -17,6 +17,7 @@ public interface RecruitmentInfoService {
     ToastUiResponseDto subInfo(String rcrtNo);
     ToastUiResponseDto subInfoInsert (JsonNode jn,String rcrtNo);
     ToastUiResponseDto subInfoUpdate (JsonNode jn,String rcrtNo);
+    ToastUiResponseDto updateStatus (JsonNode jn);
 
 
 }
