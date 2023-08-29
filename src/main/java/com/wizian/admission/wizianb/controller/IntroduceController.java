@@ -105,7 +105,7 @@ public class IntroduceController {
             }
             model.addAttribute("introduceList", answerListAll);
 
-            return "redirect:/userIntroduce/"+rcrtNos[0]+"/"+aplyNos[0];
+            return "redirect:/userIntroduce/"+rcrtNos[0]+"/"+aplyNos[0];            // 이거를 /app으로 보내면 되지않을까요?
         }else{
             //수정
             List<Introduce> introInfo = introduceService.findAnswerInfo(aplyNos[0]);
