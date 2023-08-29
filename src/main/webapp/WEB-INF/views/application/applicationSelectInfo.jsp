@@ -48,11 +48,16 @@
                 <div class="mx-2 my-4">${content.msgCont}</div>
             </c:forEach>
         </div>
-
-
-
-            <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
-            <div id="existingUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">기존회원작성</div>
+        <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
+        <sec:authorize access="isAnonymous()">
+            <%-- 로그아웃 상태 --%>
+            <div class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;" onclick="window.location.href='/login'">기존회원작성</div>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
+        <sec:csrfInput />
+            <%-- 로그인 상태 --%>
+            <div class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;" onclick="window.location.href='/userInfo/${rcrtNo}'">기존회원작성</div>
+        </sec:authorize>
     </div>
 </div>
 
@@ -66,17 +71,10 @@
 
     //userInfo 페이지 이동버튼
     const newUserBtn = document.getElementById("newUserBtn");
-    const existingUserBtn = document.getElementById("existingUserBtn");
     const userBtn = document.getElementById("userBtn");
     newUserBtn.addEventListener("click", function(){
         window.location.href = "/userInfo/${rcrtNo}";
     })
-    existingUserBtn.addEventListener("click", function (){
-        window.location.href = "/login";
-    })
-
-
-
 </script>
 <%@include file="../user/footer.jsp" %>
 </body>

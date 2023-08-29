@@ -57,8 +57,6 @@ public class ApplicationWriteController {
         return "/application/applicationLogin";
     }
 
-
-
     @PostMapping("/login/findId")
     @ResponseBody
     public ApplicationWrite findId(@RequestBody ApplicationWrite applicationWrite){
