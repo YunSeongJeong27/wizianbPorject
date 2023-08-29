@@ -158,25 +158,25 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService, UserD
     /* 학력사항 저장 */
     @Override
     public void saveEducation(Education edu) {
-        String[] acdmSeq = edu.getAcdmSeq().split(",");
-        String[] startDate = edu.getStartDate().split(",");
-        String[] endDate = edu.getEndDate().split(",");
-        String[] gradeDiv = edu.getGradeDiv().split(",");
-        String[] gradeStatusDiv = edu.getGradeStatusDiv().split(",");
-        String[] orgName = edu.getOrgName().split(",");
-        String[] deptName = edu.getDeptName().split(",");
+        String[] acdmSeq = edu.getAcdmSeq().split(",", -1);
+        String[] startDate = edu.getStartDate().split(",", -1);
+        String[] endDate = edu.getEndDate().split(",", -1);
+        String[] gradeDiv = edu.getGradeDiv().split(",", -1);
+        String[] gradeStatusDiv = edu.getGradeStatusDiv().split(",", -1);
+        String[] orgName = edu.getOrgName().split(",", -1);
+        String[] deptName = edu.getDeptName().split(",", -1);
 
         for(int i=0; i<startDate.length; i++){
             Education data = new Education();
 
             data.setRcrtNo(edu.getRcrtNo());
             data.setAplyNo(edu.getAplyNo());
-            data.setStartDate(startDate[i]);
-            data.setEndDate(endDate[i]);
-            data.setGradeDiv(gradeDiv[i]);
-            data.setGradeStatusDiv(gradeStatusDiv[i]);
-            data.setOrgName(orgName[i]);
-            data.setDeptName(deptName[i]);
+            data.setStartDate(startDate[i].isEmpty() ? null : startDate[i]);
+            data.setEndDate(endDate[i].isEmpty() ? null : endDate[i]);
+            data.setGradeDiv(gradeDiv[i].isEmpty() ? null : gradeDiv[i]);
+            data.setGradeStatusDiv(gradeStatusDiv[i].isEmpty() ? null : gradeStatusDiv[i]);
+            data.setOrgName(orgName[i].isEmpty() ? null : orgName[i]);
+            data.setDeptName(deptName[i].isEmpty() ? null : deptName[i]);
 
             if(!acdmSeq[i].isEmpty()) {
                 data.setAcdmSeq(acdmSeq[i]);
@@ -196,23 +196,22 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService, UserD
 
     @Override
     public void saveCareer(Careers career) {
-        String[] careerSeq = career.getCareerSeq().split(",");
-        String[] startDate = career.getStartDate().split(",");
-        String[] endDate = career.getEndDate().split(",");
-        String[] plcName = career.getPlcName().split(",");
-        String[] plcJob = career.getPlcJob().split(",");
-        String[] note = career.getNote().split(",");
+        String[] careerSeq = career.getCareerSeq().split(",", -1);
+        String[] startDate = career.getStartDate().split(",", -1);
+        String[] endDate = career.getEndDate().split(",", -1);
+        String[] plcName = career.getPlcName().split(",", -1);
+        String[] plcJob = career.getPlcJob().split(",", -1);
+        String[] note = career.getNote().split(",", -1);
 
         for(int i=0; i<startDate.length; i++){
             Careers data = new Careers();
-
             data.setRcrtNo(career.getRcrtNo());
             data.setAplyNo(career.getAplyNo());
-            data.setStartDate(startDate[i]);
-            data.setEndDate(endDate[i]);
-            data.setPlcName(plcName[i]);
-            data.setPlcJob(plcJob[i]);
-            data.setNote(note[i]);
+            data.setStartDate(startDate[i].isEmpty() ? null : startDate[i]);
+            data.setEndDate(endDate[i].isEmpty() ? null : endDate[i]);
+            data.setPlcName(plcName[i].isEmpty() ? null : plcName[i]);
+            data.setPlcJob(plcJob[i].isEmpty() ? null : plcJob[i]);
+            data.setNote(note[i].isEmpty() ? null : note[i]);
 
             if(!careerSeq[i].isEmpty()) {
                 data.setCareerSeq(careerSeq[i]);
