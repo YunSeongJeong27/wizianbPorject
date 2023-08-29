@@ -116,12 +116,11 @@
                             모집과정명
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-select" name="courseDiv">
+                            <select class="form-select" name="courseDiv" disabled>
                                 <option selected>${rcrtInfo.courseDiv}</option>
-                                <option>JAVA</option>
-                                <option>Python</option>
-                                <option>C++</option>
-                                <option>빅데이터</option>
+                                <option value="Java">Java</option>
+                                <option value="Python">Python</option>
+                                <option value="C++">C++</option>
                             </select>
                         </div>
                     </div>
@@ -180,9 +179,9 @@
                         <div class="col-lg-4">
                             <select class="form-select" name="gender">
                                 <option>${appInfo.gender}</option>
-                                <option>남자</option>
-                                <option>여자</option>
-                                <option>기타</option>
+                                <option value="남자">남자</option>
+                                <option value="여자">여자</option>
+                                <option value="기타">기타</option>
                             </select>
                         </div>
                     </div>
