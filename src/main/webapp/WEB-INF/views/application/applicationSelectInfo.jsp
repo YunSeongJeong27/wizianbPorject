@@ -48,9 +48,9 @@
                 <div class="mx-2 my-4">${content.msgCont}</div>
             </c:forEach>
         </div>
-        <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
         <sec:authorize access="isAnonymous()">
             <%-- 로그아웃 상태 --%>
+            <div id="newUserBtn" class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;">지원서처음작성</div>
             <div class="btn text-white p-2 mx-1" style="background-color: #003A78; width: 150px;" onclick="window.location.href='/login'">기존회원작성</div>
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">

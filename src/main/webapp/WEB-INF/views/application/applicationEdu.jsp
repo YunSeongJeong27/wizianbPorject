@@ -67,7 +67,7 @@
                         <a href="/userEdu/${rcrtNo}/${aplyNo}" class="active">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userExp/${rcrtNo}/${aplyNo}"\>경력사항</a>
+                        <a href="/userExp/${rcrtNo}/${aplyNo}">경력사항</a>
                     </li>
                     <li class="py-2">
                         <a href="/userIntroduce/${rcrtNo}/${aplyNo}">자기소개서</a>
