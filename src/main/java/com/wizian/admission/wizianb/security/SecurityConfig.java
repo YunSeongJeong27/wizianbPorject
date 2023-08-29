@@ -8,10 +8,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Configuration
@@ -24,11 +28,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
         );
-        http.formLogin()
-                .and()
+        http
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
         .and()
                 .logout()
@@ -39,6 +43,7 @@ public class SecurityConfig {
                 .and().headers().frameOptions().sameOrigin();
         http.csrf((csrf) -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/**")));
+
         return http.build();
     }
     @Bean
@@ -57,5 +62,4 @@ public class SecurityConfig {
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
-
 }
