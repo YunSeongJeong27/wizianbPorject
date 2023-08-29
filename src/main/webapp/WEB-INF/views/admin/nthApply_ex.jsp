@@ -466,7 +466,7 @@
                 </div>
                 <div id="tab4" aria-labelledby="btn_tab4" role="tabpanel"
                      class="tab-pane fade" aria-hidden="true">
-                    <div style="height: 700px;">
+                    <div style="height: 700px; overflow-y: auto;">
                         <div class="contents">
                             <div class="container">
                                 <div class="div_wrap_title d-flex justify-content-between py-3 align-items-center">

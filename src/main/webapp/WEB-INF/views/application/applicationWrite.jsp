@@ -32,7 +32,7 @@
 </div>
 <div class="w-100" style="background-image: url('https://i.ibb.co/TbKqDg1/keyboard-5017973-1920.jpg'); background-size: cover; background-repeat: no-repeat; height: 330px;"></div>
 
-<div class="d-flex flex-wrap justify-content-between mx-auto m-5" style="width: 1400px;">
+<div class="d-flex flex-wrap justify-content-start mx-auto m-5" style="width: 1400px;">
     <c:forEach items="${entrySelMaster}" var="master">
         <form action="/selectInfo" method="get" class="m-2" style="width: 32%; height: 480px;">
             <input type="hidden" name="entryRcrtNo" value="${master.rcrtNo}">
