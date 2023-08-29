@@ -18,33 +18,39 @@ public class ApplicationAdminInfoController {
         return ResponseEntity.ok(applicationAdminInfoService.peopleList(rcrtNo));
     }
 
-    @GetMapping("/admin/apply/{aplyNo}/peopleDetails")
-    public ResponseEntity<ToastUiResponseDto> peopleDetails(@PathVariable String aplyNo){
-        return ResponseEntity.ok(applicationAdminInfoService.peopleDetails(aplyNo));
+    @GetMapping("/admin/apply/{rcrtNo}/{aplyNo}/peopleDetails")
+    public ResponseEntity<ToastUiResponseDto> peopleDetails(@PathVariable String rcrtNo,@PathVariable String aplyNo){
+        return ResponseEntity.ok(applicationAdminInfoService.peopleDetails(rcrtNo, aplyNo));
     }
 
-    @GetMapping("/admin/apply/{aplyNo}/education")
-    public ResponseEntity<ToastUiResponseDto> getEducation(@PathVariable String aplyNo){
-        return ResponseEntity.ok(applicationAdminInfoService.getEducation(aplyNo));
+    @GetMapping("/admin/apply/{rcrtNo}/{aplyNo}/education")
+    public ResponseEntity<ToastUiResponseDto> getEducation(@PathVariable String rcrtNo,@PathVariable String aplyNo){
+        return ResponseEntity.ok(applicationAdminInfoService.getEducation(rcrtNo, aplyNo));
     }
 
-    @PutMapping("/admin/apply/{aplyNo}/education")
-    public ResponseEntity<ToastUiResponseDto> updateEducation(@PathVariable String aplyNo, @RequestBody JsonNode inputRows){
-        return ResponseEntity.ok(applicationAdminInfoService.updateEducation(aplyNo, inputRows));
+    @PutMapping("/admin/apply/{rcrtNo}/{aplyNo}/education")
+    public ResponseEntity<ToastUiResponseDto> updateEducation(@PathVariable String rcrtNo,@PathVariable String aplyNo, @RequestBody JsonNode inputRows){
+        return ResponseEntity.ok(applicationAdminInfoService.updateEducation(rcrtNo, aplyNo, inputRows));
     }
 
-    @GetMapping("/admin/apply/{aplyNo}/careers")
-    public ResponseEntity<ToastUiResponseDto> getCareers(@PathVariable String aplyNo){
-        return ResponseEntity.ok(applicationAdminInfoService.getCareers(aplyNo));
+    @GetMapping("/admin/apply/{rcrtNo}/{aplyNo}/careers")
+    public ResponseEntity<ToastUiResponseDto> getCareers(@PathVariable String rcrtNo,@PathVariable String aplyNo){
+        return ResponseEntity.ok(applicationAdminInfoService.getCareers(rcrtNo, aplyNo));
     }
 
-    @PutMapping("/admin/apply/{aplyNo}/careers")
-    public ResponseEntity<ToastUiResponseDto> updateCareers(@PathVariable String aplyNo, @RequestBody JsonNode inputRows){
-        return ResponseEntity.ok(applicationAdminInfoService.updateCareers(aplyNo, inputRows));
+    @PutMapping("/admin/apply/{rcrtNo}/{aplyNo}/careers")
+    public ResponseEntity<ToastUiResponseDto> updateCareers(@PathVariable String rcrtNo,@PathVariable String aplyNo, @RequestBody JsonNode inputRows){
+        return ResponseEntity.ok(applicationAdminInfoService.updateCareers(rcrtNo,aplyNo, inputRows));
     }
 
-    @GetMapping("/admin/apply/{aplyNo}/introduce")
-    public ResponseEntity<?> getIntroduce(@PathVariable String aplyNo){
-        return ResponseEntity.ok(applicationAdminInfoService.getIntroduce(aplyNo));
+    @GetMapping("/admin/apply/{rcrtNo}/{aplyNo}/introduce")
+    public ResponseEntity<?> getIntroduce(@PathVariable String rcrtNo, @PathVariable String aplyNo){
+        return ResponseEntity.ok(applicationAdminInfoService.getIntroduce(rcrtNo,aplyNo));
+    }
+
+    @GetMapping("/admin/apply/{rcrtNo}/{aplyNo}/submissionDoc")
+    public ResponseEntity<?> getSubmissionDoc(@PathVariable String rcrtNo, @PathVariable String aplyNo){
+        System.out.println("getSubmissionDoc");
+        return ResponseEntity.ok(applicationAdminInfoService.getSubmissionDoc(rcrtNo,aplyNo));
     }
 }

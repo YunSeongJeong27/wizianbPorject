@@ -9,7 +9,7 @@
     </select>
 
     <select id="peopleDetails" resultType="com.wizian.admission.wizianb.domain.ApplicationInfo">
-        SELECT entry_apply_master.APLY_NO,
+        SELECT APLY_NO,
                COURSE_DIV,
                NAME_KOR,
                NAME_ENG,
@@ -23,23 +23,20 @@
                TEL_LOCAL,
                HP_LOCAL,
                APLY_STS_DIV,
-               APLY_DATE,
-               ENTRY_APPLY_DOC.FILE_NO
-        FROM entry_apply_master inner join ENTRY_APPLY_DOC
-        ON entry_apply_master.APLY_NO = ENTRY_APPLY_DOC.APLY_NO
-        AND entry_apply_master.RCRT_NO = ENTRY_APPLY_DOC.RCRT_NO
-        WHERE entry_apply_master.aply_no = #{aplyNo} AND entry_apply_master.RCRT_NO = "J23C002"
+               APLY_DATE
+        FROM entry_apply_master
+        WHERE aply_no = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </select>
     <select id="getEducationInfo" resultType="com.wizian.admission.wizianb.domain.Education">
         SELECT *
         FROM entry_apply_acdm
-        WHERE aply_no = #{aplyNo}
+        WHERE aply_no = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </select>
 
     <select id="getCareersInfo" resultType="com.wizian.admission.wizianb.domain.Careers">
         SELECT *
         FROM entry_apply_career
-        WHERE aply_no = #{aplyNo}
+        WHERE aply_no = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </select>
 
     <update id="updateCareers" parameterType="com.wizian.admission.wizianb.domain.Careers">
@@ -48,7 +45,7 @@
             START_DATE = #{startDate}
             END_DATE = #{endDate}
             NOTE = #{note}
-        WHERE aply_no = #{aplyNo}
+        WHERE aply_no = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </update>
 
     <select id="getIntroduceList" resultType="com.wizian.admission.wizianb.domain.Introduce">
@@ -62,6 +59,14 @@
                 INNER JOIN
             entry_apply_intro AS EAI ON ESI.ITEM_NO = EAI.ITEM_NO AND ESI.RCRT_NO = EAI.RCRT_NO
         WHERE
-            EAI.APLY_NO = #{aplyNo};
+            EAI.APLY_NO = #{aplyNo} AND EAI.RCRT_NO = #{rcrtNo}
+    </select>
+    <select id="getSubmissionDocList" resultType="com.wizian.admission.wizianb.domain.SubmissionDocuments">
+        SELECT
+            FILE_NO
+        FROM
+            ENTRY_APPLY_DOC
+        WHERE
+            APLY_NO = #{aplyNo} AND RCRT_NO = #{rcrtNo}
     </select>
 </mapper>
