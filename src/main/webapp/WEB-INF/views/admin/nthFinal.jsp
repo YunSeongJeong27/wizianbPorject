@@ -364,7 +364,7 @@
 
         // 메일보내기 버튼 클릭 이벤트
         mailSendBtn.addEventListener('click', async function () {
-            const response = await fetch('/notice/find/'+nthRcrtNo+'/30');
+            const response = await fetch('/notice/find/'+rcrtNo+'/30');
             const dataList = await response.json();
             const title = dataList['data']['contents']['subject'];
             const content = dataList['data']['contents']['msgCont'].toString();
