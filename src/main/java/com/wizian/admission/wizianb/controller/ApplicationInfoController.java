@@ -47,8 +47,7 @@ public class ApplicationInfoController {
 
     }
     @GetMapping("/signin/userInfo/{rcrtNo}")
-    public String userInfoSignIn(@CurrentUser ApplicationInfo member, @PathVariable("rcrtNo")String rcrtNo, Model model){
-
+    public String userInfoSignIn(@CurrentUser ApplicationInfo member, @PathVariable String rcrtNo, Model model){
         model.addAttribute("title","기본정보");
         // Object rcrtNo = session.getAttribute("rcrtNo");
         // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
