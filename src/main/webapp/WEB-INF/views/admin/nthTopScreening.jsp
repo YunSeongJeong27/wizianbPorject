@@ -198,13 +198,6 @@
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },
-                {
-                    header: '전형평가단계',
-                    name: 'stepDiv',
-                    sortingType: 'asc',
-                    sortable: false, align: 'center'
-
-                }
             ],
             columnOptions: {
                 resizable: true

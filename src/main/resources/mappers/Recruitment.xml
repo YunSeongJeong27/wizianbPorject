@@ -3,7 +3,9 @@
 <mapper namespace="com.wizian.admission.wizianb.repository.RecruitmentRepository">
 
     <select id="findAll" resultType="com.wizian.admission.wizianb.domain.Recruitment">
-        SELECT *
+        SELECT *,
+        (select start_date from entry_sel_schdl where rcrt_no=entry_sel_master.rcrt_no and schdl_name=#{schdlAnnouncement} order by schdl_seq desc limit 0,1 ) as announcementStartDate,
+        (select end_date from entry_sel_schdl where rcrt_no=entry_sel_master.rcrt_no and schdl_name=#{schdlAnnouncement} order by schdl_seq desc limit 0,1 ) as announcementEndDate
         FROM ENTRY_SEL_MASTER ORDER BY EDU_START_DATE DESC
     </select>
 

@@ -4,6 +4,8 @@ package com.wizian.admission.wizianb.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.domain.RecruitmentStatus;
+import com.wizian.admission.wizianb.domain.SchdlName;
+import com.wizian.admission.wizianb.domain.TopScreeningInfo;
 import com.wizian.admission.wizianb.repository.RecruitmentRepository;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,13 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public ToastUiResponseDto findAll() {
-        List<Recruitment> recruitmentList = recruitmentRepository.findAll();
+        List<Recruitment> recruitmentList = recruitmentRepository.findAll(SchdlName.최종합격자발표);
+
+        for(Recruitment nl: recruitmentList){
+            nl.formatterPeriod(
+                    nl.getAnnouncementStartDate(),nl.getAnnouncementEndDate()
+            );
+        }
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", recruitmentList);

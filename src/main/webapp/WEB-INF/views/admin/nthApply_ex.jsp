@@ -135,8 +135,9 @@
                     <div class="ms-5 col">
                         <select id="registrationStatus" class="form-select">
                             <option selected>(전체)</option>
-                            <option>작성중</option>
-                            <option>작성완료</option>
+                            <option>진행중</option>
+                            <option>준비중</option>
+                            <option>완료</option>
                         </select>
                     </div>
                 </div>
@@ -613,13 +614,7 @@
                 },
                 {
                     header: '발표일자',
-                    name: '발표일자',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center'
-                },
-                {
-                    header: '전형단계',
-                    name: 'stepDiv',
+                    name: 'announcementPeriod',
                     sortingType: 'asc',
                     sortable: true, align: 'center'
                 },

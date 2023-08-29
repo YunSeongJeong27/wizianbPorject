@@ -47,7 +47,7 @@ public class TopScreeningServiceImpl implements TopScreeningService {
                 RecruitmentStatus.준비중,RecruitmentStatus.진행중,
                 SchdlName.모집,SchdlName.최종합격자발표);
 
-
+        //발표일자
         for(TopScreeningInfo nl: nthInfo){
             nl.formatterPeriod(
                     nl.getRecruitStartDate(),nl.getRecruitEndDate(),

@@ -22,4 +22,12 @@ public class Recruitment {
     private int selCnt;
     private int courseMonth;
     private String note;
+    private String announcementEndDate; //발표시작일자
+    private String announcementStartDate; //발표종료일자
+    private String announcementPeriod; //발표일정
+    public void formatterPeriod(String announcementStartDate,String announcementEndDate){
+        if(announcementStartDate !=null && announcementEndDate !=null ) {
+            this.announcementPeriod = announcementStartDate + "~" + announcementEndDate;
+        }
+    }
 }

@@ -206,12 +206,6 @@
                 },
 
                 {
-                    header: '평가단계',
-                    name: 'stepDiv',
-                    sortingType: 'asc',
-                    sortable: true, align: 'center',
-                },
-                {
                     header: '대상인원',
                     name: 'selCnt',
                     sortingType: 'asc',
