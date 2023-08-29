@@ -309,7 +309,7 @@
                                                     <div class="profile-pic dp_inlineblk"
                                                          style="vertical-align: bottom;">
                                                         <img id="img_preview" class="profile-pic tab1Form"
-                                                             src="/일본어_김현진.jpg">
+                                                             src="">
                                                     </div>
                                                     <!-- <div class="div_top_gap_06 dp_inlineblk" style="vertical-align: bottom;">
                                                         <button class="btn_slt button_sm" title="업로드">업로드</button>
@@ -893,13 +893,15 @@
             .then((list) => {
                 document.querySelector('#btn_tab1_modify').disabled = false;
 
-                const detail = list.data.contents;
+                const detail = list.data.contents
+                console.log(detail)
                 document.querySelector('#slt_cors_div').value = detail.courseDiv;
                 document.querySelector('#slt_gen_div').value = detail.gender;
                 document.querySelector('#txt_transcript_email').value = detail.email;
                 document.querySelector('#txt_inp1_nm_kor').value = detail.nameKor;
                 document.querySelector('#txt_inp1_nm_eng').value = detail.nameEng;
                 document.querySelector('#cal_brdt').value = detail.birthday;
+                document.querySelector('#img_preview').src = "/profileImage/"+ detail.picFileNo +".png";
                 document.querySelector('#txt_inp1_zip_cd').value = detail.zipcode;
                 document.querySelector('#txt_inp1_addr_local').value = detail.addrLocal;
                 document.querySelector('#txt_inp1_addr_natv').value = detail.addrDetail;
