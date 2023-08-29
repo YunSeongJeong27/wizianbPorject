@@ -865,7 +865,7 @@
             if(ii!==1) {
                 scheduleGrid.request('modifyData');
                 await searchBtn();
-                setTimeout(searchBtn, 1); //버퍼링떄문에 바로데이터가로드안돼서 일단추가
+                setTimeout(searchBtn, 100); //버퍼링떄문에 바로데이터가로드안돼서 일단추가
             }
         }
     });
