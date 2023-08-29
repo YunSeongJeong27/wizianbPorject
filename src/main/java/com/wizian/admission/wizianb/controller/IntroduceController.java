@@ -3,8 +3,10 @@ package com.wizian.admission.wizianb.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.wizian.admission.wizianb.domain.Introduce;
+import com.wizian.admission.wizianb.domain.Recruitment;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.service.IntroduceService;
+import com.wizian.admission.wizianb.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.List;
 public class IntroduceController {
 
     private final IntroduceService introduceService;
+    private final RecruitmentService recruitmentService;
 
     @GetMapping("/admin/{rcrtNo}/introduce")
     public ResponseEntity<ToastUiResponseDto> getIntroduceItems(@PathVariable String rcrtNo){
@@ -53,6 +56,7 @@ public class IntroduceController {
 
         List<Introduce> appIntro = introduceService.findAnswerInfo(aplyNo);
         List<Introduce> introduceList = introduceService.findItem(rcrtNo);
+        Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
 
         if (!appIntro.isEmpty()) {
             Introduce firstIntro = appIntro.get(0);
@@ -62,6 +66,7 @@ public class IntroduceController {
                 model.addAttribute("introduceList",answer);
                 model.addAttribute("aplyNo",aplyNo);
                 model.addAttribute("rcrtNo",rcrtNo);
+                model.addAttribute("courseName",rcrtInfo.getCourseName());
                 return "/application/applicationIntroduce";
             }else{
                 model.addAttribute("introduceList",introduceList);

@@ -76,7 +76,7 @@
             </div>
         </div>
         <div id="edu_title" class="col-lg-9">
-            <h3 class="mb-3">자바기반 풀스택 개발자 취업과정</h3>
+            <h3 class="mb-3">${courseName}</h3>
             <div class="title mt-5 mb-1">
                 학력사항
             </div>
@@ -109,7 +109,7 @@
                                             <option <c:if test="${edu.gradeStatusDiv == '재학'}">selected</c:if>>재학</option>
                                             <option <c:if test="${edu.gradeStatusDiv == '수료'}">selected</c:if>>수료</option>
                                             <option <c:if test="${edu.gradeStatusDiv == '중퇴'}">selected</c:if>>중퇴</option>
-                                            <option <c:if test="${edu.gradeStatusDiv == '편입</'}">selected</c:if>>편입</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '편입'}">selected</c:if>>편입</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-2">입학년월/졸업년월</div>

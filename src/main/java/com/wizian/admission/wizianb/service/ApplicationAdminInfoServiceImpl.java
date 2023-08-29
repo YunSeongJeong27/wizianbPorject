@@ -1,10 +1,7 @@
 package com.wizian.admission.wizianb.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.wizian.admission.wizianb.domain.ApplicationInfo;
-import com.wizian.admission.wizianb.domain.Careers;
-import com.wizian.admission.wizianb.domain.Education;
-import com.wizian.admission.wizianb.domain.Introduce;
+import com.wizian.admission.wizianb.domain.*;
 import com.wizian.admission.wizianb.dto.ToastUiResponseDto;
 import com.wizian.admission.wizianb.repository.ApplicationAdminInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +33,8 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto peopleDetails(String aplyNo) {
-        ApplicationInfo peopleDetails = applicationAdminInfoRepository.peopleDetails(aplyNo);
+    public ToastUiResponseDto peopleDetails(String rcrtNo, String aplyNo) {
+        ApplicationInfo peopleDetails = applicationAdminInfoRepository.peopleDetails(rcrtNo, aplyNo);
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", peopleDetails);
@@ -47,8 +44,8 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto getEducation(String aplyNo) {
-        List<Education> infoEducation = applicationAdminInfoRepository.getEducationInfo(aplyNo);
+    public ToastUiResponseDto getEducation(String rcrtNo, String aplyNo) {
+        List<Education> infoEducation = applicationAdminInfoRepository.getEducationInfo(rcrtNo, aplyNo);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", infoEducation);
         resultMap.put("pagination", "");
@@ -57,10 +54,11 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto updateEducation(String aplyNo, JsonNode inputRows) {
+    public ToastUiResponseDto updateEducation(String rcrtNo, String aplyNo, JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         for (JsonNode row : inputRows) {
             Education infoEducation = Education.builder()
+                    .rcrtNo(rcrtNo)
                     .aplyNo(aplyNo)
                     .orgName(row.get("orgName").asText())
                     .startDate(row.get("startDate").asText())
@@ -77,8 +75,8 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto getCareers(String aplyNo) {
-        List<Careers> infoCareers = applicationAdminInfoRepository.getCareersInfo(aplyNo);
+    public ToastUiResponseDto getCareers(String rcrtNo, String aplyNo) {
+        List<Careers> infoCareers = applicationAdminInfoRepository.getCareersInfo(rcrtNo, aplyNo);
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", infoCareers);
@@ -88,10 +86,11 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public ToastUiResponseDto updateCareers(String aplyNo, JsonNode inputRows) {
+    public ToastUiResponseDto updateCareers(String rcrtNo, String aplyNo, JsonNode inputRows) {
         HashMap<String, Object> resultMap = new HashMap<>();
         for (JsonNode row : inputRows) {
             Careers infoCareers = Careers.builder()
+                    .rcrtNo(rcrtNo)
                     .aplyNo(aplyNo)
                     .startDate(row.get("startDate").asText())
                     .endDate(row.get("endDate").asText())
@@ -106,8 +105,13 @@ public class ApplicationAdminInfoServiceImpl implements ApplicationAdminInfoServ
     }
 
     @Override
-    public List<Introduce> getIntroduce(String aplyNo) {
-        return applicationAdminInfoRepository.getIntroduceList(aplyNo);
+    public List<Introduce> getIntroduce(String rcrtNo, String aplyNo) {
+        return applicationAdminInfoRepository.getIntroduceList(rcrtNo, aplyNo);
+    }
+
+    @Override
+    public List<SubmissionDocuments> getSubmissionDoc(String rcrtNo, String aplyNo) {
+        return applicationAdminInfoRepository.getSubmissionDocList(rcrtNo, aplyNo);
     }
 
 

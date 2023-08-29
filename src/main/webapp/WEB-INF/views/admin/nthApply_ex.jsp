@@ -769,14 +769,15 @@
 
             // 클릭한 row의 rcrtNo 값을 가져오기
             const aplyNo = rowData.aplyNo;
-            tabAllLoad(aplyNo);
-            tab2GridLoad(aplyNo);
-            tab3GridLoad(aplyNo);
+            const rcrtNo = rowData.rcrtNo;
+            tabAllLoad(rcrtNo, aplyNo);
+            tab2GridLoad(rcrtNo, aplyNo);
+            tab3GridLoad(rcrtNo, aplyNo);
         })
     }
 
     //학력사항 탭
-    const tab2GridLoad = (aplyNo) => {
+    const tab2GridLoad = (rcrtNo, aplyNo) => {
         const Grid = tui.Grid;
         document.querySelector('#tab2Grid').innerHTML = "";
         const tab2Grid = new Grid({
@@ -785,8 +786,8 @@
                 initialRequest: true,
                 api: {
                     hideLoadingBar: false,
-                    readData: {url: "/admin/apply/" + aplyNo + "/education", method: 'GET'},
-                    updateData: {url: "/admin/apply/" + aplyNo + "/education", method: 'PUT'}
+                    readData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/education", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/education", method: 'PUT'}
                 },
             },
             scrollX: false,
@@ -823,7 +824,7 @@
     }
 
     //활동이력 탭
-    const tab3GridLoad = (aplyNo) => {
+    const tab3GridLoad = (rcrtNo, aplyNo) => {
         const Grid = tui.Grid;
         document.querySelector('#tab3Grid').innerHTML = "";
         const tab3Grid = new Grid({
@@ -832,8 +833,8 @@
                 initialRequest: true,
                 api: {
                     hideLoadingBar: false,
-                    readData: {url: "/admin/apply/" + aplyNo + "/careers", method: 'GET'},
-                    updateData: {url: "/admin/apply/" + aplyNo + "/careers", method: 'PUT'}
+                    readData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/careers", method: 'GET'},
+                    updateData: {url: "/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/careers", method: 'PUT'}
                 },
             },
             pagination: true,
@@ -871,7 +872,7 @@
     }
 
     //오른쪽 탭 로드(지원자 정보 클릭시 활성화)
-    const tabAllLoad = (aplyNo) => {
+    const tabAllLoad = (rcrtNo ,aplyNo) => {
 
         //탭 버튼 활성화
         const buttonList = document.querySelectorAll('#tabList > li > button');
@@ -881,7 +882,7 @@
 
         //기본 정보 로드
         let filePath = ""
-        fetch("/admin/apply/" + aplyNo + "/peopleDetails")
+        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/peopleDetails")
             .then(response => response.json())
             .then((list) => {
                 document.querySelector('#btn_tab1_modify').disabled = false;
@@ -898,12 +899,11 @@
                 document.querySelector('#txt_inp1_addr_natv').value = detail.addrDetail;
                 document.querySelector('#txt_inp1_tel_local').value = detail.telLocal;
                 document.querySelector('#txt_inp1_tel_natv').value = detail.hpLocal;
-                filePath = detail.fileNo;
             })
             .catch(error => console.log(error));
 
         //자기소개서 로드
-        fetch("/admin/apply/" + aplyNo + "/introduce")
+        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/introduce")
             .then(function(response) {
                 return response.json();
             })
@@ -937,6 +937,22 @@
             .catch(function(error) {
                 console.log(error);
             });
+        fetch("/admin/apply/" + rcrtNo+ "/"+ aplyNo + "/submissionDoc")
+            .then(response => response.json())
+            .then((list) => {
+                const pdfBox = document.querySelector('#example1');
+                pdfBox.innerHTML = "";
+                filePath = list[0].fileNo;
+                if(filePath === ""){
+                    document.querySelector('#example1').innerHTML = "제출한 서류가 존재하지 않습니다.";
+                }else {
+                    PDFObject.embed("/pdf/" + filePath, "#example1");
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                filePath = "";
+            });
 
 
         buttonList.forEach((e, i) => {
@@ -948,15 +964,14 @@
                 if (e.id === "btn_tab1") {
                     elements[0].style.display = 'block';
                 } else if (e.id === "btn_tab2") {
-                    tab2GridLoad(aplyNo);
+                    tab2GridLoad(rcrtNo ,aplyNo);
                     elements[1].style.display = 'block';
                 } else if (e.id === "btn_tab3") {
-                    tab3GridLoad(aplyNo)
+                    tab3GridLoad(rcrtNo,aplyNo)
                     elements[2].style.display = 'block';
                 } else if (e.id === "btn_tab4") {
                     elements[3].style.display = 'block';
                 } else if (e.id === "btn_tab5") {
-                    PDFObject.embed("/pdf/"+filePath, "#example1");
                     elements[4].style.display = 'block';
                 }
             })
