@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-lg-10">
                             <select class="form-select" name="courseDiv" disabled>
-                                <option selected>${rcrtInfo.courseDiv}</option>
+                                <option selected value="${rcrtInfo.courseDiv}">${rcrtInfo.courseDiv}</option>
                                 <option value="Java">Java</option>
                                 <option value="Python">Python</option>
                                 <option value="C++">C++</option>
@@ -477,7 +477,7 @@ function sendFormData() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200 && xhr.responseText === "success") {
-                window.location.href = '/userInfo/${rcrtNo}?rcrtNo=${rcrtNo}&courseDiv=${rcrtInfo.courseDiv}';
+                window.location.href = '/signin/userInfo/${rcrtNo}?rcrtNo=${rcrtNo}';
             } else {
                 console.error('Request failed:', xhr.status, xhr.statusText);
             }
