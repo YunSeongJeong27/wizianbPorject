@@ -124,11 +124,13 @@ public class ApplicationInfoController {
     public String userEdu(@PathVariable("rcrtNo")String rcrtNo,@PathVariable("aplyNo")String aplyNo, Model model){
 
         List<Education> eduList = applicationInfoService.educationList(aplyNo, rcrtNo);
+        Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
         if(eduList.isEmpty()) eduList.add(new Education());
 
         model.addAttribute("rcrtNo",rcrtNo);
         model.addAttribute("aplyNo",aplyNo);
         model.addAttribute("eduList", eduList);
+        model.addAttribute("courseName",rcrtInfo.getCourseName());
         model.addAttribute("title","학력사항");
         return "/application/applicationEdu";
     }
@@ -146,11 +148,13 @@ public class ApplicationInfoController {
     public String userExp(@PathVariable("rcrtNo")String rcrtNo,@PathVariable("aplyNo")String aplyNo,  Model model){
 
         List<Careers> expList = applicationInfoService.careerList(aplyNo, rcrtNo);
+        Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
         if(expList.isEmpty()) expList.add(new Careers());
 
         model.addAttribute("rcrtNo",rcrtNo);
         model.addAttribute("aplyNo",aplyNo);
         model.addAttribute("expList", expList);
+        model.addAttribute("courseName",rcrtInfo.getCourseName());
         model.addAttribute("title","학력사항");
         return "/application/applicationExp";
     }

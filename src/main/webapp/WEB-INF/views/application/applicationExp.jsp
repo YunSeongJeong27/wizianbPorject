@@ -75,7 +75,7 @@
             </div>
         </div>
         <div id="edu_title" class="col-lg-9">
-            <h3 class="mb-3">자바기반 풀스택 개발자 취업과정</h3>
+            <h3 class="mb-3">${courseName}</h3>
             <div class="title mt-5 mb-1">
                 경력사항
             </div>

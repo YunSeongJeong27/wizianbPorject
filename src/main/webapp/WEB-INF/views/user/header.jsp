@@ -89,7 +89,7 @@
             <sec:authorize access="isAuthenticated()">
                 <sec:csrfInput />
                     <a href="/logout">로그아웃</a>
-            </sec:authorize>>
+            </sec:authorize>
         </div>
         <div class="h-50 col-4 d-flex nav nav-underline fs-4 fw-bold text-center align-items-center" style="margin-top: 15px;">
             <div class="nav-item" style="width: 31%;">
