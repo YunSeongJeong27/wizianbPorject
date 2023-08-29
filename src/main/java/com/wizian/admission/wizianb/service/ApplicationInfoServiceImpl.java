@@ -178,11 +178,14 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService, UserD
             data.setOrgName(orgName[i]);
             data.setDeptName(deptName[i]);
 
-            if(i < acdmSeq.length) {
+            if(!acdmSeq[i].isEmpty()) {
                 data.setAcdmSeq(acdmSeq[i]);
                 applicationInfoRepository.updateEducation(data);       // 수정
             }
-            else applicationInfoRepository.saveEducation(data);        // 신규
+            else {
+                System.out.println("21");
+                applicationInfoRepository.saveEducation(data);        // 신규
+            }
         }
     }
 
@@ -211,7 +214,7 @@ public class ApplicationInfoServiceImpl implements ApplicationInfoService, UserD
             data.setPlcJob(plcJob[i]);
             data.setNote(note[i]);
 
-            if(i < careerSeq.length) {
+            if(!careerSeq[i].isEmpty()) {
                 data.setCareerSeq(careerSeq[i]);
                 applicationInfoRepository.updateCareer(data);       // 수정
             }

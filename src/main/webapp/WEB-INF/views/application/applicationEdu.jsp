@@ -67,7 +67,7 @@
                         <a href="/userEdu/${rcrtNo}/${aplyNo}" class="active">학력사항</a>
                     </li>
                     <li class="py-2 border-bottom border-gray-100">
-                        <a href="/userExp/${rcrtNo}/${aplyNo}"\>경력사항</a>
+                        <a href="/userExp/${rcrtNo}/${aplyNo}">경력사항</a>
                     </li>
                     <li class="py-2">
                         <a href="/userIntroduce/${rcrtNo}/${aplyNo}">자기소개서</a>
@@ -109,7 +109,7 @@
                                             <option <c:if test="${edu.gradeStatusDiv == '재학'}">selected</c:if>>재학</option>
                                             <option <c:if test="${edu.gradeStatusDiv == '수료'}">selected</c:if>>수료</option>
                                             <option <c:if test="${edu.gradeStatusDiv == '중퇴'}">selected</c:if>>중퇴</option>
-                                            <option <c:if test="${edu.gradeStatusDiv == '편입</'}">selected</c:if>>편입</option>
+                                            <option <c:if test="${edu.gradeStatusDiv == '편입'}">selected</c:if>>편입</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-2">입학년월/졸업년월</div>
