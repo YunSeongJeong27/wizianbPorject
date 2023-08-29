@@ -87,7 +87,6 @@
                 </div>
 
                 <div class="d-flex flex-row justify-content-end col-5 gap-2">
-                    <button id="nthInsertBtn" class="btn btn-sm btn-primary">신규</button>
                     <button id="statusPrepared" class="btn btn-sm btn-danger">완료취소</button>
                     <button id="statusComplete" class="btn btn-sm btn-primary">완료</button>
                     <button id="saveButton"  class="btn btn-sm btn-success">점수저장</button>
@@ -245,7 +244,7 @@
 
 
 
-    let subRowData;
+
     const nthEvnRegistTable = document.getElementById("nthEvaluationRegistTable");
     let nthEvaluationRegistTable;
     let rcrtNo;
@@ -258,7 +257,6 @@
             return num1+ num2 +num3;
         }
         const rowData = nthEvaluationTable.getRow(rowKey);
-        subRowData=nthEvaluationTable.getRow(rowKey);
         rcrtNo = rowData.rcrtNo;
 
         // nthEvaluationRegistTable div 요소를 초기화
@@ -325,7 +323,6 @@
                  },
                  {
                      header: '합계(100점)',
-                     name: 'total',
                      sortingType: 'asc',
                      sortable: true, align: 'center',
                      formatter:sum
@@ -352,33 +349,6 @@
         // 페이지당 행 개수 변경 이벤트 오브젝트에 바인딩
         nthEvaluationRegistTablePage.addEventListener('change', function(){handlePerPageChange(this, nthEvaluationRegistTable)});
     }
-
-
-    // 신규 버튼 클릭 이벤트
-    document.getElementById("nthInsertBtn").addEventListener("click", function () {
-        const rowData = [
-            {
-                aplyNo: subRowData.rcrtNo,
-                nameKor: subRowData.nameKor,
-                ev1Score: '',
-                ev2Score: '',
-                ev3Score: '',
-                docPassYn: subRowData.docPassYn,
-                total: '',
-                note: ''
-
-            }
-        ];
-
-        nthEvaluationRegistTable.appendRow(rowData[0], {
-            at: nthEvaluationRegistTable.getIndexOfRow(nthEvaluationRegistTable.getFocusedCell()['rowKey'])+1,
-            extendPrevRowSpan: true,
-            focus: true
-        });
-
-
-    });
-
 
 
     // 점수저장 버튼 클릭 시
