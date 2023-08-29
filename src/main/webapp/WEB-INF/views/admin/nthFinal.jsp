@@ -333,6 +333,9 @@
             if(dataFlag == null) {
                 alert("데이터가 없습니다.");
                 e.preventDefault();
+            } else {
+                subject.value = "";
+                msgCont.innerHTML = "";
             }
         });
         // 모달이 열릴 때 이벤트 핸들러 등록
