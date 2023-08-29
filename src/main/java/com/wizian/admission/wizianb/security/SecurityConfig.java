@@ -25,25 +25,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .antMatchers("/login", "/logout", "/app", "/selectInfo", "/userInfo/*", "/*").permitAll()
+                .antMatchers("/login", "/logout", "/app", "/selectInfo", "/userInfo/*").permitAll()
                 .anyRequest().authenticated()
         );
         http.formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/app", true);
-//                .successHandler(
-//                        (request, response, authentication) -> {
-//                            RequestCache requestCache = new HttpSessionRequestCache();
-//                            SavedRequest savedRequest = requestCache.getRequest(request, response);
-//                            String uri = "/";
-//                            if(savedRequest != null){
-//                                uri = savedRequest.getRedirectUrl();
-//                                requestCache.removeRequest(request, response);
-//                            }
-//
-//                            response.sendRedirect(uri);
-//                        });
+                .defaultSuccessUrl("/app", true)
+                .successHandler(
+                        (request, response, authentication) -> {
+                            RequestCache requestCache = new HttpSessionRequestCache();
+                            SavedRequest savedRequest = requestCache.getRequest(request, response);
+                            String uri = "/";
+                            if(savedRequest != null){
+                                uri = savedRequest.getRedirectUrl();
+                                requestCache.removeRequest(request, response);
+                            }
+
+                            response.sendRedirect(uri);
+                        });
         http
                 .logout()
                 .logoutUrl("/logout")
