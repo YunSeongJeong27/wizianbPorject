@@ -47,20 +47,9 @@ public class ApplicationInfoController {
 
     }
     @GetMapping("/signin/userInfo/{rcrtNo}")
-    public String userInfoSignIn(@CurrentUser ApplicationInfo member, @PathVariable String rcrtNo, Model model){
-        model.addAttribute("title","기본정보");
-        // Object rcrtNo = session.getAttribute("rcrtNo");
-        // model.addAttribute("courseName", applicationInfoService.courseName(rcrtNo));
-
-        model.addAttribute("rcrtNo",rcrtNo);
-
-        ApplicationInfo appInfo = applicationInfoService.findAppInfo(member.getLoginId(), rcrtNo);
-        Recruitment rcrtInfo = recruitmentService.findRcrtInfo(rcrtNo);
-
-        model.addAttribute("appInfo",appInfo);
-        model.addAttribute("member",member);
-        model.addAttribute("rcrtInfo",rcrtInfo);
-        return "/application/applicationInfoAfterLogin";
+    public String userInfoSignIn(@PathVariable String rcrtNo, Model model){
+        //안되서 일단 임시방편
+        return "/application/applicationLogin";
 
     }
 
