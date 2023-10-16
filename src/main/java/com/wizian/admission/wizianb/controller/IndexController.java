@@ -10,11 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("/")
-    public String index(@CurrentUser ApplicationInfo member, Model model){
-        model.addAttribute("hello","하이헬로우 안녕");
+    public String index(){
         return "/index";
     }
 
+    //회원페이지이동
+    @GetMapping("/userPage")
+    public String userPage(){
+        return "redirect:/app";}
+    //관리자페이지로 이동
+    @GetMapping("/adminPage")
+    public String adminPage(){
+        return "redirect:/admin";}
     @GetMapping("/admin")
     public String admin(){return "/admin/index";}
 
