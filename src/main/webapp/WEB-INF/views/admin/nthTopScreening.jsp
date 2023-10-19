@@ -216,6 +216,7 @@
             handlePerPageChange(this, nthTable)
         });
     }
+
     let nthTablePage = document.querySelector('#nthTablePage');
 
     // perPage 핸들러(페이지당 행 개수 변경), (value, 진수)
@@ -227,7 +228,7 @@
     nthTablePage.addEventListener('change', handlePerPageChange);
 
 
-    //검색조회 항목들 리스트불러오기(일단 EvManagementController에서불러옴 시간남으면 위치수정)
+    //검색조회 항목들 리스트불러오기(일단 EvManagementController에서불러옴)
     async function searchListData() {
         const response = await fetch('/eval/result/searchlist');
         const dataList = await response.json();

@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <style>
-    /* 마승현 */
+
     .entryWrap:hover .shortCutBtn{
         background-color: #003A78;
         color: white !important;
