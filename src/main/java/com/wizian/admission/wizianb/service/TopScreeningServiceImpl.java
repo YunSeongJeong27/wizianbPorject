@@ -43,11 +43,12 @@ public class TopScreeningServiceImpl implements TopScreeningService {
             courseName = "%" + courseName + "%";
         }
 
-        List<TopScreeningInfo> nthInfo=topScreeningRepository.nthInfo(termDiv, courseDiv, courseName,
-                RecruitmentStatus.준비중,RecruitmentStatus.진행중,
-                SchdlName.모집,SchdlName.최종합격자발표);
+        List<TopScreeningInfo> nthInfo
+                =topScreeningRepository.nthInfo(termDiv, courseDiv, courseName,
+                    RecruitmentStatus.준비중,RecruitmentStatus.진행중,
+                    SchdlName.모집,SchdlName.최종합격자발표);
 
-        //발표일자
+        //발표일자 형식 formatter
         for(TopScreeningInfo nl: nthInfo){
             nl.formatterPeriod(
                     nl.getRecruitStartDate(),nl.getRecruitEndDate(),
@@ -57,6 +58,7 @@ public class TopScreeningServiceImpl implements TopScreeningService {
         HashMap<String, Object> resultMap= new HashMap<>();
         resultMap.put("contents",nthInfo);
         resultMap.put("pagination", "");
+
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 

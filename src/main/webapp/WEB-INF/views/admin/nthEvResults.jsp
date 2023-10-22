@@ -52,7 +52,7 @@
 
         <div class="col-12 d-flex flex-row searchResult mt-4 mb-2">
             <div class="col-9 d-flex flex-row align-items-center">
-                <p class="subTitle fw-bold me-2">모집전형평가정보</p>
+                <p class="subTitle fw-bold me-2">모집전형정보</p>
                 <p class="subResult text-secondary me-2">검색결과</p>
                 <div>
                     <select class="form-select" id="nthEvaluationTablePage">

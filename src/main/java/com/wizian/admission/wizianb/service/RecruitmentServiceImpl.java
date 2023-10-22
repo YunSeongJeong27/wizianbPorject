@@ -27,7 +27,6 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public ToastUiResponseDto findAll() {
         List<Recruitment> recruitmentList = recruitmentRepository.findAll(SchdlName.최종합격자발표);
-
         for(Recruitment nl: recruitmentList){
             nl.formatterPeriod(
                     nl.getAnnouncementStartDate(),nl.getAnnouncementEndDate()
@@ -37,7 +36,6 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("contents", recruitmentList);
         resultMap.put("pagination", "");
-
         return ToastUiResponseDto.builder().result(true).data(resultMap).build();
     }
 

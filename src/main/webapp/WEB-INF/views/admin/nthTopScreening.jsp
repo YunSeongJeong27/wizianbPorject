@@ -111,7 +111,6 @@
     document.addEventListener('DOMContentLoaded', async () =>{
         await  nthGridLoad();
         await  searchListData();
-        //await subTableLoad();
     });
 
 
@@ -132,10 +131,7 @@
         termDiv = document.querySelector('select[name="termDiv"]').value;
         courseDiv = document.querySelector('select[name="courseDiv"]').value;
         courseName = document.querySelector('select[name="courseName"]').value;
-
         await nthGridLoad(nthTableData());
-        // 이 function에 추가로 서브테이블 이름에
-        // 서브테이블.innerHTML = ''; 이거 각뷰에추가하면좋음
     }
 
 

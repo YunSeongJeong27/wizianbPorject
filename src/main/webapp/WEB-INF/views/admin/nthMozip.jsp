@@ -16,9 +16,12 @@
     <link rel="stylesheet" href="css/custom.css" />
 
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
-    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+    <%--시간 선택기--%>
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <%--날짜 선택기--%>
     <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -27,7 +30,6 @@
         .table .tableColor{
             background-color: #FAFAFA;
         }
-
         .divBtn{
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
@@ -250,7 +252,7 @@
 
     let firstColumName = 'courseDiv';
     let  termDiv, courseDiv, courseName;
-    //readData빼고는 전부 (createData,updateData,deleteData)빽엔드아직안함
+    //readData빼고는 전부 (createData,updateData,deleteData)
     const nthTableData = () => {
         termDiv = termDiv === "" ? "nullTermDiv" : termDiv;
         courseDiv = courseDiv === "" ? "nullCourseDiv" : courseDiv;
@@ -368,17 +370,15 @@
                     document.querySelector("#inputTable tbody").setAttribute("id", "row0");
 
                     // 하단 table 수정시 nthTable 반영하기 위한 각 input에 onchange 함수 넣기
-                    // 데이터 업데이트..
+                    // 데이터 업데이트
                     var tableInput = document.querySelectorAll("#inputTable .tableInput");
                     tableInput.forEach((ti) => {
                         ti.addEventListener("change", function () {
                             var rowKey = parseInt(ti.parentNode.parentNode.parentNode.id.substring(3));
-
                             nthTable.setValue(rowKey, ti.getAttribute("name"), this.value, false);
                         })
                     });
                 }
-
             });
         const nthTablePage = document.querySelector('#nthTablePage');
 
@@ -543,7 +543,7 @@
             ti.value = "";
         });
        document.getElementById("courseName2").disabled = false;
-        newRow = nthTable.getRowCount() - 1; //마지막행정보(신규로만들어진행 자체정보는 마지막행에 배치돼있음)
+        newRow = nthTable.getRowCount() - 1;
         newRowList.push(newRow);
 
 
@@ -845,12 +845,10 @@
             content.setAttribute("style","display:block");
         }
     }
-
+    //저장버튼
     const nthSaveBtn = document.getElementById("scheduleSaveBtn");
     nthSaveBtn.addEventListener('click',async () => {
         const modifiedData =  scheduleGrid.getModifiedRows();
-        console.log(modifiedData); // 여기서 먼저 modifiedData 출력
-
         const gridData = modifiedData.updatedRows;
         if (Array.isArray(gridData)) {
             let ii;
@@ -865,7 +863,7 @@
             if(ii!==1) {
                 scheduleGrid.request('modifyData');
                 await searchBtn();
-                setTimeout(searchBtn, 100); //버퍼링떄문에 바로데이터가로드안돼서 일단추가
+                setTimeout(searchBtn, 100); //버퍼링떄문에 바로데이터가로드안돼서 추가
             }
         }
     });

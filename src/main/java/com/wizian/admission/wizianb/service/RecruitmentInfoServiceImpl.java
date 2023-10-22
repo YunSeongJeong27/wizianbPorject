@@ -82,7 +82,6 @@ public class RecruitmentInfoServiceImpl implements RecruitmentInfoService{
             String endDate=row.get("endDate").asText();
             if(row.get("startDate").asText().isEmpty()){
                 startDate=null;
-                System.out.println("startDate: "+startDate);
             }
             if(row.get("endDate").asText().isEmpty()){
                 endDate= null;
